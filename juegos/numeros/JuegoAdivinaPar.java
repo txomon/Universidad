@@ -35,9 +35,10 @@ public class JuegoAdivinaPar extends juegos.numeros.JuegoAdivinaNumero
         super.Juega();
     }
 
-    public JuegoAdivinaPar(int a, int b)
+    public JuegoAdivinaPar(int a)
     {
-        super(a,b);
+        super(a);
+        AAdivinar=ValidarAleatorio();
     }
 
     @Override
@@ -50,5 +51,17 @@ public class JuegoAdivinaPar extends juegos.numeros.JuegoAdivinaNumero
     {
         System.out.println("Este juego consiste en adivinar un número par, de 0 al " +
                 "10, disponiendo de "+intentos+" intentos.");
+    }
+    @Override
+    public int ValidarAleatorio()
+    {
+        int x;
+        do{
+            x=CrearAleatorio();
+            x%=11;
+        }
+        while(x%2!=0);
+
+        return x;
     }
 }
