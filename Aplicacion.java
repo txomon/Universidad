@@ -17,8 +17,16 @@ public class Aplicacion {
         JuegoAdivinaPar jugadorpar=new JuegoAdivinaPar(3,4);
         JuegoAdivinaImpar jugadorimpar=new JuegoAdivinaImpar(3,9);
 
+        jugadornumerico.MuestraNombre();
+        jugadornumerico.MuestraInfo();
         jugadornumerico.Juega();
+
+        jugadorpar.MuestraNombre();
+        jugadorpar.MuestraInfo();
         jugadorpar.Juega();
+
+        jugadorimpar.MuestraNombre();
+        jugadorimpar.MuestraInfo();
         jugadorimpar.Juega();
 
         return;
