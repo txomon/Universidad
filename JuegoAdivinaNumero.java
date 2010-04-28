@@ -9,15 +9,15 @@
  *
  * @author Javier
  */
-public class JuegoAdivinaNumero  extends Juego
+public class JuegoAdivinaNumero  extends Juego implements Jugable
 {
-    int AAdivinar;
+    int AAdivinar,intentos;
 
     public void Juega()
     {
         boolean vivito=true;
         ReiniciaPartida();
-        
+
         do
         {
             System.out.print("Adivina un numerico del 0 al 10:");
@@ -44,18 +44,30 @@ public class JuegoAdivinaNumero  extends Juego
     }
     public boolean ValidaNumero(int a)
     {
-        return true;
+        if(0<a&&a<10)
+            return true;
+        else
+        {
+            System.out.println("El numero que has introducido, fracasado, no está entre" +
+                " 0 y 10");
+            return false;
+        }
     }
-
     public JuegoAdivinaNumero(int a,int b)
     {
         super(a);
+        intentos=a;
         AAdivinar=b;
-        
+
     }
-
-
-
-
+    public void MuestraNombre()
+    {
+        System.out.println("Adivina un número!");
+    }
+    public void MuestraInfo()
+    {
+        System.out.println("Este juego consiste en adivinar un número, de 0 al " +
+                "10, disponiendo de "+intentos+" intentos");
+    }
 
 }

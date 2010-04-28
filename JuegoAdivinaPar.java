@@ -14,10 +14,19 @@ public class JuegoAdivinaPar extends JuegoAdivinaNumero
     @Override
     public boolean ValidaNumero(int a)
     {
-        if(0==a%2)
-            return true;
-        else
+        if(a<0||a>10)
+        {
+            System.out.println("A ver, cosa fea, especie subdesarrollada, creo" +
+                    "que no pillas la idea de UN NÚMERO DEL 0 AL 10!");
+        }
+        if(0!=a%2)
+        {
+            System.out.println("Eh! Tu! Proyecto de embrión! Cosa! No has" +
+                    " introducido un numero par!");
             return false;
+        }
+        else
+            return true;
     }
     @Override
     public void Juega()
@@ -31,4 +40,15 @@ public class JuegoAdivinaPar extends JuegoAdivinaNumero
         super(a,b);
     }
 
+    @Override
+    public void MuestraNombre()
+    {
+        System.out.println("Adivina un número par!");
+    }
+    @Override
+    public void MuestraInfo()
+    {
+        System.out.println("Este juego consiste en adivinar un número par, de 0 al " +
+                "10, disponiendo de "+intentos+" intentos.");
+    }
 }
