@@ -4,7 +4,6 @@
  */
 
 
-
 /**
  *
  * @author Javier
@@ -12,21 +11,16 @@
 public class Aplicacion {
     public static void main(String argv[])
     {
-        Juego jugador=new Juego(5);
 
-        jugador.MostrarVidasRestantes();
 
-        jugador.QuitaVida();
-        jugador.ActualizaRecord();
-        jugador.MostrarVidasRestantes();
+        JuegoAdivinaNumero jugadornumerico=new JuegoAdivinaNumero(3,7);
+        JuegoAdivinaPar jugadorpar=new JuegoAdivinaPar(3,4);
+        JuegoAdivinaImpar jugadorimpar=new JuegoAdivinaImpar(3,9);
 
-        jugador.ReiniciaPartida();
-        jugador.MostrarVidasRestantes();
-        Juego jugador2=new Juego(5);
-        jugador2.ActualizaRecord();
+        jugadornumerico.Juega();
+        jugadorpar.Juega();
+        jugadorimpar.Juega();
 
-        jugador2.MostrarVidasRestantes();
-        jugador.MostrarVidasRestantes();
         return;
     }
 

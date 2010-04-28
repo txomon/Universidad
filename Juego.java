@@ -4,12 +4,11 @@
  */
 
 
-
 /**
  *
  * @author Javier
  */
-public class Juego
+public abstract class Juego
 {
     private int vidas,vidasiniciales;
     private static int record;
@@ -26,6 +25,7 @@ public class Juego
         return;
     }
 
+    public abstract void Juega();
     boolean QuitaVida()
     {
         boolean a=true;
