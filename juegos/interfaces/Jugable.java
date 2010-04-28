@@ -14,6 +14,7 @@ public interface Jugable {
 
     public void MuestraNombre();
     public void MuestraInfo();
+    public abstract int ValidarAleatorio();
 
 
 }
