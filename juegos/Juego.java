@@ -55,5 +55,15 @@ public abstract class Juego
         }
     }
 
+    public static int CrearAleatorio()
+    {
+        java.util.Date seed=new java.util.Date();
+        java.util.Random ramdom = new java.util.Random(seed.getTime());
+        ramdom.setSeed(seed.getTime());
+        return ramdom.nextInt();
+    }
+
+
+
 }
 
