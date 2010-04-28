@@ -14,7 +14,7 @@ final public class CD extends SopInform implements Prestable
     private static int diasdeprestamo=1;
     public CD()
     {
-        super("CD","l CD");
+        super("CD","l CD"); 
     }
 
     @Override
