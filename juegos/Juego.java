@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+package juegos;
 
 /**
  *
@@ -25,7 +26,7 @@ public abstract class Juego
         return;
     }
 
-    boolean QuitaVida()
+    public boolean QuitaVida()
     {
         boolean a=true;
 
@@ -37,7 +38,7 @@ public abstract class Juego
         }
         return a;
     }
-    void ReiniciaPartida()
+    public void ReiniciaPartida()
     {
         vidas=vidasiniciales;
     }
@@ -55,3 +56,4 @@ public abstract class Juego
     }
 
 }
+

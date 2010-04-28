@@ -4,11 +4,18 @@
  */
 
 
+
+import juegos.numeros.JuegoAdivinaImpar;
+import juegos.numeros.JuegoAdivinaNumero;
+import juegos.numeros.JuegoAdivinaPar;
+import juegos.interfaces.Jugable;
+import profesor.Teclado;
+
 /**
  *
  * @author Javier
  */
-public class Aplicacion 
+public class Aplicacion
 {
     public static Jugable EligeJuego()
     {
