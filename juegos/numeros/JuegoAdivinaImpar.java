@@ -11,9 +11,10 @@ package juegos.numeros;
  */
 public class JuegoAdivinaImpar extends juegos.numeros.JuegoAdivinaNumero
 {
-    public JuegoAdivinaImpar(int a,int b)
+    public JuegoAdivinaImpar(int a)
     {
-        super(a,b);
+        super(a);
+        AAdivinar=ValidarAleatorio();
     }
 
     @Override
@@ -54,5 +55,16 @@ public class JuegoAdivinaImpar extends juegos.numeros.JuegoAdivinaNumero
         System.out.println("Este juego consiste en adivinar un número impar, de 0 al " +
                 "10, disponiendo de "+intentos+" intentos.");
     }
+    @Override
+    public int ValidarAleatorio()
+    {
+        int x;
+        do{
+            x=CrearAleatorio();
+            x%=11;
+        }
+        while(x%2==0);
 
+        return x;
+    }
 }

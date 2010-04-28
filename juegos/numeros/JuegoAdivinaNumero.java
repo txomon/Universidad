@@ -15,6 +15,7 @@ public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfac
 {
     int AAdivinar,intentos;
 
+
     public void Juega()
     {
         boolean vivito=true;
@@ -55,11 +56,10 @@ public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfac
             return false;
         }
     }
-    public JuegoAdivinaNumero(int a,int b)
+    public JuegoAdivinaNumero(int a)
     {
         super(a);
         intentos=a;
-        AAdivinar=b;
 
     }
     public void MuestraNombre()
@@ -74,7 +74,10 @@ public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfac
 
 
 
-
-
-
+    public int ValidarAleatorio()
+    {
+        int x=CrearAleatorio();
+        x%=11;
+        return x;
+    }
 }
