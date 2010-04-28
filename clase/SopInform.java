@@ -15,7 +15,7 @@ import java.util.Vector;
 abstract class SopInform extends Publicaciones
 {//practica de arrays dinamicos...
         private static Vector elementos;
-        static SopInform estuche[]=null;
+        static SopInform estuche[];
         private static int maximodeestuches=10;
 
 	public SopInform(String prefijo, String pregunta)
@@ -23,9 +23,9 @@ abstract class SopInform extends Publicaciones
 		super(prefijo,pregunta);
                 int i=0;
                 boolean e=false;
-                for(i=0;estuche[i]!=null&&i<maximodeestuches;i++);
-                if(i<maximodeestuches)
-                    estuche[i]=this;
+//                for(i=0;estuche[i]!=null&&i<maximodeestuches;i++);
+//                if(i<maximodeestuches)
+//                    estuche[i]=this;
                 
 	}
 
