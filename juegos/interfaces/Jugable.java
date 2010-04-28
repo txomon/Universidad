@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-
+package juegos.interfaces;
 
 /**
  *
@@ -11,6 +11,7 @@
  */
 public interface Jugable {
     public abstract void Juega();
+
     public void MuestraNombre();
     public void MuestraInfo();
 

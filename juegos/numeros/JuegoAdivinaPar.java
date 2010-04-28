@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-
+package juegos.numeros;
 
 /**
  *
  * @author Javier
  */
-public class JuegoAdivinaPar extends JuegoAdivinaNumero
+public class JuegoAdivinaPar extends juegos.numeros.JuegoAdivinaNumero
 {
     @Override
     public boolean ValidaNumero(int a)
