@@ -25,7 +25,6 @@ public abstract class Juego
         return;
     }
 
-    public abstract void Juega();
     boolean QuitaVida()
     {
         boolean a=true;
@@ -54,5 +53,5 @@ public abstract class Juego
             System.out.println("Has igualado el record, pero como inutil que eres, te has quedado a las puertas");
         }
     }
-}
 
+}
