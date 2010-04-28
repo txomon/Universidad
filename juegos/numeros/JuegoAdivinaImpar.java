@@ -3,13 +3,13 @@
  * and open the template in the editor.
  */
 
-
+package juegos.numeros;
 
 /**
  *
  * @author Javier
  */
-public class JuegoAdivinaImpar extends JuegoAdivinaNumero
+public class JuegoAdivinaImpar extends juegos.numeros.JuegoAdivinaNumero
 {
     public JuegoAdivinaImpar(int a,int b)
     {

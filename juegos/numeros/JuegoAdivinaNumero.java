@@ -3,13 +3,15 @@
  * and open the template in the editor.
  */
 
+package juegos.numeros;
 
+import profesor.Teclado;
 
 /**
  *
  * @author Javier
  */
-public class JuegoAdivinaNumero  extends Juego implements Jugable
+public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfaces.Jugable
 {
     int AAdivinar,intentos;
 
@@ -69,5 +71,10 @@ public class JuegoAdivinaNumero  extends Juego implements Jugable
         System.out.println("Este juego consiste en adivinar un número, de 0 al " +
                 "10, disponiendo de "+intentos+" intentos");
     }
+
+
+
+
+
 
 }
