@@ -14,7 +14,7 @@ import java.util.Vector;
 
 abstract class SopInform extends Publicaciones
 {//practica de arrays dinamicos...
-        private static Vector elementos=new Vector(0,1);
+        private static Vector<SopInform> elementos=new Vector<SopInform>(0,1);
         static SopInform estuche[];
         private static int maximodeestuches=10;
 
@@ -25,17 +25,28 @@ abstract class SopInform extends Publicaciones
                 boolean e=false;
                 for(i=0;elementos.size()>i&&!e;i++)
                 {
-                    if((elementos.elementAt(i).(SopInform)getTitulo().compareTo(this.getTitulo()))>=0)
+                    if((elementos.elementAt(i).getTitulo().compareTo(this.getTitulo()))>=0)
                         e=true;
                 }
                 if(e)
                 {
-                    if((elementos.elementAt(i).(String)getTitulo().compareTo(this.getTitulo()))==0)
+                    if((elementos.elementAt(i).getTitulo().compareTo(this.getTitulo()))==0)
                         elementos.setElementAt(this, i);
                     else
                         elementos.add(this);
                 }
 	}
 
-        abstract void InfoPC();
+        abstract String InfoPC();
+
+        static void VisualizarTodo()
+        {
+            int i=0;
+            System.out.println("\tNombre\t\tRequisitos Mínimos");
+            for(i=0;elementos.size()>i;i++)
+            {
+                System.out.println("\t"+elementos.elementAt(i).getTitulo()+"\t\t"+
+                        elementos.elementAt(i).InfoPC());
+            }
+        }
 }

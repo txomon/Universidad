@@ -40,6 +40,9 @@ public class Main
 //error        siete.devolver(array);
 //error        ocho.devolver(array);
         array.toString();
+
+        SopInform.VisualizarTodo();
+
     }
 
 }
