@@ -17,8 +17,8 @@ final public class DVD extends SopInform
     }
 
     @Override
-    public void InfoPC()
+    public String InfoPC()
     {
-        System.out.println("Requiere un PC de 256 Mbytes");
+        return "Requiere un PC de 256 Mbytes";
     }
 }
