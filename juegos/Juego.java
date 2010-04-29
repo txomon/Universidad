@@ -4,7 +4,7 @@
  */
 
 package juegos;
-
+import profesor.Teclado;
 /**
  *
  * @author Javier
@@ -61,6 +61,11 @@ public abstract class Juego
         java.util.Random ramdom = new java.util.Random(seed.getTime());
         ramdom.setSeed(seed.getTime());
         return ramdom.nextInt();
+    }
+
+    public String getVidas()
+    {
+        return String.valueOf(vidas);
     }
 
 
