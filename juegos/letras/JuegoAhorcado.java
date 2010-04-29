@@ -4,7 +4,8 @@
  */
 
 package juegos.letras;
-import profesor.Teclado;
+import java.io.*;
+
 /**
  *
  * @author Javier
@@ -16,27 +17,31 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
     @Override
     public void Juega()
     {
-        int x;
-        char introducido;
-        String Incognita=null;
-        for(x=0;x<AAdivinar.length();x++)
-            Incognita.concat("-");
+        int i,x=-1;
+        char intro,aj[]=new char[AAdivinar.length()];
+        String Incognita="";
+        for(i=0;i<AAdivinar.length();i++)
+            aj[i]='-';
+        Incognita=Incognita.copyValueOf(aj);
         while(!Incognita.contentEquals(AAdivinar))
         {
+            x=-1;
             System.out.println(Incognita+"\n\t");
-            System.out.println("Introduce una letras que creas que este contenida" +
-                    " en la palabra");
-            introducido=Teclado.LeeCaracter();
-            if(Incognita.length()>AAdivinar.indexOf(introducido)&&AAdivinar.indexOf(introducido)>-1)
-                while(AAdivinar.indexOf(introducido)>-1)
+            System.out.print("Introduce una letra que creas que este contenida" +
+                    " en la palabra:");
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            try{intro=br.readLine().toUpperCase().toLowerCase().charAt(0);}catch (Exception e) { intro=0;}
+            if(Incognita.length()>AAdivinar.indexOf(intro)&&AAdivinar.indexOf(intro)>-1)
+                while(AAdivinar.indexOf(intro,x)!=-1&&x!=(AAdivinar.length()-1))
                 {
                     char a[]=Incognita.toCharArray();
-                    a[AAdivinar.indexOf(introducido)]=introducido;
-                    Incognita=a.toString();
+                    x=AAdivinar.indexOf(intro,x+1);
+                    a[AAdivinar.indexOf(intro,x)]=intro;
+                    Incognita=Incognita.copyValueOf(a);
                 }
             if(Incognita.contentEquals(AAdivinar))
                 System.out.println("Porfin has acabado,... la siguiente vez, pide ayuda");
-            else
+            else if(Incognita.indexOf(intro)==-1)
                 QuitaVida();
         }
 
