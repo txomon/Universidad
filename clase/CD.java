@@ -18,9 +18,9 @@ final public class CD extends SopInform implements Prestable
     }
 
     @Override
-    public void InfoPC()
+    public String InfoPC()
     {
-        System.out.println("Requiere un PC de 128 Mbytes");
+        return "Requiere un PC de 128 Mbytes";
     }
 
     @Override
