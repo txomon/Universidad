@@ -22,19 +22,27 @@ abstract class SopInform extends Publicaciones
 	{
 		super(prefijo,pregunta);
                 int i=0;
-                boolean e=false;
-                for(i=0;elementos.size()>i&&!e;i++)
+                boolean existe=false,encuentra=false;
+                while(elementos.size()>i&&!encuentra)
                 {
                     if((elementos.elementAt(i).getTitulo().compareTo(this.getTitulo()))>=0)
-                        e=true;
+                        encuentra=true;
+                    else
+                        i++;
                 }
-                if(e)
-                {
+                if(encuentra)
+                
+//                    if(elementos.elementAt(i)==null)
+//                }
+//                if(!existe&&elementos.size()>i)
+//                {
                     if((elementos.elementAt(i).getTitulo().compareTo(this.getTitulo()))==0)
                         elementos.setElementAt(this, i);
                     else
-                        elementos.add(this);
-                }
+                        elementos.insertElementAt(this,i);
+                
+                else 
+                    elementos.add(this);
 	}
 
         abstract String InfoPC();
@@ -42,10 +50,10 @@ abstract class SopInform extends Publicaciones
         static void VisualizarTodo()
         {
             int i=0;
-            System.out.println("\tNombre\t\tRequisitos Mínimos");
+            System.out.println("Codigo\tTitulo\t\tRequisitos Mínimos");
             for(i=0;elementos.size()>i;i++)
             {
-                System.out.println("\t"+elementos.elementAt(i).getTitulo()+"\t\t"+
+                System.out.println(elementos.elementAt(i).getCodigo()+"\t"+elementos.elementAt(i).getTitulo()+"\t\t"+
                         elementos.elementAt(i).InfoPC());
             }
         }
