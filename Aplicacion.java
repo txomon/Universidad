@@ -8,6 +8,7 @@
 import juegos.numeros.JuegoAdivinaImpar;
 import juegos.numeros.JuegoAdivinaNumero;
 import juegos.numeros.JuegoAdivinaPar;
+import juegos.letras.JuegoAhorcado;
 import juegos.interfaces.Jugable;
 import profesor.Teclado;
 
@@ -21,20 +22,22 @@ public class Aplicacion
     {
 
         int opcion;
-        Jugable juegos[]=new Jugable[3];
+        Jugable juegos[]=new Jugable[4];
 
         juegos[0]=new JuegoAdivinaNumero(3);
         juegos[1]=new JuegoAdivinaPar(3);
         juegos[2]=new JuegoAdivinaImpar(3);
+        juegos[3]=new JuegoAhorcado(3,"muerete");
 
         System.out.print("A que juego deseas jugar?\n\n" +
                 "\tAl juego adivina número (0)\n" +
                 "\tAl juego adivina un par (1)\n" +
-                "\tAl juego adivina impar  (2)\n\n\t" +
+                "\tAl juego adivina impar  (2)\n" +
+                "\tAl juego del ahorcado   (3)\n\n\t" +
                 "Elije:");
         do
             opcion=Teclado.LeeEntero();
-        while(opcion<0||opcion>2);
+        while(opcion<0||opcion>3);
 
         return juegos[opcion];
     }
