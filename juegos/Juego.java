@@ -29,8 +29,8 @@ public abstract class Juego
     public boolean QuitaVida()
     {
         boolean a=true;
-
         vidas--;
+        System.out.println("Te quedan "+vidas+" vidas que echar a perder");
         if(vidas==0)
         {
             System.out.println("Juego Terminado, no quedan mas vidas que malgastar contigo");
