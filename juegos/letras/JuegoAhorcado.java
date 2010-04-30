@@ -70,9 +70,9 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
     }
 
     @Override
-    public void MuestraNombre()
+    public String MuestraNombre()
     {
-        System.out.println("Este es el juego del ahorcado");
+        return "Adivina una palabra!";
     }
 
 }
