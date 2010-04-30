@@ -11,6 +11,7 @@ import juegos.numeros.JuegoAdivinaPar;
 import juegos.letras.JuegoAhorcado;
 import juegos.interfaces.Jugable;
 import profesor.Teclado;
+import java.util.Vector;
 
 /**
  *
@@ -18,9 +19,13 @@ import profesor.Teclado;
  */
 public class Aplicacion
 {
-    public static Jugable EligeJuego()
+    public static void InfoVector()
     {
 
+    }
+    public static Jugable EligeJuego()
+    {
+        Vector<Jugable> array=new Vector<Jugable>(3,2);
         int opcion;
         Jugable juegos[]=new Jugable[4];
 

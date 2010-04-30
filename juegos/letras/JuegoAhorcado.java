@@ -17,7 +17,7 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
     @Override
     public void Juega()
     {
-        int i,x=-1;
+        int i,x=0;
         char intro,aj[]=new char[AAdivinar.length()];
         String Incognita="";
         for(i=0;i<AAdivinar.length();i++)
@@ -29,18 +29,22 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
             System.out.println(Incognita+"\n\t");
             System.out.print("Introduce una letra que creas que este contenida" +
                     " en la palabra:");
+
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             try{intro=br.readLine().toUpperCase().toLowerCase().charAt(0);}catch (Exception e) { intro=0;}
-            if(Incognita.length()>AAdivinar.indexOf(intro)&&AAdivinar.indexOf(intro)>-1)
-                while(AAdivinar.indexOf(intro,x)!=-1&&x!=(AAdivinar.length()-1))
+
+            if(AAdivinar.indexOf(intro)>-1)
+                while(AAdivinar.indexOf(intro,x)!=-1)
                 {
                     char a[]=Incognita.toCharArray();
-                    x=AAdivinar.indexOf(intro,x+1);
-                    a[AAdivinar.indexOf(intro,x)]=intro;
+                    x=AAdivinar.indexOf(intro,x);
+                    a[x]=intro;
+                    x++;
                     Incognita=Incognita.copyValueOf(a);
                 }
             if(Incognita.contentEquals(AAdivinar))
-                System.out.println("Porfin has acabado,... la siguiente vez, pide ayuda");
+                System.out.println(AAdivinar+"\nPorfin has acabado,... la siguie" +
+                        "nte vez, pide ayuda, que veo que te cuesta");
             else if(Incognita.indexOf(intro)==-1)
                 QuitaVida();
         }
