@@ -12,7 +12,7 @@ package juegos.interfaces;
 public interface Jugable {
     public abstract void Juega();
 
-    public void MuestraNombre();
+    public String MuestraNombre();
     public void MuestraInfo();
     public abstract int ValidarAleatorio();
 

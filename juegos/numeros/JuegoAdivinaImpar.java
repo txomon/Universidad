@@ -45,9 +45,9 @@ public class JuegoAdivinaImpar extends juegos.numeros.JuegoAdivinaNumero
             return true;
     }
     @Override
-    public void MuestraNombre()
+    public String MuestraNombre()
     {
-        System.out.println("Adivina un número impar!");
+        return"Adivina un número impar!";
     }
     @Override
     public void MuestraInfo()

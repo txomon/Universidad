@@ -42,9 +42,9 @@ public class JuegoAdivinaPar extends juegos.numeros.JuegoAdivinaNumero
     }
 
     @Override
-    public void MuestraNombre()
+    public String MuestraNombre()
     {
-        System.out.println("Adivina un número par!");
+        return "Adivina un número par!";
     }
     @Override
     public void MuestraInfo()
