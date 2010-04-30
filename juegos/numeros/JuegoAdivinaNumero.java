@@ -62,9 +62,9 @@ public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfac
         intentos=a;
 
     }
-    public void MuestraNombre()
+    public String MuestraNombre()
     {
-        System.out.println("Adivina un número!");
+        return "Adivina un número!";
     }
     public void MuestraInfo()
     {

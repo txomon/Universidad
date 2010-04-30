@@ -19,32 +19,38 @@ import java.util.Vector;
  */
 public class Aplicacion
 {
-    public static void InfoVector()
+    public static void InfoVector(Vector a)
     {
-
+        System.out.println("El tamaño del vector es "+a.size()+" y la capacidad "+a.capacity());
     }
     public static Jugable EligeJuego()
     {
         Vector<Jugable> array=new Vector<Jugable>(3,2);
-        int opcion;
-        Jugable juegos[]=new Jugable[4];
+        int opcion,x;
 
-        juegos[0]=new JuegoAdivinaNumero(3);
-        juegos[1]=new JuegoAdivinaPar(3);
-        juegos[2]=new JuegoAdivinaImpar(3);
-        juegos[3]=new JuegoAhorcado(3,"muerete");
+        InfoVector(array);
+        array.add(new JuegoAdivinaPar(3));
+        array.add(new JuegoAdivinaNumero(3));
+        array.add(new JuegoAdivinaImpar(3));
+        array.add(new JuegoAhorcado(3,"muerete"));
+        InfoVector(array);
 
-        System.out.print("A que juego deseas jugar?\n\n" +
-                "\tAl juego adivina número (0)\n" +
-                "\tAl juego adivina un par (1)\n" +
-                "\tAl juego adivina impar  (2)\n" +
-                "\tAl juego del ahorcado   (3)\n\n\t" +
-                "Elije:");
+        System.out.print("A que juego deseas jugar?\n\n");
+        for(x=0;x<array.size();x++)
+            System.out.println("\tAl juego \""+array.elementAt(x).MuestraNombre()
+                    +"\"  ("+x+")");
+//                "\tAl juego adivina número (0)\n" +
+//                "\tAl juego adivina un par (1)\n" +
+//                "\tAl juego adivina impar  (2)\n" +
+//                "\tAl juego del ahorcado   (3)\n\n\t" +
+                System.out.println("\n\tElije:");
         do
+        {
             opcion=Teclado.LeeEntero();
+        }
         while(opcion<0||opcion>3);
 
-        return juegos[opcion];
+        return array.elementAt(opcion);
     }
     public static void main(String argv[])
     {
@@ -54,7 +60,7 @@ public class Aplicacion
         {
             opcion=EligeJuego();
 
-            opcion.MuestraNombre();
+            System.out.println(opcion.MuestraNombre());
             opcion.MuestraInfo();
             opcion.Juega();
 
