@@ -10,6 +10,7 @@ import juegos.numeros.JuegoAdivinaNumero;
 import juegos.numeros.JuegoAdivinaPar;
 import juegos.letras.JuegoAhorcado;
 import juegos.interfaces.Jugable;
+import juegos.excepciones.JuegoException;
 import profesor.Teclado;
 import java.util.Vector;
 
@@ -23,7 +24,7 @@ public class Aplicacion
     {
         System.out.println("El tamaño del vector es "+a.size()+" y la capacidad "+a.capacity());
     }
-    public static Jugable EligeJuego()
+    public static Jugable EligeJuego() throws JuegoException
     {
         Vector<Jugable> array=new Vector<Jugable>(3,2);
         int opcion,x;
@@ -32,18 +33,14 @@ public class Aplicacion
         array.add(new JuegoAdivinaPar(3));
         array.add(new JuegoAdivinaNumero(3));
         array.add(new JuegoAdivinaImpar(3));
-        array.add(new JuegoAhorcado(3,"muerete"));
+        array.add(new JuegoAhorcado(3,"mue3ete"));
         InfoVector(array);
 
         System.out.print("A que juego deseas jugar?\n\n");
         for(x=0;x<array.size();x++)
             System.out.println("\tAl juego \""+array.elementAt(x).MuestraNombre()
                     +"\"  ("+x+")");
-//                "\tAl juego adivina número (0)\n" +
-//                "\tAl juego adivina un par (1)\n" +
-//                "\tAl juego adivina impar  (2)\n" +
-//                "\tAl juego del ahorcado   (3)\n\n\t" +
-                System.out.println("\n\tElije:");
+        System.out.println("\n\tElije:");
         do
         {
             opcion=Teclado.LeeEntero();
@@ -56,8 +53,10 @@ public class Aplicacion
     {
         Jugable opcion;
         boolean seguir;
+        try{
         do
         {
+
             opcion=EligeJuego();
 
             System.out.println(opcion.MuestraNombre());
@@ -67,6 +66,15 @@ public class Aplicacion
             seguir=Preguntar();
         }
         while(seguir);
+        }
+        catch(JuegoException e)
+        {
+            System.out.println("La razón por la que se ha acabado el progarama es porque " + e.getDescripcion());
+        }
+        finally
+        {
+            System.out.println("Juego(s) terminado(s), Fin de Partida");
+        }
 
     }
 
