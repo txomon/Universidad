@@ -45,6 +45,12 @@ public class Teclado
         {
             num = Integer.parseInt( LeeCadena().trim() );
         }
+        catch (NumberFormatException e)
+        {
+            System.err.println("No has introducido un numero, vuelve a introducilo");
+            num=0;
+            LeeEntero();
+        }
         catch( Exception e )
         {
             num = 0;
