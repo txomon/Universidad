@@ -5,7 +5,8 @@
 
 package juegos.letras;
 import java.io.*;
-
+import java.lang.Character;
+import juegos.excepciones.JuegoException;
 /**
  *
  * @author Javier
@@ -50,9 +51,19 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
         }
 
     }
-    public JuegoAhorcado(int Vidas,String Adivinar)
+    public JuegoAhorcado(int Vidas,String Adivinar) throws JuegoException
     {
         super(Vidas);
+        int x;
+        Character y;
+        for(x=0;x<Adivinar.length();x++)
+            if(((Character)Adivinar.charAt(x)).isDigit(Adivinar.charAt(x)))
+            {
+                throw new JuegoException("Se esta intentando hacer adivinar u" +
+                        "n numero... eso es trampa");
+            }
+
+        
         AAdivinar=Adivinar;
     }
 
