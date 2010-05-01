@@ -62,8 +62,6 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
                 throw new JuegoException("Se esta intentando hacer adivinar u" +
                         "n numero... eso es trampa");
             }
-
-        
         AAdivinar=Adivinar;
     }
 
