@@ -48,7 +48,7 @@ public class Teclado
         catch (NumberFormatException e)
         {
             System.err.println("No has introducido un numero, vuelve a introducilo");
-            num=0;
+            num=-1;
             LeeEntero();
         }
         catch( Exception e )
