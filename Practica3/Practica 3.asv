@@ -1,0 +1,26 @@
+s=0;
+s=Menu('Introduce el numero de ejercicio','1','2','3','4','5','6','salir');
+if s~=7
+    switch s
+        case 1
+            t=0:1:100;
+            
+            subplot(2,3,1);
+            plot(t,3*cos(t*3/4));
+            
+            subplot(2,3,2);
+            plot(t,5*cos(4*pi*t/6);
+            
+            sublplot(2,3,3);
+            plot(t,2*exp(t*pi*i*4/3);
+            
+            subplot(2,3,4);
+            plot(t,4*exp(i*t*3/2);
+            
+            subplot(2,3,5);
+            plot(t,((-2^t)*cos(2*pi*t
+            
+            
+    end
+    
+end
