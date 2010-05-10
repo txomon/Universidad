@@ -32,18 +32,20 @@ if s~=6
         case 2
             t=-10:0.1:10;
             
-            
+            hold on;
             subplot(2,2,1);
+            hold on;
             uno=tripuls(t);
             dos=cos(t);
-            x=dos*uno;
+            x=dos.*uno;
             plot(t,uno);
             plot(t,dos,'g');
             plot(t,x,'r');
             
             subplot(2,2,2);
+            hold on;
             uno=rectpuls(t);
-            x=dos*uno;
+            x=dos.*uno;
             plot(t,uno);
             plot(t,dos,'g');
             plot(t,x,'r');
@@ -51,8 +53,18 @@ if s~=6
             %supongo que el 3 ese por ahi suelto significa multiplicar...
             
             subplot(2,2,3);
-            uno=tripuls(t)*3;
+            hold on;
+            uno=tripuls(t).*3;
             dos=4*t/t;
+            x=dos+uno;
+            plot(t,uno);
+            plot(t,dos,'g');
+            plot(t,x,'r');
+            
+            subplot(2,2,4);
+            hold on;
+            uno=rectpuls(t).*3;
+            x=dos+uno;
             plot(t,uno);
             plot(t,dos,'g');
             plot(t,x,'r');
