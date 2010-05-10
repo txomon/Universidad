@@ -69,5 +69,15 @@ if s~=6
             plot(t,dos,'g');
             plot(t,x,'r');
             
+        case 3
+            
+            ConvolveGUI();
+            % si cambias la funciones, con pulse amp=0.5 y Triangle 2sec
+            % veras que se parece mucho a la que pretendes consequir... y
+            % que el tamaño, se ve reducido a la mitad..
+            %y la convolucion de a*b y b*a es la misma
+        case 4
+            
+            
     end
 end
