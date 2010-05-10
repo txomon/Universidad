@@ -90,8 +90,11 @@ if s~=6
             
         case 5
             
+            t=-10:0.01:10;
+            x=tripuls((t-1)/2)
             
             
+            plot(t,x);
             
     end
 end
