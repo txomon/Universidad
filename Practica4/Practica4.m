@@ -80,13 +80,15 @@ if s~=6
            
             t=-10:0.01:10;
             x=rectpuls((t-2)/2)*3+0.5*rectpuls((t-1)/2);
-            y=tripuls((t-2)/2)*3+0.5*tripuls((t-1)/2);
+            y=tripuls((t-2)/4)*3+0.5*tripuls((t-1)/4);
             
             subplot(2,1,1);
             plot(t,x);
            
             subplot(2,1,2);
             plot(t,y);
+            
+        case 5
             
             
             
