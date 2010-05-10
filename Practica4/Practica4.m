@@ -77,6 +77,18 @@ if s~=6
             % que el tamaño, se ve reducido a la mitad..
             %y la convolucion de a*b y b*a es la misma
         case 4
+           
+            t=-10:0.01:10;
+            x=rectpuls((t-2)/2)*3+0.5*rectpuls((t-1)/2);
+            y=tripuls((t-2)/2)*3+0.5*tripuls((t-1)/2);
+            
+            subplot(2,1,1);
+            plot(t,x);
+           
+            subplot(2,1,2);
+            plot(t,y);
+            
+            
             
             
     end
