@@ -130,7 +130,7 @@ if s~=7
                 stem(enes,3*cos(pi*5*enes/100),'g');
                 stem(enes,3*cos(pi*6*enes/100),'r');
                 
-        case 6
+        case 6%el numero de armonicos, es infinito, pues basta con que sea un múltiplo
             enes=0:1:100;
             x=3*exp(1i*((2*pi*enes/7)+3/pi));
             a=1;
@@ -139,9 +139,14 @@ if s~=7
             a=input('Introduce un valor de frecuencia:');
             fase=input('Introduce una fase:');
             result=3*exp(1i*((2*pi*enes/7)+3/pi))+amplitud*exp(1i*((2*pi*a*enes/7)+fase/pi));
-            hold on;
+            
+            %para que diese una secuencia real, bastaria con sumarle el
+            %complejo conjugado
+            
             stem(enes,result);
+            hold on;
             stem(enes,x,'g');
+            hold off;
             end
 
     end
