@@ -5,7 +5,6 @@
 
 package juegos.letras;
 import java.io.*;
-import java.lang.Character;
 import juegos.excepciones.JuegoException;
 /**
  *

@@ -20,11 +20,11 @@ import java.util.Vector;
  */
 public class Aplicacion
 {
-    public static void InfoVector(Vector a)
+    private static void InfoVector(Vector a)
     {
         System.out.println("El tamaño del vector es "+a.size()+" y la capacidad "+a.capacity());
     }
-    public static Jugable EligeJuego() throws JuegoException
+    private static Jugable EligeJuego() throws JuegoException
     {
         Vector<Jugable> array=new Vector<Jugable>(3,2);
         int opcion,x;
@@ -33,7 +33,7 @@ public class Aplicacion
         array.add(new JuegoAdivinaPar(3));
         array.add(new JuegoAdivinaNumero(3));
         array.add(new JuegoAdivinaImpar(3));
-        array.add(new JuegoAhorcado(3,"mue3ete"));
+        array.add(new JuegoAhorcado(3,"muerete"));
         InfoVector(array);
 
         System.out.print("A que juego deseas jugar?\n\n");
@@ -78,7 +78,7 @@ public class Aplicacion
 
     }
 
-    public static boolean Preguntar()
+    private static boolean Preguntar()
     {
         char marcado;
 

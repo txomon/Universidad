@@ -4,7 +4,6 @@
  */
 
 package juegos;
-import profesor.Teclado;
 /**
  *
  * @author Javier
