@@ -45,7 +45,7 @@ public class JuegoAdivinaNumero  extends juegos.Juego implements juegos.interfac
         while(vivito);
         return;
     }
-    public boolean ValidaNumero(int a)
+    private boolean ValidaNumero(int a)
     {
         if(0<a&&a<10)
             return true;

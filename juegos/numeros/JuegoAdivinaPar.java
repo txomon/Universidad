@@ -11,8 +11,7 @@ package juegos.numeros;
  */
 public class JuegoAdivinaPar extends juegos.numeros.JuegoAdivinaNumero
 {
-    @Override
-    public boolean ValidaNumero(int a)
+    boolean ValidaNumero(int a)
     {
         if(a<0||a>10)
         {
