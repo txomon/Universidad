@@ -29,6 +29,13 @@ if s~=5
             stem(n,y1);
             subplot(2,1,2);
             stem(n,y2);
+           
+        case 3
+            n=0:20
+            x=[zeros(1,10) 2*ones(1,11)];
+            
+            y=filter([3,2,0,-3],1,x);
+            stem(n,y);
             
     end
 end
