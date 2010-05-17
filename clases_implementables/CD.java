@@ -37,7 +37,7 @@ final public class CD extends SopInform implements Prestable
         int c=0;
         try
         {
-            c=Gestion.buscarObjetoPrestable(a,this);
+            c=Gestion.buscarObjetoPrestable(a,this,this.getCodigo());
         }
         catch(PrestadoExcepcion e)
         {
@@ -55,7 +55,7 @@ final public class CD extends SopInform implements Prestable
                 e.mensaje();
             }
             a[x]=this;
-                       
+            System.out.println(this.getTipo("Articulo")+" te ha sido prestad"+this.getTipo("sexo")+" "+diasdeprestamo+" dias");
         }
 
     }
@@ -65,17 +65,43 @@ final public class CD extends SopInform implements Prestable
     {
 
         System.out.println("Has elegido devolver "+getTipo("articulo")+" "+getTitulo());
-        int c;
+        
         try
         {
-            c=Gestion.buscarObjetoPrestable(a,this);
+            Gestion.buscarObjetoPrestable(a,this,this.getCodigo());
+            System.out.println("Este articulo no figura en la lista de prestados," +
+                " comprueba que no está");
+
         }
         catch(PrestadoExcepcion e)
         {
-            a[e.getindice()]=null;
-            System.out.println("Acabas de devolver "+getTipo("articulo"));
+            if(a[e.getindice()]!=null)
+            {
+                a[e.getindice()]=null;
+                System.out.println("Acabas de devolver "+getTipo("articulo"));
+            }
+            else
+                System.out.println("Ya habia sido devuelto el "+getTipo("articulo"));
+
         }
-        System.out.println("Este articulo no figura en la lista de prestamos," +
-                " comprueba que no está");
+
+    }
+    @Override
+    public String getTipo(String a)
+    {
+        if(a.equals("articulo"))
+            return "el CD";
+        if(a.equals("sustantivo"))
+            return "CD";
+        if(a.equals("Articulo"))
+            return "El CD";
+        if(a.equals("sexo"))
+            return "o";
+        return "";
+    }
+    
+    public String getSimpleName()
+    {
+        return this.getCodigo();
     }
 }
