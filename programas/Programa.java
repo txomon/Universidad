@@ -43,6 +43,7 @@ public class Programa
         cuatro.devolver(array);
         cinco.devolver(array);
         seis.devolver(array);
+        seis.devolver(array);
 //error        siete.devolver(array);
 //error        ocho.devolver(array);
         array.toString();

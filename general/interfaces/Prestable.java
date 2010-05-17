@@ -13,6 +13,6 @@ public interface Prestable
 {
     public void Prestar(Prestable a[]);
     public void devolver(Prestable a[]);
-    
+    public String getTipo(String e);
 
 }

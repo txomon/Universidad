@@ -11,7 +11,7 @@ package general.clases;
  */
 import profesor.Teclado;
 
-class Publicaciones
+public class Publicaciones
 {
 	private static int numPublicaciones;//Numero de publicaciones que se van dando de alta
 	private String titulo;
@@ -21,7 +21,7 @@ class Publicaciones
 	public Publicaciones(String prefijo, String pregunta)
 	{
 		
-		System.out.println("Porfavor introduzca el nombre de" + pregunta);
+		System.out.println("Por favor introduzca el nombre de" + pregunta);
 		titulo=Teclado.LeeCadena();
 		++numPublicaciones;
 		codigo=prefijo+numPublicaciones;
@@ -30,7 +30,7 @@ class Publicaciones
 
 	void mensajeAlta()
 	{
-		System.out.println("Se acaba de dar de alta la publicación de codigo " + codigo);
+		System.out.println("Se acaba de dar de alta la publicación de codigo " + codigo + "\n\n");
 		return;
 	}
 
@@ -57,32 +57,4 @@ class Publicaciones
         }
 
 
-        public String getTipo(String a)
-        {
-            if(a.equalsIgnoreCase("articulo"))
-                switch(codigo.charAt(0))
-                {
-                    case 'R':
-                        return "la revista";
-                    case 'C':
-                        return "el CD";
-                    case 'D':
-                        return "el DVD";
-                    case 'L':
-                        return "el libro";
-                }
-            if(a.equalsIgnoreCase("sustantivo"))
-                switch(codigo.charAt(0))
-                {
-                    case 'R':
-                        return "revista";
-                    case 'C':
-                        return "CD";
-                    case 'D':
-                        return "DVD";
-                    case 'L':
-                        return "libro";
-                }
-            return null;
-        }
 }
