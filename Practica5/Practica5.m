@@ -34,8 +34,34 @@ if s~=5
             n=0:20;
             x=[zeros(1,10) 2*ones(1,11)];
             
-            y=filter([3,2,0,-3],1,x);
-            stem(n,y);
+            yfilt=filter([3,2,0,-3],1,x);
+            yh=filter([3,2,0,-3],1,[zeros(1,10) ones(1,1) zeros(1,10)]);
+            ycon=conv(yh,x);
+            
+            subplot(1,3,1);
+            stem(n,yh);
+            title('Respuesta impulsional');
+            subplot(1,3,2);
+            stem(n,yfilt);
+            title('Respuesta Filter');
+            subplot(1,3,3);
+            stem(0:40,ycon);
+            title('Respuesta Conv');
+            
+            %es la misma respuesta porque es un sistema fir
+            
+            
+        case 4
+            n=-100:100;
+            y1=filter([1,0.5,3],[1,0.25,-2],0.95.^n.*cos(2*pi*n/5));
+            yh=filter([1,0.5,3],[1,0.25,-2],[zeros(1,100) ones(1,1) zeros(1,100)]);
+            
+            y2=conv(0.95.^n.*cos(2*pi*n/5),yh);
+  
+            subplot(2,1,1);
+            stem(n,y1);
+            subplot(2,1,2);
+            stem(-200:200,y2);
             
     end
 end
