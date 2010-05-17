@@ -17,5 +17,18 @@ if s~=5
             
             stem(N,y);
             
+        case 2
+            n=0:20;
+            
+            x1=[1,0,-1,4,0,6,zeros(1,15)];
+            x2=[0,2,3,4,5,4,3,2,1,zeros(1,12)];
+            
+            y1=filter([5,0,0,3,0,0,-5],1,x1);
+            y2=filter([5,0,0,3,0,0,-5],1,x2);
+            subplot(2,1,1);
+            stem(n,y1);
+            subplot(2,1,2);
+            stem(n,y2);
+            
     end
 end
