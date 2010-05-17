@@ -20,5 +20,25 @@ final public class Libro extends Enpapel
         diasdeprestamo=30;
     }
 
+    @Override
+    public String getTipo(String a)
+    {
+        if(a.equals("articulo"))
+            return "el libro";
+        if(a.equals("sustantivo"))
+            return "libro";
+        if(a.equals("Articulo"))
+            return "El libro";
+        if(a.equals("sexo"))
+            return "o";
+        return "";
+    }
+
+
+    public String getSimpleName()
+    {
+        return this.getCodigo();
+    }
+
 
 }

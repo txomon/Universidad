@@ -23,4 +23,10 @@ final public class DVD extends SopInform
     {
         return "Requiere un PC de 256 Mbytes";
     }
+
+
+    public String getSimpleName()
+    {
+        return this.getCodigo();
+    }
 }

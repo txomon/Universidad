@@ -24,7 +24,7 @@ public class PrestadoExcepcion extends Exception
 
     public void mensaje()
     {
-        System.out.println("La publicación de código " + prestable + "está prestada");
+        System.out.println("La publicación de código " + prestable + " ya ha sido prestada ");
     }
 
     public int getindice()

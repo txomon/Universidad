@@ -31,7 +31,7 @@ public abstract class Enpapel extends Publicaciones implements Prestable
         int c=0;
         try
         {
-            c=Gestion.buscarObjetoPrestable(a,this);
+            c=Gestion.buscarObjetoPrestable(a,this,this.getCodigo());
         }
         catch(PrestadoExcepcion e)
         {
@@ -46,9 +46,10 @@ public abstract class Enpapel extends Publicaciones implements Prestable
             }
             catch(SitioExcepcion e)
             {
-                e.mensaje();
+                SitioExcepcion.mensaje();
             }
             a[x]=this;
+            System.out.println(this.getTipo("Articulo")+" te ha sido prestad" + this.getTipo("sexo")+" "+diasdeprestamo+" dias");
 
         }
 
@@ -59,18 +60,21 @@ public abstract class Enpapel extends Publicaciones implements Prestable
     {
 
         System.out.println("Has elegido devolver "+getTipo("articulo")+" "+getTitulo());
-        int c;
+   
         try
         {
-            c=Gestion.buscarObjetoPrestable(a,this);
+            Gestion.buscarObjetoPrestable(a,this,this.getCodigo());
         }
         catch(PrestadoExcepcion e)
         {
             a[e.getindice()]=null;
             System.out.println("Acabas de devolver "+getTipo("articulo"));
         }
-        System.out.println("Este articulo no figura en la lista de prestamos," +
+        catch(Exception e)
+        {
+            System.out.println("Este articulo no figura en la lista de prestados," +
                 " comprueba que no está");
+        }
     }
 }
 
