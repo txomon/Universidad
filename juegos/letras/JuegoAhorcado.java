@@ -17,13 +17,14 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
     @Override
     public void Juega()
     {
+        boolean vidillas=true;
         int i,x=0;
         char intro,aj[]=new char[AAdivinar.length()];
         String Incognita="";
         for(i=0;i<AAdivinar.length();i++)
             aj[i]='-';
         Incognita=Incognita.copyValueOf(aj);
-        while(!Incognita.contentEquals(AAdivinar))
+        while(!Incognita.contentEquals(AAdivinar)&&vidillas)
         {
             x=-1;
             System.out.println(Incognita+"\n\t");
@@ -31,8 +32,20 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
                     " en la palabra:");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            try{intro=br.readLine().toUpperCase().toLowerCase().charAt(0);}catch (Exception e) { intro=0;}
-
+            do
+            {
+                try
+                {
+                    intro=br.readLine().toUpperCase().toLowerCase().charAt(0);
+                    if(java.lang.Character.isDigit(intro))
+                        System.err.println("Introduce una letra!");
+                }
+                catch (Exception e)
+                {
+                    intro=0;
+                }
+            }
+            while(!java.lang.Character.isLetter(intro));
             if(AAdivinar.indexOf(intro)>-1)
                 while(AAdivinar.indexOf(intro,x)!=-1)
                 {
@@ -46,7 +59,7 @@ public class JuegoAhorcado extends juegos.Juego implements juegos.interfaces.Jug
                 System.out.println(AAdivinar+"\nPorfin has acabado,... la siguie" +
                         "nte vez, pide ayuda, que veo que te cuesta");
             else if(Incognita.indexOf(intro)==-1)
-                QuitaVida();
+                vidillas=QuitaVida();
         }
 
     }
