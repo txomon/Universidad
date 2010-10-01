@@ -18,10 +18,12 @@ plot(f,X);
 
 canalmodulo=real(1+a*cos(2*pi*t_1*f));
 canalfase=-2*pi*t_0*f;
-Xsalidare=real(X)*canalmodulo;
-Xsalidaimg=img(X)+canalfase;
+Xsalidare=real(X).*canalmodulo;
+Xsalidaimg=imag(X)+canalfase;
 
+subplot(3,2,5);
 plot(f,Xsalidare);
+subplot(3,2,6);
 plot(f,Xsalidaimg);
 
 end
