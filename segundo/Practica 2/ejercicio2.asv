@@ -1,0 +1,28 @@
+function []=ejercicio2()
+load hola.mat;
+zpb=filtropb(hola,t,3400,5,20);
+sound(zpb,32000);
+
+pause
+
+n=randn(size(t))/2;
+z=zpb+n;
+sound(z,32000)
+pause
+z=hola+n;
+pause
+
+n=randn(size(t))/40;
+z=zpb+n;
+sound(z,32000)
+pause
+z=hola+n;
+pause
+
+n=randn(size(t))/100;
+z=zpb+n;
+sound(z,32000)
+pause
+z=hola+n;
+pause
+sound(z,32000)
