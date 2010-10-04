@@ -1,0 +1,26 @@
+function  [] = ejercicio1 (a)
+
+load hola.mat;
+n=randn(size(t));
+
+z=hola+n;
+
+z_P=potencia(z)
+x_P=potencia(hola)
+y_P=potencia(n)
+sound(z)
+
+x_P
+n=randn(size(t))/2;
+z=hola+n;
+z_P=potencia(z)
+y_P
+sound(z)
+
+
+x_P
+n=randn(size(t))/2;
+z=hola+n;
+z_P=potencia(z)
+y_P
+sound(z)
