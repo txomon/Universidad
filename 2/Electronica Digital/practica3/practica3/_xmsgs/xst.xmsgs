@@ -5,10 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd</arg>&quot; line <arg fmt="%d" index="2">104</arg>: Mux is complete : default of case is discarded
-</msg>
-
-<msg type="warning" file="Xst" num="1610" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd</arg>&quot; line <arg fmt="%d" index="2">42</arg>: Width mismatch. &lt;<arg fmt="%s" index="3">suma</arg>&gt; has a width of <arg fmt="%d" index="4">4</arg> bits but assigned expression is <arg fmt="%d" index="5">3</arg>-bit wide.
+<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd</arg>&quot; line <arg fmt="%d" index="2">102</arg>: Mux is complete : default of case is discarded
 </msg>
 
 <msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
