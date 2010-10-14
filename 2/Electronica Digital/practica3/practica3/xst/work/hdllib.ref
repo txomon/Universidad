@@ -1,0 +1,6 @@
+AR main3 behavioral "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" sub00/vhpl01 1287056439
+AR sumador behavioral "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" sub00/vhpl03 1287061908
+EN main3 NULL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" sub00/vhpl00 1287056438
+EN entidad NULL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" sub00/vhpl04 1287061909
+AR entidad behavioral "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" sub00/vhpl05 1287061910
+EN sumador NULL "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" sub00/vhpl02 1287061907
