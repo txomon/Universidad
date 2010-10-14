@@ -1,0 +1,17 @@
+V3 7
+FL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" 2010/10/14.15:00:07 J.36
+EN work/entidad 1287061909 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" \
+      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
+      PB ieee/STD_LOGIC_UNSIGNED 1177545583
+AR work/entidad/Behavioral 1287061910 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" \
+      EN work/entidad 1287061909 CP work/sumador
+FL "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" 2010/10/14.15:10:54 J.36
+EN work/sumador 1287061907 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" \
+      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
+      PB ieee/STD_LOGIC_UNSIGNED 1177545583
+AR work/sumador/Behavioral 1287061908 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" \
+      EN work/sumador 1287061907
