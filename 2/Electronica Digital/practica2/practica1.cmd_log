@@ -1,0 +1,9 @@
+xst -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -ifn practica1.xst -ofn practica1.syr
+xst -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -ifn practica1.xst -ofn practica1.syr
+xst -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -ifn practica1.xst -ofn practica1.syr
+xst -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -ifn practica1.xst -ofn practica1.syr
+ngdbuild -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "practica1.ngc" practica1.ngd
+map -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o practica1_map.ncd practica1.ngd practica1.pcf
+par -ise "C:/MIJ/practica2/practica2.ise" -w -intstyle ise -ol std -t 1 practica1_map.ncd practica1.ncd practica1.pcf
+trce -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -e 3 -s 4 -xml practica1 practica1.ncd -o practica1.twr practica1.pcf -ucf nexys.ucf
+bitgen -ise "C:/MIJ/practica2/practica2.ise" -intstyle ise -f practica1.ut practica1.ncd
