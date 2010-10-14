@@ -1,0 +1,39 @@
+//! **************************************************************************
+// Written by: Map J.36 on Fri Oct 08 16:12:06 2010
+//! **************************************************************************
+
+SCHEMATIC START;
+COMP "an<0>" LOCATE = SITE "G14" LEVEL 1;
+COMP "an<1>" LOCATE = SITE "G12" LEVEL 1;
+COMP "an<2>" LOCATE = SITE "G13" LEVEL 1;
+COMP "led<0>" LOCATE = SITE "L14" LEVEL 1;
+COMP "an<3>" LOCATE = SITE "F12" LEVEL 1;
+COMP "btn<0>" LOCATE = SITE "J13" LEVEL 1;
+COMP "led<1>" LOCATE = SITE "L13" LEVEL 1;
+COMP "btn<1>" LOCATE = SITE "K14" LEVEL 1;
+COMP "led<2>" LOCATE = SITE "M14" LEVEL 1;
+COMP "btn<2>" LOCATE = SITE "K13" LEVEL 1;
+COMP "led<3>" LOCATE = SITE "L12" LEVEL 1;
+COMP "btn<3>" LOCATE = SITE "K12" LEVEL 1;
+COMP "led<4>" LOCATE = SITE "N14" LEVEL 1;
+COMP "led<5>" LOCATE = SITE "M13" LEVEL 1;
+COMP "led<6>" LOCATE = SITE "P14" LEVEL 1;
+COMP "led<7>" LOCATE = SITE "R16" LEVEL 1;
+COMP "swt<0>" LOCATE = SITE "N15" LEVEL 1;
+COMP "swt<1>" LOCATE = SITE "J16" LEVEL 1;
+COMP "swt<2>" LOCATE = SITE "K16" LEVEL 1;
+COMP "swt<3>" LOCATE = SITE "K15" LEVEL 1;
+COMP "swt<4>" LOCATE = SITE "L15" LEVEL 1;
+COMP "swt<5>" LOCATE = SITE "M16" LEVEL 1;
+COMP "swt<6>" LOCATE = SITE "M15" LEVEL 1;
+COMP "swt<7>" LOCATE = SITE "N16" LEVEL 1;
+COMP "mclk" LOCATE = SITE "A8" LEVEL 1;
+COMP "ssg<0>" LOCATE = SITE "F13" LEVEL 1;
+COMP "ssg<1>" LOCATE = SITE "E13" LEVEL 1;
+COMP "ssg<2>" LOCATE = SITE "G15" LEVEL 1;
+COMP "ssg<3>" LOCATE = SITE "H13" LEVEL 1;
+COMP "ssg<4>" LOCATE = SITE "J14" LEVEL 1;
+COMP "ssg<5>" LOCATE = SITE "E14" LEVEL 1;
+COMP "ssg<6>" LOCATE = SITE "G16" LEVEL 1;
+COMP "ssg<7>" LOCATE = SITE "H14" LEVEL 1;
+SCHEMATIC END;
