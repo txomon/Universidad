@@ -39,7 +39,7 @@ architecture Behavioral of sumador is
 
 begin
 
-suma <= a + b;
+suma <= ('0'&a) + ('0'&b);
 
 end Behavioral;
 

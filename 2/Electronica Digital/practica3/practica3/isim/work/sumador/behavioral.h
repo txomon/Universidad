@@ -26,6 +26,10 @@ public:
 
 HSimConstraints *c0;
   char *t1;
+HSimConstraints *c2;
+  char *t3;
+HSimConstraints *c4;
+  char *t5;
     Work_sumador_behavioral(const char * name);
     ~Work_sumador_behavioral();
     void constructObject();

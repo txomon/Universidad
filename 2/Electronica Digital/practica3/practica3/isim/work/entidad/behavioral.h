@@ -25,12 +25,12 @@ public:
     HSim__s1 SE[6];
 
     HSim__s1 SA[6];
-HSimConstraints *c6;
-  char *t7;
-HSimConstraints *c8;
-  char *t9;
-HSimConstraints *c10;
-  char *t11;
+HSimConstraints *c18;
+  char *t19;
+HSimConstraints *c20;
+  char *t21;
+HSimConstraints *c22;
+  char *t23;
     Work_entidad_behavioral(const char * name);
     ~Work_entidad_behavioral();
     void constructObject();
