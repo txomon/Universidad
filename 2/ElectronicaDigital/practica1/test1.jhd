@@ -1,0 +1,3 @@
+MODULE test1
+SUBMODULE practica1
+INSTANCE UUT

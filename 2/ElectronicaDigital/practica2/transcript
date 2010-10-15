@@ -1,0 +1,42 @@
+# Reading C:/Archivos de programa/Modeltech_6.2c/tcl/vsim/pref.tcl 
+# //  ModelSim SE 6.2c Aug 26 2006 
+# //
+# //  Copyright 2006 Mentor Graphics Corporation
+# //              All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND 
+# //  PROPRIETARY INFORMATION WHICH IS THE PROPERTY
+# //  OF MENTOR GRAPHICS CORPORATION OR ITS LICENSORS
+# //  AND IS SUBJECT TO LICENSE TERMS.
+# //
+# OpenFile {C:/ATI/Drivers/2/Electronica Digital/practica2/practica1.vhd} 
+# Load canceled
+vsim -gui ieee.std_logic_arith
+# vsim -gui ieee.std_logic_arith 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-7) Failed to open lock file "C:\Archivos de programa\Modeltech_6.2c\win32/../ieee/_lock" in create mode.
+# Permission denied. (errno = EACCES)
+# ** Error: Top-level design unit 'std_logic_arith' must be an ENTITY, CONFIGURATION, MODULE or PROGRAM.
+# Optimization failed
+# Error loading design
+vsim -gui practica1
+# vsim -gui practica1 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-7) Failed to open lock file "C:\Archivos de programa\Modeltech_6.2c\win32/../ieee/_lock" in create mode.
+# Permission denied. (errno = EACCES)
+# ** Error: Failed to find design unit ieee.practica1.
+# Optimization failed
+# Error loading design
+vopt {ieee.std_logic_1164 ieee.std_logic_arith ieee.std_logic_unsigned} -o pruebamodelsim
+# Model Technology ModelSim SE vopt 6.2c Compiler 2006.08 Aug 26 2006
+# ** Error: (vopt-19) Failed to access library 'work' at "work".
+# No such file or directory. (errno = ENOENT)
+# C:/Archivos de programa/Modeltech_6.2c/win32/vopt failed.
+vsim pruebamodelsim -gui
+# vsim -gui pruebamodelsim 
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-7) Failed to open lock file "C:\Archivos de programa\Modeltech_6.2c\win32/../ieee/_lock" in create mode.
+# Permission denied. (errno = EACCES)
+# ** Error: Failed to find design unit ieee.pruebamodelsim.
+# Optimization failed
+# Error loading design
