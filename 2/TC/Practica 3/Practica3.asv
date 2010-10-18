@@ -1,0 +1,44 @@
+function [ output_args ] = Practica3(  audiowav)
+%PRACTICA3 Summary of this function goes here
+%  Detailed explanation goes here
+%open('audio.wav');
+hold on;
+subplot(2,1,1);
+plot_cuant(4);
+subplot(2,1,2);
+plot_cuant(16);
+hold off;
+pause;
+% el escalon del de 4 niveles es de 0'25 cada uno
+% el escalon del de 16 niveles es de 0'125 cada uno
+q4=q_unif(audiowav.data, 4,-1,1);
+q16=q_unif(audiowav.data, 16,-1,1);
+long=length(audiowav.data);
+%sound(q4);
+%pause;
+%sound(q16);
+
+%se oye bastante mas claro en el de 16 niveles
+
+%para codificar los niveles, 
+% 2^2=4 (2 bits)
+% 2^4=16 (4 bits)
+
+hold on;
+
+t=0:1:long-1;
+subplot(3,2,1:2);
+plot(t,audiowav.data);
+subplot(3,2,3);
+plot_cuant(4);
+subplot(3,2,4);
+plot(t,q4);
+subplot(3,2,5);
+plot_cuant(16);
+subplot(3,2,6);
+plot(t,q16);
+
+hold off;
+
+pause;
+
