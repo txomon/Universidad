@@ -1,5 +1,5 @@
-set -tmpdir "./xst/projnav.tmp"
-set -xsthdpdir "./xst"
+set -tmpdir "xst/projnav.tmp"
+set -xsthdpdir "xst"
 run
 -ifn entidad.prj
 -ifmt mixed
@@ -10,8 +10,8 @@ run
 -opt_mode Speed
 -opt_level 1
 -iuc NO
--lso entidad.lso
--keep_hierarchy NO
+-keep_hierarchy No
+-netlist_hierarchy As_Optimized
 -rtlview Yes
 -glob_opt AllClockNets
 -read_cores YES
@@ -19,28 +19,28 @@ run
 -cross_clock_analysis NO
 -hierarchy_separator /
 -bus_delimiter <>
--case maintain
+-case Maintain
 -slice_utilization_ratio 100
 -bram_utilization_ratio 100
 -verilog2001 YES
 -fsm_extract YES -fsm_encoding Auto
 -safe_implementation No
--fsm_style lut
+-fsm_style LUT
 -ram_extract Yes
 -ram_style Auto
 -rom_extract Yes
 -mux_style Auto
 -decoder_extract YES
--priority_extract YES
+-priority_extract Yes
 -shreg_extract YES
 -shift_extract YES
 -xor_collapse YES
 -rom_style Auto
 -auto_bram_packing NO
--mux_extract YES
+-mux_extract Yes
 -resource_sharing YES
 -async_to_sync NO
--mult_style auto
+-mult_style Auto
 -iobuf YES
 -max_fanout 500
 -bufg 8
@@ -51,6 +51,6 @@ run
 -use_clock_enable Yes
 -use_sync_set Yes
 -use_sync_reset Yes
--iob auto
+-iob Auto
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
