@@ -1,0 +1,35 @@
+
+Release 12.3 SmartXplorer
+Copyright(c) 1995-2010 Xilinx, Inc. All rights reserved.
+"C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64\smartxplorer.exe" -p xc3s200-ft256-4 -b -wd smartxplorer_results entidad.ngd -to "-e 3 -s 4 -n 3 -xml entidad.twx -ucf nexys.ucf" -host_list hostlistfile.txt -max_runs 7
+
+SmartXplorer Settings: 
+
+designName=C:\Universidad\2\ElectronicaDigital\practica3\practica3\entidad.ngd 
+write_dir=C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results 
+host_list=C:\Universidad\2\ElectronicaDigital\practica3\practica3\hostlistfile.txt 
+part=xc3s200-ft256-4 
+strategy_file=None 
+notify=None 
+source_dir=C:\Universidad\2\ElectronicaDigital\practica3\practica3 
+batch_mode=True 
+run_all_strategies=False 
+list_all_strategies=False 
+remote_command=rsh
+area_report="lut;slice_reg"
+power_options=off
+trce_options="-e 3 -s 4 -n 3 -xml entidad.twx -ucf nexys.ucf"
+max_runs=7
+
+Starting SmartXplorer...
+See file 'smartxplorer.html' for real-time report.
+
+
+Running SmartXplorer strategies...
+
+
+WARNING: No timing constraints found for the design. So, timing scores appear as None in the reports.
+
+INFO: No best strategy!
+
+SmartXplorer Done. See file 'smartxplorer.txt' for detailed report.

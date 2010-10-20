@@ -1,0 +1,148 @@
+--------------------------------------------------------------------------------
+-- Copyright (c) 1995-2007 Xilinx, Inc.
+-- All Right Reserved.
+--------------------------------------------------------------------------------
+--   ____  ____ 
+--  /   /\/   / 
+-- /___/  \  /    Vendor: Xilinx 
+-- \   \   \/     Version : 9.2i
+--  \   \         Application : ISE
+--  /   /         Filename : testpractica3.ant
+-- /___/   /\     Timestamp : Thu Oct 14 15:07:33 2010
+-- \   \  /  \ 
+--  \___\/\___\ 
+--
+--Command: 
+--Design Name: testpractica3
+--Device: Xilinx
+--
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+use IEEE.STD_LOGIC_ARITH.all;
+use IEEE.STD_LOGIC_UNSIGNED.all;
+library ieee;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+USE IEEE.STD_LOGIC_TEXTIO.ALL;
+USE STD.TEXTIO.ALL;
+
+ENTITY testpractica3 IS
+END testpractica3;
+
+ARCHITECTURE testbench_arch OF testpractica3 IS
+    FILE RESULTS: TEXT OPEN WRITE_MODE IS "C:\MIJ\2\Electronica Digital\practica3\practica3\testpractica3.ano";
+
+    COMPONENT entidad
+        PORT (
+            mclk : In std_logic;
+            btn : In std_logic_vector (3 DownTo 0);
+            swt : In std_logic_vector (7 DownTo 0);
+            led : Out std_logic_vector (7 DownTo 0);
+            an : Out std_logic_vector (3 DownTo 0);
+            ssg : Out std_logic_vector (7 DownTo 0)
+        );
+    END COMPONENT;
+
+    SIGNAL mclk : std_logic := '0';
+    SIGNAL btn : std_logic_vector (3 DownTo 0) := "0000";
+    SIGNAL swt : std_logic_vector (7 DownTo 0) := "00000000";
+    SIGNAL led : std_logic_vector (7 DownTo 0) := "00000000";
+    SIGNAL an : std_logic_vector (3 DownTo 0) := "0000";
+    SIGNAL ssg : std_logic_vector (7 DownTo 0) := "00000000";
+
+    SHARED VARIABLE TX_ERROR : INTEGER := 0;
+    SHARED VARIABLE TX_OUT : LINE;
+
+    BEGIN
+        UUT : entidad
+        PORT MAP (
+            mclk => mclk,
+            btn => btn,
+            swt => swt,
+            led => led,
+            an => an,
+            ssg => ssg
+        );
+
+        PROCESS    -- Annotation process
+            VARIABLE TX_TIME : INTEGER := 0;
+
+            PROCEDURE ANNOTATE_led(
+                TX_TIME : INTEGER
+            ) IS
+                VARIABLE TX_STR : String(1 to 4096);
+                VARIABLE TX_LOC : LINE;
+            BEGIN
+                STD.TEXTIO.write(TX_LOC, string'("Annotate["));
+                STD.TEXTIO.write(TX_LOC, TX_TIME);
+                STD.TEXTIO.write(TX_LOC, string'(", led, "));
+                IEEE.STD_LOGIC_TEXTIO.write(TX_LOC, led);
+                STD.TEXTIO.write(TX_LOC, string'("]"));
+                TX_STR(TX_LOC.all'range) := TX_LOC.all;
+                STD.TEXTIO.writeline(RESULTS, TX_LOC);
+                STD.TEXTIO.Deallocate(TX_LOC);
+            END;
+            PROCEDURE ANNOTATE_an(
+                TX_TIME : INTEGER
+            ) IS
+                VARIABLE TX_STR : String(1 to 4096);
+                VARIABLE TX_LOC : LINE;
+            BEGIN
+                STD.TEXTIO.write(TX_LOC, string'("Annotate["));
+                STD.TEXTIO.write(TX_LOC, TX_TIME);
+                STD.TEXTIO.write(TX_LOC, string'(", an, "));
+                IEEE.STD_LOGIC_TEXTIO.write(TX_LOC, an);
+                STD.TEXTIO.write(TX_LOC, string'("]"));
+                TX_STR(TX_LOC.all'range) := TX_LOC.all;
+                STD.TEXTIO.writeline(RESULTS, TX_LOC);
+                STD.TEXTIO.Deallocate(TX_LOC);
+            END;
+            PROCEDURE ANNOTATE_ssg(
+                TX_TIME : INTEGER
+            ) IS
+                VARIABLE TX_STR : String(1 to 4096);
+                VARIABLE TX_LOC : LINE;
+            BEGIN
+                STD.TEXTIO.write(TX_LOC, string'("Annotate["));
+                STD.TEXTIO.write(TX_LOC, TX_TIME);
+                STD.TEXTIO.write(TX_LOC, string'(", ssg, "));
+                IEEE.STD_LOGIC_TEXTIO.write(TX_LOC, ssg);
+                STD.TEXTIO.write(TX_LOC, string'("]"));
+                TX_STR(TX_LOC.all'range) := TX_LOC.all;
+                STD.TEXTIO.writeline(RESULTS, TX_LOC);
+                STD.TEXTIO.Deallocate(TX_LOC);
+            END;
+        BEGIN
+            WAIT for 1 fs;
+            ANNOTATE_led(0);
+            ANNOTATE_an(0);
+            ANNOTATE_ssg(0);
+            ANNO_LOOP : LOOP
+                WAIT for 50 ns;
+                TX_TIME := TX_TIME + 50;
+                ANNOTATE_led(TX_TIME);
+                ANNOTATE_an(TX_TIME);
+                ANNOTATE_ssg(TX_TIME);
+                WAIT for 50 ns;
+                TX_TIME := TX_TIME + 50;
+            END LOOP ANNO_LOOP;
+        END PROCESS;
+
+        PROCESS
+            BEGIN
+                -- -------------  Current Time:  100ns
+                WAIT FOR 100 ns;
+                swt <= "00100010";
+                -- -------------------------------------
+                WAIT FOR 900 ns;
+
+                STD.TEXTIO.write(TX_OUT, string'("Total[]"));
+                STD.TEXTIO.writeline(RESULTS, TX_OUT);
+                ASSERT (FALSE) REPORT
+                    "Success! Simulation for annotation completed"
+                    SEVERITY FAILURE;
+            END PROCESS;
+
+    END testbench_arch;
+

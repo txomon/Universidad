@@ -1,0 +1,3 @@
+vhdl isim_temp "sumador.vhd"
+vhdl isim_temp "main3.vhd"
+vhdl isim_temp "prueba25.vhd"

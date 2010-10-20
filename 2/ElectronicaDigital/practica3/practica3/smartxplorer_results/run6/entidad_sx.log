@@ -1,0 +1,251 @@
+
+WARNING: The Trce option "-ucf" is either illegal or not supported by projNav and hence will be ignored.
+
+Command Line : 
+-------------
+map C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.ngd -timing -ol high -t 9 -p xc3s200-ft256-4 -o entidad_map.ncd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.pcf
+
+Release 12.3 - Map M.70d (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+Using target part "3s200ft256-4".
+Mapping design into LUTs...
+Writing file entidad_map.ngm...
+Running directed packing...
+Running delay-based LUT packing...
+Updating timing models...
+Running timing-driven placement...
+Total REAL time at the beginning of Placer: 1 secs 
+Total CPU  time at the beginning of Placer: 1 secs 
+
+Phase 1.1  Initial Placement Analysis
+Phase 1.1  Initial Placement Analysis (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 2.7  Design Feasibility Check
+Phase 2.7  Design Feasibility Check (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 3.31  Local Placement Optimization
+Phase 3.31  Local Placement Optimization (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 4.2  Initial Clock and IO Placement
+Phase 4.2  Initial Clock and IO Placement (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 5.36  Local Placement Optimization
+Phase 5.36  Local Placement Optimization (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 6.4  Local Placement Optimization
+..
+Phase 6.4  Local Placement Optimization (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 7.28  Local Placement Optimization
+Phase 7.28  Local Placement Optimization (Checksum:4007178b) REAL time: 1 secs 
+
+Phase 8.8  Global Placement
+..
+Phase 8.8  Global Placement (Checksum:73811b41) REAL time: 1 secs 
+
+Phase 9.29  Local Placement Optimization
+Phase 9.29  Local Placement Optimization (Checksum:73811b41) REAL time: 1 secs 
+
+Phase 10.5  Local Placement Optimization
+Phase 10.5  Local Placement Optimization (Checksum:73811b41) REAL time: 1 secs 
+
+Phase 11.18  Placement Optimization
+Phase 11.18  Placement Optimization (Checksum:93fb5349) REAL time: 1 secs 
+
+Phase 12.5  Local Placement Optimization
+Phase 12.5  Local Placement Optimization (Checksum:93fb5349) REAL time: 2 secs 
+
+Total REAL time to Placer completion: 2 secs 
+Total CPU  time to Placer completion: 1 secs 
+Running post-placement packing...
+
+Design Summary:
+Number of errors:      0
+Number of warnings:    5
+Logic Utilization:
+  Number of 4 input LUTs:                14 out of   3,840    1%
+Logic Distribution:
+  Number of occupied Slices:             10 out of   1,920    1%
+    Number of Slices containing only related logic:      10 out of      10 100%
+    Number of Slices containing unrelated logic:          0 out of      10   0%
+      *See NOTES below for an explanation of the effects of unrelated logic.
+  Total Number of 4 input LUTs:          14 out of   3,840    1%
+  Number of bonded IOBs:                 33 out of     173   19%
+
+Average Fanout of Non-Clock Nets:                2.65
+
+Peak Memory Usage:  222 MB
+Total REAL time to MAP completion:  2 secs 
+Total CPU time to MAP completion:   2 secs 
+
+Mapping completed.
+See MAP report file "entidad_map.mrp" for details.
+
+Command Line : 
+-------------
+par C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.ngd -ol high -t 9 -w entidad.ncd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.pcf
+
+Release 12.3 - par M.70d (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+
+
+Constraints file: C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.pcf.
+Loading device for application Rf_Device from file '3s200.nph' in environment C:\Xilinx\12.3\ISE_DS\ISE\.
+   "entidad" is an NCD, version 3.2, device xc3s200, package ft256, speed -4
+
+Initializing temperature to 85.000 Celsius. (default - Range: 0.000 to 85.000 Celsius)
+Initializing voltage to 1.140 Volts. (default - Range: 1.140 to 1.260 Volts)
+
+INFO:Par:282 - No user timing constraints were detected or you have set the option to ignore timing constraints ("par
+   -x"). Place and Route will run in "Performance Evaluation Mode" to automatically improve the performance of all
+   internal clocks in this design. Because there are not defined timing requirements, a timing score will not be
+   reported in the PAR report in this mode. The PAR timing summary will list the performance achieved for each clock.
+   Note: For the fastest runtime, set the effort level to "std".  For best performance, set the effort level to "high".
+
+Device speed data version:  "PRODUCTION 1.39 2010-09-15".
+
+
+WARNING:Par:426 - The cost table specified for par "-t 1" is different from map "-t 9". Par will use the map cost table.
+    
+
+Device Utilization Summary:
+
+   Number of External IOBs                  33 out of 173    19%
+      Number of LOCed IOBs                  33 out of 33    100%
+
+   Number of Slices                         10 out of 1920    1%
+      Number of SLICEMs                      0 out of 960     0%
+
+
+
+Overall effort level (-ol):   High 
+Router effort level (-rl):    High 
+
+Starting initial Timing Analysis.  REAL time: 1 secs 
+Finished initial Timing Analysis.  REAL time: 1 secs 
+
+WARNING:Par:288 - The signal btn<0>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal btn<1>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal btn<2>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal btn<3>_IBUF has no load.  PAR will not attempt to route this signal.
+WARNING:Par:288 - The signal mclk_IBUF has no load.  PAR will not attempt to route this signal.
+Starting Router
+
+
+Phase  1  : 73 unrouted;      REAL time: 1 secs 
+
+Phase  2  : 73 unrouted;      REAL time: 1 secs 
+
+Phase  3  : 34 unrouted;      REAL time: 1 secs 
+
+Phase  4  : 34 unrouted; (Par is working to improve performance)     REAL time: 1 secs 
+
+Phase  5  : 0 unrouted; (Par is working to improve performance)     REAL time: 1 secs 
+
+Updating file: entidad.ncd with current fully routed design.
+
+Phase  6  : 0 unrouted; (Par is working to improve performance)     REAL time: 1 secs 
+
+Phase  7  : 0 unrouted; (Par is working to improve performance)     REAL time: 1 secs 
+
+Phase  8  : 0 unrouted; (Par is working to improve performance)     REAL time: 1 secs 
+
+Total REAL time to Router completion: 1 secs 
+Total CPU time to Router completion: 1 secs 
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+Generating "PAR" statistics.
+
+Timing Score: 0 (Setup: 0, Hold: 0)
+
+
+
+Generating Pad Report.
+
+All signals are completely routed.
+
+WARNING:Par:283 - There are 5 loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
+
+Total REAL time to PAR completion: 2 secs 
+Total CPU time to PAR completion: 2 secs 
+
+Peak Memory Usage:  211 MB
+
+Placer: Placement generated during map.
+Routing: Completed - No errors found.
+
+Number of error messages: 0
+Number of warning messages: 8
+Number of info messages: 1
+
+Writing design to file entidad.ncd
+
+
+
+PAR done!
+
+Command Line : 
+-------------
+trce C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.ngd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.pcf -xml C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.twx -e 3 -s 4 -n 3 -ucf nexys.ucf -o C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.twr
+
+Release 12.3 - Trace  (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+
+Loading device for application Rf_Device from file '3s200.nph' in environment
+C:\Xilinx\12.3\ISE_DS\ISE\.
+   "entidad" is an NCD, version 3.2, device xc3s200, package ft256, speed -4
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+--------------------------------------------------------------------------------
+Release 12.3 Trace  (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64\unwrapped\trce.exe
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run
+6\entidad.ncd
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run
+6\entidad.pcf
+-xml
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run
+6\entidad.twx
+-e 3 -s 4 -n 3 -ucf nexys.ucf -o
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run
+6\entidad.twr
+
+
+Design file:              entidad.ncd
+Physical constraint file: entidad.pcf
+Device,speed:             xc3s200,-4 (PRODUCTION 1.39 2010-09-15)
+Report level:             error report
+--------------------------------------------------------------------------------
+
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths
+   option. All paths that are not constrained will be reported in the
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on a
+   50 Ohm transmission line loading model.  For the details of this model, and
+   for more information on accounting for different loading conditions, please
+   see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and
+   'Phase Error' calculations, these terms will be zero in the Clock Uncertainty
+   calculation.  Please make appropriate modification to SYSTEM_JITTER to
+   account for the unsupported Discrete Jitter and Phase Error.
+
+Analysis completed Sat Oct 16 17:29:56 2010
+--------------------------------------------------------------------------------
+
+Generating Report ...
+
+Number of warnings: 0
+Number of info messages: 5
+Total time: 1 secs 

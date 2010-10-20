@@ -1,0 +1,37 @@
+V3 16
+FL "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" 2010/10/14.15:17:47 J.36
+FL "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" 2010/10/14.15:19:01 J.36
+FL "C:/MIJ/2/Electronica Digital/practica3/practica3/testpractica3.vhw" 2010/10/14.15:07:33 J.36
+EN work/testpractica3 1287062381 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/testpractica3.vhw" \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991 PB ieee/STD_LOGIC_TEXTIO 1179176993 \
+      PB std/textio 1179176969
+AR work/testpractica3/testbench_arch 1287062382 \
+      FL "C:/MIJ/2/Electronica Digital/practica3/practica3/testpractica3.vhw" \
+      EN work/testpractica3 1287062381 CP entidad
+FL F:/Universidad/2/ElectronicaDigital/practica3/main3.vhd 2010/10/16.16:46:06 J.36
+EN work/entidad 1287592450 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/main3.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/entidad/Behavioral 1287592451 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/main3.vhd EN work/entidad 1287592450 \
+      CP work/sumador
+FL F:/Universidad/2/ElectronicaDigital/practica3/simulacion25.vhw 2010/10/20.18:41:51 J.36
+EN work/simulacion25 1287592923 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/simulacion25.vhw \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991 PB ieee/STD_LOGIC_TEXTIO 1179176993 \
+      PB std/textio 1179176969
+AR work/simulacion25/testbench_arch 1287592924 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/simulacion25.vhw \
+      EN work/simulacion25 1287592923 CP entidad
+FL F:/Universidad/2/ElectronicaDigital/practica3/sumador.vhd 2010/10/16.16:46:06 J.36
+EN work/sumador 1287592448 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/sumador.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/sumador/Behavioral 1287592449 \
+      FL F:/Universidad/2/ElectronicaDigital/practica3/sumador.vhd \
+      EN work/sumador 1287592448

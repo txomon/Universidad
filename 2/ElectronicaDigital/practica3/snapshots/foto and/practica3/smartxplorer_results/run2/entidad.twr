@@ -1,0 +1,127 @@
+--------------------------------------------------------------------------------
+Release 12.3 Trace  (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
+
+C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64\unwrapped\trce.exe
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run2\entidad.ncd
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run2\entidad.pcf
+-xml
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run2\entidad.twx
+-e 3 -s 4 -n 3 -ucf nexys.ucf -o
+C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run2\entidad.twr
+
+Design file:              entidad.ncd
+Physical constraint file: entidad.pcf
+Device,package,speed:     xc3s200,ft256,-4 (PRODUCTION 1.39 2010-09-15)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+INFO:Timing:3390 - This architecture does not support a default System Jitter 
+   value, please add SYSTEM_JITTER constraint to the UCF to modify the Clock 
+   Uncertainty calculation.
+INFO:Timing:3389 - This architecture does not support 'Discrete Jitter' and 
+   'Phase Error' calculations, these terms will be zero in the Clock 
+   Uncertainty calculation.  Please make appropriate modification to 
+   SYSTEM_JITTER to account for the unsupported Discrete Jitter and Phase 
+   Error.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Pad to Pad
+---------------+---------------+---------+
+Source Pad     |Destination Pad|  Delay  |
+---------------+---------------+---------+
+swt<0>         |led<0>         |    7.325|
+swt<0>         |ssg<0>         |   12.333|
+swt<0>         |ssg<1>         |   12.676|
+swt<0>         |ssg<2>         |   11.476|
+swt<0>         |ssg<3>         |   11.496|
+swt<0>         |ssg<4>         |   10.847|
+swt<0>         |ssg<5>         |   12.538|
+swt<0>         |ssg<6>         |   11.766|
+swt<0>         |ssg<7>         |   12.092|
+swt<1>         |led<1>         |    7.174|
+swt<1>         |ssg<0>         |   12.191|
+swt<1>         |ssg<1>         |   12.534|
+swt<1>         |ssg<2>         |   11.406|
+swt<1>         |ssg<3>         |   11.354|
+swt<1>         |ssg<4>         |   10.705|
+swt<1>         |ssg<5>         |   12.396|
+swt<1>         |ssg<6>         |   11.624|
+swt<1>         |ssg<7>         |   11.950|
+swt<2>         |led<2>         |    7.567|
+swt<2>         |ssg<0>         |   10.613|
+swt<2>         |ssg<1>         |   10.956|
+swt<2>         |ssg<2>         |    9.756|
+swt<2>         |ssg<3>         |    9.776|
+swt<2>         |ssg<4>         |    9.127|
+swt<2>         |ssg<5>         |   10.818|
+swt<2>         |ssg<6>         |   10.046|
+swt<2>         |ssg<7>         |   10.372|
+swt<3>         |led<3>         |    6.638|
+swt<4>         |led<4>         |    6.970|
+swt<4>         |ssg<0>         |   11.303|
+swt<4>         |ssg<1>         |   11.646|
+swt<4>         |ssg<2>         |   10.446|
+swt<4>         |ssg<3>         |   10.466|
+swt<4>         |ssg<4>         |    9.817|
+swt<4>         |ssg<5>         |   11.508|
+swt<4>         |ssg<6>         |   10.736|
+swt<4>         |ssg<7>         |   11.062|
+swt<5>         |led<5>         |    6.641|
+swt<5>         |ssg<0>         |   12.159|
+swt<5>         |ssg<1>         |   12.502|
+swt<5>         |ssg<2>         |   11.302|
+swt<5>         |ssg<3>         |   11.322|
+swt<5>         |ssg<4>         |   10.673|
+swt<5>         |ssg<5>         |   12.364|
+swt<5>         |ssg<6>         |   11.592|
+swt<5>         |ssg<7>         |   11.918|
+swt<6>         |led<6>         |    7.261|
+swt<6>         |ssg<0>         |   11.080|
+swt<6>         |ssg<1>         |   11.423|
+swt<6>         |ssg<2>         |   10.223|
+swt<6>         |ssg<3>         |   10.243|
+swt<6>         |ssg<4>         |    9.594|
+swt<6>         |ssg<5>         |   11.285|
+swt<6>         |ssg<6>         |   10.513|
+swt<6>         |ssg<7>         |   10.839|
+swt<7>         |led<7>         |    6.638|
+swt<7>         |ssg<0>         |   12.002|
+swt<7>         |ssg<1>         |   12.345|
+swt<7>         |ssg<2>         |   11.537|
+swt<7>         |ssg<3>         |   10.630|
+swt<7>         |ssg<4>         |   10.531|
+swt<7>         |ssg<5>         |   12.123|
+swt<7>         |ssg<6>         |   11.068|
+swt<7>         |ssg<7>         |   11.430|
+---------------+---------------+---------+
+
+
+Analysis completed Sat Oct 16 17:28:52 2010 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 143 MB
+
+
+

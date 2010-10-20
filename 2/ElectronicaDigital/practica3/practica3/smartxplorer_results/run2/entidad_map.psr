@@ -1,0 +1,33 @@
+Release 12.3 Physical Synthesis Report M.70d (nt64)
+Copyright (c) 1995-2010 Xilinx, Inc. All rights reserved.
+
+TABLE OF CONTENTS
+  1) Physical Synthesis Options Summary
+  2) Optimizations statistics and details
+
+
+=========================================================================
+*                 Physical Synthesis Options Summary                    *
+=========================================================================
+---- Options
+Global Optimization                 : OFF
+    Retiming                        : OFF
+    Equivalent Register Removal     : OFF
+Timing-Driven Packing and Placement : ON
+    Logic Optimization              : ON
+    Register Duplication            : ON
+
+---- Slice clock gating 
+    Effort Level (-power)           : OFF
+
+---- Target Parameters
+Target Device                       : 3s200ft256-4
+
+=========================================================================
+
+
+=========================================================================
+*                        Optimizations                                  *
+=========================================================================
+---- Statistics
+No sequential optimizations have been performed.

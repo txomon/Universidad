@@ -1,0 +1,37 @@
+strategySpecString = ':ocurly:squotemap:squote:colon:space:squote:space:dashcm:spacearea:space:squote:comma:space:squotepower:squote:colon:space:squoteoff:squote:comma:space:squotebitgen:squote:colon:space:squoteon:squote:comma:space:squotesynplify:squote:colon:space:squote:squote:comma:space:squotengdbuild:squote:colon:space:squote:dashsd:spaceC:coloncolon:colonbackslashUniversidad:colonbackslash2:colonbackslashElectronicaDigital:colonbackslashpractica3:colonbackslashpractica3:space:dashp:spacexc3s200:dashft256:dash4:squote:comma:space:squotetrce:squote:colon:space:squote:dashe:space3:space:dashs:space4:space:dashn:space3:space:dashxml:spaceentidad.twx:space:dashucf:spacenexys.ucf:squote:comma:space:squotemax_score:squote:colon:spaceNone:comma:space:squoteindex:squote:colon:space3:comma:space:squotepar:squote:colon:space:squote:space:dashol:spacehigh:space:squote:comma:space:squotename:squote:colon:space:squoteParHighEffort1:squote:comma:space:squotexst:squote:colon:space:squote:squote:comma:space:squotearea:squote:colon:space:osquare:squotelut:squote:comma:space:squoteslice_reg:squote:csquare:comma:space:squoteversion:squote:colon:space:squote12.3:squote:comma:space:squoteenv:squote:colon:space:squote:ocurly:ccurly:squote:comma:space:squotesxLaunchDir:squote:colon:space:squoteC:colon:backslash:backslashUniversidad:backslash:backslash2:backslash:backslashElectronicaDigital:backslash:backslashpractica3:backslash:backslashpractica3:squote:ccurly'
+Xilinx Environment Variables:
+
+{'XILINX': 'C:\\Xilinx\\12.3\\ISE_DS\\ISE\\'
+'PATH': 'C:\\Xilinx\\12.3\\ISE_DS\\ISE\\\\lib\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\ISE\\\\bin\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\PlanAhead\\bin;C:\\Xilinx\\12.3\\ISE_DS\\ISE\\bin\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\ISE\\lib\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\EDK\\bin\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\EDK\\lib\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\common\\bin\\nt64;C:\\Xilinx\\12.3\\ISE_DS\\common\\lib\\nt64;c:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files (x86)\\PC Connectivity Solution\\;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Microsoft SQL Server\\100\\Tools\\Binn\\;C:\\Program Files (x86)\\Microsoft SQL Server\\100\\DTS\\Binn\\;C:\\Program Files\\Intel\\DMIX;C:\\Program Files (x86)\\QuickTime\\QTSystem\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live'
+'XILINX_PLANAHEAD': 'C:\\Xilinx\\12.3\\ISE_DS\\PlanAhead'
+'XILINX_DSP': 'C:\\Xilinx\\12.3\\ISE_DS\\ISE'
+'XILINX_EDK': 'C:\\Xilinx\\12.3\\ISE_DS\\EDK'}
+envDict = {}
+Javier-7_2.stat:C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\.smartxplorer\.sx.keepAlive.Javier-7_2
+INFO: total number of threads running this host None
+...searching for file: parhigheffort1.xds
+Creating XDS file ... parhigheffort1.xds
+###################################
+
+      <property name = "Map:Optimization Strategy (Cover Mode)"
+               value = "Area" />
+      <property name = "Place &amp; Route:Place &amp; Route Effort Level (Overall)"
+               value = "High" />
+      <property name = "Generate Post-Place &amp; Route Static Timing:Number of Paths in Error/Verbose Report"
+               value = "3" />
+      <property name = "Generate Post-Place &amp; Route Static Timing:Report Type"
+               value = "Error Report" />
+      <property name = "Generate Post-Place &amp; Route Static Timing:Change Device Speed To"
+               value = "-4" />
+      <property name = "Generate Post-Place &amp; Route Static Timing:Report Paths by Endpoint"
+               value = "3" />
+###################################
+launching map with options  -cm area  -p xc3s200-ft256-4 -o entidad_map.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun3:backslashentidad.pcf...
+runTask: map entidad.ngd -cm area -p xc3s200-ft256-4 -o entidad_map.ncd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.pcf
+args = ['map', 'entidad.ngd', '-cm', 'area', '-p', 'xc3s200-ft256-4', '-o', 'entidad_map.ncd', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.pcf']
+launching par with options  -ol high  -w entidad.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun3:backslashentidad.pcf...
+runTask: par entidad_map.ncd -ol high -w entidad.ncd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.pcf
+args = ['par', 'entidad_map.ncd', '-ol', 'high', '-w', 'entidad.ncd', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.pcf']
+launching trce...
+runTask: trce C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.ncd C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.pcf -xml C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.twx -e 3 -s 4 -n 3 -ucf nexys.ucf -o C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run3\entidad.twr
+args = ['trce', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.ncd', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.pcf', '-xml', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.twx', '-e', '3', '-s', '4', '-n', '3', '-ucf', 'nexys.ucf', '-o', 'C:\\Universidad\\2\\ElectronicaDigital\\practica3\\practica3\\smartxplorer_results\\run3\\entidad.twr']

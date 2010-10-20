@@ -1,0 +1,473 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0014)about:SXplorer -->
+<html>
+<head>
+
+    <noscript>
+    <!--
+        We have the "refresh" meta-tag in case the user's browser does
+	not correctly support JavaScript or has JavaScript disabled.
+     <meta http-equiv="refresh" content="2">
+     -->
+
+     </noscript>
+
+     <script language="JavaScript">
+
+     var sURL = unescape(window.location.pathname);
+
+     function doLoad()
+     {
+         // the timeout value should be the same as in the "refresh" meta-tag
+         setTimeout( "refresh()", 31536000000);
+     }
+
+     function refresh()
+     {
+         //  This version of the refresh function will cause a new
+         //  entry in the visitor's history.  It is provided for
+         //  those browsers that only support JavaScript 1.0.
+         //
+         //window.location.href = sURL;
+         // CR 452967
+         window.location.reload( false );
+     }
+
+     </script>
+
+     <script language="JavaScript">
+     function sxtooltip_findPosX(obj) {
+       var curleft = 0;
+       if (obj.offsetParent) {
+           while (obj.offsetParent) {
+            curleft += obj.offsetLeft
+            obj = obj.offsetParent;
+           }
+       } else if (obj.x)
+           curleft += obj.x;
+       return curleft;
+     }
+
+
+     function sxtooltip_findPosY(obj) {
+         var curtop = 0;
+         if (obj.offsetParent) {
+            while (obj.offsetParent) {
+               curtop += obj.offsetTop
+               obj = obj.offsetParent;
+            }
+         } else if (obj.y)
+            curtop += obj.y;
+         return curtop;
+     }
+
+
+     function sxtooltip_show(tooltipId, parentId, x1, y1) {
+         // x1 and y1 are (left, down) offsets from the upper-left corner
+         // of the parent
+         var ie4 = document.all;
+         var tt = document.getElementById(tooltipId);
+
+         if ((tt.style.top == '' || tt.style.top == 0) ||
+             (tt.style.left == '' || tt.style.left == 0)) {
+
+             // need to offset widths for IE
+             ieWidthOffset = 0
+             iePosOffset = 0
+             if (ie4) {
+                 ieWidthOffset = 300
+                 iePosOffset = 20
+             }
+             tt.style.width = ieWidthOffset + tt.offsetWidth + 'px';
+             tt.style.height = tt.offsetHeight + 'px';
+
+             var parent = document.getElementById(parentId);
+
+             if (x1 < 0 ) x1 = 0;
+
+             var x = sxtooltip_findPosX(parent) + x1;
+             var y = sxtooltip_findPosY(parent) + y1;
+
+             tt.style.top = iePosOffset + y + 'px';
+             tt.style.left = iePosOffset + x + 'px';
+        }
+
+        tt.style.visibility = 'visible';
+     }
+
+     function sxtooltip_hide(id) {
+        tt = document.getElementById(id);
+        tt.style.visibility = 'hidden';
+     }
+     </script>
+
+
+</head>
+
+	<title>SmartXplorer Report</title>
+	<style type="text/css">
+		/***
+			The following is just an example of how to use the table.
+			You can override any class names to be used if you wish.
+		***/
+		table.toplevel {
+			font-family:Lucida Grande, Verdana;
+			font-size:0.8em;
+			width:60%;
+			border:1px solid #ccc;
+			border-collapse:collapse;
+			cursor:default;
+                        margin-left: 10px;
+                        margin-right: 10px;
+		}
+		table th{
+			padding:2px;
+			font-weight:600;
+                        background-color: cornflowerblue;
+                        background-color: #87cefa;
+		}
+		table td{
+			padding:2px;
+			font-weight:normal;
+		}
+		table thead td, table thead th {
+			background-repeat:no-repeat;
+			background-position:top right;
+		}
+		table tbody tr td{
+			padding:2px;
+			border-bottom:1px solid #ddd;
+		}
+		table tbody tr.alt td{
+			background: #e3edfa;
+		}
+		table tbody tr.selected td{
+			background: yellow;
+		}
+		table tbody tr:hover td{
+			background: #a6c2e7;
+			background: #FFFFCC;
+		}
+		table tbody tr.selected:hover td{
+			background:#ff9;
+		}
+                .defaultCellColor {
+                        background-color: lightsteelblue;
+                        background-color: #fcba7a;
+
+                }
+                .timingMetCellColor {
+                        background-color: #ccffcc;
+                }
+                .bestStrategyCellColor {
+                        background-color: #00FF00;
+                }
+                .alternateCellColor {
+                        background-color: #efeeee;
+                }
+
+
+                .sxtooltip {
+  		        visibility: hidden;
+                        position: absolute;
+                        background: beige;
+                        background: lightcyan;
+                        background: blanchedalmond;
+                        top: 0;
+                        left: 0;
+                        z-index: 2;
+                        font: normal 10pt sans-serif;
+                        padding: 3px;
+                        border: solid 1px;
+                }
+
+	</style>
+
+
+       <!--
+           Use the "onload" event to start the refresh process.
+        -->
+<body onload="doLoad()">
+
+	<h2><u>SmartXplorer Report </u></h2>
+
+	<br />
+
+	<div>
+        Release 12.3 SmartXplorer <br />Copyright(c) 1995-2010 <a href="http://www.xilinx.com"> Xilinx </a>, Inc. All rights reserved. <br /> <br />
+	<b> "C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64\smartxplorer.exe" -p xc3s200-ft256-4 -b -wd smartxplorer_results entidad.ngd -to "-e 3 -s 4 -n 3 -xml entidad.twx -ucf nexys.ucf" -host_list hostlistfile.txt -max_runs 7 <b/> <br />
+
+	<br />
+
+
+    <h3>Run Summary</h3>
+
+    <table id="t1" class="toplevel"
+        multiple="true" alternateRows="true" maxSortable="1"
+        cellpadding="0" cellspacing="0" border="1">
+    <thead>
+
+        <tr>
+            <th field="Strategy" dataType="String" align="left" valign="top">Strategy</th>
+            <th field="Host" dataType="String" valign="top">Host</th>
+            <th field="Output" dataType="String" align="left" valign="top">Output</th>
+            <th field="Status" dataType="String" align="left" valign="top">Status</th>
+            <th field="Current" dataType="Number" sort="asc" align="center" valign="top">Timing <br> Score</th>
+            <th field="Status" dataType="String" align="center" valign="top"> Luts</th>
+            <th field="Status" dataType="String" align="center" valign="top"> Slice <br> Registers</th>
+            
+            <th field="Run Time" dataType="Number" sort="asc" align="center" valign="top">Total <br> RunTime </th>
+
+        </tr>
+        <tr>  </tr>
+    </thead>
+
+    <tbody>
+         
+        <tr >
+        <td id="strat1"><span
+        onmouseover="sxtooltip_show('stratTt1', 'strat1', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt1');">
+        MapTimingExtraEffort
+        </span></td>
+        <div id="stratTt1" class="sxtooltip">
+        map  -timing -ol high -xe n ; par  -ol high 
+        </div>
+
+        
+        <td id="host0"><span
+        onmouseover="sxtooltip_show('hostTt0', 'host0', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt0');">
+        Javier-7
+        </span></td>
+        <div id="hostTt0" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run1\entidad_sx.log target=_blank>run1</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run1\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 19s</td></tr>
+        <tr class="defaultCellColor" >
+        <td id="strat2"><span
+        onmouseover="sxtooltip_show('stratTt2', 'strat2', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt2');">
+        MapPhysSynthesis
+        </span></td>
+        <div id="stratTt2" class="sxtooltip">
+        map  -timing -ol high -xe n -register_duplication on -logic_opt on ; par  -ol high 
+        </div>
+
+        
+        <td id="host1"><span
+        onmouseover="sxtooltip_show('hostTt1', 'host1', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt1');">
+        Javier-7
+        </span></td>
+        <div id="hostTt1" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run2\entidad_sx.log target=_blank>run2</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run2\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 30s</td></tr>
+        <tr >
+        <td id="strat3"><span
+        onmouseover="sxtooltip_show('stratTt3', 'strat3', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt3');">
+        ParHighEffort1
+        </span></td>
+        <div id="stratTt3" class="sxtooltip">
+        map  -cm area ; par  -ol high 
+        </div>
+
+        
+        <td id="host2"><span
+        onmouseover="sxtooltip_show('hostTt2', 'host2', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt2');">
+        Javier-7
+        </span></td>
+        <div id="hostTt2" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run3\entidad_sx.log target=_blank>run3</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run3\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 41s</td></tr>
+        <tr class="defaultCellColor" >
+        <td id="strat4"><span
+        onmouseover="sxtooltip_show('stratTt4', 'strat4', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt4');">
+        ParHighEffort2
+        </span></td>
+        <div id="stratTt4" class="sxtooltip">
+        map  -cm area -t 2; par  -ol high -t 2
+        </div>
+
+        
+        <td id="host3"><span
+        onmouseover="sxtooltip_show('hostTt3', 'host3', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt3');">
+        Javier-7
+        </span></td>
+        <div id="hostTt3" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run4\entidad_sx.log target=_blank>run4</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run4\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 52s</td></tr>
+        <tr >
+        <td id="strat5"><span
+        onmouseover="sxtooltip_show('stratTt5', 'strat5', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt5');">
+        MapTiming1
+        </span></td>
+        <div id="stratTt5" class="sxtooltip">
+        map  -timing -ol high ; par  -ol high 
+        </div>
+
+        
+        <td id="host0"><span
+        onmouseover="sxtooltip_show('hostTt0', 'host0', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt0');">
+        Javier-7
+        </span></td>
+        <div id="hostTt0" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run5\entidad_sx.log target=_blank>run5</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run5\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 19s</td></tr>
+        <tr class="defaultCellColor" >
+        <td id="strat6"><span
+        onmouseover="sxtooltip_show('stratTt6', 'strat6', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt6');">
+        MapTiming2
+        </span></td>
+        <div id="stratTt6" class="sxtooltip">
+        map  -timing -ol high -t 9; par  -ol high -t 9
+        </div>
+
+        
+        <td id="host1"><span
+        onmouseover="sxtooltip_show('hostTt1', 'host1', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt1');">
+        Javier-7
+        </span></td>
+        <div id="hostTt1" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run6\entidad_sx.log target=_blank>run6</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run6\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 30s</td></tr>
+        <tr >
+        <td id="strat7"><span
+        onmouseover="sxtooltip_show('stratTt7', 'strat7', 20, 20);"
+        onmouseout="sxtooltip_hide('stratTt7');">
+        MapUseIOReg
+        </span></td>
+        <div id="stratTt7" class="sxtooltip">
+        map  -timing -ol high -pr b ; par  -ol high 
+        </div>
+
+        
+        <td id="host2"><span
+        onmouseover="sxtooltip_show('hostTt2', 'host2', 20, 20)"
+        onmouseout="sxtooltip_hide('hostTt2');">
+        Javier-7
+        </span></td>
+        <div id="hostTt2" class="sxtooltip">
+        Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+        </div> 
+        <td><a href=run7\entidad_sx.log target=_blank>run7</a></td>
+        <td><b> Done <b/></td>
+        <td><a href=run7\entidad.twx.html target=_blank>None</a></td>
+        <td>14 (1%)</td>
+        <td>0 (0%)</td>
+        
+        <td>0h 0m 41s</td></tr>
+    </tbody>
+    </table>
+
+    <br />     <br />
+
+        <h3>Best Strategy: None (None), Timing Score: None, Runtime: None</h3>
+
+        <table id="t3" class="toplevel"
+                multiple="true" alternateRows="true" maxSortable="1"
+                cellpadding="0" cellspacing="0" border="1">
+        <thead>
+
+                <tr>
+                        <th field="Command Lines" dataType="String" align="left" valign="top">Command Lines</th>
+                </tr>
+                <tr>  </tr>
+        </thead>
+
+        <tbody>
+             
+        </tbody>
+        </table>
+
+        <br />  <br />
+
+	<h3>Environment Variables</h3>
+
+	<table id="t2" class="toplevel"
+		multiple="true" alternateRows="true" maxSortable="1"
+		cellpadding="0" cellspacing="0" border="1">
+	<thead>
+
+		<tr>
+			<th field="Name" dataType="String" align="left" valign="top">Name</th>
+			<th field="Value" dataType="String" valign="top">Value</th>
+		</tr>
+		<tr>  </tr>
+	</thead>
+
+	<tbody>
+	     
+        <tr >
+        <td>XILINX_DSP</td>
+        <td>C:\Xilinx\12.3\ISE_DS\ISE</td></tr>
+        <tr class="alternateCellColor" >
+        <td>XILINX_PLANAHEAD</td>
+        <td>C:\Xilinx\12.3\ISE_DS\PlanAhead</td></tr>
+        <tr >
+        <td>XILINX_EDK</td>
+        <td>C:\Xilinx\12.3\ISE_DS\EDK</td></tr>
+        <tr class="alternateCellColor" >
+        <td>PATH</td>
+        <td>C:\Xilinx\12.3\ISE_DS\ISE\\lib\nt64;C:\Xilinx\12.3\ISE_DS\ISE\\bin\nt64;C:\Xilinx\12.3\ISE_DS\PlanAhead\bin;C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64;C:\Xilinx\12.3\ISE_DS\ISE\lib\nt64;C:\Xilinx\12.3\ISE_DS\EDK\bin\nt64;C:\Xilinx\12.3\ISE_DS\EDK\lib\nt64;C:\Xilinx\12.3\ISE_DS\common\bin\nt64;C:\Xilinx\12.3\ISE_DS\common\lib\nt64;c:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\PC Connectivity Solution\;%CommonProgramFiles%\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Intel\DMIX;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Common Files\Microsoft Shared\Windows Live</td></tr>
+        <tr >
+        <td>XILINX</td>
+        <td>C:\Xilinx\12.3\ISE_DS\ISE\</td></tr>
+	</tbody>
+	</table>
+
+	<br /> 	<br />
+
+
+</body>
+</html>

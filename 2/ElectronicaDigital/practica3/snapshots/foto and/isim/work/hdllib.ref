@@ -1,0 +1,8 @@
+EN simulacion25 NULL F:/Universidad/2/ElectronicaDigital/practica3/simulacion25.vhw sub00/vhpl06 1287592923
+EN testpractica3 NULL "C:/MIJ/2/Electronica Digital/practica3/practica3/testpractica3.vhw" sub00/vhpl04 1287062381
+AR sumador behavioral F:/Universidad/2/ElectronicaDigital/practica3/sumador.vhd sub00/vhpl01 1287592449
+AR simulacion25 testbench_arch F:/Universidad/2/ElectronicaDigital/practica3/simulacion25.vhw sub00/vhpl07 1287592924
+EN entidad NULL F:/Universidad/2/ElectronicaDigital/practica3/main3.vhd sub00/vhpl02 1287592450
+AR entidad behavioral F:/Universidad/2/ElectronicaDigital/practica3/main3.vhd sub00/vhpl03 1287592451
+AR testpractica3 testbench_arch "C:/MIJ/2/Electronica Digital/practica3/practica3/testpractica3.vhw" sub00/vhpl05 1287062382
+EN sumador NULL F:/Universidad/2/ElectronicaDigital/practica3/sumador.vhd sub00/vhpl00 1287592448
