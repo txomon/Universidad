@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=C:\Universidad\2\ElectronicaDigital\practica3\practica3\entidad.ncd
+OUTFILE=C:\Universidad\2\ElectronicaDigital\practica3\practica3\entidad.bit
+FAMILY=Spartan3
+PART=xc3s200-4ft256
+WORKINGDIR=C:\Universidad\2\ElectronicaDigital\practica3\practica3
+LICENSE=WebPack
+USER_INFO=0_0_657

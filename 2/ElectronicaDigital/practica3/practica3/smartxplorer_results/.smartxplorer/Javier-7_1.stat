@@ -1,0 +1,20 @@
+START:Strategy:2:MapPhysSynthesis
+REMOTE_PID:5456
+RUNNING:5456:6132:MapPhysSynthesis:map:entidad.ngd: -timing -ol high -xe n -register_duplication on -logic_opt on  -p xc3s200-ft256-4 -o entidad_map.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun2:backslashentidad.pcf
+STATUS:MapPhysSynthesis:map:Score:None:lut:14 (1%):slice_reg:None:slice:None:bram:None:dsp48:None:mult18x18:None:Power:None:Time:10.17 secs 
+STATUS:MapPhysSynthesis:map:Score:None:lut:14 (1%):slice_reg:None:slice:10 (1%):bram:None:dsp48:None:mult18x18:None:Power:None:Time:10.17 secs 
+DONE:map:0
+RUNNING:5456:5188:MapPhysSynthesis:par:entidad_map.ncd: -ol high  -w entidad.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun2:backslashentidad.pcf
+DONE:par:0
+RUNNING:5456:1476:MapPhysSynthesis:trce:C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run2\entidad.ncd:C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun2:backslashentidad.pcf -xml C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun2:backslashentidad.twx -e 3 -s 4 -n 3   -ucf nexys.ucf -o C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun2:backslashentidad.twr
+DONE:trce:0
+START:Strategy:6:MapTiming2
+REMOTE_PID:3164
+RUNNING:3164:6656:MapTiming2:map:entidad.ngd: -timing -ol high -t 9 -p xc3s200-ft256-4 -o entidad_map.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun6:backslashentidad.pcf
+STATUS:MapTiming2:map:Score:None:lut:14 (1%):slice_reg:None:slice:None:bram:None:dsp48:None:mult18x18:None:Power:None:Time:5.08 secs 
+STATUS:MapTiming2:map:Score:None:lut:14 (1%):slice_reg:None:slice:10 (1%):bram:None:dsp48:None:mult18x18:None:Power:None:Time:5.08 secs 
+DONE:map:0
+RUNNING:3164:7072:MapTiming2:par:entidad_map.ncd: -ol high -t 9 -w entidad.ncd  C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun6:backslashentidad.pcf
+DONE:par:0
+RUNNING:3164:1972:MapTiming2:trce:C:\Universidad\2\ElectronicaDigital\practica3\practica3\smartxplorer_results\run6\entidad.ncd:C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun6:backslashentidad.pcf -xml C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun6:backslashentidad.twx -e 3 -s 4 -n 3   -ucf nexys.ucf -o C:colon:backslashUniversidad:backslash2:backslashElectronicaDigital:backslashpractica3:backslashpractica3:backslashsmartxplorer_results:backslashrun6:backslashentidad.twr
+DONE:trce:0

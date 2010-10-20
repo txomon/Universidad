@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Universidad/2/ElectronicaDigital/practica3/practica3/prueba2simulacion_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="prueba2simulacion" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_arith" />
+            <top_module name="std_logic_unsigned" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="2" />
+   <wvobject fp_name="group42" type="group">
+      <obj_property name="label">inputs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/prueba2simulacion/swt" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">swt[7:0]</obj_property>
+         <obj_property name="ObjectShortName">swt[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group41" type="group">
+      <obj_property name="label">Outputs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/prueba2simulacion/led" type="array" db_ref_id="1">
+         <obj_property name="ElementShortName">led[7:0]</obj_property>
+         <obj_property name="ObjectShortName">led[7:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

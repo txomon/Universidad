@@ -1,0 +1,188 @@
+
+<smartXplorerReport>
+    <command>"C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64\smartxplorer.exe" -p xc3s200-ft256-4 -b -wd smartxplorer_results entidad.ngd -to "-e 3 -s 4 -n 3 -xml entidad.twx -ucf nexys.ucf" -host_list hostlistfile.txt -max_runs 7
+    </command>
+    <programStatus>Done
+    </programStatus>
+    <programPID>1016
+    </programPID>
+    
+    <strategy name="MapTimingExtraEffort">
+        <strategyData>map  -timing -ol high -xe n ; par  -ol high 
+        </strategyData>
+        <xdsFile>maptimingextraeffort.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run1
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 19s
+        </runTime>
+    </strategy>
+    <strategy name="MapPhysSynthesis">
+        <strategyData>map  -timing -ol high -xe n -register_duplication on -logic_opt on ; par  -ol high 
+        </strategyData>
+        <xdsFile>mapphyssynthesis.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run2
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 30s
+        </runTime>
+    </strategy>
+    <strategy name="ParHighEffort1">
+        <strategyData>map  -cm area ; par  -ol high 
+        </strategyData>
+        <xdsFile>parhigheffort1.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run3
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 41s
+        </runTime>
+    </strategy>
+    <strategy name="ParHighEffort2">
+        <strategyData>map  -cm area -t 2; par  -ol high -t 2
+        </strategyData>
+        <xdsFile>parhigheffort2.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run4
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 52s
+        </runTime>
+    </strategy>
+    <strategy name="MapTiming1">
+        <strategyData>map  -timing -ol high ; par  -ol high 
+        </strategyData>
+        <xdsFile>maptiming1.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run5
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 19s
+        </runTime>
+    </strategy>
+    <strategy name="MapTiming2">
+        <strategyData>map  -timing -ol high -t 9; par  -ol high -t 9
+        </strategyData>
+        <xdsFile>maptiming2.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run6
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 30s
+        </runTime>
+    </strategy>
+    <strategy name="MapUseIOReg">
+        <strategyData>map  -timing -ol high -pr b ; par  -ol high 
+        </strategyData>
+        <xdsFile>mapuseioreg.xds
+        </xdsFile>
+        <host name="Javier-7">
+            <hostData>Windows_NT, Intel64 Family 6 Model 23 Stepping 7, GenuineIntel, 4-processor, -1G RAM
+            </hostData>
+        </host>
+        <runIndex>run7
+        </runIndex>
+        <status>Done
+        </status>
+        <logFile>entidad_sx.log
+        </logFile>
+        <timingScore>None
+        </timingScore>
+        <Luts>14 (1%)
+	</Luts>
+	<SliceRegisters>0 (0%)
+	</SliceRegisters>
+	<runTime>0h 0m 41s
+        </runTime>
+    </strategy>
+    <bestStrategy>None
+    </bestStrategy>
+    <envVariables>
+        <env name="XILINX_DSP"  value="C:\Xilinx\12.3\ISE_DS\ISE"/>
+        <env name="XILINX_PLANAHEAD"  value="C:\Xilinx\12.3\ISE_DS\PlanAhead"/>
+        <env name="XILINX_EDK"  value="C:\Xilinx\12.3\ISE_DS\EDK"/>
+        <env name="PATH"  value="C:\Xilinx\12.3\ISE_DS\ISE\\lib\nt64;C:\Xilinx\12.3\ISE_DS\ISE\\bin\nt64;C:\Xilinx\12.3\ISE_DS\PlanAhead\bin;C:\Xilinx\12.3\ISE_DS\ISE\bin\nt64;C:\Xilinx\12.3\ISE_DS\ISE\lib\nt64;C:\Xilinx\12.3\ISE_DS\EDK\bin\nt64;C:\Xilinx\12.3\ISE_DS\EDK\lib\nt64;C:\Xilinx\12.3\ISE_DS\common\bin\nt64;C:\Xilinx\12.3\ISE_DS\common\lib\nt64;c:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\PC Connectivity Solution\;%CommonProgramFiles%\Microsoft Shared\Windows Live;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Intel\DMIX;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Program Files\Common Files\Microsoft Shared\Windows Live"/>
+        <env name="XILINX"  value="C:\Xilinx\12.3\ISE_DS\ISE\"/>
+        
+    </envVariables>
+</smartXplorerReport>

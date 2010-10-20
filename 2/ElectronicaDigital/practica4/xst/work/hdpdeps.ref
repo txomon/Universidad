@@ -1,0 +1,13 @@
+V3 7
+EN work/contjohn 0 FL F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd \
+      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
+      PB ieee/STD_LOGIC_UNSIGNED 1177545583
+AR work/contjohn/Behavioral 0 \
+      FL F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd \
+      EN work/contjohn 0
+EN work/Placa 0 FL F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd \
+      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
+      PB ieee/STD_LOGIC_UNSIGNED 1177545583
+AR work/practica4/Behavioral 0 \
+      FL F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd \
+      EN work/practica4 0

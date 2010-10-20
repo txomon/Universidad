@@ -1,0 +1,3 @@
+vhdl work "sumador.vhd"
+vhdl work "main3.vhd"
+vhdl work "prueba21simulacion.vhd"

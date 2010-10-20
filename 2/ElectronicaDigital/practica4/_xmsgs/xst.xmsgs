@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="HDLParsers" num="3516" delta="unknown" >Found error in file &quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd</arg>&quot;. 
+</msg>
+
+<msg type="warning" file="HDLParsers" num="3458" delta="unknown" >Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file &quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4_vhdl.prj</arg>&quot; may be inaccurate. Please put the files in the project file in correct order with keyword &apos;nosort&apos; at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
+</msg>
+
+<msg type="error" file="HDLParsers" num="3010" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">41</arg>. Entity <arg fmt="%s" index="3">practica4</arg> does not exist.
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">42</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">std_logic</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">42</arg>. <arg fmt="%s" index="3">std_logic</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">enable</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">swt</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. <arg fmt="%s" index="3">swt</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">rst</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">btn</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. <arg fmt="%s" index="3">btn</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">mclk</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. <arg fmt="%s" index="3">mclk</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">50</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">clk</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">50</arg>. <arg fmt="%s" index="3">clk</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">51</arg>. <arg fmt="%s" index="3">parse error, unexpected INTEGER_LITERAL, expecting SEMICOLON</arg>
+</msg>
+
+<msg type="warning" file="HDLParsers" num="1406" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. No sensitivity list and no wait in the process
+</msg>
+
+<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">enable</arg>&apos;.
+</msg>
+
+<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. <arg fmt="%s" index="3">enable</arg>: Undefined symbol (last report in this block)
+</msg>
+
+<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">59</arg>. <arg fmt="%s" index="3">parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK</arg>
+</msg>
+
+<msg type="warning" file="HDLParsers" num="901" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">58</arg>. Label <arg fmt="%s" index="3">contjohn</arg> is ignored.
+</msg>
+
+<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">66</arg>. <arg fmt="%s" index="3">parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK</arg>
+</msg>
+
+<msg type="warning" file="HDLParsers" num="901" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">65</arg>. Label <arg fmt="%s" index="3">contbsd</arg> is ignored.
+</msg>
+
+<msg type="warning" file="HDLParsers" num="1406" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. No sensitivity list and no wait in the process
+</msg>
+
+</messages>
+

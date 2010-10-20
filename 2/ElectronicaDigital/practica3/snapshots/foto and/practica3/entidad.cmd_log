@@ -1,0 +1,31 @@
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MIJ/2/Electronica Digital/practica3/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -intstyle ise -filter "C:/Universidad/2/ElectronicaDigital/practica3/practica3/iseconfig/filter.filter" -ifn "C:/Universidad/2/ElectronicaDigital/practica3/practica3/entidad.xst" -ofn "C:/Universidad/2/ElectronicaDigital/practica3/practica3/entidad.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc nexys.ucf -p xc3s200-ft256-4 entidad.ngc entidad.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s200-ft256-4 -cm area -ir off -pr b -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 entidad_map.ncd entidad.ncd entidad.pcf 
+trce -filter C:/Universidad/2/ElectronicaDigital/practica3/practica3/iseconfig/filter.filter -intstyle ise -e 3 -s 4 -n 3 -xml entidad.twx entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f entidad.ut entidad.ncd 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc nexys.ucf -p xc3s200-ft256-4 entidad.ngc entidad.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s200-ft256-4 -cm area -ir off -pr b -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 entidad_map.ncd entidad.ncd entidad.pcf 
+trce -filter C:/Universidad/2/ElectronicaDigital/practica3/practica3/iseconfig/filter.filter -intstyle ise -e 3 -s 4 -n 3 -xml entidad.twx entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f entidad.ut entidad.ncd 
+xst -intstyle ise -filter "C:/Universidad/2/ElectronicaDigital/practica3/practica3/iseconfig/filter.filter" -ifn "C:/Universidad/2/ElectronicaDigital/practica3/practica3/entidad.xst" -ofn "C:/Universidad/2/ElectronicaDigital/practica3/practica3/entidad.syr" 
+ngdbuild -filter "iseconfig/filter.filter" -intstyle ise -dd _ngo -nt timestamp -uc nexys.ucf -p xc3s200-ft256-4 entidad.ngc entidad.ngd  
+map -filter "iseconfig/filter.filter" -intstyle ise -p xc3s200-ft256-4 -cm area -ir off -pr b -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf 
+par -filter "iseconfig/filter.filter" -w -intstyle ise -ol high -t 1 entidad_map.ncd entidad.ncd entidad.pcf 
+trce -filter C:/Universidad/2/ElectronicaDigital/practica3/practica3/iseconfig/filter.filter -intstyle ise -e 3 -s 4 -n 3 -xml entidad.twx entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf 
+bitgen -filter "iseconfig/filter.filter" -intstyle ise -f entidad.ut entidad.ncd 
