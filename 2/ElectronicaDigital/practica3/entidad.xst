@@ -5,7 +5,7 @@ run
 -ifmt mixed
 -ofn entidad
 -ofmt NGC
--p xc3s200-4-ft256
+-p xc3s400-4-ft256
 -top entidad
 -opt_mode Speed
 -opt_level 1
