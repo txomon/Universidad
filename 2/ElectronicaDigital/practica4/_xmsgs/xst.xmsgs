@@ -5,76 +5,72 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLParsers" num="3516" delta="unknown" >Found error in file &quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd</arg>&quot;. 
+<msg type="warning" file="Xst" num="2211" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; line <arg fmt="%d" index="2">88</arg>: Instantiating black box module &lt;<arg fmt="%s" index="3">contbcd</arg>&gt;.
 </msg>
 
-<msg type="warning" file="HDLParsers" num="3458" delta="unknown" >Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file &quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4_vhdl.prj</arg>&quot; may be inaccurate. Please put the files in the project file in correct order with keyword &apos;nosort&apos; at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
+<msg type="warning" file="Xst" num="819" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd</arg>&quot; line <arg fmt="%d" index="2">45</arg>: The following signals are missing in the process sensitivity list:
+<arg fmt="%s" index="3">enable, rst</arg>.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3010" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">41</arg>. Entity <arg fmt="%s" index="3">practica4</arg> does not exist.
+<msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">leds</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contjohn</arg>&gt; has a constant value of <arg fmt="%s" index="3">00000000</arg> during circuit operation. The register is replaced by logic.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">42</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">std_logic</arg>&apos;.
+<msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">led</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contjohn</arg>&gt; has a constant value of <arg fmt="%s" index="3">10101010</arg> during circuit operation. The register is replaced by logic.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">42</arg>. <arg fmt="%s" index="3">std_logic</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">clk</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">enable</arg>&apos;.
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">dir</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">swt</arg>&apos;.
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">45</arg>. <arg fmt="%s" index="3">swt</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">enable</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">rst</arg>&apos;.
+<msg type="warning" file="Xst" num="1306" delta="unknown" >Output &lt;<arg fmt="%s" index="1">an</arg>&gt; is never assigned.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">btn</arg>&apos;.
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">btn&lt;3:1&gt;</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">46</arg>. <arg fmt="%s" index="3">btn</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">swt&lt;7:2&gt;</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">mclk</arg>&apos;.
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">mclk</arg>&gt; is never used.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. <arg fmt="%s" index="3">mclk</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">50</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">clk</arg>&apos;.
+<msg type="warning" file="Xst" num="2170" delta="unknown" >Unit <arg fmt="%s" index="1">Placa</arg> : the following signal(s) form a combinatorial loop: </msg>
+
+<msg type="warning" file="Xst" num="2170" delta="unknown" >Unit <arg fmt="%s" index="1">Placa</arg> : the following signal(s) form a combinatorial loop: </msg>
+
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;7&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">50</arg>. <arg fmt="%s" index="3">clk</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;6&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">51</arg>. <arg fmt="%s" index="3">parse error, unexpected INTEGER_LITERAL, expecting SEMICOLON</arg>
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;5&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="warning" file="HDLParsers" num="1406" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">48</arg>. No sensitivity list and no wait in the process
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;4&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="error" file="HDLParsers" num="3312" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. Undefined symbol &apos;<arg fmt="%s" index="3">enable</arg>&apos;.
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;3&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="error" file="HDLParsers" num="1209" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. <arg fmt="%s" index="3">enable</arg>: Undefined symbol (last report in this block)
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;2&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">59</arg>. <arg fmt="%s" index="3">parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK</arg>
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;1&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
-<msg type="warning" file="HDLParsers" num="901" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">58</arg>. Label <arg fmt="%s" index="3">contjohn</arg> is ignored.
-</msg>
-
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">66</arg>. <arg fmt="%s" index="3">parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK</arg>
-</msg>
-
-<msg type="warning" file="HDLParsers" num="901" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">65</arg>. Label <arg fmt="%s" index="3">contbsd</arg> is ignored.
-</msg>
-
-<msg type="warning" file="HDLParsers" num="1406" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; Line <arg fmt="%d" index="2">55</arg>. No sensitivity list and no wait in the process
+<msg type="warning" file="Xst" num="2036" delta="unknown" >Inserting OBUF on port &lt;<arg fmt="%s" index="1">ssg&lt;0&gt;</arg>&gt; driven by black box &lt;<arg fmt="%s" index="2">contbcd</arg>&gt;. Possible simulation mismatch.
 </msg>
 
 </messages>
