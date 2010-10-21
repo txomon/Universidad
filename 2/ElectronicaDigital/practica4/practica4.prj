@@ -1,2 +1,3 @@
 vhdl work "contjohn.vhd"
+vhdl work "contbcd.vhd"
 vhdl work "practica4.vhd"

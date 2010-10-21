@@ -1,10 +1,10 @@
 Release 9.2i - xst J.36
 Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to ./xst/projnav.tmp
-CPU : 0.00 / 0.38 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.38 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Reading design: practica4.prj
 
@@ -98,37 +98,51 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-WARNING:HDLParsers:3516 - Found error in file "F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd". 
-WARNING:HDLParsers:3458 - Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file "F:/Universidad/2/ElectronicaDigital/practica4/practica4_vhdl.prj" may be inaccurate. Please put the files in the project file in correct order with keyword 'nosort' at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
-Compiling vhdl file "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" in Library work.
-Entity <Placa> compiled.
-ERROR:HDLParsers:3010 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 41. Entity practica4 does not exist.
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 42. Undefined symbol 'std_logic'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 42. std_logic: Undefined symbol (last report in this block)
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 45. Undefined symbol 'enable'.
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 45. Undefined symbol 'swt'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 45. swt: Undefined symbol (last report in this block)
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. Undefined symbol 'rst'.
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. Undefined symbol 'btn'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. btn: Undefined symbol (last report in this block)
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 48. Undefined symbol 'mclk'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 48. mclk: Undefined symbol (last report in this block)
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 50. Undefined symbol 'clk'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 50. clk: Undefined symbol (last report in this block)
-ERROR:HDLParsers:164 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 51. parse error, unexpected INTEGER_LITERAL, expecting SEMICOLON
-WARNING:HDLParsers:1406 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 48. No sensitivity list and no wait in the process
-ERROR:HDLParsers:3312 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 55. Undefined symbol 'enable'.
-ERROR:HDLParsers:1209 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 55. enable: Undefined symbol (last report in this block)
-ERROR:HDLParsers:164 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 59. parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK
-WARNING:HDLParsers:901 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 58. Label contjohn is ignored.
-ERROR:HDLParsers:164 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 66. parse error, unexpected PORT, expecting OPENPAR or TICK or LSQBRACK
-WARNING:HDLParsers:901 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 65. Label contbsd is ignored.
-WARNING:HDLParsers:1406 - "F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd" Line 55. No sensitivity list and no wait in the process
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd" in Library work.
+Entity <contjohn> compiled.
+Entity <contjohn> (Architecture <Behavioral>) compiled.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd" in Library work.
+Entity <contbcd> compiled.
+Entity <contbcd> (Architecture <Behavioral>) compiled.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" in Library work.
+Entity <placa> compiled.
+ERROR:HDLParsers:3010 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 41. Entity practica4 does not exist.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 42. Undefined symbol 'std_logic'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 42. std_logic: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 43. Undefined symbol 'std_logic_vector'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 43. std_logic_vector: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. Undefined symbol 'enable'.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. Undefined symbol 'swt'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 46. swt: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 47. Undefined symbol 'rst'.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 47. Undefined symbol 'btn'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 47. btn: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 48. Undefined symbol 'dir'.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 50. Undefined symbol 'mclk'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 50. mclk: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 52. Undefined symbol 'contador'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 52. contador: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 53. Undefined symbol 'clk'.
+WARNING:HDLParsers:1406 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 50. No sensitivity list and no wait in the process
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 58. Undefined symbol 'contjohn'.
+ERROR:HDLParsers:402 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 59. Label 'clk' clk can not be used as a primary name.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 60. Undefined symbol 'led'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 60. led: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 61. Undefined symbol 'rst'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 61. rst: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 62. Undefined symbol 'dir'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 62. dir: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 64. Undefined symbol 'enable'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 64. enable: Undefined symbol (last report in this block)
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 67. Undefined symbol 'contbcd'.
+ERROR:HDLParsers:402 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 68. Label 'clk' clk can not be used as a primary name.
+ERROR:HDLParsers:3312 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 69. Undefined symbol 'ssg'.
+ERROR:HDLParsers:1209 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" Line 69. ssg: Undefined symbol (last report in this block)
 --> 
 
-Total memory usage is 114752 kilobytes
+Total memory usage is 114156 kilobytes
 
-Number of errors   :   18 (   0 filtered)
-Number of warnings :    6 (   0 filtered)
+Number of errors   :   31 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

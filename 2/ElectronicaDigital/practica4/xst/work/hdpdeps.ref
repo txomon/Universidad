@@ -1,13 +1,20 @@
-V3 7
-EN work/contjohn 0 FL F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd \
+V3 11
+FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd 2010/10/21.14:02:56 J.36
+EN work/contbcd 1287663328 FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd \
       PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
       PB ieee/STD_LOGIC_UNSIGNED 1177545583
-AR work/contjohn/Behavioral 0 \
-      FL F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd \
-      EN work/contjohn 0
-EN work/Placa 0 FL F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd \
+AR work/contbcd/Behavioral 1287663329 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd EN work/contbcd 1287663328
+FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd 2010/10/21.14:05:15 J.36
+EN work/contjohn 1287663326 FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd \
       PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
       PB ieee/STD_LOGIC_UNSIGNED 1177545583
-AR work/practica4/Behavioral 0 \
-      FL F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd \
-      EN work/practica4 0
+AR work/contjohn/Behavioral 1287663327 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd EN work/contjohn 1287663326
+FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd 2010/10/21.14:15:16 J.36
+EN work/Placa 1287663330 FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd \
+      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
+      PB ieee/STD_LOGIC_UNSIGNED 1177545583
+AR work/Placa/Behavioral 1287663331 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd EN work/Placa 1287663330 \
+      CP contjohn CP contbcd

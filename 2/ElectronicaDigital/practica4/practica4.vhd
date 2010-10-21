@@ -37,41 +37,64 @@ entity Placa is
     an   : out std_logic_vector(3 downto 0);   -- anodos display
     ssg  : out std_logic_vector(7 downto 0));  -- 7 segmentos
 end Placa;
+	
+	
+architecture Behavioral of Placa is	
 
-architecture Behavioral of practica4 is
-signal enable,rst,clk,dir : std_logic;
+COMPONENT contjohn
+	PORT(
+		clk : IN std_logic;
+		rst : IN std_logic;
+		dir : IN std_logic;
+		enable : IN std_logic;          
+		led : OUT std_logic_vector(7 downto 0)
+		);
+	END COMPONENT;
+	
+COMPONENT contbcd
+	PORT(
+		clk : IN std_logic;
+		rst : IN std_logic;
+		dir : IN std_logic;
+		enable : IN std_logic;          
+		ssg : OUT std_logic_vector(7 downto 0)
+		);
+	END COMPONENT;
+
+signal enable,rst,clk,dir	:	std_logic;
+signal contador				:	std_logic_vector(25 downto 0);
 
 begin
-	enable <= swt(0);
+	enable <= swt(0);	-- 1 si 0 no
 	rst <= btn(0);
-	dir <= swt(1);
+	dir <= swt(1); 	-- 1 para arriba 0 para abajo
 	
-	clk : process(mclk)
+	process(mclk)
 	begin
-		clk <= not(clk);
-		wait for 1s;
+		contador <= contador+1;
+		clk <= contador(25);
 	end process;
+	
+		
+		cont1 : contjohn
+		port map (
+			clk => clk,
+			led => led,
+			rst => rst,
+			dir => dir,
+			enable => enable
+		);
 
-	mux : process(enable)
-	begin
-		if enable = 0 then		
-			contjohn : contjohn
-			port map (
-				clk => clk,
-				led => led,
-				rst => rst,
-				dir => dir
-			);
-		else
-			contbsd : contbsd
-			port map (
-				clk => clk,
-				ssg => ssg,
-				rst => rst,
-				dir => dir
-			);
-		end if;
-	end process;
+		cont2 : contbcd
+		port map (
+			clk => clk,
+			ssg => ssg,
+			rst => rst,
+			dir => dir,
+			enable => enable
+		);
+
+
 
 end Behavioral;
 

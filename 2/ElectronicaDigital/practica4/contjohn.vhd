@@ -32,9 +32,9 @@ port(
 	clk		:	in		std_logic;
 	rst		:	in		std_logic;
 	dir		:	in		std_logic;
+	enable	:	in		std_logic;
 	led		:	out	std_logic_vector(7 downto 0));
 	
-
 end contjohn;
 
 architecture Behavioral of contjohn is
@@ -44,18 +44,22 @@ begin
 	leds <= x"00";
 	contador : process (clk)
 	begin
-		if rst = 0 then 
-			led <= "10101010";
-		else
-			if clk'event&clk='1' then
-				if dir=1 then
-					leds <= leds (6 downto 0) & leds(7);
-				else
-					leds <= leds (0)& leds(7 downto 1);
+		if enable = '1' then
+			if rst = '0' then 
+				leds <= x"00";
+				led <= "10101010" OR leds;
+			else
+				if rising_edge(clk) then
+					if dir='1' then
+						leds <= leds (6 downto 0) & leds(7);
+					else
+						leds <= leds (0)& leds(7 downto 1);
+					end if;
 				end if;
 			end if;
-		end if;	
+		end if;
 	end process;
+
 
 end Behavioral;
 
