@@ -1,10 +1,10 @@
 Release 9.2i - xst J.36
 Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to ./xst/projnav.tmp
-CPU : 0.00 / 0.13 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.13 s | Elapsed : 0.00 / 0.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
  
 --> Reading design: entidad.prj
 
@@ -36,7 +36,7 @@ Ignore Synthesis Constraint File   : NO
 ---- Target Parameters
 Output File Name                   : "entidad"
 Output Format                      : NGC
-Target Device                      : xc3s200-4-ft256
+Target Device                      : xc3s400-4-ft256
 
 ---- Source Options
 Top Module Name                    : entidad
@@ -98,11 +98,11 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" in Library work.
-Entity <sumador> compiled.
-Entity <sumador> (Architecture <behavioral>) compiled.
-Compiling vhdl file "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" in Library work.
-Architecture behavioral of Entity entidad is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica3/sumador.vhd" in Library work.
+Architecture behavioral of Entity sumador is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica3/main3.vhd" in Library work.
+Entity <entidad> compiled.
+Entity <entidad> (Architecture <behavioral>) compiled.
 
 =========================================================================
 *                     Design Hierarchy Analysis                         *
@@ -116,7 +116,7 @@ Analyzing hierarchy for entity <sumador> in library <work> (architecture <Behavi
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing Entity <entidad> in library <work> (Architecture <behavioral>).
-INFO:Xst:1561 - "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" line 102: Mux is complete : default of case is discarded
+INFO:Xst:1561 - "C:/MJ/2/ElectronicaDigital/practica3/main3.vhd" line 102: Mux is complete : default of case is discarded
 Entity <entidad> analyzed. Unit <entidad> generated.
 
 Analyzing Entity <sumador> in library <work> (Architecture <Behavioral>).
@@ -130,7 +130,7 @@ Entity <sumador> analyzed. Unit <sumador> generated.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <sumador>.
-    Related source file is "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd".
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica3/sumador.vhd".
 WARNING:Xst:2734 - Property "use_dsp48" is not applicable for this technology.
     Found 4-bit adder for signal <suma>.
     Summary:
@@ -139,7 +139,7 @@ Unit <sumador> synthesized.
 
 
 Synthesizing Unit <entidad>.
-    Related source file is "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd".
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica3/main3.vhd".
 WARNING:Xst:647 - Input <btn> is never used.
 WARNING:Xst:647 - Input <mclk> is never used.
     Found 16x8-bit ROM for signal <ssg>.
@@ -163,7 +163,7 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-Loading device for application Rf_Device from file '3s200.nph' in environment C:\Archivos de programa\Xilinx ISE 9.2i.
+Loading device for application Rf_Device from file '3s400.nph' in environment C:\Archivos de programa\Xilinx ISE 9.2i.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -221,10 +221,10 @@ Design Statistics
 Cell Usage :
 # BELS                             : 20
 #      GND                         : 1
-#      LUT2                        : 1
-#      LUT3                        : 4
-#      LUT4                        : 12
-#      MUXF5                       : 1
+#      LUT2                        : 2
+#      LUT3                        : 3
+#      LUT4                        : 11
+#      MUXF5                       : 2
 #      VCC                         : 1
 # IO Buffers                       : 28
 #      IBUF                        : 8
@@ -234,10 +234,10 @@ Cell Usage :
 Device utilization summary:
 ---------------------------
 
-Selected Device : 3s200ft256-4 
+Selected Device : 3s400ft256-4 
 
- Number of Slices:                       9  out of   1920     0%  
- Number of 4 input LUTs:                17  out of   3840     0%  
+ Number of Slices:                       9  out of   3584     0%  
+ Number of 4 input LUTs:                16  out of   7168     0%  
  Number of IOs:                         33
  Number of bonded IOBs:                 28  out of    173    16%  
 
@@ -272,7 +272,7 @@ Speed Grade: -4
    Minimum period: No path found
    Minimum input arrival time before clock: No path found
    Maximum output required time after clock: No path found
-   Maximum combinational path delay: 14.070ns
+   Maximum combinational path delay: 12.890ns
 
 Timing Detail:
 --------------
@@ -280,32 +280,32 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 204 / 16
+  Total number of paths / destination ports: 215 / 16
 -------------------------------------------------------------------------
-Delay:               14.070ns (Levels of Logic = 6)
+Delay:               12.890ns (Levels of Logic = 6)
   Source:            swt<0> (PAD)
-  Destination:       ssg<2> (PAD)
+  Destination:       ssg<4> (PAD)
 
-  Data Path: swt<0> to ssg<2>
+  Data Path: swt<0> to ssg<4>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             4   0.821   1.256  swt_0_IBUF (led_0_OBUF)
-     LUT4:I0->O            4   0.551   0.943  suma/Madd_suma_cy<1>11 (suma/Madd_suma_cy<1>)
-     LUT4:I3->O            7   0.551   1.261  salida<2>1 (salida<2>)
-     LUT3:I1->O            1   0.551   1.140  Mrom_ssg340 (Mrom_ssg3_map12)
-     LUT3:I0->O            1   0.551   0.801  Mrom_ssg342 (Mrom_ssg2)
-     OBUF:I->O                 5.644          ssg_2_OBUF (ssg<2>)
+     LUT4:I0->O            3   0.551   0.933  suma/Madd_suma_cy<1>11 (suma/Madd_suma_cy<1>)
+     LUT4:I3->O            8   0.551   1.422  salida<2>1 (salida<2>)
+     LUT2:I0->O            1   0.551   0.000  Mrom_ssg5_G (N32)
+     MUXF5:I1->O           1   0.360   0.801  Mrom_ssg5 (Mrom_ssg4)
+     OBUF:I->O                 5.644          ssg_4_OBUF (ssg<4>)
     ----------------------------------------
-    Total                     14.070ns (8.669ns logic, 5.401ns route)
-                                       (61.6% logic, 38.4% route)
+    Total                     12.890ns (8.478ns logic, 4.412ns route)
+                                       (65.8% logic, 34.2% route)
 
 =========================================================================
-CPU : 3.34 / 3.50 s | Elapsed : 3.00 / 3.00 s
+CPU : 3.50 / 3.66 s | Elapsed : 3.00 / 4.00 s
  
 --> 
 
-Total memory usage is 136476 kilobytes
+Total memory usage is 139424 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)
