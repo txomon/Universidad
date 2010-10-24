@@ -63,6 +63,7 @@ COMPONENT contbcd
 
 signal enable,rst,clk,dir	:	std_logic;
 signal contador				:	std_logic_vector(25 downto 0);
+signal bcd						:	std_logic_vector(3 downto 0);
 
 begin
 	enable <= swt(0);	-- 1 si 0 no
@@ -88,7 +89,7 @@ begin
 		cont2 : contbcd
 		port map (
 			clk => clk,
-			ssg => ssg,
+			bcd => bcd,
 			rst => rst,
 			dir => dir,
 			enable => enable
