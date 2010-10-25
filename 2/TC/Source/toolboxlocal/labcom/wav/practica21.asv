@@ -1,0 +1,26 @@
+ t=(0:1/8000:0.62);
+ f=100
+ x1=cos(2*pi*f*t)
+ x2=wavread('hola_mik.wav')'
+ sound(x1,8000);
+ sound(x2,8000);
+ plot(t,x1)
+ pause;
+ close;
+ plot(t,x2)
+ pause;
+ close;
+ fft_plot (x1,8000)
+ pause;
+ close;
+ fft_plot (x2,8000)
+ pause;
+ close;
+ %parte dos
+ y=a*[1+0.25*x1]*cos(2*pi*2000*t);
+ y=[1+0.25*x1]*cos(2*pi*2000*t);
+ y=[1+(0.25*x1)]*cos(2*pi*2000*t);
+ y=[1+(0.25*x1)]*(cos(2*pi*2000*t));
+ y=(1+(0.25*x1)).(cos(2*pi*2000*t));
+ 
+ 

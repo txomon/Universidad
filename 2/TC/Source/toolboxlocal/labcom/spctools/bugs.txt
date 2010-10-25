@@ -1,0 +1,106 @@
+
+This is a BETA release of the SPC Toolbox and as such, is bound to have
+a number of bugs.  Of course, unlike Matlab (and Mathworks Toolboxes),
+you didn't pay any money for this software.  This software is also a
+one-man project (designer, writer, QA controller, etc).  Hence, I won't
+feel too bad if you find some bugs but I would appreciate knowing if
+you find any so I can fix them (I do want to deliver a quality
+product).  Anyway, here are a few known problems.
+
+
+Slow to start GUI Application
+----------------------------------
+This is not a bug, it's just a side effect of Matlab being an
+interpreted language.  The long startup time the first time a GUI is
+started occurs because of the number of files which have to be read and
+internally compiled by Matlab.  Some speed increase can be realized by
+installing the SPC Toolbox in the "../matlab/toolbox" directory.
+
+
+Bus errors, IO Errors, and Segmentation Violations on Unix platforms.
+---------------------------------------------------------------------
+Quite frequently, you can experience these errors when running SPC GUI
+applications on UNIX platforms.  These do not occur when running under
+MS-Windows Matlab.  As near as I can figure, these errors are due to
+the kluggy interface between Matlab and X-Windows.  If you get these
+errors and can find an action that can consistently reproduce the
+error, contact The Mathworks like you would for any other Matlab bug.
+
+
+Memory fragmentation
+--------------------
+Sometimes after opening and closing several large spectral surfaces
+using the SPECT3D application, the surface will seemingly stop
+rendering and then do nothing.  Pressing control-C is required to bring
+control back.  Near as I can figure, Matlab has fragmented memory so
+bad its gotten lost.  The only thing I know what to do is save your
+workspace, quit Matlab, restart it, and reload your workspace.
+
+
+Edit boxes on frames in MS-Windows Matlab
+-----------------------------------------
+For some reason, The Mathworks didn't program the uicontrols so that an
+edit box is visible when displayed on top of a frame in the MS-Windows
+version of Matlab.  Under X-Windows, an edit box appears on a frame
+appears as a shadowed depression.  Under MS-Windows, the only way to
+make an edit box visible is to display it in a different color.  I've
+tried to go back and put in a switch to do this on when running
+MS-Windows Matlab.  However, I may have missed a few.  If you suspect
+there is supposed to be and edit box there, watch for the cursor to
+change to an I-beam or just keep clicking in the area until you see a
+text cursor appear.
+
+
+Watch pointer
+-------------
+The watch pointer is used to indicate Matlab is busy performing some
+operation with an SPC Toolbox application.  Unfortunately, the cursor
+does not change to a watch when set as advertised on all platforms.  To
+get it to appear, a DRAWNOW command is required and this causes the
+plot to keep redrawing, slowing down the GUI application.  I've left
+out the drawnow commands hoping this will be fixed in version 4.2 of
+Matlab.
+
+
+Menu item checkmarks under MS-Windows Matlab
+--------------------------------------------
+When setting the 'Checked' uimenu property to 'on' under MS-Windows
+Matlab, the checkmark is not drawn.  To draw the checkmark, you first
+have to create the control with UICONTROL, render it with a DRAWNOW
+command and then use the SET command to make the checkmark appear.
+Sometimes, this was inconvient to implements so not all default menu
+items are checked until after a menu item has been selected.  Again,
+hopefully this will be fixed in Matlab 4.2.
+
+
+Cursor colors
+-------------
+The line cursors are line objects drawn with the EraseMode property set
+to 'xor'.  Unfortunately, the color cannot be set in this mode.  To
+tell the truth, I can't tell how you can predict what color of an
+object you will get when you set the EraseMode to xor.  I know it
+depends on the background but still, if you use the same background
+color on different hardware (even on machines of the same architecture,
+the cursors come up in differenct colors.  This can sometimes make them
+invisible or nearly invisible.  If this occurs, fool around with the
+setting for the SPC_WINDOW or SPC_AXIS variables in the spcolors.m
+configuration file.  If anybody can find the secret to predicting the
+color, please let me know.
+
+
+spect2d
+-------
+This is still a project under works.  I know there are some power
+normalizaiton  problems.  Someday, I hope to get them figured out.
+
+
+MS-Windows Video Drivers
+------------------------
+Some video drivers "leak" system resources (as reported on the Program
+Manager's About box).  Opening too many windows will cause funny things
+to happen to the screen or crash Windows.  ATI drivers are notorious for
+doing this.  The driver that comes with the TI 4000M Notebook computer
+does this too.  There is no fix except get you video card supplier to
+fix the leaks or buy a new card.  I hear the Diamond cards have better
+drivers but I haven't observed this personnally.
+

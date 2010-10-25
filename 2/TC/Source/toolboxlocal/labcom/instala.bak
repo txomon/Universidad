@@ -1,0 +1,2 @@
+xcopy . "c:\apl\MatLab 5\toolbox\labcom" /s
+del "c:\apl\MatLab 5\toolbox\labcom\instala.bat"

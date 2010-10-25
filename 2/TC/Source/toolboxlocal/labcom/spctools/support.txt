@@ -1,0 +1,58 @@
+
+
+Introduction
+------------
+The SPC (Signal Processing & Communications) software package is
+the result of thesis work originated in Spring 1993 at the Naval
+Postgraduate School as originally a class project in speech
+processing. The project developed an interactive, user-friendly,
+tools to analyze speech signals using MATLAB. Then, as with any
+project left without a fixed deadline, it grew to include more
+sophisticated analysis tools such as various filtering techniques, Autoregressive (AR) and linear Auto Regressive-Moving Average (ARMA)
+modeling methods. Finally, it was expanded to include some basic
+communication tools.
+
+This is a BETA release version of this software package designed
+to provide the user with a series of data manipulation tools which
+use the MATLAB v.4 graphical user interface. SPC can be used in the
+classroom to illustrate and to reinforce basic concepts in digital
+signal processing and communications. It frees the user from having
+to write and debug his/her own code and gives him/her more time to
+understand the advantages and drawbacks of each technique included
+in the package. It can also be used as a basic analysis and modeling
+tool for research in Signal Processing. SPC is well suited to reinforce
+basic concepts presented in the following courses offered at the Naval
+Postgraduate School:
+
+	EC4410: Speech Processing,
+	EC4420: Modern Spectral Estimation,
+	EC4470: Adaptive Signal Processing,
+	EC3420: Statistical Digital Signal Processing,
+	EC3400: Digital Signal Processing,
+	EC2500: Communication Theory.
+
+We hope that users will find this package useful, and we welcome any
+comments and suggestions regarding this software at
+
+	Dennis W. Brown, dwbrown@access.digex.net
+
+	or
+
+	Prof. Monique Fargues, fargues@ece.nps.navy.mil.
+
+
+Disclaimer
+----------
+This software package is made available as a service to the academic
+community. It is not a depository of Mathworks approved software.
+The authors make no warranty of any kind, expressed or implied, with
+regard to these programs or the documentation contained in this report.
+Use of these programs is at the users' own risk and the authors
+disclaim all liability for injury, damage, and losses that may result
+from their use. Losses include, but are not limited to, loss of data
+or data being rendered inaccurate, or losses sustained by third parties
+for a failure of the software to operate. The U.S. Government assumes no
+responsibility for the information provided. Matlab is a trademark of
+The Mathworks. Microsoft Windows is a trademark of Microsoft. Sun is a
+trademark of Sun Microsystems. Soundblaster is a trademark of Creative
+Labs, Inc.
