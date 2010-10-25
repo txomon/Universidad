@@ -138,3 +138,26 @@ mc7=mean(yc7)
 
 % d)
 
+Pxx = PSD(ya1,length(ya1),fs,WINDOW);
+Pxx = PSD(ya2,length(ya2),fs,WINDOW);
+Pxx = PSD(ya3,length(ya3),fs,WINDOW);
+Pxx = PSD(ya4,length(ya4),fs,WINDOW);
+Pxx = PSD(ya5,length(ya5),fs,WINDOW);
+Pxx = PSD(ya6,length(ya6),fs,WINDOW);
+Pxx = PSD(ya7,length(ya7),fs,WINDOW);
+
+Pxx = PSD(yb1,length(yb1),fs,WINDOW);
+Pxx = PSD(yb2,length(yb2),fs,WINDOW);
+Pxx = PSD(yb3,length(yb3),fs,WINDOW);
+Pxx = PSD(yb4,length(yb4),fs,WINDOW);
+Pxx = PSD(yb5,length(yb5),fs,WINDOW);
+Pxx = PSD(yb6,length(yb6),fs,WINDOW);
+Pxx = PSD(yb7,length(yb7),fs,WINDOW);
+
+Pxx = PSD(yc1,length(yc1),fs,WINDOW);
+Pxx = PSD(yc2,length(yc2),fs,WINDOW);
+Pxx = PSD(yc3,length(yc3),fs,WINDOW);
+Pxx = PSD(yc4,length(yc4),fs,WINDOW);
+Pxx = PSD(yc5,length(yc5),fs,WINDOW);
+Pxx = PSD(yc6,length(yc6),fs,WINDOW);
+Pxx = PSD(yc7,length(yc7),fs,WINDOW);
