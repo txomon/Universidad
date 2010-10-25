@@ -1,3 +1,103 @@
-function [ output_args ] = ejercicio3( input_args )
+function [ output_args ] = ejercicio3( audio )
 %EJERCICIO3 Summary of this function goes here
+% Codigo de l?nea Funcion a utilizar
+% Unipolar NRZ uniponrz()
+% Polar NRZ polarnrz()
+% Bipolar NRZ bipolnrz()
+% Unipolar RZ uniporz()
+% Polar NRZ polarrz()
+% Bipolar RZ bipolrz()
+% Manchester manchest()
+
 %  Detailed explanation goes here
+
+a=[ 0 1 0 1 0 1 1 1 0 0 0 1 1 0 0 1 1 1 0 0 ];
+b=[ 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 ];
+c=[ 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 ];
+
+Rb=20;
+fs=1000;
+msg=a;
+
+[ya1,ta1] = uniponrz(Rb,msg,fs);
+[ya2,ta2] = polarnrz(Rb,msg,fs);
+[ya3,ta3] = bipolnrz(Rb,msg,fs);
+[ya4,ta4] = uniporz(Rb,msg,fs);
+[ya5,ta5] = polarrz(Rb,msg,fs);
+[ya6,ta6] = bipolrz(Rb,msg,fs);
+[ya7,ta7] = manchest(Rb,msg,fs);
+
+msg=b;
+
+[yb1,tb1] = uniponrz(Rb,msg,fs);
+[yb2,tb2] = polarnrz(Rb,msg,fs);
+[yb3,tb3] = bipolnrz(Rb,msg,fs);
+[yb4,tb4] = uniporz(Rb,msg,fs);
+[yb5,tb5] = polarrz(Rb,msg,fs);
+[yb6,tb6] = bipolrz(Rb,msg,fs);
+[yb7,tb7] = manchest(Rb,msg,fs);
+
+msg=c;
+
+[yc1,tc1] = uniponrz(Rb,msg,fs);
+[yc2,tc2] = polarnrz(Rb,msg,fs);
+[yc3,tc3] = bipolnrz(Rb,msg,fs);
+[yc4,tc4] = uniporz(Rb,msg,fs);
+[yc5,tc5] = polarrz(Rb,msg,fs);
+[yc6,tc6] = bipolrz(Rb,msg,fs);
+[yc7,tc7] = manchest(Rb,msg,fs);
+
+
+hold on;
+
+subplot(3,3,1);
+plot(ta1,ya1);
+subplot(3,3,2);
+plot(tb1,yb1);
+subplot(3,3,3);
+plot(tc1,yc1);
+
+subplot(3,3,4);
+plot(ta2,ya2);
+subplot(3,3,5);
+plot(tb2,yb2);
+subplot(3,3,6);
+plot(tc2,yc2);
+
+subplot(3,3,7);
+plot(ta3,ya3);
+subplot(3,3,8);
+plot(tb3,yb3);
+subplot(3,3,9);
+plot(tc3,yc3);
+hold off;
+pause;
+
+subplot(4,3,1);
+plot(ta4,ya4);
+hold on;
+subplot(4,3,2);
+plot(tb4,yb4);
+subplot(4,3,3);
+plot(tc4,yc4);
+
+subplot(4,3,4);
+plot(ta5,ya5);
+subplot(4,3,5);
+plot(tb5,yb5);
+subplot(4,3,6);
+plot(tc5,yc5);
+
+subplot(4,3,7);
+plot(ta6,ya6);
+subplot(4,3,8);
+plot(tb6,yb6);
+subplot(4,3,9);
+plot(tc6,yc6);
+
+subplot(4,3,10);
+plot(ta7,ya7);
+subplot(4,3,11);
+plot(tb7,yb7);
+subplot(4,3,12);
+plot(tc7,yc7);
