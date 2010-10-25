@@ -101,3 +101,40 @@ subplot(4,3,11);
 plot(tb7,yb7);
 subplot(4,3,12);
 plot(tc7,yc7);
+
+
+
+ma1=mean(ya1) 
+ma2=mean(ya2) 
+ma3=mean(ya3) 
+ma4=mean(ya4) 
+ma5=mean(ya5) 
+ma6=mean(ya6) 
+ma7=mean(ya7) 
+
+mb1=mean(yb1) 
+mb2=mean(yb2) 
+mb3=mean(yb3) 
+mb4=mean(yb4) 
+mb5=mean(yb5) 
+mb6=mean(yb6) 
+mb7=mean(yb7) 
+
+mc1=mean(yc1) 
+mc2=mean(yc2) 
+mc3=mean(yc3) 
+mc4=mean(yc4) 
+mc5=mean(yc5) 
+mc6=mean(yc6) 
+mc7=mean(yc7) 
+
+
+% las que no pasan son la 1,2,4 y 5, vamos que la 3 la 6 y la 7 pasan, que
+% son la Bipolar NRZ, Bipolar RZ y la Manchester
+
+% para transmitir con una sincronia de 0'4 minimo, habria que utilizar la
+% codificacion Polar NRZ o la Manchester
+
+
+% d)
+
