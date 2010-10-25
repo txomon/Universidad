@@ -1,0 +1,173 @@
+Installation notes for the SPC Toolbox
+Dennis W. Brown
+Naval Postgraduate School
+Monterey, CA 93943
+dwbrown@access.digex.net
+Last Updated: 11-6-95
+Obtaining the SPC Toolbox
+
+The SPC Toolbox is distributed in TAR format for UNIX platforms and 
+by ZIP file for PC's.
+UNIX install:
+
+1) Create a subdirectory in the "../matlab/toolbox" directory 
+called "spctools".  You can create a subdirectory in your "home" 
+or other directory but you will have to edit the files 
+"spcpath.m" and "spcdata.m" to set the 'matdir' to point to the 
+"spctools" directory.
+2) Copy the "spctools.tar" file to this directory.
+3) Extract the tar file with the command "tar xvf spctools.tar".
+----
+NOTE: If you are installing spctools.sh downloaded from the ftp 
+site at ftp.mathworks.com, use the following
+1) ignore.
+2) Copy the spctools.sh file to the "../matlab/toolbox" 
+directory.
+3) Extract the sh file with the command "sh spctools.sh".  
+Extracting the sh file will create the "spctools" subdirectory.
+----
+4) Modify the MATLAB resource file to append the "spctools" and 
+all the subdirectories contained in it to the MATLABPATH.  
+Optionally, a link can be made from a directory already contained 
+in the MATLABPATH to point to the file "spcpath.m" in the 
+spctools directory.  In this configuration, users must first 
+execute the SPCPATH program to gain full access to the SPC 
+Toolbox.
+5. Execute the "spcsetup" to set the proper file permissions and 
+the "spcmex" script to create the mex-files (not required but it 
+will speed up execution of some functions).  Mex files for MS-
+Windows are distributed in "spctools.zip".  Mex files for other 
+platforms will have to be created using you're own tools (I 
+currently have access to a PC only).
+Files
+-----
+After extracting the SPC Toolbox, the spctools directory will 
+contain a number of C-shell scripts, m-files and data files, and 
+a number of subdirectories.  The SPC Toolbox commands are grouped 
+into the subdirectories according to function.
+C-Shell scripts:
+----------------
+spcsetup - Script to set the file permissions on all the SPC 
+Toolbox files.  This should be executed once to ensure proper 
+file permissions are set.
+spcmex - Script to compile mex files on UNIX machines.  The 
+toolbox is distributed with Sun4 mex files.  If you are running 
+on an machine other than a sun4, you will have to execute this 
+script.
+
+spctar - Script to create a tar file containing the SPC Toolbox.
+spc2sun - Script to copy the SPC Toolbox from an MS-DOS formatted 
+floppy disk containing the SPC Toolbox from a directory called 
+"spctools".  The script uses the mtools commands for DOS copying. 
+The SPC toolbox is installed into the current directory on the 
+Sun workstation.
+spc2flop - Script to copy the SPC Toolbox from a Sun to a MS-DOS 
+formatted floppy disk.  The script places all the necessary files 
+a directory structure beginning with the directory "spctools" on 
+the floppy disk.  The MS-DOS mex files are copied to the floppy 
+so that it may then be used to install the SPC Toolbox on a PC.  
+This file will have to be edited to ensure the SPCDIR variable 
+points to the spctools directory.  The script should be edited to 
+ensure the proper disk drive if pointed to the the "drive" 
+variable.  The SPC Toolbox requires a high density (1.4 MByte) 
+floppy.  The user is asked if they want to format the floppy 
+before the files are copied.
+M-files:
+--------
+spcpath - Program to append the SPC toolbox directories to the 
+users MATLABPATH.  This script is used when the SPC Toolbox is 
+installed such that to access it, the user must first execute 
+this program.  If the SPC Toolbox has not been setup in the 
+toolbox directory (or the MATLAB environment variable does not 
+set or not set to point to the "../matlab" directory), this file 
+will have to be edited so that the "matdir" variable points the 
+the "../matlab" directory.
+spcdata - Loads the data used in the SPC Toolbox documentation 
+into the MATLAB workspace.  If the SPC Toolbox has not been setup 
+in the toolbox directory (or the MATLAB environment variable does 
+is not set or not set to point to the "../matlab" directory), 
+this file will have to be edited so that the "matdir" variable 
+points the the "../matlab" directory.
+spconfig - Copies "spcolors.m", "spcbandw.m" and "spcolor.m" 
+configuration files to the users home directory.  The user can 
+then edit the spcolor.m or spcbandw.m files to suit their 
+preference and then copy them over the spcolors.m file.  For this 
+file to override the one in the SPC Toolbox directory, it must be 
+reachable first in the MATLABPATH.  If the SPC Toolbox has not 
+been setup in the toolbox directory (or the MATLAB environment 
+variable does is not set or not set to point to the "../matlab" 
+directory), this file will have to be edited so that the "matdir" 
+variable points the the "../matlab" directory.
+spc2flop - Program a user can use to copy the SPC Toolbox to an 
+MS-DOS formatted floppy disk.  The program simply executes the 
+spc2flop C-shell script.
+Use of undocumented functions
+
+-----------------------------
+The SPC Toolbox has made use of one undocumented function, one 
+undocumented m-file, and one undocumented uicontrol property.  In 
+the case of the uicontrol "Enable" property, the Mathworks made 
+extensive use of it in their MATLAB Expo demonstration.  Thus, 
+any version that ships with the MATLAB Expo should not have a 
+problem running the SPC Toolbox.
+The undocumented built-in function "gs_modal_warn" provides a 
+modal
+
+dialog box for reporting errors to the user and requires their 
+acknowledgement before any continuation with MATLAB operation.  
+The undocumented m-file provides the same functionality but is 
+not modal. Because these two functions are not included in every 
+version of MATLAB, some problems may occur.  To avoid this, the 
+only use of these functions are in the m-file SPCWARN.M in the 
+spctools/progtool directory.  You should edit this file if your 
+version of MATLAB does not support either of these functions.  
+This file check the computer it is running on and determines if 
+it is OK to run either function.  YOU have to tell the function 
+it is OK.  Simply edit this file to include your computer in the 
+comparison operation if the following command will create a 
+dialog box on your screen.
+
+	>> gs_modal_dialog('Test','OK')
+
+The file SPCWARN.M has been shipped with the gs_modal_dialog 
+command enabled for PCWIN and SUN4 computers.
+SPC Toolbox for MS-Windows MATLAB
+
+---------------------------------
+The SPC Toolbox is now available for downloading to a floppy disk 
+which can then be used to install the SPC Toolbox on a PC running 
+MATLAB for Windows.  To download a copy:
+
+1. Log into a Sun with a floppy drive on the ECE network.
+2. Start MATLAB 4.1 (matlab).
+3. Execute "spcpath" from the MATLAB prompt to access the SPC 
+Toolbox.
+4. Place a 1.4M high density floppy disk into the disk drive.
+5. Execute "spc2flop" from the MATLAB prompt.  You'll be asked if 
+you want to format the floppy.  After formatting, the SPC Toolbox 
+files will be copied to a directory called "spctools" on the 
+floppy.  After completion, the disk will automatically be ejected 
+from the drive.  The toolbox will use the full 1.4M floppy.
+6. To load SPC Tools onto a PC, from the MS-DOS prompt change to 
+the "\matlab\toolbox" directory.
+7. Place the floppy into a drive and execute
+xcopy a:\spctools spctools /s
+
+
+from the MS-DOS prompt.  If you have not loaded SPC previously 
+(e.g. the \matlab\toolbox\spctools directory does not already 
+exist), you'll be asked if "spctools" is a directory or a 
+filename.  Respond that it is a directory.  After a lot of disk 
+activity, SPC Tools will be loaded onto your hard drive.
+8. To complete installation, add the following directories to the 
+"\matlab\matlabrc.m" file where the matlabpath variable is set.
+....
+'e:\matlab\toolbox\spctools;',... 
+'e:\matlab\toolbox\spctools\spcgui;',... 
+'e:\matlab\toolbox\spctools\spcline;',... 
+'e:\matlab\toolbox\spctools\spcprog;',... 
+'e:\matlab\toolbox\spctools\spcspch;',...
+
+'e:\matlab\toolbox\spctools\spccomms;',... 
+'e:\matlab\toolbox\spctools\spcutil;',... 
+'e:\matlab\toolbox\spctools\spcsspi;',... ...

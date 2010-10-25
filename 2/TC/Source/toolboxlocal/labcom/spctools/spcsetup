@@ -1,0 +1,61 @@
+# spcsetup
+# script to setup spctools for netwide use
+#
+# execute from the spctools directory
+#
+# by Dennis W. Brown, 3-16-94
+
+unset verbose
+
+# directories to setup
+set d = (spccomms spcgui spcline spcprog spcspch spcsspi spcutil)
+
+foreach dname ( $d )
+
+	# change it's permission
+	chmod 755 $dname
+
+	# change to directory
+	cd $dname
+
+	# file permissions (readable by all)
+	chmod 644 *.m *.c
+
+	# executable by all (the UNIX mex files)
+	chmod 755 *.mex*
+
+	# readable by all (DOS mex file included in distro) for spc2flop.m
+	chmod 744 *.mex
+
+	# back a directory
+	cd ..
+
+end;
+
+# files in spctools dir to setup
+set datafiles = (seatsit.voc t0x.mat uuu.mat datax.mat)
+set mscripts = (spcolors.m spcbandw.m spcpath.m spcdata.m \
+	spcolor.m Contents.m Readme.m)
+set cscripts = (spcmex spcsetup )
+set users = (spc2flop)
+set text = (install.txt descript.txt bugs.txt support.txt)
+
+# UNIX filename particulars
+if ( -e contents.m ) mv contents.m Contents.m
+if ( -e readme.m ) mv readme.m Readme.m
+
+chmod 644 $datafiles $mscripts
+chmod 755 $users
+chmod 755 $text
+chmod 700 $cscripts
+
+# let anybody read the tar file
+chmod 644 spctools.tar
+
+unset d
+unset datafiles
+unset mscripts
+unset cscripts
+unset users
+unset text
+
