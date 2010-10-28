@@ -15,9 +15,6 @@
 <msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">led</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contjohn</arg>&gt; has a constant value of <arg fmt="%s" index="3">10101010</arg> during circuit operation. The register is replaced by logic.
 </msg>
 
-<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot; line <arg fmt="%d" index="2">103</arg>: Mux is complete : default of case is discarded
-</msg>
-
 <msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">clk</arg>&gt; is never used.
 </msg>
 
@@ -33,6 +30,9 @@
 <msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used.
 </msg>
 
+<msg type="warning" file="Xst" num="1305" delta="unknown" >Output &lt;<arg fmt="%s" index="1">ssg</arg>&gt; is never assigned. Tied to value <arg fmt="%s" index="2">00000000</arg>.
+</msg>
+
 <msg type="warning" file="Xst" num="1306" delta="unknown" >Output &lt;<arg fmt="%s" index="1">an</arg>&gt; is never assigned.
 </msg>
 
@@ -46,13 +46,6 @@
 </msg>
 
 <msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
-</msg>
-
-<msg type="warning" file="Xst" num="2170" delta="unknown" >Unit <arg fmt="%s" index="1">Placa</arg> : the following signal(s) form a combinatorial loop: </msg>
-
-<msg type="warning" file="Xst" num="2170" delta="unknown" >Unit <arg fmt="%s" index="1">Placa</arg> : the following signal(s) form a combinatorial loop: </msg>
-
-<msg type="info" file="Xst" num="2169" delta="unknown" >HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 </msg>
 
 </messages>
