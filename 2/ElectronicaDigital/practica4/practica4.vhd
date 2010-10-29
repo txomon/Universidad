@@ -51,35 +51,46 @@ COMPONENT contjohn
 		);
 	END COMPONENT;
 	
+	
 COMPONENT contbcd
 	PORT(
 		clk : IN std_logic;
 		rst : IN std_logic;
 		dir : IN std_logic;
 		enable : IN std_logic;          
+		bcd : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+	
+	
+	COMPONENT bcdssg
+	PORT(
+		bcd : IN std_logic_vector(3 downto 0);          
 		ssg : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
 
-signal enable,rst,clk,dir	:	std_logic;
+signal enable,rst,enable_slow,dir	:	std_logic;
 signal contador				:	std_logic_vector(25 downto 0);
 signal bcd						:	std_logic_vector(3 downto 0);
 
 begin
-	enable <= swt(0);	-- 1 si 0 no
+	enable <= swt(0)and enable_slow;	-- 1 si 0 no
 	rst <= btn(0);
 	dir <= swt(1); 	-- 1 para arriba 0 para abajo
 	
 	process(mclk)
 	begin
-		contador <= contador+1;
-		clk <= contador(25);
+	if rising_edge(mclk) then
+			contador <= contador+1;
+			enable_slow <= contador(0);
+	end if;
 	end process;
 	
 		
 		cont1 : contjohn
 		port map (
-			clk => clk,
+			clk => mclk,
 			led => led,
 			rst => rst,
 			dir => dir,
@@ -88,14 +99,19 @@ begin
 
 		cont2 : contbcd
 		port map (
-			clk => clk,
+			clk => mclk,
 			bcd => bcd,
 			rst => rst,
 			dir => dir,
 			enable => enable
 		);
-
-
+		
+		conversor : bcdssg
+		port map (
+			bcd => bcd,
+			ssg => ssg
+		);
+an <= x"f";
 
 end Behavioral;
 

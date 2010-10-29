@@ -1,10 +1,10 @@
 Release 9.2i - xst J.36
 Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to ./xst/projnav.tmp
-CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Reading design: entidad.prj
 
@@ -116,7 +116,6 @@ Analyzing hierarchy for entity <sumador> in library <work> (architecture <Behavi
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing Entity <entidad> in library <work> (Architecture <behavioral>).
-INFO:Xst:1561 - "C:/MJ/2/ElectronicaDigital/practica3/main3.vhd" line 102: Mux is complete : default of case is discarded
 Entity <entidad> analyzed. Unit <entidad> generated.
 
 Analyzing Entity <sumador> in library <work> (Architecture <Behavioral>).
@@ -219,12 +218,12 @@ Design Statistics
 # IOs                              : 33
 
 Cell Usage :
-# BELS                             : 20
+# BELS                             : 19
 #      GND                         : 1
-#      LUT2                        : 2
+#      LUT2                        : 1
 #      LUT3                        : 3
-#      LUT4                        : 11
-#      MUXF5                       : 2
+#      LUT4                        : 12
+#      MUXF5                       : 1
 #      VCC                         : 1
 # IO Buffers                       : 28
 #      IBUF                        : 8
@@ -272,7 +271,7 @@ Speed Grade: -4
    Minimum period: No path found
    Minimum input arrival time before clock: No path found
    Maximum output required time after clock: No path found
-   Maximum combinational path delay: 12.890ns
+   Maximum combinational path delay: 14.077ns
 
 Timing Detail:
 --------------
@@ -280,28 +279,28 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 215 / 16
+  Total number of paths / destination ports: 211 / 16
 -------------------------------------------------------------------------
-Delay:               12.890ns (Levels of Logic = 6)
+Delay:               14.077ns (Levels of Logic = 6)
   Source:            swt<0> (PAD)
-  Destination:       ssg<4> (PAD)
+  Destination:       ssg<2> (PAD)
 
-  Data Path: swt<0> to ssg<4>
+  Data Path: swt<0> to ssg<2>
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O             4   0.821   1.256  swt_0_IBUF (led_0_OBUF)
      LUT4:I0->O            3   0.551   0.933  suma/Madd_suma_cy<1>11 (suma/Madd_suma_cy<1>)
      LUT4:I3->O            8   0.551   1.422  salida<2>1 (salida<2>)
-     LUT2:I0->O            1   0.551   0.000  Mrom_ssg5_G (N32)
-     MUXF5:I1->O           1   0.360   0.801  Mrom_ssg5 (Mrom_ssg4)
-     OBUF:I->O                 5.644          ssg_4_OBUF (ssg<4>)
+     LUT3:I0->O            1   0.551   0.996  Mrom_ssg321 (N16)
+     LUT4:I1->O            1   0.551   0.801  Mrom_ssg3 (Mrom_ssg2)
+     OBUF:I->O                 5.644          ssg_2_OBUF (ssg<2>)
     ----------------------------------------
-    Total                     12.890ns (8.478ns logic, 4.412ns route)
-                                       (65.8% logic, 34.2% route)
+    Total                     14.077ns (8.669ns logic, 5.408ns route)
+                                       (61.6% logic, 38.4% route)
 
 =========================================================================
-CPU : 3.50 / 3.66 s | Elapsed : 3.00 / 4.00 s
+CPU : 3.48 / 3.64 s | Elapsed : 3.00 / 3.00 s
  
 --> 
 
@@ -309,5 +308,5 @@ Total memory usage is 139424 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    3 (   0 filtered)
-Number of infos    :    1 (   0 filtered)
+Number of infos    :    0 (   0 filtered)
 

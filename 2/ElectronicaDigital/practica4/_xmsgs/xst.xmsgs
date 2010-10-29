@@ -5,51 +5,14 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLParsers" num="3607" delta="unknown" >Unit <arg fmt="%s" index="1">work/contbcd</arg> is now defined in a different file.  It was defined in &quot;<arg fmt="%s" index="2">C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot;, and is now defined in &quot;<arg fmt="%s" index="3">F:/Universidad/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot;.
+<msg type="warning" file="Xst" num="1541" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; line <arg fmt="%d" index="2">109</arg>: Different binding for component: &lt;<arg fmt="%s" index="3">bcdssg</arg>&gt;. Port &lt;<arg fmt="%s" index="4">bcd</arg>&gt; does not match.
 </msg>
 
-<msg type="warning" file="HDLParsers" num="3607" delta="unknown" >Unit <arg fmt="%s" index="1">work/contbcd/Behavioral</arg> is now defined in a different file.  It was defined in &quot;<arg fmt="%s" index="2">C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot;, and is now defined in &quot;<arg fmt="%s" index="3">F:/Universidad/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot;.
+<msg type="warning" file="Xst" num="819" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot; line <arg fmt="%d" index="2">48</arg>: The following signals are missing in the process sensitivity list:
+<arg fmt="%s" index="3">numero</arg>.
 </msg>
 
-<msg type="warning" file="Xst" num="819" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd</arg>&quot; line <arg fmt="%d" index="2">45</arg>: The following signals are missing in the process sensitivity list:
-<arg fmt="%s" index="3">enable, rst</arg>.
-</msg>
-
-<msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">leds</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contjohn</arg>&gt; has a constant value of <arg fmt="%s" index="3">00000000</arg> during circuit operation. The register is replaced by logic.
-</msg>
-
-<msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">led</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contjohn</arg>&gt; has a constant value of <arg fmt="%s" index="3">10101010</arg> during circuit operation. The register is replaced by logic.
-</msg>
-
-<msg type="warning" file="Xst" num="819" delta="unknown" >&quot;<arg fmt="%s" index="1">F:/Universidad/2/ElectronicaDigital/practica4/contbcd.vhd</arg>&quot; line <arg fmt="%d" index="2">44</arg>: The following signals are missing in the process sensitivity list:
-<arg fmt="%s" index="3">enable, rst</arg>.
-</msg>
-
-<msg type="info" file="Xst" num="2679" delta="unknown" >Register &lt;<arg fmt="%s" index="1">salida</arg>&gt; in unit &lt;<arg fmt="%s" index="2">contbcd</arg>&gt; has a constant value of <arg fmt="%s" index="3">10001000</arg> during circuit operation. The register is replaced by logic.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">clk</arg>&gt; is never used.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">dir</arg>&gt; is never used.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">rst</arg>&gt; is never used.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">enable</arg>&gt; is never used.
-</msg>
-
-<msg type="warning" file="Xst" num="1305" delta="unknown" >Output &lt;<arg fmt="%s" index="1">ssg</arg>&gt; is never assigned. Tied to value <arg fmt="%s" index="2">00000000</arg>.
-</msg>
-
-<msg type="warning" file="Xst" num="646" delta="unknown" >Signal &lt;<arg fmt="%s" index="1">salida</arg>&gt; is assigned but never used.
-</msg>
-
-<msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
-</msg>
-
-<msg type="warning" file="Xst" num="1306" delta="unknown" >Output &lt;<arg fmt="%s" index="1">an</arg>&gt; is never assigned.
+<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd</arg>&quot; line <arg fmt="%d" index="2">74</arg>: Mux is complete : default of case is discarded
 </msg>
 
 <msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">btn&lt;3:1&gt;</arg>&gt; is never used.
@@ -58,13 +21,79 @@
 <msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">swt&lt;7:2&gt;</arg>&gt; is never used.
 </msg>
 
-<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">mclk</arg>&gt; is never used.
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_1</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
 </msg>
 
-<msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
 </msg>
 
-<msg type="info" file="Xst" num="1767" delta="unknown" >HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_8</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_9</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_10</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_11</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_12</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_24</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_25</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
 </msg>
 
 </messages>

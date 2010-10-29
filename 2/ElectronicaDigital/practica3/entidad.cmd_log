@@ -55,3 +55,27 @@ map -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -p x
 par -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -w -intstyle ise -ol std -t 1 entidad_map.ncd entidad.ncd entidad.pcf
 trce -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -e 3 -s 4 -xml entidad entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf
 bitgen -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -f entidad.ut entidad.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "entidad.ngc" entidad.ngd
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "entidad.ngc" entidad.ngd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "entidad.ngc" entidad.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -w -intstyle ise -ol std -t 1 entidad_map.ncd entidad.ncd entidad.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -e 3 -s 4 -xml entidad entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -f entidad.ut entidad.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "entidad.ngc" entidad.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -w -intstyle ise -ol std -t 1 entidad_map.ncd entidad.ncd entidad.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -e 3 -s 4 -xml entidad entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -f entidad.ut entidad.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -ifn entidad.xst -ofn entidad.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "entidad.ngc" entidad.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o entidad_map.ncd entidad.ngd entidad.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -w -intstyle ise -ol std -t 1 entidad_map.ncd entidad.ncd entidad.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -e 3 -s 4 -xml entidad entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica3/practica3.ise" -intstyle ise -f entidad.ut entidad.ncd

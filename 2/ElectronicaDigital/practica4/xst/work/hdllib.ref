@@ -1,6 +1,8 @@
-AR placa behavioral F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl05 1287934797
-EN placa NULL F:/Universidad/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl00 1287934796
-EN contbcd NULL F:/Universidad/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl03 1287934794
-AR contbcd behavioral F:/Universidad/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl04 1287934795
-AR contjohn behavioral F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl02 1287934793
-EN contjohn NULL F:/Universidad/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl01 1287934792
+AR placa behavioral C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl05 1288271043
+AR bcdssg behavioral C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd sub00/vhpl07 1288271041
+EN placa NULL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl00 1288271042
+EN contbcd NULL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl03 1288271038
+AR contbcd behavioral C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl04 1288271039
+EN bcdssg NULL C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd sub00/vhpl06 1288271040
+AR contjohn behavioral C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl02 1288271037
+EN contjohn NULL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl01 1288271036

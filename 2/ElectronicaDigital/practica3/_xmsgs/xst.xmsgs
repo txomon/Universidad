@@ -5,9 +5,6 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica3/main3.vhd</arg>&quot; line <arg fmt="%d" index="2">102</arg>: Mux is complete : default of case is discarded
-</msg>
-
 <msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
 </msg>
 
