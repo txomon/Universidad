@@ -41,11 +41,11 @@ architecture Behavioral of contjohn is
 signal leds : std_logic_vector(7 downto 0);
 begin
 
-	contador : process (clk)
+	contador : process (clk) is
 	begin
 		if rising_edge(clk) then	
 		   if rst = '1' then 
-					leds <= x"00";
+					leds <= "00000000";
 			else
 				if enable = '1' then
 					if dir='1' then

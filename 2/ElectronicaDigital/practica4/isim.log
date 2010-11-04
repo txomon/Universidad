@@ -1,0 +1,42 @@
+ command line:
+   ./simulacion_isim_beh.exe
+     -intstyle  ise
+     -ipchost  localhost
+     -ipcport  2580
+
+Thu Nov 04 14:23:15 2010
+
+Total Line Count : 132
+
+ Elaboration time : 0.015625 sec.
+
+ Estimate current memory usage : 117.563 Meg. 
+
+ Total Signals          : 32
+ Total Nets             : 79
+ Total Signal Drivers   : 15
+ Total Blocks           : 10
+ Total Primitive Blocks : 3
+ Total Processes        : 13
+ Total Traceable Variables  : 0
+ Total Scalar Nets and Variables : 79
+ntrace select -o on -n /simulacion/mclk 
+ntrace select -o on -n /simulacion/btn 
+ntrace select -o on -n /simulacion/swt 
+ntrace select -o on -n /simulacion/led 
+ntrace select -o on -n /simulacion/an 
+ntrace select -o on -n /simulacion/ssg 
+ntrace start 
+isimrun 1000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+WARNING:Simulator:29 - at 300.000 ns(1): Warning: There is an
+   'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+isimrun 10 us 
+
+ Simulation time 0.09375 sec.
+
+ Estimate current memory usage : 125.952 Meg. 
+
+Thu Nov 04 14:29:31 2010
+

@@ -1,0 +1,10 @@
+AR placa behavioral C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl07 1288876975
+AR bcdssg behavioral C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd sub00/vhpl05 1288873037
+EN placa NULL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd sub00/vhpl06 1288876974
+EN contbcd NULL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl02 1288874798
+AR contbcd behavioral C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd sub00/vhpl03 1288874799
+AR simulacion testbench_arch C:/MJ/2/ElectronicaDigital/practica4/simulacion.vhw sub00/vhpl09 1288876994
+EN bcdssg NULL C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd sub00/vhpl04 1288873036
+AR contjohn behavioral C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl01 1288873668
+EN simulacion NULL C:/MJ/2/ElectronicaDigital/practica4/simulacion.vhw sub00/vhpl08 1288876993
+EN contjohn NULL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd sub00/vhpl00 1288873667

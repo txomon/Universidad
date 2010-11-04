@@ -75,22 +75,23 @@ signal contador				:	std_logic_vector(25 downto 0);
 signal bcd						:	std_logic_vector(3 downto 0);
 
 begin
-	enable <= swt(0)and enable_slow;	-- 1 si 0 no
+	enable <= swt(0);	-- 1 si 0 no
 	rst <= btn(0);
 	dir <= swt(1); 	-- 1 para arriba 0 para abajo
 	
-	process(mclk)
+	process(mclk) is
 	begin
 	if rising_edge(mclk) then
 			contador <= contador+1;
-			enable_slow <= contador(0);
+			enable_slow <= contador(23); --FPGA
 	end if;
 	end process;
 	
 		
 		cont1 : contjohn
 		port map (
-			clk => mclk,
+			clk => mclk, -- Simulacion
+--			clk => enable_slow, -- FPGA
 			led => led,
 			rst => rst,
 			dir => dir,
@@ -99,7 +100,8 @@ begin
 
 		cont2 : contbcd
 		port map (
-			clk => mclk,
+			clk => mclk, -- Simulacion
+--			clk => enable_slow, -- FPGA
 			bcd => bcd,
 			rst => rst,
 			dir => dir,
@@ -111,7 +113,7 @@ begin
 			bcd => bcd,
 			ssg => ssg
 		);
-an <= x"f";
+an <= "1000";
 
 end Behavioral;
 
