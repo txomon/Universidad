@@ -1,0 +1,6 @@
+[Inputs]
+clk
+=actual[3:0]=
+[Outputs]
+=siguiente[3:0]=
+[BiDir]
