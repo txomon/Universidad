@@ -1,10 +1,10 @@
 Release 9.2i - xst J.36
 Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to ./xst/projnav.tmp
-CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Parameter xsthdpdir set to ./xst
-CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 1.00 s
+CPU : 0.00 / 0.14 s | Elapsed : 0.00 / 0.00 s
  
 --> Reading design: principal.prj
 
@@ -99,18 +99,19 @@ Slice Utilization Ratio Delta      : 5
 *                          HDL Compilation                              *
 =========================================================================
 WARNING:HDLParsers:3516 - Found error in file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd". 
+WARNING:HDLParsers:3516 - Found error in file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd". 
 WARNING:HDLParsers:3458 - Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal_vhdl.prj" may be inaccurate. Please put the files in the project file in correct order with keyword 'nosort' at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
 Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd" in Library work.
 Architecture behavioral of Entity cambio_estado is up to date.
 Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" in Library work.
 Entity <estado_siguiente> compiled.
-ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 110. parse error, unexpected WHEN, expecting SEMICOLON
-ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 118. parse error, unexpected WHEN, expecting SEMICOLON
+ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 123. parse error, unexpected WHEN, expecting END
+ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 128. parse error, unexpected PROCESS, expecting IF
 --> 
 
 Total memory usage is 114156 kilobytes
 
 Number of errors   :    2 (   0 filtered)
-Number of warnings :    2 (   0 filtered)
+Number of warnings :    3 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

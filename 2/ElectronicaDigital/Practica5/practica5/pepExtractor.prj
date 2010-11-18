@@ -1,1 +1,4 @@
+work	cambio_estado.vhd
 work	estado_siguiente.vhd
+work	principal.vhd
+work	salidas.vhd

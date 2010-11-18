@@ -53,8 +53,10 @@ architecture Behavioral of principal is
 		s1 : IN std_logic;
 		s2 : IN std_logic;
 		reset : IN std_logic;
-		actual : IN std_logic_vector(3 downto 0);          
-		siguiente : OUT std_logic_vector(3 downto 0)
+		actual : IN std_logic_vector(3 downto 0);
+		num_actual : IN std_logic_vector(3 downto 0);          
+		siguiente : OUT std_logic_vector(3 downto 0);
+		num_siguiente : OUT std_logic_vector(3 downto 0)
 		);
 	END COMPONENT;
 
@@ -69,6 +71,7 @@ architecture Behavioral of principal is
 
 signal s1,s2,reset : std_logic;
 signal actual,siguiente : std_logic_vector(3 downto 0);
+signal num_actual, num_siguiente : std_logic;
 
 begin
 
@@ -90,7 +93,9 @@ port map(
 	s2 => s2,
 	reset => reset,
 	actual => actual,
-	siguiente => siguiente
+	siguiente => siguiente,
+	num_actual => num_actual,
+	num_siguiente => num_siguiente
 );
 
 an <= x"8";
@@ -99,8 +104,12 @@ c : salidas
 port map(
 	led => led,
 	ssg => ssg,
-	actual => actual
+	actual => actual,
+	num_actual => num_actual
 );
+
+
+
 
 end Behavioral;
 

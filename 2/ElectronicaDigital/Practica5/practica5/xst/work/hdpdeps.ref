@@ -1,12 +1,12 @@
 V3 15
 FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd 2010/11/11.14:54:35 J.36
-EN work/cambio_estado 1289483887 \
+EN work/cambio_estado 1290085742 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd \
       PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
       PB ieee/STD_LOGIC_UNSIGNED 1177545583
-AR work/cambio_estado/Behavioral 1289483888 \
+AR work/cambio_estado/Behavioral 1290085743 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd \
-      EN work/cambio_estado 1289483887
+      EN work/cambio_estado 1290085742
 FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd 2010/11/11.13:58:47 J.36
 EN work/estado_siguiente 1289480935 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd \

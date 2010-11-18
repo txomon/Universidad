@@ -1,5 +1,5 @@
 
--- VHDL Instantiation Created from source file salidas.vhd -- 14:05:43 11/11/2010
+-- VHDL Instantiation Created from source file salidas.vhd -- 13:29:41 11/18/2010
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types

@@ -8,13 +8,16 @@
 <msg type="warning" file="HDLParsers" num="3516" delta="unknown" >Found error in file &quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd</arg>&quot;. 
 </msg>
 
+<msg type="warning" file="HDLParsers" num="3516" delta="unknown" >Found error in file &quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd</arg>&quot;. 
+</msg>
+
 <msg type="warning" file="HDLParsers" num="3458" delta="unknown" >Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file &quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal_vhdl.prj</arg>&quot; may be inaccurate. Please put the files in the project file in correct order with keyword &apos;nosort&apos; at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
 </msg>
 
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd</arg>&quot; Line <arg fmt="%d" index="2">110</arg>. <arg fmt="%s" index="3">parse error, unexpected WHEN, expecting SEMICOLON</arg>
+<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd</arg>&quot; Line <arg fmt="%d" index="2">123</arg>. <arg fmt="%s" index="3">parse error, unexpected WHEN, expecting END</arg>
 </msg>
 
-<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd</arg>&quot; Line <arg fmt="%d" index="2">118</arg>. <arg fmt="%s" index="3">parse error, unexpected WHEN, expecting SEMICOLON</arg>
+<msg type="error" file="HDLParsers" num="164" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd</arg>&quot; Line <arg fmt="%d" index="2">128</arg>. <arg fmt="%s" index="3">parse error, unexpected PROCESS, expecting IF</arg>
 </msg>
 
 </messages>

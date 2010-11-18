@@ -34,8 +34,9 @@ port(
 	s2 : in std_logic;
 	reset  : in std_logic;
 	actual  : in std_logic_vector(3 downto 0);
-	siguiente  : out std_logic_vector(3 downto 0));
-
+	siguiente  : out std_logic_vector(3 downto 0);
+	num_actual 	: in	std_logic_vector(3 downto 0);
+	num_siguiente : out std_logic_vector(3 downto 0));
 end estado_siguiente;
 
 architecture Behavioral of estado_siguiente is
@@ -45,37 +46,39 @@ process (actual, s1, s2, reset) is
 	begin
 		if reset = '1' then 
 			siguiente <= "1111";
+			num_siguiente <= "0000";
 		else
 			case actual is 
 				when "0000" =>
-					if (s1='1' and s2 = '0') then
-						siguiente <= actual;
-					elsif s1='0' and s2 = '0' then
+					if s1='0' and s2 = '0' then
 						siguiente <= "1111";
+					elsif s1='1' and s2 = '0' then
+						siguiente <= actual;
 					elsif s1='1' and s2 = '1' then
 						siguiente <= "0001";
 					end if;
 					
 				when "0001" =>
-					if s1='1' and s2 = '1' then
-						siguiente <= actual;
-					elsif s1='1' and s2 = '0' then
+					if s1='1' and s2 = '0' then
 						siguiente <= "0000";
+					elsif s1='1' and s2 = '1' then
+						siguiente <= actual;
 					elsif s1 = '0' and s2= '1' then
 						siguiente <= "0010";
 					end if;
 
 				when "0010" =>
-					if s1 = '0' and s2= '1' then
-						siguiente <= actual;
-					elsif s1 = '1' and s2 = '1' then 
+					if s1 = '1' and s2 = '1' then 
 						siguiente <= "0001";
+					elsif s1 = '0' and s2= '1' then
+						siguiente <= actual;
 					elsif s1 = '0' and s2 = '0' then
 						siguiente <= "0011";
 					end if;
 					
 				when "0011" =>
 						siguiente <= "1111";
+						num_siguiente <= num_actual+1;
 					
 				when "0100" =>
 					if s1 = '0' and s2 = '0' then
@@ -105,7 +108,8 @@ process (actual, s1, s2, reset) is
 					end if;
 					
 				when "0111" =>
-					 siguiente <= "1111"
+					 siguiente <= "1111";
+					 num_siguiente <= num_actual-1;
 
 				when "1111" =>
 					if s1 = '1' and s2 = '0' then 
@@ -113,14 +117,14 @@ process (actual, s1, s2, reset) is
 					if s1 = '0' and s2 = '0' then 
 						siguiente <= actual;
 					if s1 = '0' and s2 = '1' then 
-						siguiente <= "0100"
+						siguiente <= "0100";
+					end if;
 
 				when others =>
 					siguiente <= "1111";
 
 			end case;
-			
-	
+		end if;
 	end process;
 end Behavioral;
 

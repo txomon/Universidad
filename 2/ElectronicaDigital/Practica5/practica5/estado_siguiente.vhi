@@ -1,5 +1,5 @@
 
--- VHDL Instantiation Created from source file estado_siguiente.vhd -- 14:06:06 11/11/2010
+-- VHDL Instantiation Created from source file estado_siguiente.vhd -- 13:30:53 11/18/2010
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types
@@ -11,8 +11,10 @@
 		s1 : IN std_logic;
 		s2 : IN std_logic;
 		reset : IN std_logic;
-		actual : IN std_logic_vector(3 downto 0);          
-		siguiente : OUT std_logic_vector(3 downto 0)
+		actual : IN std_logic_vector(3 downto 0);
+		num_actual : IN std_logic_vector(3 downto 0);          
+		siguiente : OUT std_logic_vector(3 downto 0);
+		num_siguiente : OUT std_logic_vector(3 downto 0)
 		);
 	END COMPONENT;
 
@@ -21,7 +23,9 @@
 		s2 => ,
 		reset => ,
 		actual => ,
-		siguiente => 
+		siguiente => ,
+		num_actual => ,
+		num_siguiente => 
 	);
 
 
