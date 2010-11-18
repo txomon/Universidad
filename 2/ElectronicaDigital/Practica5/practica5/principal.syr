@@ -98,20 +98,239 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-WARNING:HDLParsers:3516 - Found error in file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd". 
-WARNING:HDLParsers:3516 - Found error in file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd". 
-WARNING:HDLParsers:3458 - Because of erroneous VHDL file(s), automatic determination of correct order of compilation of files in project file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal_vhdl.prj" may be inaccurate. Please put the files in the project file in correct order with keyword 'nosort' at end of the project file, or compile your vhdl file(s) individually to find and fix the error(s) in your vhdl file(s). 
 Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd" in Library work.
 Architecture behavioral of Entity cambio_estado is up to date.
 Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" in Library work.
-Entity <estado_siguiente> compiled.
-ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 123. parse error, unexpected WHEN, expecting END
-ERROR:HDLParsers:164 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" Line 128. parse error, unexpected PROCESS, expecting IF
+Architecture behavioral of Entity estado_siguiente is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd" in Library work.
+Architecture behavioral of Entity salidas is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd" in Library work.
+Entity <principal> compiled.
+Entity <principal> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <principal> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <cambio_estado> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <estado_siguiente> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <salidas> in library <work> (architecture <behavioral>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <principal> in library <work> (Architecture <behavioral>).
+Entity <principal> analyzed. Unit <principal> generated.
+
+Analyzing Entity <cambio_estado> in library <work> (Architecture <behavioral>).
+Entity <cambio_estado> analyzed. Unit <cambio_estado> generated.
+
+Analyzing Entity <estado_siguiente> in library <work> (Architecture <behavioral>).
+WARNING:Xst:819 - "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd" line 47: The following signals are missing in the process sensitivity list:
+   num_actual.
+Entity <estado_siguiente> analyzed. Unit <estado_siguiente> generated.
+
+Analyzing Entity <salidas> in library <work> (Architecture <behavioral>).
+Entity <salidas> analyzed. Unit <salidas> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <cambio_estado>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd".
+    Found 4-bit register for signal <siguiente>.
+    Summary:
+	inferred   4 D-type flip-flop(s).
+Unit <cambio_estado> synthesized.
+
+
+Synthesizing Unit <estado_siguiente>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd".
+WARNING:Xst:2734 - Property "use_dsp48" is not applicable for this technology.
+WARNING:Xst:737 - Found 4-bit latch for signal <siguiente>.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+WARNING:Xst:737 - Found 4-bit latch for signal <num_siguiente>.
+INFO:Xst:2371 - HDL ADVISOR - Logic functions respectively driving the data and gate enable inputs of this latch share common terms. This situation will potentially lead to setup/hold violations and, as a result, to simulation problems. This situation may come from an incomplete case statement (all selector values are not covered). You should carefully review if it was in your intentions to describe such a latch.
+    Found 4-bit addsub for signal <num_siguiente$addsub0000>.
+    Summary:
+	inferred   1 Adder/Subtractor(s).
+Unit <estado_siguiente> synthesized.
+
+
+Synthesizing Unit <salidas>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd".
+    Found 16x8-bit ROM for signal <led>.
+    Found 16x8-bit ROM for signal <ssg>.
+    Summary:
+	inferred   2 ROM(s).
+Unit <salidas> synthesized.
+
+
+Synthesizing Unit <principal>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd".
+WARNING:Xst:647 - Input <btn<1>> is never used.
+WARNING:Xst:647 - Input <swt> is never used.
+WARNING:Xst:646 - Signal <num_siguiente> is assigned but never used.
+WARNING:Xst:653 - Signal <num_actual> is used but never assigned. Tied to value 0000.
+WARNING:Xst:653 - Signal <actual> is used but never assigned. Tied to value 0000.
+WARNING:Xst:646 - Signal <siguiente> is assigned but never used.
+Unit <principal> synthesized.
+
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+WARNING:Xst:524 - All outputs of the instance <a> of the block <cambio_estado> are unconnected in block <principal>.
+   This instance will be removed from the design along with all underlying logic
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 2
+ 16x8-bit ROM                                          : 2
+# Adders/Subtractors                                   : 1
+ 4-bit addsub                                          : 1
+# Latches                                              : 2
+ 4-bit latch                                           : 2
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '3s400.nph' in environment C:\Archivos de programa\Xilinx ISE 9.2i.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# ROMs                                                 : 2
+ 16x8-bit ROM                                          : 2
+# Adders/Subtractors                                   : 1
+ 4-bit addsub                                          : 1
+# Latches                                              : 2
+ 4-bit latch                                           : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:1710 - FF/Latch  <num_siguiente_0> (without init value) has a constant value of 0 in block <estado_siguiente>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <num_siguiente_1> (without init value) has a constant value of 0 in block <estado_siguiente>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <num_siguiente_2> (without init value) has a constant value of 0 in block <estado_siguiente>.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch  <num_siguiente_3> (without init value) has a constant value of 0 in block <estado_siguiente>.
+INFO:Xst:2261 - The FF/Latch <siguiente_1> in Unit <estado_siguiente> is equivalent to the following 2 FFs/Latches, which will be removed : <siguiente_2> <siguiente_3> 
+WARNING:Xst:2677 - Node <b/siguiente_1> of sequential type is unconnected in block <principal>.
+WARNING:Xst:2677 - Node <b/siguiente_0> of sequential type is unconnected in block <principal>.
+
+Optimizing unit <principal> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block principal, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Found no macro
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : principal.ngr
+Top Level Output File Name         : principal
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 33
+
+Cell Usage :
+# BELS                             : 2
+#      GND                         : 1
+#      VCC                         : 1
+# IO Buffers                       : 20
+#      OBUF                        : 20
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s400ft256-4 
+
+ Number of Slices:                       0  out of   3584     0%  
+ Number of IOs:                         33
+ Number of bonded IOBs:                 20  out of    173    11%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+No clock signals found in this design
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: No path found
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+CPU : 3.03 / 3.20 s | Elapsed : 4.00 / 4.00 s
+ 
 --> 
 
-Total memory usage is 114156 kilobytes
+Total memory usage is 140448 kilobytes
 
-Number of errors   :    2 (   0 filtered)
-Number of warnings :    3 (   0 filtered)
-Number of infos    :    0 (   0 filtered)
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   17 (   0 filtered)
+Number of infos    :    4 (   0 filtered)
 

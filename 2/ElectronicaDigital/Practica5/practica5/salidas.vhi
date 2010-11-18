@@ -1,5 +1,5 @@
 
--- VHDL Instantiation Created from source file salidas.vhd -- 13:29:41 11/18/2010
+-- VHDL Instantiation Created from source file salidas.vhd -- 14:36:52 11/18/2010
 --
 -- Notes: 
 -- 1) This instantiation template has been automatically generated using types
@@ -8,7 +8,8 @@
 
 	COMPONENT salidas
 	PORT(
-		actual : IN std_logic_vector(3 downto 0);          
+		actual : IN std_logic_vector(3 downto 0);
+		num_actual : IN std_logic_vector(3 downto 0);          
 		led : OUT std_logic_vector(7 downto 0);
 		ssg : OUT std_logic_vector(7 downto 0)
 		);
@@ -17,7 +18,8 @@
 	Inst_salidas: salidas PORT MAP(
 		led => ,
 		ssg => ,
-		actual => 
+		actual => ,
+		num_actual => 
 	);
 
 

@@ -17,3 +17,40 @@ xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyl
 xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
 xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
 xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "principal.ngc" principal.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o principal_map.ncd principal.ngd principal.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -w -intstyle ise -ol std -t 1 principal_map.ncd principal.ncd principal.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -e 3 -s 4 -xml principal principal.ncd -o principal.twr principal.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -f principal.ut principal.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "principal.ngc" principal.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o principal_map.ncd principal.ngd principal.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -w -intstyle ise -ol std -t 1 principal_map.ncd principal.ncd principal.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -e 3 -s 4 -xml principal principal.ncd -o principal.twr principal.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -f principal.ut principal.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "principal.ngc" principal.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o principal_map.ncd principal.ngd principal.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -w -intstyle ise -ol std -t 1 principal_map.ncd principal.ncd principal.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -e 3 -s 4 -xml principal principal.ncd -o principal.twr principal.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -f principal.ut principal.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -ifn principal.xst -ofn principal.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "principal.ngc" principal.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o principal_map.ncd principal.ngd principal.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -w -intstyle ise -ol std -t 1 principal_map.ncd principal.ncd principal.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -e 3 -s 4 -xml principal principal.ncd -o principal.twr principal.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/Practica5/practica5/practica5.ise" -intstyle ise -f principal.ut principal.ncd

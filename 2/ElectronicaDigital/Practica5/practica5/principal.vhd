@@ -63,15 +63,17 @@ architecture Behavioral of principal is
 
 	COMPONENT salidas
 	PORT(
-		actual : IN std_logic_vector(3 downto 0);          
+		actual : IN std_logic_vector(3 downto 0);
+		num_actual : IN std_logic_vector(3 downto 0);          
 		led : OUT std_logic_vector(7 downto 0);
 		ssg : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
-
+	
+	
 signal s1,s2,reset : std_logic;
 signal actual,siguiente : std_logic_vector(3 downto 0);
-signal num_actual, num_siguiente : std_logic;
+signal num_actual, num_siguiente : std_logic_vector(3 downto 0);
 
 begin
 
@@ -97,8 +99,9 @@ port map(
 	num_actual => num_actual,
 	num_siguiente => num_siguiente
 );
-
-an <= x"8";
+with num_actual select
+	an <= "0000" when "1101",
+			"0111" when others;
 
 c : salidas
 port map(

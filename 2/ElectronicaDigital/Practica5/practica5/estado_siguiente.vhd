@@ -39,9 +39,11 @@ port(
 	num_siguiente : out std_logic_vector(3 downto 0));
 end estado_siguiente;
 
-architecture Behavioral of estado_siguiente is
+architecture Behavioral of estado_siguiente is 
 
 begin
+
+
 process (actual, s1, s2, reset) is
 	begin
 		if reset = '1' then 
@@ -78,7 +80,7 @@ process (actual, s1, s2, reset) is
 					
 				when "0011" =>
 						siguiente <= "1111";
-						num_siguiente <= num_actual+1;
+						num_siguiente <= num_actual+'1';
 					
 				when "0100" =>
 					if s1 = '0' and s2 = '0' then
@@ -109,14 +111,14 @@ process (actual, s1, s2, reset) is
 					
 				when "0111" =>
 					 siguiente <= "1111";
-					 num_siguiente <= num_actual-1;
+					 num_siguiente <= num_actual-'1';
 
 				when "1111" =>
 					if s1 = '1' and s2 = '0' then 
 						siguiente <= "0000";
-					if s1 = '0' and s2 = '0' then 
+					elsif s1 = '0' and s2 = '0' then 
 						siguiente <= actual;
-					if s1 = '0' and s2 = '1' then 
+					elsif s1 = '0' and s2 = '1' then 
 						siguiente <= "0100";
 					end if;
 
