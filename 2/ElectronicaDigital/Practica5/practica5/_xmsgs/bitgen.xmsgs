@@ -5,7 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;0&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
+<msg type="warning" file="PhysDesignRules" num="372" delta="unknown" >Gated clock. Clock net <arg fmt="%s" index="1">siguiente_not0001</arg> is sourced by a combinatorial pin. This is not good design practice. Use the CE pin to control the loading of data into the flip-flop.
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;1&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
@@ -15,9 +15,6 @@
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;3&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;0&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;1&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
@@ -36,12 +33,6 @@
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;6&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;7&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">mclk_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
 </msg>
 
 </messages>

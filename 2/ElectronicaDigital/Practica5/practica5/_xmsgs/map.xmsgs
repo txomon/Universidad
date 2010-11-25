@@ -5,25 +5,29 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="LIT" num="243" delta="unknown" >Logical network <arg fmt="%s" index="1">mclk_IBUF</arg> has no load.
+<msg type="warning" file="LIT" num="243" delta="unknown" >Logical network <arg fmt="%s" index="1">btn&lt;3&gt;_IBUF</arg> has no load.
 </msg>
 
-<msg type="warning" file="LIT" num="395" delta="unknown" >The above <arg fmt="%s" index="1">warning</arg> message <arg fmt="%s" index="2">base_net_load_rule</arg> is repeated <arg fmt="%d" index="3">12</arg> more times for the following (max. 5 shown):
-<arg fmt="%s" index="4">btn&lt;3&gt;_IBUF,
-btn&lt;2&gt;_IBUF,
+<msg type="warning" file="LIT" num="395" delta="unknown" >The above <arg fmt="%s" index="1">warning</arg> message <arg fmt="%s" index="2">base_net_load_rule</arg> is repeated <arg fmt="%d" index="3">8</arg> more times for the following (max. 5 shown):
+<arg fmt="%s" index="4">btn&lt;2&gt;_IBUF,
 btn&lt;1&gt;_IBUF,
-btn&lt;0&gt;_IBUF,
-swt&lt;7&gt;_IBUF</arg>
+swt&lt;6&gt;_IBUF,
+swt&lt;5&gt;_IBUF,
+swt&lt;4&gt;_IBUF</arg>
 To see the details of these <arg fmt="%s" index="5">warning</arg> messages, please use the -detail switch.
 </msg>
 
 <msg type="info" file="MapLib" num="562" delta="unknown" >No environment variables are currently set.
 </msg>
 
+<msg type="info" file="MapLib" num="863" delta="unknown" >The following Virtex BUFG(s) is/are being retargeted to Virtex2 BUFGMUX(s) with input tied to I0 and Select pin tied to constant 0:
+<arg fmt="%s" index="1">BUFGP symbol &quot;mclk_BUFGP&quot; (output signal=mclk_BUFGP)</arg>
+</msg>
+
 <msg type="info" file="LIT" num="244" delta="unknown" >All of the single ended outputs in this design are using slew rate limited output drivers. The delay on speed critical single ended outputs can be dramatically reduced by designating them as fast outputs in the schematic.
 </msg>
 
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;0&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
+<msg type="warning" file="PhysDesignRules" num="372" delta="unknown" >Gated clock. Clock net <arg fmt="%s" index="1">siguiente_not0001</arg> is sourced by a combinatorial pin. This is not good design practice. Use the CE pin to control the loading of data into the flip-flop.
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;1&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
@@ -33,9 +37,6 @@ To see the details of these <arg fmt="%s" index="5">warning</arg> messages, plea
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">btn&lt;3&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;0&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;1&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
@@ -54,12 +55,6 @@ To see the details of these <arg fmt="%s" index="5">warning</arg> messages, plea
 </msg>
 
 <msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;6&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">swt&lt;7&gt;_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
-</msg>
-
-<msg type="warning" file="PhysDesignRules" num="367" delta="unknown" >The signal &lt;<arg fmt="%s" index="1">mclk_IBUF</arg>&gt; is incomplete. The signal does not drive any load pins in the design.
 </msg>
 
 </messages>

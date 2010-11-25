@@ -1,3 +1,33 @@
 run 1000 ns
-run 10000 ns
+run 1000000 ns
+run 1000000 ns
+run 1000000 ns
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+step
+run 1000000 ns
 exit

@@ -2,39 +2,83 @@
    ./simulacion_isim_beh.exe
      -intstyle  ise
      -ipchost  localhost
-     -ipcport  1367
+     -ipcport  1298
 
-Thu Nov 18 14:57:23 2010
+Thu Nov 25 14:40:18 2010
 
-Total Line Count : 145
+Total Line Count : 258
 
  Elaboration time : 0 sec.
 
- Estimate current memory usage : 117.563 Meg. 
+ Estimate current memory usage : 117.567 Meg. 
 
- Total Signals          : 33
- Total Nets             : 52
+ Total Signals          : 18
+ Total Nets             : 42
  Total Signal Drivers   : 12
- Total Blocks           : 10
- Total Primitive Blocks : 3
- Total Processes        : 10
+ Total Blocks           : 7
+ Total Primitive Blocks : 1
+ Total Processes        : 11
  Total Traceable Variables  : 0
- Total Scalar Nets and Variables : 52
+ Total Scalar Nets and Variables : 42
 ntrace select -o on -n /simulacion/mclk 
 ntrace select -o on -n /simulacion/btn 
 ntrace select -o on -n /simulacion/swt 
 ntrace select -o on -n /simulacion/led 
 ntrace select -o on -n /simulacion/an 
 ntrace select -o on -n /simulacion/ssg 
+ntrace select -o on -n /simulacion/UUT/s1 
+ntrace select -o on -n /simulacion/UUT/s2 
 ntrace start 
 isimrun 1000 ns 
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-isimrun 10000 ns 
+isimrun 1000000 ns 
+isimrun 1000000 ns 
+restart
+isimrun 1000000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
+restart
+isimstep 
+Simulator is doing circuit initialization process.
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+Finished circuit initialization process.
+restart
+isimstep 
+Simulator is doing circuit initialization process.
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+isimstep 
+Finished circuit initialization process.
+isimstep 
+restart
+isimrun 1000000 ns 
+Simulator is doing circuit initialization process.
+Finished circuit initialization process.
 
- Simulation time 0.015625 sec.
+ Simulation time 0.203125 sec.
 
- Estimate current memory usage : 125.952 Meg. 
+ Estimate current memory usage : 125.956 Meg. 
 
-Thu Nov 18 14:59:40 2010
+Thu Nov 25 14:47:24 2010
 

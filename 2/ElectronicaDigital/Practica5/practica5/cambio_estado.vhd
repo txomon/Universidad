@@ -37,7 +37,7 @@ end cambio_estado;
 architecture Behavioral of cambio_estado is
 
 begin
-process (clk) is
+process (clk)
 	begin
 		if rising_edge(clk) then
 			siguiente <= actual;

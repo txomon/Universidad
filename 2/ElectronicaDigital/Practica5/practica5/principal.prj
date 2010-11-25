@@ -1,4 +1,1 @@
-vhdl work "salidas.vhd"
-vhdl work "estado_siguiente.vhd"
-vhdl work "cambio_estado.vhd"
 vhdl work "principal.vhd"

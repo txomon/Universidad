@@ -46,6 +46,14 @@ SIGNAL_ORDER_BEGIN
 mclk
 btn
 swt
+swt
+swt
+swt
+swt
+swt
+swt
+swt
+swt
 an
 led
 ssg

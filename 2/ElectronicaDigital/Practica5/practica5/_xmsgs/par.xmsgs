@@ -8,9 +8,6 @@
 <msg type="info" file="Par" num="282" delta="unknown" >No user timing constraints were detected or you have set the option to ignore timing constraints (&quot;par -x&quot;). Place and Route will run in &quot;Performance Evaluation Mode&quot; to automatically improve the performance of all internal clocks in this design. The PAR timing summary will list the performance achieved for each clock. Note: For the fastest runtime, set the effort level to &quot;std&quot;.  For best performance, set the effort level to &quot;high&quot;. For a balance between the fastest runtime and best performance, set the effort level to &quot;med&quot;.
 </msg>
 
-<msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">btn&lt;0&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
-</msg>
-
 <msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">btn&lt;1&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
 </msg>
 
@@ -18,9 +15,6 @@
 </msg>
 
 <msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">btn&lt;3&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
-</msg>
-
-<msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">swt&lt;0&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
 </msg>
 
 <msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">swt&lt;1&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
@@ -41,17 +35,19 @@
 <msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">swt&lt;6&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
 </msg>
 
-<msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">swt&lt;7&gt;_IBUF</arg> has no load.  PAR will not attempt to route this signal.
+<msg type="info" file="Timing" num="2761" delta="unknown" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
+
+<msg type="warning" file="Route" num="455" delta="unknown" >CLK Net:<arg fmt="%s" index="1">actual&lt;8&gt;</arg> may have excessive skew because 
+   <arg fmt="%d" index="2">6</arg> CLK pins and <arg fmt="%d" index="3">5</arg> NON_CLK pins failed to route using a CLK template.
 </msg>
 
-<msg type="warning" file="Par" num="288" delta="unknown" >The signal <arg fmt="%s" index="1">mclk_IBUF</arg> has no load.  PAR will not attempt to route this signal.
+<msg type="info" file="Timing" num="2761" delta="unknown" >N/A entries in the Constraints list may indicate that the constraint does not cover any paths or that it has no requested value.</msg>
+
+<msg type="warning" file="Par" num="283" delta="unknown" >There are <arg fmt="%d" index="1">9</arg> loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
+
 </msg>
 
-<msg type="warning" file="Par" num="283" delta="unknown" >There are <arg fmt="%d" index="1">13</arg> loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
-
-</msg>
-
-<msg type="warning" file="ParHelpers" num="361" delta="unknown" >There are <arg fmt="%d" index="1">13</arg> loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
+<msg type="warning" file="ParHelpers" num="361" delta="unknown" >There are <arg fmt="%d" index="1">9</arg> loadless signals in this design. This design will cause Bitgen to issue DRC warnings.
 
 </msg>
 

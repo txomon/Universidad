@@ -1,8 +1,8 @@
-EN estado_siguiente NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd sub00/vhpl03 1290088100
-EN principal NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd sub00/vhpl00 1290088300
-EN cambio_estado NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd sub00/vhpl01 1290088098
-AR principal behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd sub00/vhpl07 1290088301
-EN salidas NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd sub00/vhpl05 1290088102
-AR salidas behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd sub00/vhpl06 1290088103
-AR estado_siguiente behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd sub00/vhpl04 1290088101
-AR cambio_estado behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd sub00/vhpl02 1290088099
+EN estado_siguiente NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd sub00/vhpl03 1290687589
+EN principal NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd sub00/vhpl00 1290692070
+EN cambio_estado NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd sub00/vhpl01 1290687587
+AR principal behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd sub00/vhpl07 1290692071
+EN salidas NULL C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd sub00/vhpl05 1290687591
+AR salidas behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd sub00/vhpl06 1290687592
+AR estado_siguiente behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd sub00/vhpl04 1290687590
+AR cambio_estado behavioral C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd sub00/vhpl02 1290687588

@@ -24,7 +24,8 @@ public:
 
     HSim__s1 SE[6];
 
-    HSim__s1 SA[7];
+  HSimEnumType Estado;
+    HSim__s1 SA[6];
     Work_principal_behavioral(const char * name);
     ~Work_principal_behavioral();
     void constructObject();

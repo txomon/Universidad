@@ -1,28 +1,28 @@
-V3 19
-FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd 2010/11/11.14:54:35 J.36
-EN work/cambio_estado 1290088493 \
+V3 16
+FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd 2010/11/25.13:07:29 J.36
+EN work/cambio_estado 1290686863 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd \
       PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
       PB ieee/STD_LOGIC_UNSIGNED 1179176991
-AR work/cambio_estado/Behavioral 1290088494 \
+AR work/cambio_estado/Behavioral 1290686864 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/cambio_estado.vhd \
-      EN work/cambio_estado 1290088493
-FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd 2010/11/18.14:27:45 J.36
-EN work/estado_siguiente 1290088495 \
+      EN work/cambio_estado 1290686863
+FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd 2010/11/25.13:07:29 J.36
+EN work/estado_siguiente 1290686865 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd \
       PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
       PB ieee/STD_LOGIC_UNSIGNED 1179176991
-AR work/estado_siguiente/Behavioral 1290088496 \
+AR work/estado_siguiente/Behavioral 1290686866 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/estado_siguiente.vhd \
-      EN work/estado_siguiente 1290088495
-FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd 2010/11/18.14:55:54 J.36
-EN work/principal 1290088640 \
+      EN work/estado_siguiente 1290686865
+FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd 2010/11/25.14:40:00 J.36
+EN work/principal 1290692415 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd \
       PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
       PB ieee/STD_LOGIC_UNSIGNED 1179176991
-AR work/principal/Behavioral 1290088641 \
+AR work/principal/Behavioral 1290692416 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/principal.vhd \
-      EN work/principal 1290088640 CP cambio_estado CP estado_siguiente CP salidas
+      EN work/principal 1290692415
 FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd 2010/11/18.14:30:02 J.36
 EN work/salidas 1290088497 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd \
@@ -31,12 +31,12 @@ EN work/salidas 1290088497 \
 AR work/salidas/Behavioral 1290088498 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/salidas.vhd \
       EN work/salidas 1290088497
-FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/simulacion.vhw 2010/11/18.14:57:04 J.36
-EN work/simulacion 1290088642 \
+FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/simulacion.vhw 2010/11/25.13:28:03 J.36
+EN work/simulacion 1290692417 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/simulacion.vhw \
       PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
       PB ieee/STD_LOGIC_UNSIGNED 1179176991 PB ieee/STD_LOGIC_TEXTIO 1179176993 \
       PB std/textio 1179176969
-AR work/simulacion/testbench_arch 1290088643 \
+AR work/simulacion/testbench_arch 1290692418 \
       FL C:/MJ/2/ElectronicaDigital/Practica5/practica5/simulacion.vhw \
-      EN work/simulacion 1290088642 CP principal
+      EN work/simulacion 1290692417 CP principal

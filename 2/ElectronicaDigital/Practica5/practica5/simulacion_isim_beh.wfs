@@ -29,6 +29,10 @@ SIGNAL_ORDER_BEGIN
 /simulacion/led
 /simulacion/an
 /simulacion/ssg
+/simulacion/UUT/s1
+/simulacion/UUT/s2
+/simulacion/UUT/actual
+/simulacion/UUT/siguiente
 SIGNAL_ORDER_END
 DIFFERENTIAL_CLKS_BEGIN
 DIFFERENTIAL_CLKS_END
@@ -53,4 +57,16 @@ SIGPROPS_BEGIN
 /simulacion/ssg
 2
 0
+/simulacion/UUT/s1
+2
+2
+/simulacion/UUT/s2
+2
+2
+/simulacion/UUT/actual
+2
+2
+/simulacion/UUT/siguiente
+2
+2
 SIGPROPS_END

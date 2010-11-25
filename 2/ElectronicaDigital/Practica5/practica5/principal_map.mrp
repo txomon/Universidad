@@ -11,22 +11,29 @@ Target Device  : xc3s400
 Target Package : ft256
 Target Speed   : -4
 Mapper Version : spartan3 -- $Revision: 1.36 $
-Mapped Date    : Thu Nov 18 14:48:29 2010
+Mapped Date    : Thu Nov 25 14:34:44 2010
 
 Design Summary
 --------------
 Number of errors:      0
-Number of warnings:   15
+Number of warnings:   12
 Logic Utilization:
+  Total Number Slice Registers:        24 out of   7,168    1%
+    Number used as Flip Flops:                     9
+    Number used as Latches:                       15
+  Number of 4 input LUTs:             159 out of   7,168    2%
 Logic Distribution:
-    Number of Slices containing only related logic:       0 out of       0    0%
-    Number of Slices containing unrelated logic:          0 out of       0    0%
+  Number of occupied Slices:                           89 out of   3,584    2%
+    Number of Slices containing only related logic:      89 out of      89  100%
+    Number of Slices containing unrelated logic:          0 out of      89    0%
       *See NOTES below for an explanation of the effects of unrelated logic
+Total Number of 4 input LUTs:         159 out of   7,168    2%
   Number of bonded IOBs:               33 out of     173   19%
+  Number of GCLKs:                     1 out of       8   12%
 
-Total equivalent gate count for design:  0
+Total equivalent gate count for design:  1,146
 Additional JTAG gate count for IOBs:  1,584
-Peak Memory Usage:  136 MB
+Peak Memory Usage:  137 MB
 Total REAL time to MAP completion:  1 secs 
 Total CPU time to MAP completion:   1 secs 
 
@@ -69,24 +76,23 @@ Section 1 - Errors
 
 Section 2 - Warnings
 --------------------
-WARNING:LIT:243 - Logical network mclk_IBUF has no load.
-WARNING:LIT:395 - The above warning message base_net_load_rule is repeated 12
+WARNING:LIT:243 - Logical network btn<3>_IBUF has no load.
+WARNING:LIT:395 - The above warning message base_net_load_rule is repeated 8
    more times for the following (max. 5 shown):
-   btn<3>_IBUF,
    btn<2>_IBUF,
    btn<1>_IBUF,
-   btn<0>_IBUF,
-   swt<7>_IBUF
+   swt<6>_IBUF,
+   swt<5>_IBUF,
+   swt<4>_IBUF
    To see the details of these warning messages, please use the -detail switch.
-WARNING:PhysDesignRules:367 - The signal <btn<0>_IBUF> is incomplete. The signal
-   does not drive any load pins in the design.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net siguiente_not0001 is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:367 - The signal <btn<1>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <btn<2>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <btn<3>_IBUF> is incomplete. The signal
-   does not drive any load pins in the design.
-WARNING:PhysDesignRules:367 - The signal <swt<0>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <swt<1>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
@@ -100,14 +106,13 @@ WARNING:PhysDesignRules:367 - The signal <swt<5>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
 WARNING:PhysDesignRules:367 - The signal <swt<6>_IBUF> is incomplete. The signal
    does not drive any load pins in the design.
-WARNING:PhysDesignRules:367 - The signal <swt<7>_IBUF> is incomplete. The signal
-   does not drive any load pins in the design.
-WARNING:PhysDesignRules:367 - The signal <mclk_IBUF> is incomplete. The signal
-   does not drive any load pins in the design.
 
 Section 3 - Informational
 -------------------------
 INFO:MapLib:562 - No environment variables are currently set.
+INFO:MapLib:863 - The following Virtex BUFG(s) is/are being retargeted to
+   Virtex2 BUFGMUX(s) with input tied to I0 and Select pin tied to constant 0:
+   BUFGP symbol "mclk_BUFGP" (output signal=mclk_BUFGP)
 INFO:LIT:244 - All of the single ended outputs in this design are using slew
    rate limited output drivers. The delay on speed critical single ended outputs
    can be dramatically reduced by designating them as fast outputs in the
@@ -124,6 +129,9 @@ Optimized Block(s):
 TYPE 		BLOCK
 GND 		XST_GND
 VCC 		XST_VCC
+
+To enable printing of redundant blocks removed and signals merged, set the
+detailed map report option and rerun map.
 
 Section 6 - IOB Properties
 --------------------------

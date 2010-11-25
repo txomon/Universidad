@@ -44,7 +44,7 @@ architecture Behavioral of estado_siguiente is
 begin
 
 
-process (actual, s1, s2, reset) is
+process (actual, s1, s2, reset)
 	begin
 		if reset = '1' then 
 			siguiente <= "1111";
