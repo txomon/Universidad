@@ -2,24 +2,24 @@
    ./simulacion_isim_beh.exe
      -intstyle  ise
      -ipchost  localhost
-     -ipcport  1298
+     -ipcport  1279
 
-Thu Nov 25 14:40:18 2010
+Thu Dec 02 13:24:14 2010
 
-Total Line Count : 258
+Total Line Count : 228
 
  Elaboration time : 0 sec.
 
  Estimate current memory usage : 117.567 Meg. 
 
- Total Signals          : 18
- Total Nets             : 42
- Total Signal Drivers   : 12
+ Total Signals          : 19
+ Total Nets             : 43
+ Total Signal Drivers   : 13
  Total Blocks           : 7
  Total Primitive Blocks : 1
  Total Processes        : 11
  Total Traceable Variables  : 0
- Total Scalar Nets and Variables : 42
+ Total Scalar Nets and Variables : 43
 ntrace select -o on -n /simulacion/mclk 
 ntrace select -o on -n /simulacion/btn 
 ntrace select -o on -n /simulacion/swt 
@@ -28,57 +28,17 @@ ntrace select -o on -n /simulacion/an
 ntrace select -o on -n /simulacion/ssg 
 ntrace select -o on -n /simulacion/UUT/s1 
 ntrace select -o on -n /simulacion/UUT/s2 
+ntrace select -o on -n /simulacion/UUT/actual 
+ntrace select -o on -n /simulacion/UUT/siguiente 
 ntrace start 
 isimrun 1000 ns 
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-isimrun 1000000 ns 
-isimrun 1000000 ns 
-restart
-isimrun 1000000 ns 
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-restart
-isimstep 
-Simulator is doing circuit initialization process.
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-Finished circuit initialization process.
-restart
-isimstep 
-Simulator is doing circuit initialization process.
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-isimstep 
-Finished circuit initialization process.
-isimstep 
-restart
-isimrun 1000000 ns 
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
+isimrun 10 us 
 
- Simulation time 0.203125 sec.
+ Simulation time 0.015625 sec.
 
  Estimate current memory usage : 125.956 Meg. 
 
-Thu Nov 25 14:47:24 2010
+Thu Dec 02 13:31:50 2010
 
