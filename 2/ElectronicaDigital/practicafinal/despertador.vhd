@@ -58,7 +58,6 @@ signal hora, minuto, segundo		: integer;
 ------------ Señales intermedias ------------------------------
 signal alarmita, enable_m, enable_h, camb_lent			: std_logic;
 signal enable_minuto, enable_hora, alarma					: std_logic;
-signal digito														: std_logic_vector (7 downto 0);
 
 ---------------------------------------------------------------
 ------------ Salidas ------------------------------------------
@@ -72,8 +71,8 @@ type estados is (inicio, reset, est_hora, est_desp, cmb_min, cmb_hra, cmb_desp_h
 signal estado_actual, estado_siguiente : estados;
 ---------------------------------------------------------------
 ------------------- señales para el display -------------------
-type 4digitos is array integer range 0 to 3;
-signal digito 		: 4digitos;
+type array_digitos is array (0 to 3) of integer;
+signal digitos		: array_digitos;
 signal digito_ssg : integer;
 
 begin
@@ -97,34 +96,39 @@ begin
 			if cambio_display = 0 then
 				cambio_display<=cambio_display+1;
 				an<="0111";
-				digito_ssg=digito(0);
+				digito_ssg<=digitos(0);
 			elsif cambio_display = 250000 then
 				cambio_display<=cambio_display+1;
 				an<="1011";
-				digito_ssg=digito(1);
+				digito_ssg<=digitos(1);
 			elsif cambio_display = 500000 then
 				cambio_display<=cambio_display+1;
 				an<="1101";
-				digito_ssg=digito(2);
+				digito_ssg<=digitos(2);
 			elsif cambio_display = 750000 then
 				cambio_display<=cambio_display+1;
 				an<="1110";
-				digito_ssg=digito(3);
+				digito_ssg<=digitos(3);
 			elsif cambio_display = 999999 then
 				cambio_display <= 0;
-				digito_ssg=digito(1);
+				digito_ssg<=digitos(1);
 			else
 				cambio_display <= cambio_display+1;
 			end if;
 ----------------------------------			
 		
-			if enable_lento=1 then
-				if cambio_lento=24999999 then
-					cambio_lento<=0;
+			if enable_lento='1' then
+				if lento=24999999 then
+					lento<=0;
+				else
+					lento<=lento+1;
 				end if;
 			else
-				cambio_lento<=0;
-			end if
+				lento<=0;
+			end if;
+			
+----------------------------------
+
 	end if;
 end process;
 
@@ -136,8 +140,6 @@ begin
 	case estado_actual is
 		
 		when reset =>			
-			enable_lento <= '1';
-			despertador_programado <='0';
 			if rst='1' then
 				estado_siguiente <= reset;
 			else
@@ -146,7 +148,6 @@ begin
 			
 		when inicio =>
 			if cmb_hora='1' and cmb_desp='0' and rst='0' then
-				enable_lento <= '0';
 				estado_siguiente <= est_hora;
 			elsif cmb_hora='0' and cmb_desp='1' and rst='0' then
 				estado_siguiente <= est_desp;
@@ -157,14 +158,11 @@ begin
 			end if;
 		---------------------------------------------	
 			when est_hora =>
-				mux_camb_hra <='0';
-				mux_camb_min <='0';
 				if conf_hora='1' and conf_min='0' and rst='0' and cmb_hora='1' then
 					estado_siguiente <= cmb_hra;
 				elsif conf_hora='0' and conf_min='1' and rst='0' and cmb_hora='1' then
 					estado_siguiente <= cmb_min;
 				elsif cmb_hora='0' and rst='0' then
-					enable_lento <= '1';
 					estado_siguiente <= inicio;
 				elsif rst='1' then
 					estado_siguiente <= reset;
@@ -173,11 +171,9 @@ begin
 				end if;
 				---------------------------------------------
 				when cmb_hra =>
-					mux_camb_hra <='1';
 					if conf_hora <='1' and cmb_hora='1' and rst='0' then
 						estado_siguiente <= cmb_hra;
 					elsif cmb_hora='0' and rst='0' then
-						enable_lento <= '1';
 						estado_siguiente <= inicio;
 					elsif rst='1' then
 						estado_siguiente<=reset;
@@ -186,11 +182,9 @@ begin
 					end if;
 				
 				when cmb_min =>
-					mux_camb_min <='1';
 					if conf_min <='1' and cmb_hora='1' and rst='0' then
 						estado_siguiente <= cmb_min;
 					elsif cmb_hora='0' and rst='0' then
-						enable_lento <= '1';
 						estado_siguiente <= inicio;
 					elsif rst='1' then
 						estado_siguiente<=reset;
@@ -199,9 +193,6 @@ begin
 					end if;
 				---------------------------------------------
 			when est_desp =>
-				mux_display <='1';
-				mux_camb_desp_hora <='0';
-				mux_camb_desp_min <='0';
 				if conf_hora='1' and conf_min='0' and rst='0' and cmb_desp='1' then
 					estado_siguiente <= cmb_desp_hra;
 				elsif conf_hora='0' and conf_min='1' and rst='0' and cmb_desp='1' then
@@ -215,8 +206,6 @@ begin
 				end if;
 				---------------------------------------------
 				when cmb_desp_hra =>
-					mux_camb_desp_hora <='1';
-					despertador_programado <='1';
 					if conf_min='1' and cmb_hora='1' and rst='0' then
 						estado_siguiente <= cmb_desp_min;
 					elsif cmb_hora='0' and rst='0' then
@@ -228,8 +217,6 @@ begin
 					end if;
 					
 				when cmb_desp_min =>
-					mux_camb_desp_min <='1';
-					despertador_programado <='1';
 					if conf_min='1' and cmb_desp='1' and rst='0' then
 						estado_siguiente <= cmb_desp_min;
 					elsif cmb_desp='0' and rst='0' then
@@ -242,5 +229,413 @@ begin
 				---------------------------------------------
 			end case;
 end process;
+-----------------------------------------------------------------------
+---------------Paso 3: Las salidas en función del estado---------------
+with estado_actual select
+mux_camb_hra	<=	'1' when cmb_hra,
+						'0' when others;
+						
+with estado_actual select
+mux_camb_min 	<= '1' when cmb_min,
+						'0' when others;
+						
+with estado_actual select
+despertador_programado <=	'1' when cmb_desp_hra,
+									'1' when cmb_desp_min,
+									'0' when reset,
+									'X' when others;
+
+with estado_actual select
+mux_camb_desp_min	<=	'1' when cmb_desp_min,
+							'0' when others;
+							
+with estado_actual select
+mux_camb_desp_hora <=	'1' when cmb_desp_hra,
+								'0' when others;
+					
+with estado_actual select
+mux_display	<= '1' when cmb_desp_hra,
+					'1' when cmb_desp_min,
+					'1' when est_desp,
+					'0' when others;
+					
+with estado_actual select
+enable_lento <=	'0' when cmb_min,
+						'0' when cmb_hra,
+						'0' when est_hora,
+						'1' when others;
+						
+-----------------------------------------------------------------------
+-------------------- Paso 4: Cosas del display ------------------------
+process(mclk)
+	begin
+	case mux_display is
+		when '0' =>
+			case hora is
+				when 0 =>
+					digitos(0) <=	0;
+				
+									digitos(0) <= 0 when 1,
+									digitos(0) <= 0 when 2,
+									digitos(0) <= 0 when 3,
+									digitos(0) <= 0 when 4,
+									digitos(0) <= 0 when 5,
+									digitos(0) <= 0 when 6,
+									digitos(0) <= 0 when 7,
+									digitos(0) <= 0 when 8,
+									digitos(0) <= 0 when 9,
+									digitos(0) <= 1 when 10,
+									digitos(0) <= 1 when 11,
+									digitos(0) <= 1 when 12,
+									digitos(0) <= 1 when 13,
+									digitos(0) <= 1 when 14,
+									digitos(0) <= 1 when 15,
+									digitos(0) <= 1 when 16,
+									digitos(0) <= 1 when 17,
+									digitos(0) <= 1 when 18,
+									digitos(0) <= 1 when 19,
+									digitos(0) <= 2 when 20,
+									digitos(0) <= 2 when 21,
+									digitos(0) <= 2 when 22,
+									digitos(0) <= 2 when 23;
+			with hora select
+				digitos(1) <=	0 when 0,
+									digitos(1) <= 1 when 1,
+									digitos(1) <= 2 when 2,
+									digitos(1) <= 3 when 3,
+									digitos(1) <= 4 when 4,
+									digitos(1) <= 5 when 5,
+									digitos(1) <= 6 when 6,
+									digitos(1) <= 7 when 7,
+									digitos(1) <= 8 when 8,
+									digitos(1) <= 9 when 9,
+									digitos(1) <= 0 when 10,
+									digitos(1) <= 1 when 11,
+									digitos(1) <= 2 when 12,
+									digitos(1) <= 3 when 13,
+									digitos(1) <= 4 when 14,
+									digitos(1) <= 5 when 15,
+									digitos(1) <= 6 when 16,
+									digitos(1) <= 7 when 17,
+									digitos(1) <= 8 when 18,
+									digitos(1) <= 9 when 19,
+									digitos(1) <= 0 when 20,
+									digitos(1) <= 1 when 21,
+									digitos(1) <= 2 when 22,
+									digitos(1) <= 3 when 23;
+									
+			with minuto select	
+				digitos(2) <=		0 when 0,
+										digitos(2) <= 0 when 1,
+										digitos(2) <= 0 when 2,
+										digitos(2) <= 0 when 3,
+										digitos(2) <= 0 when 4,
+										digitos(2) <= 0 when 5,
+										digitos(2) <= 0 when 6,
+										digitos(2) <= 0 when 7,
+										digitos(2) <= 0 when 8,
+										digitos(2) <= 0 when 9,
+										digitos(2) <= 1 when 10,
+										digitos(2) <= 1 when 11,
+										digitos(2) <= 1 when 12,
+										digitos(2) <= 1 when 13,
+										digitos(2) <= 1 when 14,
+										digitos(2) <= 1 when 15,
+										digitos(2) <= 1 when 16,
+										digitos(2) <= 1 when 17,
+										digitos(2) <= 1 when 18,
+										digitos(2) <= 1 when 19,
+										digitos(2) <= 2 when 20,
+										digitos(2) <= 2 when 21,
+										digitos(2) <= 2 when 22,
+										digitos(2) <= 2 when 23,
+										digitos(2) <= 2 when 24,
+										digitos(2) <= 2 when 25,
+										digitos(2) <= 2 when 26,
+										digitos(2) <= 2 when 27,
+										digitos(2) <= 2 when 28,
+										digitos(2) <= 2 when 29,
+										digitos(2) <= 3 when 30,
+										digitos(2) <= 3 when 31,
+										digitos(2) <= 3 when 32,
+										digitos(2) <= 3 when 33,
+										digitos(2) <= 3 when 34,
+										digitos(2) <= 3 when 35,
+										digitos(2) <= 3 when 36,
+										digitos(2) <= 3 when 37,
+										digitos(2) <= 3 when 38,
+										digitos(2) <= 3 when 39,
+										digitos(2) <= 4 when 40,
+										digitos(2) <= 4 when 41,
+										digitos(2) <= 4 when 42,
+										digitos(2) <= 4 when 43,
+										digitos(2) <= 4 when 44,
+										digitos(2) <= 4 when 45,
+										digitos(2) <= 4 when 46,
+										digitos(2) <= 4 when 47,
+										digitos(2) <= 4 when 48,
+										digitos(2) <= 4 when 49,
+										digitos(2) <= 5 when 50,
+										digitos(2) <= 5 when 51,
+										digitos(2) <= 5 when 52,
+										digitos(2) <= 5 when 53,
+										digitos(2) <= 5 when 54,
+										digitos(2) <= 5 when 55,
+										digitos(2) <= 5 when 56,
+										digitos(2) <= 5 when 57,
+										digitos(2) <= 5 when 58,
+										digitos(2) <= 5 when 59;
+										
+			with minuto select	
+				digitos(3) <=		digitos(3) <= 0 when 0,
+										digitos(3) <= 1 when 1,
+										digitos(3) <= 2 when 2,
+										digitos(3) <= 3 when 3,
+										digitos(3) <= 4 when 4,
+										digitos(3) <= 5 when 5,
+										digitos(3) <= 6 when 6,
+										digitos(3) <= 7 when 7,
+										digitos(3) <= 8 when 8,
+										digitos(3) <= 9 when 9,
+										digitos(3) <= 0 when 10,
+										digitos(3) <= 1 when 11,
+										digitos(3) <= 2 when 12,
+										digitos(3) <= 3 when 13,
+										digitos(3) <= 4 when 14,
+										digitos(3) <= 5 when 15,
+										digitos(3) <= 6 when 16,
+										digitos(3) <= 7 when 17,
+										digitos(3) <= 8 when 18,
+										digitos(3) <= 9 when 19,
+										digitos(3) <= 0 when 20,
+										digitos(3) <= 1 when 21,
+										digitos(3) <= 2 when 22,
+										digitos(3) <= 3 when 23,
+										digitos(3) <= 4 when 24,
+										digitos(3) <= 5 when 25,
+										digitos(3) <= 6 when 26,
+										digitos(3) <= 7 when 27,
+										digitos(3) <= 8 when 28,
+										digitos(3) <= 9 when 29,
+										digitos(3) <= 0 when 30,
+										digitos(3) <= 1 when 31,
+										digitos(3) <= 2 when 32,
+										digitos(3) <= 3 when 33,
+										digitos(3) <= 4 when 34,
+										digitos(3) <= 5 when 35,
+										digitos(3) <= 6 when 36,
+										digitos(3) <= 7 when 37,
+										digitos(3) <= 8 when 38,
+										digitos(3) <= 9 when 39,
+										digitos(3) <= 0 when 40,
+										digitos(3) <= 1 when 41,
+										digitos(3) <= 2 when 42,
+										digitos(3) <= 3 when 43,
+										digitos(3) <= 4 when 44,
+										digitos(3) <= 5 when 45,
+										digitos(3) <= 6 when 46,
+										digitos(3) <= 7 when 47,
+										digitos(3) <= 8 when 48,
+										digitos(3) <= 9 when 49,
+										digitos(3) <= 0 when 50,
+										digitos(3) <= 1 when 51,
+										digitos(3) <= 2 when 52,
+										digitos(3) <= 3 when 53,
+										digitos(3) <= 4 when 54,
+										digitos(3) <= 5 when 55,
+										digitos(3) <= 6 when 56,
+										digitos(3) <= 7 when 57,
+										digitos(3) <= 8 when 58,
+										digitos(3) <= 9 when 59;
+		when '1' =>
+			with hora_desp select
+				digitos(0) <=	0 when 0,
+									0 when 1,
+									0 when 2,
+									0 when 3,
+									0 when 4,
+									0 when 5,
+									0 when 6,
+									0 when 7,
+									0 when 8,
+									0 when 9,
+									1 when 10,
+									1 when 11,
+									1 when 12,
+									1 when 13,
+									1 when 14,
+									1 when 15,
+									1 when 16,
+									1 when 17,
+									1 when 18,
+									1 when 19,
+									2 when 20,
+									2 when 21,
+									2 when 22,
+									2 when 23;
+			with hora_desp select
+				digitos(1) <=	0 when 0,
+									1 when 1,
+									2 when 2,
+									3 when 3,
+									4 when 4,
+									5 when 5,
+									6 when 6,
+									7 when 7,
+									8 when 8,
+									9 when 9,
+									0 when 10,
+									1 when 11,
+									2 when 12,
+									3 when 13,
+									4 when 14,
+									5 when 15,
+									6 when 16,
+									7 when 17,
+									8 when 18,
+									9 when 19,
+									0 when 20,
+									1 when 21,
+									2 when 22,
+									3 when 23;
+									
+			with minuto_desp select	
+				digitos(2) <=		0 when 0,
+										0 when 1,
+										0 when 2,
+										0 when 3,
+										0 when 4,
+										0 when 5,
+										0 when 6,
+										0 when 7,
+										0 when 8,
+										0 when 9,
+										1 when 10,
+										1 when 11,
+										1 when 12,
+										1 when 13,
+										1 when 14,
+										1 when 15,
+										1 when 16,
+										1 when 17,
+										1 when 18,
+										1 when 19,
+										2 when 20,
+										2 when 21,
+										2 when 22,
+										2 when 23,
+										2 when 24,
+										2 when 25,
+										2 when 26,
+										2 when 27,
+										2 when 28,
+										2 when 29,
+										3 when 30,
+										3 when 31,
+										3 when 32,
+										3 when 33,
+										3 when 34,
+										3 when 35,
+										3 when 36,
+										3 when 37,
+										3 when 38,
+										3 when 39,
+										4 when 40,
+										4 when 41,
+										4 when 42,
+										4 when 43,
+										4 when 44,
+										4 when 45,
+										4 when 46,
+										4 when 47,
+										4 when 48,
+										4 when 49,
+										5 when 50,
+										5 when 51,
+										5 when 52,
+										5 when 53,
+										5 when 54,
+										5 when 55,
+										5 when 56,
+										5 when 57,
+										5 when 58,
+										5 when 59;
+										
+			with minuto_desp select	
+				digitos(3) <=		0 when 0,
+										1 when 1,
+										2 when 2,
+										3 when 3,
+										4 when 4,
+										5 when 5,
+										6 when 6,
+										7 when 7,
+										8 when 8,
+										9 when 9,
+										0 when 10,
+										1 when 11,
+										2 when 12,
+										3 when 13,
+										4 when 14,
+										5 when 15,
+										6 when 16,
+										7 when 17,
+										8 when 18,
+										9 when 19,
+										0 when 20,
+										1 when 21,
+										2 when 22,
+										3 when 23,
+										4 when 24,
+										5 when 25,
+										6 when 26,
+										7 when 27,
+										8 when 28,
+										9 when 29,
+										0 when 30,
+										1 when 31,
+										2 when 32,
+										3 when 33,
+										4 when 34,
+										5 when 35,
+										6 when 36,
+										7 when 37,
+										8 when 38,
+										9 when 39,
+										0 when 40,
+										1 when 41,
+										2 when 42,
+										3 when 43,
+										4 when 44,
+										5 when 45,
+										6 when 46,
+										7 when 47,
+										8 when 48,
+										9 when 49,
+										0 when 50,
+										1 when 51,
+										2 when 52,
+										3 when 53,
+										4 when 54,
+										5 when 55,
+										6 when 56,
+										7 when 57,
+										8 when 58,
+										9 when 59;
+										
+	end case;
+end process;
+with digito_ssg select
+ssg  <=		 "11000000" when 0,   --0
+				 "01111001" when 1,   --1
+				 "00100100" when 2,   --2
+				 "00110000" when 3,   --3
+				 "00011001" when 4,   --4
+				 "00010010" when 5,   --5
+				 "00000010" when 6,   --6
+				 "01111000" when 7,   --7
+				 "00000000" when 8,   --8
+				 "00010000" when 9,   --9
+				 "00000000" when others;
 
 end Behavioral;
