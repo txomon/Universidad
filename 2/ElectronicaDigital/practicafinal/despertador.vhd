@@ -117,7 +117,14 @@ begin
 				cambio_display <= cambio_display+1;
 			end if;
 ----------------------------------			
-			
+		
+			if enable_lento=1 then
+				if cambio_lento=24999999 then
+					cambio_lento<=0;
+				end if;
+			else
+				cambio_lento<=0;
+			end if
 	end if;
 end process;
 
