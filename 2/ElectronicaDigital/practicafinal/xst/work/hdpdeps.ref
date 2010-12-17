@@ -1,9 +1,0 @@
-V3 3
-FL C:/MJ/2/ElectronicaDigital/practicafinal/despertador.vhd 2010/12/02.14:53:22 J.36
-EN work/despertador 1291896531 \
-      FL C:/MJ/2/ElectronicaDigital/practicafinal/despertador.vhd \
-      PB ieee/std_logic_1164 1177545575 PB ieee/std_logic_arith 1177545576 \
-      PB ieee/STD_LOGIC_UNSIGNED 1177545583
-AR work/despertador/Behavioral 1291896532 \
-      FL C:/MJ/2/ElectronicaDigital/practicafinal/despertador.vhd \
-      EN work/despertador 1291896531
