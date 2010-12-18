@@ -8,7 +8,7 @@
 -- \   \   \/     Version : 9.2i
 --  \   \         Application : ISE
 --  /   /         Filename : simulacion.ant
--- /___/   /\     Timestamp : Thu Dec 09 13:08:25 2010
+-- /___/   /\     Timestamp : Sat Dec 18 22:28:41 2010
 -- \   \  /  \ 
 --  \___\/\___\ 
 --
@@ -28,7 +28,7 @@ ENTITY simulacion IS
 END simulacion;
 
 ARCHITECTURE testbench_arch OF simulacion IS
-    FILE RESULTS: TEXT OPEN WRITE_MODE IS "C:\MJ\2\ElectronicaDigital\practicafinal\simulacion.ano";
+    FILE RESULTS: TEXT OPEN WRITE_MODE IS "C:\Universidad\2\ElectronicaDigital\practicafinal\simulacion.ano";
 
     COMPONENT despertador
         PORT (
@@ -150,11 +150,11 @@ ARCHITECTURE testbench_arch OF simulacion IS
                 WAIT FOR 285 ns;
                 btn <= "0001";
                 -- -------------------------------------
-                -- -------------  Current Time:  2685ns
-                WAIT FOR 2400 ns;
+                -- -------------  Current Time:  1085ns
+                WAIT FOR 800 ns;
                 btn <= "0000";
                 -- -------------------------------------
-                WAIT FOR 97515 ns;
+                WAIT FOR 999115 ns;
 
                 STD.TEXTIO.write(TX_OUT, string'("Total[]"));
                 STD.TEXTIO.writeline(RESULTS, TX_OUT);

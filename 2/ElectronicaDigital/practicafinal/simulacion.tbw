@@ -1,13 +1,13 @@
 version 3
-C:/MJ/2/ElectronicaDigital/practicafinal/despertador.vhd
+C:/Universidad/2/ElectronicaDigital/practicafinal/despertador.vhd
 despertador
 VHDL
 VHDL
-C:/MJ/2/ElectronicaDigital/practicafinal/simulacion.xwv
+C:/Universidad/2/ElectronicaDigital/practicafinal/simulacion.xwv
 Clocked
 -
 -
-100000000000
+1000000000000
 ns
 GSR:true
 PRLD:false

@@ -42,10 +42,12 @@ end despertador;
 architecture Behavioral of despertador is
 ---------------------------------------------------------------
 ------------ Contadores ---------------------------------------
-signal lento, camb_lento, cambio_display		:	integer;
+signal cuenta_lento, camb_lento, cambio_display		:	integer;
+signal camb_rapido											:	integer;
+signal rapido, lento, minutos, segundos							:	std_logic;
 
 ---------------------------------------------------------------
------------- Variables de las Entradas-------------------------
+------------ Señales de las Entradas-------------------------
 signal rst,conf_min,conf_hora,cmb_hora,cmb_desp			: std_logic;
 
 ---------------------------------------------------------------
@@ -57,12 +59,12 @@ signal hora, minuto, segundo		: integer;
 ---------------------------------------------------------------
 ------------ Señales intermedias ------------------------------
 signal alarmita, enable_m, enable_h, camb_lent			: std_logic;
-signal enable_minuto, enable_hora, alarma					: std_logic;
+signal enable_min, enable_hra, alarma						: std_logic;
 
 ---------------------------------------------------------------
 ------------ Salidas ------------------------------------------
 signal mux_camb_hra, mux_camb_min, despertador_programado					: std_logic;
-signal mux_camb_desp_min,mux_camb_desp_hora , mux_display, enable_lento : std_logic;
+signal mux_camb_desp_min, mux_camb_desp_hora , mux_display, enable_lento : std_logic;
 
 ---------------------------------------------------------------
 ------------ Estados-------------------------------------------
@@ -91,47 +93,146 @@ process( mclk )
 begin
 	if rising_edge(mclk) then
 		estado_actual <= estado_siguiente;
-		
+	
 ----------------------------------		
-			if cambio_display = 0 then
-				cambio_display<=cambio_display+1;
-				an<="0111";
-				digito_ssg<=digitos(0);
-			elsif cambio_display = 250000 then
-				cambio_display<=cambio_display+1;
-				an<="1011";
-				digito_ssg<=digitos(1);
-			elsif cambio_display = 500000 then
-				cambio_display<=cambio_display+1;
-				an<="1101";
-				digito_ssg<=digitos(2);
-			elsif cambio_display = 750000 then
-				cambio_display<=cambio_display+1;
-				an<="1110";
-				digito_ssg<=digitos(3);
-			elsif cambio_display = 999999 then
-				cambio_display <= 0;
-				digito_ssg<=digitos(1);
-			else
-				cambio_display <= cambio_display+1;
-			end if;
+		if cambio_display = 0 then
+			cambio_display<=cambio_display+1;
+			an<="0111";
+			digito_ssg<=digitos(0);
+--		elsif cambio_display = 249999 then	-- Para la placa
+		elsif cambio_display = 2 then 		-- Para la simulacion
+			cambio_display<=cambio_display+1;
+			an<="1011";
+			digito_ssg<=digitos(1);
+--		elsif cambio_display = 499999 then	-- Para la placa
+		elsif cambio_display = 4 then 		-- Para la simulacion
+			cambio_display<=cambio_display+1;
+			an<="1101";
+			digito_ssg<=digitos(2);
+--		elsif cambio_display = 749999 then	-- Para la placa
+		elsif cambio_display = 7 then 		-- Para la simulacion
+			cambio_display<=cambio_display+1;
+			an<="1110";
+			digito_ssg<=digitos(3);
+--		elsif cambio_display = 999999 then	-- Para la placa
+		elsif cambio_display = 9 then 		-- Para la simulacion
+			cambio_display <= 0;
+			digito_ssg<=digitos(1);
+		else
+			cambio_display <= cambio_display+1;
+		end if;
 ----------------------------------			
+	
+		if hora = hora_desp and minuto = minuto_desp then
+			alarmita<='1';
+		else
+			alarmita<='0';
+		end if;
 		
-			if enable_lento='1' then
-				if lento=24999999 then
-					lento<=0;
-				else
-					lento<=lento+1;
-				end if;
+----------------------------------
+--		if camb_rapido=24999999 then		-- Para la placa
+		if camb_rapido=249 then				-- Para la simulación
+			camb_rapido<=0;
+			rapido<='1';
+		else
+			camb_lento<=camb_lento+1;
+			rapido<='0';
+		end if;
+		
+----------------------------------
+		if enable_lento='1' then
+--			if cuenta_lento=24999999 then	-- Para la placa
+			if cuenta_lento=249 then		-- Para la simulación
+				cuenta_lento<=0;
+				lento<= '1';
 			else
-				lento<=0;
+				cuenta_lento<=cuenta_lento+1;
+				lento<= '0';
+			end if;
+		else
+			lento<='0';
+		end if;
+		
+		if rst = '0' then
+			if lento='1' then 
+				if segundo = 59 then
+					segundo <=0;
+					segundos <='1';
+				else
+					segundo <=segundo+1;
+					segundos <='0';
+				end if;
 			end if;
 			
-----------------------------------
-
+			if enable_m = '1' then
+				if minuto = 59 then
+					minuto <= 0;
+					minutos <='1';
+				else
+					minuto <= minuto +1;
+					minutos <= '0';
+				end if;
+			end if;
+			
+			if enable_h='1' then
+				if hora = 23 then
+					hora <= 0;
+				else
+					hora <= hora + 1;
+				end if;
+			end if;
+			
+		elsif rst='1' then
+			segundo<=0;
+			segundos<='0';
+			minuto<=0;
+			minutos<='0';
+			hora<=0;
+		end if;
+		
+		if rst = '0' then 
+			if enable_min = '1' then
+				if minuto_desp=59 then
+					minuto_desp <= 0;
+				else
+					minuto_desp <= minuto_desp + 1;
+				end if;
+			end if;
+			
+			if enable_hra = '1' then
+				if hora_desp=59 then
+					hora_desp<=0;
+				else
+					hora_desp<=hora_desp+1;
+				end if;
+			end if;
+		else
+			hora_desp<=0;
+			minuto_desp<=0;
+		end if;
+		
 	end if;
 end process;
+-----------------------------------------
+with mux_camb_min select
+enable_m <=	segundos when '0',
+				rapido when '1',
+				'0' when others;
+				
+with mux_camb_hra select
+enable_h <= minutos when '0',
+				rapido when '1',
+				'0' when others;
 
+with mux_camb_desp_min select
+enable_min <=	'0' when '0',
+					rapido when '1',
+					'0' when others;
+				
+with mux_camb_desp_hora select
+enable_hra <=	'0' when '0',
+					rapido when '1',
+					'0' when others;
 
 ---------------------------------------------------------------
 ----- Paso 2: estado_sigiente=f(estado_actual,entradas) -------
@@ -273,358 +374,725 @@ process(mclk)
 		when '0' =>
 			case hora is
 				when 0 =>
-					digitos(0) <=	0;
+					digitos(0) <= 0;
+				when 1 =>			
+					digitos(0) <= 0;
+				when 2 =>				
+					digitos(0) <= 0;
+				when 3 =>				
+					digitos(0) <= 0;
+				when 4 =>				
+					digitos(0) <= 0;
+				when 5 =>				
+					digitos(0) <= 0;
+				when 6 =>				
+					digitos(0) <= 0;
+				when 7 =>				
+					digitos(0) <= 0;
+				when 8 =>			
+					digitos(0) <= 0;
+				when 9 =>				
+					digitos(0) <= 0;
+				when 10 =>				
+					digitos(0) <= 1;
+				when 11 =>				
+					digitos(0) <= 1;
+				when 12 =>				
+					digitos(0) <= 1;
+				when 13 =>			
+					digitos(0) <= 1;
+				when 14 =>				
+					digitos(0) <= 1;
+				when 15 =>				
+					digitos(0) <= 1;
+				when 16 =>				
+					digitos(0) <= 1;
+				when 17 =>			
+					digitos(0) <= 1;
+				when 18 =>				
+					digitos(0) <= 1;
+				when 19 =>				
+					digitos(0) <= 1;
+				when 20 =>				
+					digitos(0) <= 2;
+				when 21 =>				
+					digitos(0) <= 2;
+				when 22 =>				
+					digitos(0) <= 2;
+				when 23 =>			
+					digitos(0) <= 2;
+				when others => 
+					digitos(0) <= 0;
+			end case;
 				
-									digitos(0) <= 0 when 1,
-									digitos(0) <= 0 when 2,
-									digitos(0) <= 0 when 3,
-									digitos(0) <= 0 when 4,
-									digitos(0) <= 0 when 5,
-									digitos(0) <= 0 when 6,
-									digitos(0) <= 0 when 7,
-									digitos(0) <= 0 when 8,
-									digitos(0) <= 0 when 9,
-									digitos(0) <= 1 when 10,
-									digitos(0) <= 1 when 11,
-									digitos(0) <= 1 when 12,
-									digitos(0) <= 1 when 13,
-									digitos(0) <= 1 when 14,
-									digitos(0) <= 1 when 15,
-									digitos(0) <= 1 when 16,
-									digitos(0) <= 1 when 17,
-									digitos(0) <= 1 when 18,
-									digitos(0) <= 1 when 19,
-									digitos(0) <= 2 when 20,
-									digitos(0) <= 2 when 21,
-									digitos(0) <= 2 when 22,
-									digitos(0) <= 2 when 23;
-			with hora select
-				digitos(1) <=	0 when 0,
-									digitos(1) <= 1 when 1,
-									digitos(1) <= 2 when 2,
-									digitos(1) <= 3 when 3,
-									digitos(1) <= 4 when 4,
-									digitos(1) <= 5 when 5,
-									digitos(1) <= 6 when 6,
-									digitos(1) <= 7 when 7,
-									digitos(1) <= 8 when 8,
-									digitos(1) <= 9 when 9,
-									digitos(1) <= 0 when 10,
-									digitos(1) <= 1 when 11,
-									digitos(1) <= 2 when 12,
-									digitos(1) <= 3 when 13,
-									digitos(1) <= 4 when 14,
-									digitos(1) <= 5 when 15,
-									digitos(1) <= 6 when 16,
-									digitos(1) <= 7 when 17,
-									digitos(1) <= 8 when 18,
-									digitos(1) <= 9 when 19,
-									digitos(1) <= 0 when 20,
-									digitos(1) <= 1 when 21,
-									digitos(1) <= 2 when 22,
-									digitos(1) <= 3 when 23;
+			case hora is
+				when 0 =>
+					digitos(1) <= 0;
+				when 1 =>			
+					digitos(1) <= 1;
+				when 2 =>				
+					digitos(1) <= 2;
+				when 3 =>				
+					digitos(1) <= 3;
+				when 4 =>				
+					digitos(1) <= 4;
+				when 5 =>				
+					digitos(1) <= 5;
+				when 6 =>				
+					digitos(1) <= 6;
+				when 7 =>				
+					digitos(1) <= 7;
+				when 8 =>			
+					digitos(1) <= 8;
+				when 9 =>				
+					digitos(1) <= 9;
+				when 10 =>				
+					digitos(1) <= 0;
+				when 11 =>				
+					digitos(1) <= 1;
+				when 12 =>				
+					digitos(1) <= 2;
+				when 13 =>			
+					digitos(1) <= 3;
+				when 14 =>				
+					digitos(1) <= 4;
+				when 15 =>				
+					digitos(1) <= 5;
+				when 16 =>				
+					digitos(1) <= 6;
+				when 17 =>			
+					digitos(1) <= 7;
+				when 18 =>				
+					digitos(1) <= 8;
+				when 19 =>				
+					digitos(1) <= 9;
+				when 20 =>				
+					digitos(1) <= 0;
+				when 21 =>				
+					digitos(1) <= 1;
+				when 22 =>				
+					digitos(1) <= 2;
+				when 23 =>			
+					digitos(1) <= 3;
+				when others =>
+					digitos(1) <= 0;
+			end case;
 									
-			with minuto select	
-				digitos(2) <=		0 when 0,
-										digitos(2) <= 0 when 1,
-										digitos(2) <= 0 when 2,
-										digitos(2) <= 0 when 3,
-										digitos(2) <= 0 when 4,
-										digitos(2) <= 0 when 5,
-										digitos(2) <= 0 when 6,
-										digitos(2) <= 0 when 7,
-										digitos(2) <= 0 when 8,
-										digitos(2) <= 0 when 9,
-										digitos(2) <= 1 when 10,
-										digitos(2) <= 1 when 11,
-										digitos(2) <= 1 when 12,
-										digitos(2) <= 1 when 13,
-										digitos(2) <= 1 when 14,
-										digitos(2) <= 1 when 15,
-										digitos(2) <= 1 when 16,
-										digitos(2) <= 1 when 17,
-										digitos(2) <= 1 when 18,
-										digitos(2) <= 1 when 19,
-										digitos(2) <= 2 when 20,
-										digitos(2) <= 2 when 21,
-										digitos(2) <= 2 when 22,
-										digitos(2) <= 2 when 23,
-										digitos(2) <= 2 when 24,
-										digitos(2) <= 2 when 25,
-										digitos(2) <= 2 when 26,
-										digitos(2) <= 2 when 27,
-										digitos(2) <= 2 when 28,
-										digitos(2) <= 2 when 29,
-										digitos(2) <= 3 when 30,
-										digitos(2) <= 3 when 31,
-										digitos(2) <= 3 when 32,
-										digitos(2) <= 3 when 33,
-										digitos(2) <= 3 when 34,
-										digitos(2) <= 3 when 35,
-										digitos(2) <= 3 when 36,
-										digitos(2) <= 3 when 37,
-										digitos(2) <= 3 when 38,
-										digitos(2) <= 3 when 39,
-										digitos(2) <= 4 when 40,
-										digitos(2) <= 4 when 41,
-										digitos(2) <= 4 when 42,
-										digitos(2) <= 4 when 43,
-										digitos(2) <= 4 when 44,
-										digitos(2) <= 4 when 45,
-										digitos(2) <= 4 when 46,
-										digitos(2) <= 4 when 47,
-										digitos(2) <= 4 when 48,
-										digitos(2) <= 4 when 49,
-										digitos(2) <= 5 when 50,
-										digitos(2) <= 5 when 51,
-										digitos(2) <= 5 when 52,
-										digitos(2) <= 5 when 53,
-										digitos(2) <= 5 when 54,
-										digitos(2) <= 5 when 55,
-										digitos(2) <= 5 when 56,
-										digitos(2) <= 5 when 57,
-										digitos(2) <= 5 when 58,
-										digitos(2) <= 5 when 59;
+			case minuto is
+				when 0 =>
+					digitos(2) <= 0;
+				when 1 =>			
+					digitos(2) <= 0;
+				when 2 =>				
+					digitos(2) <= 0;
+				when 3 =>				
+					digitos(2) <= 0;
+				when 4 =>				
+					digitos(2) <= 0;
+				when 5 =>				
+					digitos(2) <= 0;
+				when 6 =>				
+					digitos(2) <= 0;
+				when 7 =>				
+					digitos(2) <= 0;
+				when 8 =>			
+					digitos(2) <= 0;
+				when 9 =>				
+					digitos(2) <= 0;
+				when 10 =>				
+					digitos(2) <= 1;
+				when 11 =>				
+					digitos(2) <= 1;
+				when 12 =>				
+					digitos(2) <= 1;
+				when 13 =>			
+					digitos(2) <= 1;
+				when 14 =>				
+					digitos(2) <= 1;
+				when 15 =>				
+					digitos(2) <= 1;
+				when 16 =>				
+					digitos(2) <= 1;
+				when 17 =>			
+					digitos(2) <= 1;
+				when 18 =>				
+					digitos(2) <= 1;
+				when 19 =>				
+					digitos(2) <= 1;
+				when 20 =>				
+					digitos(2) <= 2;
+				when 21 =>				
+					digitos(2) <= 2;
+				when 22 =>				
+					digitos(2) <= 2;
+				when 23 =>			
+					digitos(2) <= 2;
+				when 24 =>
+					digitos(2) <= 2;
+				when 25 =>			
+					digitos(2) <= 2;
+				when 26=>				
+					digitos(2) <= 2;
+				when 27 =>				
+					digitos(2) <= 2;
+				when 28 =>				
+					digitos(2) <= 2;
+				when 29 =>				
+					digitos(2) <= 2;
+				when 30 =>				
+					digitos(2) <= 3;
+				when 31 =>				
+					digitos(2) <= 3;
+				when 32 =>			
+					digitos(2) <= 3;
+				when 33 =>				
+					digitos(2) <= 3;
+				when 34 =>				
+					digitos(2) <= 3;
+				when 35 =>				
+					digitos(2) <= 3;
+				when 36 =>				
+					digitos(2) <= 3;
+				when 37 =>			
+					digitos(2) <= 3;
+				when 38 =>				
+					digitos(2) <= 3;
+				when 39 =>				
+					digitos(2) <= 3;
+				when 40 =>				
+					digitos(2) <= 4;
+				when 41 =>			
+					digitos(2) <= 4;
+				when 42 =>				
+					digitos(2) <= 4;
+				when 43 =>				
+					digitos(2) <= 4;
+				when 44 =>				
+					digitos(2) <= 4;
+				when 45 =>				
+					digitos(2) <= 4;
+				when 46 =>				
+					digitos(2) <= 4;
+				when 47 =>			
+					digitos(2) <= 4;
+				when 48 =>				
+					digitos(2) <= 4;
+				when 49 =>				
+					digitos(2) <= 4;
+				when 50 =>				
+					digitos(2) <= 5;
+				when 51 =>			
+					digitos(2) <= 5;
+				when 52 =>				
+					digitos(2) <= 5;
+				when 53 =>				
+					digitos(2) <= 5;
+				when 54 =>				
+					digitos(2) <= 5;
+				when 55 =>				
+					digitos(2) <= 5;
+				when 56 =>				
+					digitos(2) <= 5;
+				when 57 =>			
+					digitos(2) <= 5;
+				when 58 =>				
+					digitos(2) <= 5;
+				when 59 =>			
+					digitos(2) <= 5;
+				when others =>
+					digitos(2) <= 0;
+			end case;
 										
-			with minuto select	
-				digitos(3) <=		digitos(3) <= 0 when 0,
-										digitos(3) <= 1 when 1,
-										digitos(3) <= 2 when 2,
-										digitos(3) <= 3 when 3,
-										digitos(3) <= 4 when 4,
-										digitos(3) <= 5 when 5,
-										digitos(3) <= 6 when 6,
-										digitos(3) <= 7 when 7,
-										digitos(3) <= 8 when 8,
-										digitos(3) <= 9 when 9,
-										digitos(3) <= 0 when 10,
-										digitos(3) <= 1 when 11,
-										digitos(3) <= 2 when 12,
-										digitos(3) <= 3 when 13,
-										digitos(3) <= 4 when 14,
-										digitos(3) <= 5 when 15,
-										digitos(3) <= 6 when 16,
-										digitos(3) <= 7 when 17,
-										digitos(3) <= 8 when 18,
-										digitos(3) <= 9 when 19,
-										digitos(3) <= 0 when 20,
-										digitos(3) <= 1 when 21,
-										digitos(3) <= 2 when 22,
-										digitos(3) <= 3 when 23,
-										digitos(3) <= 4 when 24,
-										digitos(3) <= 5 when 25,
-										digitos(3) <= 6 when 26,
-										digitos(3) <= 7 when 27,
-										digitos(3) <= 8 when 28,
-										digitos(3) <= 9 when 29,
-										digitos(3) <= 0 when 30,
-										digitos(3) <= 1 when 31,
-										digitos(3) <= 2 when 32,
-										digitos(3) <= 3 when 33,
-										digitos(3) <= 4 when 34,
-										digitos(3) <= 5 when 35,
-										digitos(3) <= 6 when 36,
-										digitos(3) <= 7 when 37,
-										digitos(3) <= 8 when 38,
-										digitos(3) <= 9 when 39,
-										digitos(3) <= 0 when 40,
-										digitos(3) <= 1 when 41,
-										digitos(3) <= 2 when 42,
-										digitos(3) <= 3 when 43,
-										digitos(3) <= 4 when 44,
-										digitos(3) <= 5 when 45,
-										digitos(3) <= 6 when 46,
-										digitos(3) <= 7 when 47,
-										digitos(3) <= 8 when 48,
-										digitos(3) <= 9 when 49,
-										digitos(3) <= 0 when 50,
-										digitos(3) <= 1 when 51,
-										digitos(3) <= 2 when 52,
-										digitos(3) <= 3 when 53,
-										digitos(3) <= 4 when 54,
-										digitos(3) <= 5 when 55,
-										digitos(3) <= 6 when 56,
-										digitos(3) <= 7 when 57,
-										digitos(3) <= 8 when 58,
-										digitos(3) <= 9 when 59;
+			case minuto is
+				when 0 =>
+					digitos(3) <= 0;
+				when 1 =>			
+					digitos(3) <= 1;
+				when 2 =>				
+					digitos(3) <= 2;
+				when 3 =>				
+					digitos(3) <= 3;
+				when 4 =>				
+					digitos(3) <= 4;
+				when 5 =>				
+					digitos(3) <= 5;
+				when 6 =>				
+					digitos(3) <= 6;
+				when 7 =>				
+					digitos(3) <= 7;
+				when 8 =>			
+					digitos(3) <= 8;
+				when 9 =>				
+					digitos(3) <= 9;
+				when 10 =>				
+					digitos(3) <= 0;
+				when 11 =>				
+					digitos(3) <= 1;
+				when 12 =>				
+					digitos(3) <= 2;
+				when 13 =>			
+					digitos(3) <= 3;
+				when 14 =>				
+					digitos(3) <= 4;
+				when 15 =>				
+					digitos(3) <= 5;
+				when 16 =>				
+					digitos(3) <= 6;
+				when 17 =>			
+					digitos(3) <= 7;
+				when 18 =>				
+					digitos(3) <= 8;
+				when 19 =>				
+					digitos(3) <= 9;
+				when 20 =>				
+					digitos(3) <= 0;
+				when 21 =>				
+					digitos(3) <= 1;
+				when 22 =>				
+					digitos(3) <= 2;
+				when 23 =>			
+					digitos(3) <= 3;
+				when 24 =>
+					digitos(3) <= 4;
+				when 25 =>			
+					digitos(3) <= 5;
+				when 26 =>				
+					digitos(3) <= 6;
+				when 27 =>				
+					digitos(3) <= 7;
+				when 28 =>				
+					digitos(3) <= 8;
+				when 29 =>				
+					digitos(3) <= 9;
+				when 30 =>				
+					digitos(3) <= 0;
+				when 31 =>				
+					digitos(3) <= 1;
+				when 32 =>			
+					digitos(3) <= 2;
+				when 33 =>				
+					digitos(3) <= 3;
+				when 34 =>				
+					digitos(3) <= 4;
+				when 35 =>				
+					digitos(3) <= 5;
+				when 36 =>				
+					digitos(3) <= 6;
+				when 37 =>			
+					digitos(3) <= 7;
+				when 38 =>				
+					digitos(3) <= 8;
+				when 39 =>				
+					digitos(3) <= 9;
+				when 40 =>				
+					digitos(3) <= 0;
+				when 41 =>			
+					digitos(3) <= 1;
+				when 42 =>				
+					digitos(3) <= 2;
+				when 43 =>				
+					digitos(3) <= 3;
+				when 44 =>				
+					digitos(3) <= 4;
+				when 45 =>				
+					digitos(3) <= 5;
+				when 46 =>				
+					digitos(3) <= 6;
+				when 47 =>			
+					digitos(3) <= 7;
+				when 48 =>				
+					digitos(3) <= 8;
+				when 49 =>				
+					digitos(3) <= 9;
+				when 50 =>				
+					digitos(3) <= 0;
+				when 51 =>			
+					digitos(3) <= 1;
+				when 52 =>				
+					digitos(3) <= 2;
+				when 53 =>				
+					digitos(3) <= 3;
+				when 54 =>				
+					digitos(3) <= 4;
+				when 55 =>				
+					digitos(3) <= 5;
+				when 56 =>				
+					digitos(3) <= 6;
+				when 57 =>			
+					digitos(3) <= 7;
+				when 58 =>				
+					digitos(3) <= 8;
+				when 59 =>			
+					digitos(3) <= 9;
+				when others =>
+					digitos(3) <= 0;
+			end case;
+			
 		when '1' =>
-			with hora_desp select
-				digitos(0) <=	0 when 0,
-									0 when 1,
-									0 when 2,
-									0 when 3,
-									0 when 4,
-									0 when 5,
-									0 when 6,
-									0 when 7,
-									0 when 8,
-									0 when 9,
-									1 when 10,
-									1 when 11,
-									1 when 12,
-									1 when 13,
-									1 when 14,
-									1 when 15,
-									1 when 16,
-									1 when 17,
-									1 when 18,
-									1 when 19,
-									2 when 20,
-									2 when 21,
-									2 when 22,
-									2 when 23;
-			with hora_desp select
-				digitos(1) <=	0 when 0,
-									1 when 1,
-									2 when 2,
-									3 when 3,
-									4 when 4,
-									5 when 5,
-									6 when 6,
-									7 when 7,
-									8 when 8,
-									9 when 9,
-									0 when 10,
-									1 when 11,
-									2 when 12,
-									3 when 13,
-									4 when 14,
-									5 when 15,
-									6 when 16,
-									7 when 17,
-									8 when 18,
-									9 when 19,
-									0 when 20,
-									1 when 21,
-									2 when 22,
-									3 when 23;
+			case hora_desp is
+				when 0 =>
+					digitos(0) <= 0;
+				when 1 =>			
+					digitos(0) <= 0;
+				when 2 =>				
+					digitos(0) <= 0;
+				when 3 =>				
+					digitos(0) <= 0;
+				when 4 =>				
+					digitos(0) <= 0;
+				when 5 =>				
+					digitos(0) <= 0;
+				when 6 =>				
+					digitos(0) <= 0;
+				when 7 =>				
+					digitos(0) <= 0;
+				when 8 =>			
+					digitos(0) <= 0;
+				when 9 =>				
+					digitos(0) <= 0;
+				when 10 =>				
+					digitos(0) <= 1;
+				when 11 =>				
+					digitos(0) <= 1;
+				when 12 =>				
+					digitos(0) <= 1;
+				when 13 =>			
+					digitos(0) <= 1;
+				when 14 =>				
+					digitos(0) <= 1;
+				when 15 =>				
+					digitos(0) <= 1;
+				when 16 =>				
+					digitos(0) <= 1;
+				when 17 =>			
+					digitos(0) <= 1;
+				when 18 =>				
+					digitos(0) <= 1;
+				when 19 =>				
+					digitos(0) <= 1;
+				when 20 =>				
+					digitos(0) <= 2;
+				when 21 =>				
+					digitos(0) <= 2;
+				when 22 =>				
+					digitos(0) <= 2;
+				when 23 =>			
+					digitos(0) <= 2;
+				when others =>
+					digitos(0) <= 0;
+			end case;
+			
+			case hora_desp is
+				when 0 =>
+					digitos(1) <= 0;
+				when 1 =>			
+					digitos(1) <= 1;
+				when 2 =>				
+					digitos(1) <= 2;
+				when 3 =>				
+					digitos(1) <= 3;
+				when 4 =>				
+					digitos(1) <= 4;
+				when 5 =>				
+					digitos(1) <= 5;
+				when 6 =>				
+					digitos(1) <= 6;
+				when 7 =>				
+					digitos(1) <= 7;
+				when 8 =>			
+					digitos(1) <= 8;
+				when 9 =>				
+					digitos(1) <= 9;
+				when 10 =>				
+					digitos(1) <= 0;
+				when 11 =>				
+					digitos(1) <= 1;
+				when 12 =>				
+					digitos(1) <= 2;
+				when 13 =>			
+					digitos(1) <= 3;
+				when 14 =>				
+					digitos(1) <= 4;
+				when 15 =>				
+					digitos(1) <= 5;
+				when 16 =>				
+					digitos(1) <= 6;
+				when 17 =>			
+					digitos(1) <= 7;
+				when 18 =>				
+					digitos(1) <= 8;
+				when 19 =>				
+					digitos(1) <= 9;
+				when 20 =>				
+					digitos(1) <= 0;
+				when 21 =>				
+					digitos(1) <= 1;
+				when 22 =>				
+					digitos(1) <= 2;
+				when 23 =>			
+					digitos(1) <= 3;
+				when others =>
+					digitos(1) <= 0;
+			end case;
+			
+			case minuto_desp is
+				when 0 =>
+					digitos(2) <= 0;
+				when 1 =>			
+					digitos(2) <= 0;
+				when 2 =>				
+					digitos(2) <= 0;
+				when 3 =>				
+					digitos(2) <= 0;
+				when 4 =>				
+					digitos(2) <= 0;
+				when 5 =>				
+					digitos(2) <= 0;
+				when 6 =>				
+					digitos(2) <= 0;
+				when 7 =>				
+					digitos(2) <= 0;
+				when 8 =>			
+					digitos(2) <= 0;
+				when 9 =>				
+					digitos(2) <= 0;
+				when 10 =>				
+					digitos(2) <= 1;
+				when 11 =>				
+					digitos(2) <= 1;
+				when 12 =>				
+					digitos(2) <= 1;
+				when 13 =>			
+					digitos(2) <= 1;
+				when 14 =>				
+					digitos(2) <= 1;
+				when 15 =>				
+					digitos(2) <= 1;
+				when 16 =>				
+					digitos(2) <= 1;
+				when 17 =>			
+					digitos(2) <= 1;
+				when 18 =>				
+					digitos(2) <= 1;
+				when 19 =>				
+					digitos(2) <= 1;
+				when 20 =>				
+					digitos(2) <= 2;
+				when 21 =>				
+					digitos(2) <= 2;
+				when 22 =>				
+					digitos(2) <= 2;
+				when 23 =>			
+					digitos(2) <= 2;
+				when 24 =>
+					digitos(2) <= 2;
+				when 25 =>			
+					digitos(2) <= 2;
+				when 26=>				
+					digitos(2) <= 2;
+				when 27 =>				
+					digitos(2) <= 2;
+				when 28 =>				
+					digitos(2) <= 2;
+				when 29 =>				
+					digitos(2) <= 2;
+				when 30 =>				
+					digitos(2) <= 3;
+				when 31 =>				
+					digitos(2) <= 3;
+				when 32 =>			
+					digitos(2) <= 3;
+				when 33 =>				
+					digitos(2) <= 3;
+				when 34 =>				
+					digitos(2) <= 3;
+				when 35 =>				
+					digitos(2) <= 3;
+				when 36 =>				
+					digitos(2) <= 3;
+				when 37 =>			
+					digitos(2) <= 3;
+				when 38 =>				
+					digitos(2) <= 3;
+				when 39 =>				
+					digitos(2) <= 3;
+				when 40 =>				
+					digitos(2) <= 4;
+				when 41 =>			
+					digitos(2) <= 4;
+				when 42 =>				
+					digitos(2) <= 4;
+				when 43 =>				
+					digitos(2) <= 4;
+				when 44 =>				
+					digitos(2) <= 4;
+				when 45 =>				
+					digitos(2) <= 4;
+				when 46 =>				
+					digitos(2) <= 4;
+				when 47 =>			
+					digitos(2) <= 4;
+				when 48 =>				
+					digitos(2) <= 4;
+				when 49 =>				
+					digitos(2) <= 4;
+				when 50 =>				
+					digitos(2) <= 5;
+				when 51 =>			
+					digitos(2) <= 5;
+				when 52 =>				
+					digitos(2) <= 5;
+				when 53 =>				
+					digitos(2) <= 5;
+				when 54 =>				
+					digitos(2) <= 5;
+				when 55 =>				
+					digitos(2) <= 5;
+				when 56 =>				
+					digitos(2) <= 5;
+				when 57 =>			
+					digitos(2) <= 5;
+				when 58 =>				
+					digitos(2) <= 5;
+				when 59 =>			
+					digitos(2) <= 5;
+				when others =>
+					digitos(2) <= 0;
+			end case;
 									
-			with minuto_desp select	
-				digitos(2) <=		0 when 0,
-										0 when 1,
-										0 when 2,
-										0 when 3,
-										0 when 4,
-										0 when 5,
-										0 when 6,
-										0 when 7,
-										0 when 8,
-										0 when 9,
-										1 when 10,
-										1 when 11,
-										1 when 12,
-										1 when 13,
-										1 when 14,
-										1 when 15,
-										1 when 16,
-										1 when 17,
-										1 when 18,
-										1 when 19,
-										2 when 20,
-										2 when 21,
-										2 when 22,
-										2 when 23,
-										2 when 24,
-										2 when 25,
-										2 when 26,
-										2 when 27,
-										2 when 28,
-										2 when 29,
-										3 when 30,
-										3 when 31,
-										3 when 32,
-										3 when 33,
-										3 when 34,
-										3 when 35,
-										3 when 36,
-										3 when 37,
-										3 when 38,
-										3 when 39,
-										4 when 40,
-										4 when 41,
-										4 when 42,
-										4 when 43,
-										4 when 44,
-										4 when 45,
-										4 when 46,
-										4 when 47,
-										4 when 48,
-										4 when 49,
-										5 when 50,
-										5 when 51,
-										5 when 52,
-										5 when 53,
-										5 when 54,
-										5 when 55,
-										5 when 56,
-										5 when 57,
-										5 when 58,
-										5 when 59;
-										
-			with minuto_desp select	
-				digitos(3) <=		0 when 0,
-										1 when 1,
-										2 when 2,
-										3 when 3,
-										4 when 4,
-										5 when 5,
-										6 when 6,
-										7 when 7,
-										8 when 8,
-										9 when 9,
-										0 when 10,
-										1 when 11,
-										2 when 12,
-										3 when 13,
-										4 when 14,
-										5 when 15,
-										6 when 16,
-										7 when 17,
-										8 when 18,
-										9 when 19,
-										0 when 20,
-										1 when 21,
-										2 when 22,
-										3 when 23,
-										4 when 24,
-										5 when 25,
-										6 when 26,
-										7 when 27,
-										8 when 28,
-										9 when 29,
-										0 when 30,
-										1 when 31,
-										2 when 32,
-										3 when 33,
-										4 when 34,
-										5 when 35,
-										6 when 36,
-										7 when 37,
-										8 when 38,
-										9 when 39,
-										0 when 40,
-										1 when 41,
-										2 when 42,
-										3 when 43,
-										4 when 44,
-										5 when 45,
-										6 when 46,
-										7 when 47,
-										8 when 48,
-										9 when 49,
-										0 when 50,
-										1 when 51,
-										2 when 52,
-										3 when 53,
-										4 when 54,
-										5 when 55,
-										6 when 56,
-										7 when 57,
-										8 when 58,
-										9 when 59;
-										
+			case minuto_desp is
+				when 0 =>
+					digitos(3) <= 0;
+				when 1 =>			
+					digitos(3) <= 1;
+				when 2 =>				
+					digitos(3) <= 2;
+				when 3 =>				
+					digitos(3) <= 3;
+				when 4 =>				
+					digitos(3) <= 4;
+				when 5 =>				
+					digitos(3) <= 5;
+				when 6 =>				
+					digitos(3) <= 6;
+				when 7 =>				
+					digitos(3) <= 7;
+				when 8 =>			
+					digitos(3) <= 8;
+				when 9 =>				
+					digitos(3) <= 9;
+				when 10 =>				
+					digitos(3) <= 0;
+				when 11 =>				
+					digitos(3) <= 1;
+				when 12 =>				
+					digitos(3) <= 2;
+				when 13 =>			
+					digitos(3) <= 3;
+				when 14 =>				
+					digitos(3) <= 4;
+				when 15 =>				
+					digitos(3) <= 5;
+				when 16 =>				
+					digitos(3) <= 6;
+				when 17 =>			
+					digitos(3) <= 7;
+				when 18 =>				
+					digitos(3) <= 8;
+				when 19 =>				
+					digitos(3) <= 9;
+				when 20 =>				
+					digitos(3) <= 0;
+				when 21 =>				
+					digitos(3) <= 1;
+				when 22 =>				
+					digitos(3) <= 2;
+				when 23 =>			
+					digitos(3) <= 3;
+				when 24 =>
+					digitos(3) <= 4;
+				when 25 =>			
+					digitos(3) <= 5;
+				when 26 =>				
+					digitos(3) <= 6;
+				when 27 =>				
+					digitos(3) <= 7;
+				when 28 =>				
+					digitos(3) <= 8;
+				when 29 =>				
+					digitos(3) <= 9;
+				when 30 =>				
+					digitos(3) <= 0;
+				when 31 =>				
+					digitos(3) <= 1;
+				when 32 =>			
+					digitos(3) <= 2;
+				when 33 =>				
+					digitos(3) <= 3;
+				when 34 =>				
+					digitos(3) <= 4;
+				when 35 =>				
+					digitos(3) <= 5;
+				when 36 =>				
+					digitos(3) <= 6;
+				when 37 =>			
+					digitos(3) <= 7;
+				when 38 =>				
+					digitos(3) <= 8;
+				when 39 =>				
+					digitos(3) <= 9;
+				when 40 =>				
+					digitos(3) <= 0;
+				when 41 =>			
+					digitos(3) <= 1;
+				when 42 =>				
+					digitos(3) <= 2;
+				when 43 =>				
+					digitos(3) <= 3;
+				when 44 =>				
+					digitos(3) <= 4;
+				when 45 =>				
+					digitos(3) <= 5;
+				when 46 =>				
+					digitos(3) <= 6;
+				when 47 =>			
+					digitos(3) <= 7;
+				when 48 =>				
+					digitos(3) <= 8;
+				when 49 =>				
+					digitos(3) <= 9;
+				when 50 =>				
+					digitos(3) <= 0;
+				when 51 =>			
+					digitos(3) <= 1;
+				when 52 =>				
+					digitos(3) <= 2;
+				when 53 =>				
+					digitos(3) <= 3;
+				when 54 =>				
+					digitos(3) <= 4;
+				when 55 =>				
+					digitos(3) <= 5;
+				when 56 =>				
+					digitos(3) <= 6;
+				when 57 =>			
+					digitos(3) <= 7;
+				when 58 =>				
+					digitos(3) <= 8;
+				when 59 =>			
+					digitos(3) <= 9;
+				when others =>
+					digitos(3) <= 0;
+			end case;
+		when others =>
+			digitos(0) <= 0;
+			digitos(1) <= 0;
+			digitos(2) <= 0;
+			digitos(3) <= 0;
 	end case;
 end process;
+
+
 with digito_ssg select
 ssg  <=		 "11000000" when 0,   --0
 				 "01111001" when 1,   --1
@@ -637,5 +1105,27 @@ ssg  <=		 "11000000" when 0,   --0
 				 "00000000" when 8,   --8
 				 "00010000" when 9,   --9
 				 "00000000" when others;
+
+
+
+-----------------------------------------------------------------------
+-------------------- Paso 4: Cosas de la alarma -----------------------
+
+alarma <= (despertador_programado and alarmita);
+
+process (rapido)
+begin
+		if alarma = '1' then
+			if rapido='1' then
+				led<="00000000";
+			else
+				led<="11111111";
+			end if;
+		else 
+			led<="11111111";
+		end if;
+
+end process;
+
 
 end Behavioral;
