@@ -1,7 +1,12 @@
-ultimos_10=`git verify-pack -v $1 | sort -nk3 | tail -10`
-shadelos10=`echo $ultimos_10 | awk -F\  '{print $1}'`
-for a in $shadelos10 do
-	git rev-list --objects --all | grep $a
+echo
+ultimos_10=`git verify-pack -v $1 | sort -nk3 | tail `
+echo $ultimos_10
+shadelos10=`echo $ultimos_10| xargs -n1 | awk -F\  '{ if (length($1) > 30) print $1}'`
+for a in $shadelos10 ; do
+	hashynombre=`git rev-list --objects --all | grep $a`
+	tamano=`git verify-pack -v $1 | grep $a | tail | awk -F\  '{print $3}'`
+	echo $hashynombre
+	echo $tamano
 done
 
 
