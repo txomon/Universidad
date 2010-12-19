@@ -1,0 +1,9 @@
+ultimos_10=`git verify-pack -v $1 | sort -nk3 | tail -10`
+shadelos10=`echo $ultimos_10 | awk -F\  '{print $1}'`
+for a in $shadelos10 do
+	git rev-list --objects --all | grep $a
+done
+
+
+
+
