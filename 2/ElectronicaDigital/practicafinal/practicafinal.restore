@@ -773,8 +773,7 @@ proc restore { { project_dir "" } } {
   } "A problem occured while restoring user files."
 
   set imported_files { 
-      "despertador_guide.ncd" 
-      "simulacion.xwv"}
+      "despertador_guide.ncd"}
 
   set origination 2
 
