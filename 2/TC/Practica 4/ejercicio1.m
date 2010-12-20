@@ -124,3 +124,7 @@ N=0.1;
 yrecib=canal(xtrans,xdef,G,N,B*1000);
 eyediagram(yrecib,100);
 pause;
+
+
+
+
