@@ -99,23 +99,23 @@ begin
 			cambio_display<=cambio_display+1;
 			an<="0111";
 			digito_ssg<=digitos(0);
---		elsif cambio_display = 249999 then	-- Para la placa
-		elsif cambio_display = 2 then 		-- Para la simulacion
+		elsif cambio_display = 249999 then	-- Para la placa
+--		elsif cambio_display = 2 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1011";
 			digito_ssg<=digitos(1);
---		elsif cambio_display = 499999 then	-- Para la placa
-		elsif cambio_display = 4 then 		-- Para la simulacion
+		elsif cambio_display = 499999 then	-- Para la placa
+--		elsif cambio_display = 4 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1101";
 			digito_ssg<=digitos(2);
---		elsif cambio_display = 749999 then	-- Para la placa
-		elsif cambio_display = 7 then 		-- Para la simulacion
+		elsif cambio_display = 749999 then	-- Para la placa
+--		elsif cambio_display = 7 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1110";
 			digito_ssg<=digitos(3);
---		elsif cambio_display = 999999 then	-- Para la placa
-		elsif cambio_display = 9 then 		-- Para la simulacion
+		elsif cambio_display = 999999 then	-- Para la placa
+--		elsif cambio_display = 9 then 		-- Para la simulacion
 			cambio_display <= 0;
 			digito_ssg<=digitos(1);
 		else
@@ -130,19 +130,19 @@ begin
 		end if;
 		
 ----------------------------------
---		if camb_rapido=24999999 then		-- Para la placa
-		if camb_rapido=249 then				-- Para la simulación
+		if camb_rapido=24999999 then		-- Para la placa
+--		if camb_rapido=249 then				-- Para la simulación
 			camb_rapido<=0;
 			rapido<='1';
 		else
-			camb_lento<=camb_lento+1;
+			camb_rapido<=camb_rapido+1;
 			rapido<='0';
 		end if;
 		
 ----------------------------------
 		if enable_lento='1' then
---			if cuenta_lento=24999999 then	-- Para la placa
-			if cuenta_lento=249 then		-- Para la simulación
+			if cuenta_lento=24999999 then	-- Para la placa
+--			if cuenta_lento=249 then		-- Para la simulación
 				cuenta_lento<=0;
 				lento<= '1';
 			else
