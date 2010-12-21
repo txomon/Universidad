@@ -42,9 +42,9 @@ end despertador;
 architecture Behavioral of despertador is
 ---------------------------------------------------------------
 ------------ Contadores ---------------------------------------
-signal cuenta_lento, camb_lento, cambio_display		:	integer;
+signal cuenta_lento, cambio_display		:	integer;
 signal camb_rapido											:	integer;
-signal rapido, lento, minutos, segundos							:	std_logic;
+signal rapido, lento, minutos, segundos					:	std_logic;
 
 ---------------------------------------------------------------
 ------------ Señales de las Entradas-------------------------
@@ -58,8 +58,8 @@ signal hora, minuto, segundo		: integer;
 
 ---------------------------------------------------------------
 ------------ Señales intermedias ------------------------------
-signal alarmita, enable_m, enable_h, camb_lent			: std_logic;
-signal enable_min, enable_hra, alarma						: std_logic;
+signal alarmita, enable_m, enable_h			: std_logic;
+signal enable_minuto, enable_hora, alarma						: std_logic;
 
 ---------------------------------------------------------------
 ------------ Salidas ------------------------------------------
@@ -100,22 +100,22 @@ begin
 			an<="0111";
 			digito_ssg<=digitos(0);
 		elsif cambio_display = 249999 then	-- Para la placa
---		elsif cambio_display = 2 then 		-- Para la simulacion
+--		elsif cambio_display = 1 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1011";
 			digito_ssg<=digitos(1);
 		elsif cambio_display = 499999 then	-- Para la placa
---		elsif cambio_display = 4 then 		-- Para la simulacion
+--		elsif cambio_display = 2 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1101";
 			digito_ssg<=digitos(2);
 		elsif cambio_display = 749999 then	-- Para la placa
---		elsif cambio_display = 7 then 		-- Para la simulacion
+--		elsif cambio_display = 3 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1110";
 			digito_ssg<=digitos(3);
 		elsif cambio_display = 999999 then	-- Para la placa
---		elsif cambio_display = 9 then 		-- Para la simulacion
+--		elsif cambio_display = 4 then 		-- Para la simulacion
 			cambio_display <= 0;
 			digito_ssg<=digitos(1);
 		else
@@ -129,11 +129,31 @@ begin
 			alarmita<='0';
 		end if;
 		
+		if rst='0' then 
+			if (cmb_desp='1' and conf_hora='1') or (cmb_desp='1' and conf_min='1') then
+				despertador_programado <= '1';
+			end if;
+		else
+			despertador_programado <='0';
+		end if;
 ----------------------------------
 		if camb_rapido=24999999 then		-- Para la placa
---		if camb_rapido=249 then				-- Para la simulación
+--		if camb_rapido=24 then				-- Para la simulación
 			camb_rapido<=0;
 			rapido<='1';
+			if despertador_programado = '1' then
+				if alarmita='1' then
+					if alarma ='1' then
+						led<="01010101";
+						alarma<='0';
+					else 
+						alarma<='1';
+						led<="10101010";
+					end if;
+				else
+					led<="00000000";
+				end if;
+			end if;
 		else
 			camb_rapido<=camb_rapido+1;
 			rapido<='0';
@@ -141,8 +161,8 @@ begin
 		
 ----------------------------------
 		if enable_lento='1' then
-			if cuenta_lento=24999999 then	-- Para la placa
---			if cuenta_lento=249 then		-- Para la simulación
+			if cuenta_lento=99999999 then	-- Para la placa
+--			if cuenta_lento=5 then		-- Para la simulación
 				cuenta_lento<=0;
 				lento<= '1';
 			else
@@ -152,67 +172,92 @@ begin
 		else
 			lento<='0';
 		end if;
-		
-		if rst = '0' then
-			if lento='1' then 
-				if segundo = 59 then
-					segundo <=0;
-					segundos <='1';
-				else
-					segundo <=segundo+1;
-					segundos <='0';
-				end if;
-			end if;
-			
-			if enable_m = '1' then
-				if minuto = 59 then
-					minuto <= 0;
-					minutos <='1';
-				else
-					minuto <= minuto +1;
-					minutos <= '0';
-				end if;
-			end if;
-			
-			if enable_h='1' then
-				if hora = 23 then
-					hora <= 0;
-				else
-					hora <= hora + 1;
-				end if;
-			end if;
-			
-		elsif rst='1' then
-			segundo<=0;
-			segundos<='0';
-			minuto<=0;
-			minutos<='0';
-			hora<=0;
-		end if;
-		
-		if rst = '0' then 
-			if enable_min = '1' then
-				if minuto_desp=59 then
-					minuto_desp <= 0;
-				else
-					minuto_desp <= minuto_desp + 1;
-				end if;
-			end if;
-			
-			if enable_hra = '1' then
-				if hora_desp=59 then
-					hora_desp<=0;
-				else
-					hora_desp<=hora_desp+1;
-				end if;
-			end if;
-		else
-			hora_desp<=0;
-			minuto_desp<=0;
-		end if;
-		
 	end if;
 end process;
+
+------------------------------------
+process (lento, mclk)
+begin
+	if rst = '0' then
+		if rising_edge(lento) then
+			if segundo = 59 then
+				segundo <=0;
+				segundos <='1';
+			else
+				segundo <=segundo+1;
+				segundos <='0';
+			end if;
+		end if;
+	else
+		segundo<=0;
+		segundos<='0';
+	end if;
+end process;
+
+process(enable_m, mclk)
+begin
+	if rst = '0' then
+		if rising_edge(enable_m) then	
+			if minuto = 59 then
+				minuto <= 0;
+				minutos <='1';
+			else
+				minuto <= minuto +1;
+				minutos <= '0';
+			end if;
+		end if;
+	else
+		minuto<=0;
+		minutos<='0';
+	end if;
+end process;
+			
+process(enable_h, mclk)
+begin
+	if rst='0' then
+		if rising_edge(enable_h) then
+			if hora = 23 then
+				hora <= 0;
+			else
+				hora <= hora + 1;
+			end if;
+		end if;
+	else
+		hora<=0;
+	end if;
+end process;
+			
+process (enable_minuto, mclk)
+begin
+	if rst= '0' then
+		if rising_edge(enable_minuto) then
+			if minuto_desp=59 then
+				minuto_desp <= 0;
+			else
+				minuto_desp <= minuto_desp + 1;
+			end if;
+		end if;
+	else
+		minuto_desp <=0;
+	end if;
+end process;
+
+
+process (enable_hora, mclk)
+begin
+	if rst = '0' then
+		if rising_edge(enable_hora) then
+			if hora_desp=23 then
+				hora_desp<=0;
+			else
+				hora_desp<=hora_desp+1;
+			end if;
+		end if;
+	else
+		hora_desp<=0;
+	end if;
+end process;
+
 -----------------------------------------
 with mux_camb_min select
 enable_m <=	segundos when '0',
@@ -225,12 +270,12 @@ enable_h <= minutos when '0',
 				'0' when others;
 
 with mux_camb_desp_min select
-enable_min <=	'0' when '0',
+enable_minuto <=	'0' when '0',
 					rapido when '1',
 					'0' when others;
 				
 with mux_camb_desp_hora select
-enable_hra <=	'0' when '0',
+enable_hora <=	'0' when '0',
 					rapido when '1',
 					'0' when others;
 
@@ -239,7 +284,6 @@ enable_hra <=	'0' when '0',
 process ( rst,conf_min,conf_hora,cmb_hora,cmb_desp,estado_actual )
 begin
 	case estado_actual is
-		
 		when reset =>			
 			if rst='1' then
 				estado_siguiente <= reset;
@@ -248,87 +292,124 @@ begin
 			end if;
 			
 		when inicio =>
-			if cmb_hora='1' and cmb_desp='0' and rst='0' then
-				estado_siguiente <= est_hora;
-			elsif cmb_hora='0' and cmb_desp='1' and rst='0' then
-				estado_siguiente <= est_desp;
-			elsif rst='1' then
+			if rst='1' then
 				estado_siguiente <= reset;
 			else
-				estado_siguiente <= inicio;
+				if cmb_hora='1' and cmb_desp='0' then
+						estado_siguiente <= est_hora;
+				elsif cmb_hora='0' and cmb_desp='1' then
+					estado_siguiente <= est_desp;
+				else
+					estado_siguiente <= inicio;
+				end if;
 			end if;
 		---------------------------------------------	
 			when est_hora =>
-				if conf_hora='1' and conf_min='0' and rst='0' and cmb_hora='1' then
-					estado_siguiente <= cmb_hra;
-				elsif conf_hora='0' and conf_min='1' and rst='0' and cmb_hora='1' then
-					estado_siguiente <= cmb_min;
-				elsif cmb_hora='0' and rst='0' then
-					estado_siguiente <= inicio;
-				elsif rst='1' then
+				if rst='1' then
 					estado_siguiente <= reset;
 				else
-					estado_siguiente <= est_hora;
+					if cmb_hora='1' then
+						if conf_hora='1' and conf_min='0' then
+							estado_siguiente <= cmb_hra;
+						elsif conf_hora='0' and conf_min='1' then
+							estado_siguiente <= cmb_min;
+						else
+							estado_siguiente <= est_hora;
+						end if;
+					else
+						estado_siguiente <= inicio;
+					end if;
 				end if;
 				---------------------------------------------
 				when cmb_hra =>
-					if conf_hora <='1' and cmb_hora='1' and rst='0' then
-						estado_siguiente <= cmb_hra;
-					elsif cmb_hora='0' and rst='0' then
-						estado_siguiente <= inicio;
-					elsif rst='1' then
-						estado_siguiente<=reset;
+					if rst='1' then
+						estado_siguiente <= reset;
 					else
-						estado_siguiente <= est_hora;
+						if cmb_hora='1' then
+							if conf_hora='1' and conf_min='0' then
+								estado_siguiente <= cmb_hra;
+							elsif conf_hora='0' and conf_min='1' then
+								estado_siguiente <= cmb_min;
+							else
+								estado_siguiente <= est_hora;
+							end if;
+						else
+							estado_siguiente <= inicio;
+						end if;
 					end if;
 				
 				when cmb_min =>
-					if conf_min <='1' and cmb_hora='1' and rst='0' then
-						estado_siguiente <= cmb_min;
-					elsif cmb_hora='0' and rst='0' then
-						estado_siguiente <= inicio;
-					elsif rst='1' then
-						estado_siguiente<=reset;
+					if rst='1' then
+						estado_siguiente <= reset;
 					else
-						estado_siguiente <= est_hora;
+						if cmb_hora='1' then
+							if conf_hora='1' and conf_min='0' then
+								estado_siguiente <= cmb_hra;
+							elsif conf_hora='0' and conf_min='1' then
+								estado_siguiente <= cmb_min;
+							else
+								estado_siguiente <= est_hora;
+							end if;
+						else
+							estado_siguiente <= inicio;
+						end if;
 					end if;
 				---------------------------------------------
 			when est_desp =>
-				if conf_hora='1' and conf_min='0' and rst='0' and cmb_desp='1' then
-					estado_siguiente <= cmb_desp_hra;
-				elsif conf_hora='0' and conf_min='1' and rst='0' and cmb_desp='1' then
-					estado_siguiente <= cmb_desp_min;
-				elsif cmb_desp='0' and rst='0' then
-					estado_siguiente <= inicio;
-				elsif rst='1' then
+				if rst='1' then
 					estado_siguiente <= reset;
 				else
-					estado_siguiente <= est_desp;
+					if cmb_desp='1' then
+						if conf_hora='1' and conf_min='0' then
+							estado_siguiente <= cmb_desp_hra;
+						elsif conf_hora='0' and conf_min='1' then
+							estado_siguiente <= cmb_desp_min;
+						else
+							estado_siguiente <= est_desp;
+						end if;
+					else
+						estado_siguiente <= inicio;
+					end if;
 				end if;
+	
 				---------------------------------------------
 				when cmb_desp_hra =>
-					if conf_min='1' and cmb_hora='1' and rst='0' then
-						estado_siguiente <= cmb_desp_min;
-					elsif cmb_hora='0' and rst='0' then
-						estado_siguiente <= inicio;
-					elsif rst='1' then
+					if rst='1' then
 						estado_siguiente <= reset;
 					else
-						estado_siguiente <= est_desp;
+						if cmb_desp='1' then
+							if conf_hora='1' and conf_min='0' then
+								estado_siguiente <= cmb_desp_hra;
+							elsif conf_hora='0' and conf_min='1' then
+								estado_siguiente <= cmb_desp_min;
+							else
+								estado_siguiente <= est_desp;
+							end if;
+						else
+							estado_siguiente <= inicio;
+						end if;
 					end if;
 					
 				when cmb_desp_min =>
-					if conf_min='1' and cmb_desp='1' and rst='0' then
-						estado_siguiente <= cmb_desp_min;
-					elsif cmb_desp='0' and rst='0' then
-						estado_siguiente <= inicio;
-					elsif rst='1' then
-						estado_siguiente<=reset;
+					if rst='1' then
+						estado_siguiente <= reset;
 					else
-						estado_siguiente <= est_desp;
+						if cmb_desp='1' then
+							if conf_hora='1' and conf_min='0' then
+								estado_siguiente <= cmb_desp_hra;
+							elsif conf_hora='0' and conf_min='1' then
+								estado_siguiente <= cmb_desp_min;
+							else
+								estado_siguiente <= est_desp;
+							end if;
+						else
+							estado_siguiente <= inicio;
+						end if;
 					end if;
-				---------------------------------------------
-			end case;
+				--------------------------------------------
+			when others =>
+				estado_siguiente <= reset;
+	end case;
 end process;
 -----------------------------------------------------------------------
 ---------------Paso 3: Las salidas en función del estado---------------
@@ -339,12 +420,7 @@ mux_camb_hra	<=	'1' when cmb_hra,
 with estado_actual select
 mux_camb_min 	<= '1' when cmb_min,
 						'0' when others;
-						
-with estado_actual select
-despertador_programado <=	'1' when cmb_desp_hra,
-									'1' when cmb_desp_min,
-									'0' when reset,
-									'X' when others;
+
 
 with estado_actual select
 mux_camb_desp_min	<=	'1' when cmb_desp_min,
@@ -1095,37 +1171,20 @@ end process;
 
 with digito_ssg select
 ssg  <=		 "11000000" when 0,   --0
-				 "01111001" when 1,   --1
-				 "00100100" when 2,   --2
-				 "00110000" when 3,   --3
-				 "00011001" when 4,   --4
-				 "00010010" when 5,   --5
-				 "00000010" when 6,   --6
-				 "01111000" when 7,   --7
-				 "00000000" when 8,   --8
-				 "00010000" when 9,   --9
-				 "00000000" when others;
+				 "11111001" when 1,   --1
+				 "10100100" when 2,   --2
+				 "10110000" when 3,   --3
+				 "10011001" when 4,   --4
+				 "10010010" when 5,   --5
+				 "10000010" when 6,   --6
+				 "11111000" when 7,   --7
+				 "10000000" when 8,   --8
+				 "10010000" when 9,   --9
+				 "10000000" when others;
 
 
 
------------------------------------------------------------------------
--------------------- Paso 4: Cosas de la alarma -----------------------
 
-alarma <= (despertador_programado and alarmita);
-
-process (rapido)
-begin
-		if alarma = '1' then
-			if rapido='1' then
-				led<="00000000";
-			else
-				led<="11111111";
-			end if;
-		else 
-			led<="11111111";
-		end if;
-
-end process;
 
 
 end Behavioral;

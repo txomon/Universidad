@@ -8,7 +8,7 @@
 -- \   \   \/     Version : 9.2i
 --  \   \         Application : ISE
 --  /   /         Filename : simulacion.ant
--- /___/   /\     Timestamp : Sat Dec 18 22:28:41 2010
+-- /___/   /\     Timestamp : Tue Dec 21 00:27:51 2010
 -- \   \  /  \ 
 --  \___\/\___\ 
 --
@@ -53,7 +53,7 @@ ARCHITECTURE testbench_arch OF simulacion IS
 
     constant PERIOD : time := 200 ns;
     constant DUTY_CYCLE : real := 0.5;
-    constant OFFSET : time := 200 ns;
+    constant OFFSET : time := 100 ns;
 
     BEGIN
         UUT : despertador
@@ -131,7 +131,7 @@ ARCHITECTURE testbench_arch OF simulacion IS
             ANNOTATE_an(0);
             ANNOTATE_ssg(0);
             WAIT for OFFSET;
-            TX_TIME := TX_TIME + 200;
+            TX_TIME := TX_TIME + 100;
             ANNO_LOOP : LOOP
                 --Rising Edge
                 WAIT for 115 ns;
@@ -146,15 +146,27 @@ ARCHITECTURE testbench_arch OF simulacion IS
 
         PROCESS
             BEGIN
-                -- -------------  Current Time:  285ns
-                WAIT FOR 285 ns;
+                -- -------------  Current Time:  185ns
+                WAIT FOR 185 ns;
                 btn <= "0001";
                 -- -------------------------------------
-                -- -------------  Current Time:  1085ns
-                WAIT FOR 800 ns;
+                -- -------------  Current Time:  1185ns
+                WAIT FOR 1000 ns;
                 btn <= "0000";
                 -- -------------------------------------
-                WAIT FOR 999115 ns;
+                -- -------------  Current Time:  1585ns
+                WAIT FOR 400 ns;
+                swt <= "00000001";
+                -- -------------------------------------
+                -- -------------  Current Time:  2185ns
+                WAIT FOR 600 ns;
+                btn <= "0100";
+                -- -------------------------------------
+                -- -------------  Current Time:  102785ns
+                WAIT FOR 100600 ns;
+                btn <= "0000";
+                -- -------------------------------------
+                WAIT FOR 897415 ns;
 
                 STD.TEXTIO.write(TX_OUT, string'("Total[]"));
                 STD.TEXTIO.writeline(RESULTS, TX_OUT);
