@@ -2,13 +2,13 @@
    ./simulacion_isim_beh.exe
      -intstyle  ise
      -ipchost  localhost
-     -ipcport  1310
+     -ipcport  1075
 
-Tue Dec 21 00:28:12 2010
+Tue Dec 21 15:11:26 2010
 
-Total Line Count : 609
+Total Line Count : 616
 
- Elaboration time : 0 sec.
+ Elaboration time : 0.010015 sec.
 
  Estimate current memory usage : 117.101 Meg. 
 
@@ -39,11 +39,11 @@ ntrace start
 isimrun 1000 ns 
 Simulator is doing circuit initialization process.
 Finished circuit initialization process.
-restart
-isimrun 100000 ns 
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
-restart
-isimrun 100000 ns 
-Simulator is doing circuit initialization process.
-Finished circuit initialization process.
+isimrun 1000000 ns 
+
+ Simulation time 0.110159 sec.
+
+ Estimate current memory usage : 125.489 Meg. 
+
+Tue Dec 21 15:12:42 2010
+

@@ -99,25 +99,28 @@ begin
 			cambio_display<=cambio_display+1;
 			an<="0111";
 			digito_ssg<=digitos(0);
-		elsif cambio_display = 249999 then	-- Para la placa
---		elsif cambio_display = 1 then 		-- Para la simulacion
+--		elsif cambio_display = 249999 then	-- Para la placa
+		elsif cambio_display = 1 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1011";
 			digito_ssg<=digitos(1);
-		elsif cambio_display = 499999 then	-- Para la placa
---		elsif cambio_display = 2 then 		-- Para la simulacion
+--		elsif cambio_display = 499999 then	-- Para la placa
+		elsif cambio_display = 2 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1101";
 			digito_ssg<=digitos(2);
-		elsif cambio_display = 749999 then	-- Para la placa
---		elsif cambio_display = 3 then 		-- Para la simulacion
+--		elsif cambio_display = 749999 then	-- Para la placa
+		elsif cambio_display = 3 then 		-- Para la simulacion
 			cambio_display<=cambio_display+1;
 			an<="1110";
 			digito_ssg<=digitos(3);
-		elsif cambio_display = 999999 then	-- Para la placa
---		elsif cambio_display = 4 then 		-- Para la simulacion
+--		elsif cambio_display = 999999 then	-- Para la placa
+		elsif cambio_display = 4 then 		-- Para la simulacion
 			cambio_display <= 0;
 			digito_ssg<=digitos(1);
+--		elsif cambio_display < 0 or cambio_display > 999999 then
+		elsif cambio_display < 0 or cambio_display > 9 then
+			cambio_display <= 0;
 		else
 			cambio_display <= cambio_display+1;
 		end if;
@@ -137,8 +140,8 @@ begin
 			despertador_programado <='0';
 		end if;
 ----------------------------------
-		if camb_rapido=24999999 then		-- Para la placa
---		if camb_rapido=24 then				-- Para la simulación
+--		if camb_rapido=24999999 then		-- Para la placa
+		if camb_rapido=24 then				-- Para la simulación
 			camb_rapido<=0;
 			rapido<='1';
 			if despertador_programado = '1' then
@@ -154,6 +157,9 @@ begin
 					led<="00000000";
 				end if;
 			end if;
+--		elsif camb_rapido < 0 or camb_rapido > 24999999 then
+		elsif camb_rapido < 0 or camb_rapido > 24 then
+			camb_rapido<=0;
 		else
 			camb_rapido<=camb_rapido+1;
 			rapido<='0';
@@ -161,10 +167,13 @@ begin
 		
 ----------------------------------
 		if enable_lento='1' then
-			if cuenta_lento=99999999 then	-- Para la placa
---			if cuenta_lento=5 then		-- Para la simulación
+--			if cuenta_lento=99999999 then	-- Para la placa
+			if cuenta_lento=5 then		-- Para la simulación
 				cuenta_lento<=0;
 				lento<= '1';
+--			elsif cuenta_lento < 0 or cuenta_lento > 99999999 then
+			elsif cuenta_lento < 0 or cuenta_lento > 5 then
+				cuenta_lento <= 0;
 			else
 				cuenta_lento<=cuenta_lento+1;
 				lento<= '0';
@@ -183,6 +192,8 @@ begin
 			if segundo = 59 then
 				segundo <=0;
 				segundos <='1';
+			elsif segundo < 0 or segundo > 59 then
+				segundo <= 0;
 			else
 				segundo <=segundo+1;
 				segundos <='0';
@@ -201,6 +212,8 @@ begin
 			if minuto = 59 then
 				minuto <= 0;
 				minutos <='1';
+			elsif minuto < 0 or minuto > 59 then
+				minuto <= 0;
 			else
 				minuto <= minuto +1;
 				minutos <= '0';
@@ -218,6 +231,8 @@ begin
 		if rising_edge(enable_h) then
 			if hora = 23 then
 				hora <= 0;
+			elsif hora < 0 or hora >23 then
+				hora <= 0;
 			else
 				hora <= hora + 1;
 			end if;
@@ -232,6 +247,8 @@ begin
 	if rst= '0' then
 		if rising_edge(enable_minuto) then
 			if minuto_desp=59 then
+				minuto_desp <= 0;
+			elsif minuto_desp < 0 or minuto_desp > 59 then
 				minuto_desp <= 0;
 			else
 				minuto_desp <= minuto_desp + 1;
@@ -249,6 +266,8 @@ begin
 		if rising_edge(enable_hora) then
 			if hora_desp=23 then
 				hora_desp<=0;
+			elsif hora_desp < 0 or hora_desp > 23 then
+					hora_desp <= 0;
 			else
 				hora_desp<=hora_desp+1;
 			end if;
