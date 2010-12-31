@@ -5,6 +5,7 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
+<<<<<<< HEAD
 <msg type="info" file="Xst" num="1561" delta="old" >&quot;<arg fmt="%s" index="1">C:/Universidad/2/ElectronicaDigital/practica3/practica3/main3.vhd</arg>&quot; line <arg fmt="%d" index="2">102</arg>: Mux is complete : default of case is discarded
 </msg>
 
@@ -12,6 +13,18 @@
 </msg>
 
 <msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">mclk</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+=======
+<msg type="info" file="Xst" num="1561" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd</arg>&quot; line <arg fmt="%d" index="2">102</arg>: Mux is complete : default of case is discarded
+</msg>
+
+<msg type="warning" file="Xst" num="2734" delta="unknown" >Property &quot;<arg fmt="%s" index="1">use_dsp48</arg>&quot; is not applicable for this technology.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">btn</arg>&gt; is never used.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">mclk</arg>&gt; is never used.
+>>>>>>> TC
 </msg>
 
 </messages>

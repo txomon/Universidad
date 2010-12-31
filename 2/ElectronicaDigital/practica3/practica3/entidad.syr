@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Release 12.3 - xst M.70d (nt64)
 Copyright (c) 1995-2010 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
@@ -11,6 +12,15 @@ Total CPU time to Xst completion: 0.25 secs
 
 Total REAL time to Xst completion: 0.00 secs
 Total CPU time to Xst completion: 0.25 secs
+=======
+Release 9.2i - xst J.36
+Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.13 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.13 s | Elapsed : 0.00 / 0.00 s
+>>>>>>> TC
  
 --> Reading design: entidad.prj
 
@@ -26,9 +36,15 @@ TABLE OF CONTENTS
   7) Low Level Synthesis
   8) Partition Report
   9) Final Report
+<<<<<<< HEAD
 	9.1) Device utilization summary
 	9.2) Partition Resource Summary
 	9.3) TIMING REPORT
+=======
+     9.1) Device utilization summary
+     9.2) Partition Resource Summary
+     9.3) TIMING REPORT
+>>>>>>> TC
 
 
 =========================================================================
@@ -49,21 +65,36 @@ Top Module Name                    : entidad
 Automatic FSM Extraction           : YES
 FSM Encoding Algorithm             : Auto
 Safe Implementation                : No
+<<<<<<< HEAD
 FSM Style                          : LUT
+=======
+FSM Style                          : lut
+>>>>>>> TC
 RAM Extraction                     : Yes
 RAM Style                          : Auto
 ROM Extraction                     : Yes
 Mux Style                          : Auto
 Decoder Extraction                 : YES
+<<<<<<< HEAD
 Priority Encoder Extraction        : Yes
+=======
+Priority Encoder Extraction        : YES
+>>>>>>> TC
 Shift Register Extraction          : YES
 Logical Shifter Extraction         : YES
 XOR Collapsing                     : YES
 ROM Style                          : Auto
+<<<<<<< HEAD
 Mux Extraction                     : Yes
 Resource Sharing                   : YES
 Asynchronous To Synchronous        : NO
 Multiplier Style                   : Auto
+=======
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : auto
+>>>>>>> TC
 Automatic Register Balancing       : No
 
 ---- Target Options
@@ -76,14 +107,23 @@ Optimize Instantiated Primitives   : NO
 Use Clock Enable                   : Yes
 Use Synchronous Set                : Yes
 Use Synchronous Reset              : Yes
+<<<<<<< HEAD
 Pack IO Registers into IOBs        : Auto
+=======
+Pack IO Registers into IOBs        : auto
+>>>>>>> TC
 Equivalent register Removal        : YES
 
 ---- General Options
 Optimization Goal                  : Speed
 Optimization Effort                : 1
+<<<<<<< HEAD
 Keep Hierarchy                     : No
 Netlist Hierarchy                  : As_Optimized
+=======
+Library Search Order               : entidad.lso
+Keep Hierarchy                     : NO
+>>>>>>> TC
 RTL Output                         : Yes
 Global Optimization                : AllClockNets
 Read Cores                         : YES
@@ -91,7 +131,11 @@ Write Timing Constraints           : NO
 Cross Clock Analysis               : NO
 Hierarchy Separator                : /
 Bus Delimiter                      : <>
+<<<<<<< HEAD
 Case Specifier                     : Maintain
+=======
+Case Specifier                     : maintain
+>>>>>>> TC
 Slice Utilization Ratio            : 100
 BRAM Utilization Ratio             : 100
 Verilog 2001                       : YES
@@ -104,9 +148,16 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
+<<<<<<< HEAD
 Compiling vhdl file "C:/Universidad/2/ElectronicaDigital/practica3/practica3/sumador.vhd" in Library work.
 Architecture behavioral of Entity sumador is up to date.
 Compiling vhdl file "C:/Universidad/2/ElectronicaDigital/practica3/practica3/main3.vhd" in Library work.
+=======
+Compiling vhdl file "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd" in Library work.
+Entity <sumador> compiled.
+Entity <sumador> (Architecture <behavioral>) compiled.
+Compiling vhdl file "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" in Library work.
+>>>>>>> TC
 Architecture behavioral of Entity entidad is up to date.
 
 =========================================================================
@@ -121,7 +172,11 @@ Analyzing hierarchy for entity <sumador> in library <work> (architecture <Behavi
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing Entity <entidad> in library <work> (Architecture <behavioral>).
+<<<<<<< HEAD
 INFO:Xst:1561 - "C:/Universidad/2/ElectronicaDigital/practica3/practica3/main3.vhd" line 102: Mux is complete : default of case is discarded
+=======
+INFO:Xst:1561 - "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd" line 102: Mux is complete : default of case is discarded
+>>>>>>> TC
 Entity <entidad> analyzed. Unit <entidad> generated.
 
 Analyzing Entity <sumador> in library <work> (Architecture <Behavioral>).
@@ -135,7 +190,12 @@ Entity <sumador> analyzed. Unit <sumador> generated.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <sumador>.
+<<<<<<< HEAD
     Related source file is "C:/Universidad/2/ElectronicaDigital/practica3/practica3/sumador.vhd".
+=======
+    Related source file is "C:/MIJ/2/Electronica Digital/practica3/practica3/sumador.vhd".
+WARNING:Xst:2734 - Property "use_dsp48" is not applicable for this technology.
+>>>>>>> TC
     Found 4-bit adder for signal <suma>.
     Summary:
 	inferred   1 Adder/Subtractor(s).
@@ -143,9 +203,15 @@ Unit <sumador> synthesized.
 
 
 Synthesizing Unit <entidad>.
+<<<<<<< HEAD
     Related source file is "C:/Universidad/2/ElectronicaDigital/practica3/practica3/main3.vhd".
 WARNING:Xst:647 - Input <btn> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 WARNING:Xst:647 - Input <mclk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+=======
+    Related source file is "C:/MIJ/2/Electronica Digital/practica3/practica3/main3.vhd".
+WARNING:Xst:647 - Input <btn> is never used.
+WARNING:Xst:647 - Input <mclk> is never used.
+>>>>>>> TC
     Found 16x8-bit ROM for signal <ssg>.
     Summary:
 	inferred   1 ROM(s).
@@ -167,6 +233,10 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
+<<<<<<< HEAD
+=======
+Loading device for application Rf_Device from file '3s200.nph' in environment C:\Archivos de programa\Xilinx ISE 9.2i.
+>>>>>>> TC
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -198,7 +268,11 @@ Found no macro
 =========================================================================
 
 =========================================================================
+<<<<<<< HEAD
 *                           Partition Report                            *
+=======
+*                          Partition Report                             *
+>>>>>>> TC
 =========================================================================
 
 Partition Implementation Status
@@ -216,17 +290,29 @@ RTL Top Level Output File Name     : entidad.ngr
 Top Level Output File Name         : entidad
 Output Format                      : NGC
 Optimization Goal                  : Speed
+<<<<<<< HEAD
 Keep Hierarchy                     : No
+=======
+Keep Hierarchy                     : NO
+>>>>>>> TC
 
 Design Statistics
 # IOs                              : 33
 
 Cell Usage :
+<<<<<<< HEAD
 # BELS                             : 17
 #      GND                         : 1
 #      LUT2                        : 1
 #      LUT3                        : 2
 #      LUT4                        : 11
+=======
+# BELS                             : 20
+#      GND                         : 1
+#      LUT2                        : 1
+#      LUT3                        : 4
+#      LUT4                        : 12
+>>>>>>> TC
 #      MUXF5                       : 1
 #      VCC                         : 1
 # IO Buffers                       : 28
@@ -239,10 +325,17 @@ Device utilization summary:
 
 Selected Device : 3s200ft256-4 
 
+<<<<<<< HEAD
  Number of Slices:                        8  out of   1920     0%  
  Number of 4 input LUTs:                 14  out of   3840     0%  
  Number of IOs:                          33
  Number of bonded IOBs:                  28  out of    173    16%  
+=======
+ Number of Slices:                       9  out of   1920     0%  
+ Number of 4 input LUTs:                17  out of   3840     0%  
+ Number of IOs:                         33
+ Number of bonded IOBs:                 28  out of    173    16%  
+>>>>>>> TC
 
 ---------------------------
 Partition Resource Summary:
@@ -275,7 +368,11 @@ Speed Grade: -4
    Minimum period: No path found
    Minimum input arrival time before clock: No path found
    Maximum output required time after clock: No path found
+<<<<<<< HEAD
    Maximum combinational path delay: 12.500ns
+=======
+   Maximum combinational path delay: 14.070ns
+>>>>>>> TC
 
 Timing Detail:
 --------------
@@ -283,6 +380,7 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default path analysis
+<<<<<<< HEAD
   Total number of paths / destination ports: 197 / 16
 -------------------------------------------------------------------------
 Delay:               12.500ns (Levels of Logic = 5)
@@ -314,5 +412,36 @@ Total memory usage is 246576 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :    2 (   0 filtered)
+=======
+  Total number of paths / destination ports: 204 / 16
+-------------------------------------------------------------------------
+Delay:               14.070ns (Levels of Logic = 6)
+  Source:            swt<0> (PAD)
+  Destination:       ssg<2> (PAD)
+
+  Data Path: swt<0> to ssg<2>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             4   0.821   1.256  swt_0_IBUF (led_0_OBUF)
+     LUT4:I0->O            4   0.551   0.943  suma/Madd_suma_cy<1>11 (suma/Madd_suma_cy<1>)
+     LUT4:I3->O            7   0.551   1.261  salida<2>1 (salida<2>)
+     LUT3:I1->O            1   0.551   1.140  Mrom_ssg340 (Mrom_ssg3_map12)
+     LUT3:I0->O            1   0.551   0.801  Mrom_ssg342 (Mrom_ssg2)
+     OBUF:I->O                 5.644          ssg_2_OBUF (ssg<2>)
+    ----------------------------------------
+    Total                     14.070ns (8.669ns logic, 5.401ns route)
+                                       (61.6% logic, 38.4% route)
+
+=========================================================================
+CPU : 3.34 / 3.50 s | Elapsed : 3.00 / 3.00 s
+ 
+--> 
+
+Total memory usage is 136476 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    3 (   0 filtered)
+>>>>>>> TC
 Number of infos    :    1 (   0 filtered)
 

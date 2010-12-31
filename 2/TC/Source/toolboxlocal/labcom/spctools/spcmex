@@ -1,0 +1,32 @@
+# spcmex
+# script to generate mex files out of ANY *.c file in 
+# sub-directories below current directory
+#
+# execute from the spctools directory
+#
+# by Dennis W. Brown, 2-22-94
+
+unset verbose
+
+# get directory 
+set d=`ls -1F !* |grep /`
+
+foreach dname ( $d )
+
+	# change to directory
+	cd $dname
+
+	# compile mex files if any
+	set c = `ls *.c`
+	foreach cname ($c)
+		echo "Compiling $cname ..."
+		cmex -D__UNIX__ $cname
+	end
+	unset c
+
+	# go back to parent
+	cd ..
+end
+
+unset d
+
