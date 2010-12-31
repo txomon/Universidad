@@ -1,0 +1,456 @@
+Release 9.2i - xst J.36
+Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to ./xst/projnav.tmp
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Parameter xsthdpdir set to ./xst
+CPU : 0.00 / 0.17 s | Elapsed : 0.00 / 0.00 s
+ 
+--> Reading design: Placa.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+     9.1) Device utilization summary
+     9.2) Partition Resource Summary
+     9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "Placa.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "Placa"
+Output Format                      : NGC
+Target Device                      : xc3s400-4-ft256
+
+---- Source Options
+Top Module Name                    : Placa
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : lut
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : YES
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : YES
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : auto
+Automatic Register Balancing       : No
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 500
+Add Generic Clock Buffer(BUFG)     : 8
+Register Duplication               : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Library Search Order               : Placa.lso
+Keep Hierarchy                     : NO
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd" in Library work.
+Architecture behavioral of Entity contjohn is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd" in Library work.
+Architecture behavioral of Entity contbcd is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd" in Library work.
+Architecture behavioral of Entity bcdssg is up to date.
+Compiling vhdl file "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" in Library work.
+Entity <placa> compiled.
+Entity <placa> (Architecture <behavioral>) compiled.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <Placa> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <contjohn> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <contbcd> in library <work> (architecture <behavioral>).
+
+Analyzing hierarchy for entity <bcdssg> in library <work> (architecture <behavioral>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <Placa> in library <work> (Architecture <behavioral>).
+WARNING:Xst:1541 - "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd" line 110: Different binding for component: <bcdssg>. Port <bcd> does not match.
+Entity <Placa> analyzed. Unit <Placa> generated.
+
+Analyzing Entity <contjohn> in library <work> (Architecture <behavioral>).
+Entity <contjohn> analyzed. Unit <contjohn> generated.
+
+Analyzing Entity <contbcd> in library <work> (Architecture <behavioral>).
+Entity <contbcd> analyzed. Unit <contbcd> generated.
+
+Analyzing Entity <bcdssg> in library <work> (Architecture <behavioral>).
+Entity <bcdssg> analyzed. Unit <bcdssg> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <contjohn>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd".
+    Found 8-bit register for signal <leds>.
+    Summary:
+	inferred   8 D-type flip-flop(s).
+Unit <contjohn> synthesized.
+
+
+Synthesizing Unit <contbcd>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd".
+    Found 4-bit updown counter for signal <numero>.
+    Summary:
+	inferred   1 Counter(s).
+Unit <contbcd> synthesized.
+
+
+Synthesizing Unit <bcdssg>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd".
+Unit <bcdssg> synthesized.
+
+
+Synthesizing Unit <Placa>.
+    Related source file is "C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd".
+WARNING:Xst:647 - Input <btn<3:1>> is never used.
+WARNING:Xst:647 - Input <swt<7:2>> is never used.
+    Found 26-bit up counter for signal <contador>.
+    Found 1-bit register for signal <enable_slow>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred   1 D-type flip-flop(s).
+Unit <Placa> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 2
+ 26-bit up counter                                     : 1
+ 4-bit updown counter                                  : 1
+# Registers                                            : 2
+ 1-bit register                                        : 1
+ 8-bit register                                        : 1
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Loading device for application Rf_Device from file '3s400.nph' in environment C:\Archivos de programa\Xilinx ISE 9.2i.
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Counters                                             : 2
+ 26-bit up counter                                     : 1
+ 4-bit updown counter                                  : 1
+# Registers                                            : 9
+ Flip-Flops                                            : 9
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:2677 - Node <contador_2> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_3> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_4> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_5> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_6> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_7> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_8> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_9> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_10> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_11> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_12> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_13> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_14> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_15> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_16> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_17> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_18> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_19> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_20> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_21> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_22> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_23> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_24> of sequential type is unconnected in block <Placa>.
+WARNING:Xst:2677 - Node <contador_25> of sequential type is unconnected in block <Placa>.
+
+Optimizing unit <Placa> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block Placa, actual ratio is 0.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 15
+ Flip-Flops                                            : 15
+
+=========================================================================
+
+=========================================================================
+*                          Partition Report                             *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : Placa.ngr
+Top Level Output File Name         : Placa
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : NO
+
+Design Statistics
+# IOs                              : 33
+
+Cell Usage :
+# BELS                             : 31
+#      GND                         : 1
+#      INV                         : 2
+#      LUT1                        : 1
+#      LUT2                        : 1
+#      LUT2_L                      : 1
+#      LUT3                        : 9
+#      LUT4                        : 10
+#      LUT4_L                      : 2
+#      MUXCY                       : 1
+#      MUXF5                       : 1
+#      VCC                         : 1
+#      XORCY                       : 1
+# FlipFlops/Latches                : 15
+#      FD                          : 3
+#      FDRE                        : 12
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 23
+#      IBUF                        : 3
+#      OBUF                        : 20
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s400ft256-4 
+
+ Number of Slices:                      14  out of   3584     0%  
+ Number of Slice Flip Flops:            15  out of   7168     0%  
+ Number of 4 input LUTs:                26  out of   7168     0%  
+ Number of IOs:                         33
+ Number of bonded IOBs:                 24  out of    173    13%  
+ Number of GCLKs:                        1  out of      8    12%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+mclk                               | BUFGP                  | 3     |
+enable_slow                        | NONE(cont2/numero_0)   | 12    |
+-----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 5.246ns (Maximum Frequency: 190.621MHz)
+   Minimum input arrival time before clock: 5.543ns
+   Maximum output required time after clock: 9.225ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'mclk'
+  Clock period: 3.679ns (frequency: 271.813MHz)
+  Total number of paths / destination ports: 4 / 3
+-------------------------------------------------------------------------
+Delay:               3.679ns (Levels of Logic = 3)
+  Source:            contador_0 (FF)
+  Destination:       contador_1 (FF)
+  Source Clock:      mclk rising
+  Destination Clock: mclk rising
+
+  Data Path: contador_0 to contador_1
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               1   0.720   0.801  contador_0 (contador_0)
+     INV:I->O              2   0.551   0.000  Mcount_contador_lut<0>_INV_0 (Result<0>)
+     MUXCY:S->O            0   0.500   0.000  Mcount_contador_cy<0> (Mcount_contador_cy<0>)
+     XORCY:CI->O           1   0.904   0.000  Mcount_contador_xor<1> (Result<1>)
+     FD:D                      0.203          contador_1
+    ----------------------------------------
+    Total                      3.679ns (2.878ns logic, 0.801ns route)
+                                       (78.2% logic, 21.8% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'enable_slow'
+  Clock period: 5.246ns (frequency: 190.621MHz)
+  Total number of paths / destination ports: 47 / 16
+-------------------------------------------------------------------------
+Delay:               5.246ns (Levels of Logic = 2)
+  Source:            cont2/numero_2 (FF)
+  Destination:       cont2/numero_0 (FF)
+  Source Clock:      enable_slow rising
+  Destination Clock: enable_slow rising
+
+  Data Path: cont2/numero_2 to cont2/numero_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            12   0.720   1.313  cont2/numero_2 (cont2/numero_2)
+     LUT4_L:I1->LO         1   0.551   0.168  cont2/numero_and0000_SW0 (N40)
+     LUT4:I2->O            4   0.551   0.917  cont2/numero_and0000 (cont2/numero_and0000)
+     FDRE:R                    1.026          cont2/numero_0
+    ----------------------------------------
+    Total                      5.246ns (2.848ns logic, 2.398ns route)
+                                       (54.3% logic, 45.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'enable_slow'
+  Total number of paths / destination ports: 44 / 35
+-------------------------------------------------------------------------
+Offset:              5.543ns (Levels of Logic = 3)
+  Source:            swt<1> (PAD)
+  Destination:       cont2/numero_0 (FF)
+  Destination Clock: enable_slow rising
+
+  Data Path: swt<1> to cont2/numero_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            13   0.821   1.509  swt_1_IBUF (swt_1_IBUF)
+     LUT4_L:I0->LO         1   0.551   0.168  cont2/numero_and0000_SW0 (N40)
+     LUT4:I2->O            4   0.551   0.917  cont2/numero_and0000 (cont2/numero_and0000)
+     FDRE:R                    1.026          cont2/numero_0
+    ----------------------------------------
+    Total                      5.543ns (2.949ns logic, 2.594ns route)
+                                       (53.2% logic, 46.8% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'enable_slow'
+  Total number of paths / destination ports: 36 / 15
+-------------------------------------------------------------------------
+Offset:              9.225ns (Levels of Logic = 2)
+  Source:            cont2/numero_0 (FF)
+  Destination:       ssg<1> (PAD)
+  Source Clock:      enable_slow rising
+
+  Data Path: cont2/numero_0 to ssg<1>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDRE:C->Q            13   0.720   1.509  cont2/numero_0 (cont2/numero_0)
+     LUT4:I0->O            1   0.551   0.801  conversor/ssg_1_or00001 (ssg_1_OBUF)
+     OBUF:I->O                 5.644          ssg_1_OBUF (ssg<1>)
+    ----------------------------------------
+    Total                      9.225ns (6.915ns logic, 2.310ns route)
+                                       (75.0% logic, 25.0% route)
+
+=========================================================================
+CPU : 3.38 / 3.56 s | Elapsed : 4.00 / 4.00 s
+ 
+--> 
+
+Total memory usage is 140448 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   27 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+

@@ -1213,4 +1213,8 @@ proc restore { { project_dir "" } } {
       INFO "and submit this file, along with the project source files, for evaluation."
    }
 }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> ElecDig

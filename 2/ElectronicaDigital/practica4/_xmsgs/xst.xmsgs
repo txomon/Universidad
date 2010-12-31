@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- IMPORTANT: This is an internal file that has been generated
      by the Xilinx ISE software.  Any direct editing or
@@ -50,3 +51,98 @@
 
 </messages>
 
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="Xst" num="1541" delta="unknown" >&quot;<arg fmt="%s" index="1">C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd</arg>&quot; line <arg fmt="%d" index="2">110</arg>: Different binding for component: &lt;<arg fmt="%s" index="3">bcdssg</arg>&gt;. Port &lt;<arg fmt="%s" index="4">bcd</arg>&gt; does not match.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">btn&lt;3:1&gt;</arg>&gt; is never used.
+</msg>
+
+<msg type="warning" file="Xst" num="647" delta="unknown" >Input &lt;<arg fmt="%s" index="1">swt&lt;7:2&gt;</arg>&gt; is never used.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_2</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_3</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_4</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_5</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_6</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_7</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_8</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_9</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_10</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_11</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_12</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_13</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_14</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_15</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_16</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_17</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_18</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_19</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_20</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_21</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_22</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_23</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_24</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="warning" file="Xst" num="2677" delta="unknown" >Node &lt;<arg fmt="%s" index="1">contador_25</arg>&gt; of sequential type is unconnected in block &lt;<arg fmt="%s" index="2">Placa</arg>&gt;.
+</msg>
+
+<msg type="info" file="Xst" num="2169" delta="unknown" >HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
+</msg>
+
+</messages>
+
+>>>>>>> ElecDig

@@ -1,0 +1,35 @@
+V3 19
+FL C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd 2010/11/04.13:16:12 J.36
+EN work/bcdssg 1288873036 FL C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/bcdssg/Behavioral 1288873037 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/bcdssg.vhd EN work/bcdssg 1288873036
+FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd 2010/11/04.13:43:24 J.36
+EN work/contbcd 1288874798 FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/contbcd/Behavioral 1288874799 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/contbcd.vhd EN work/contbcd 1288874798
+FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd 2010/11/04.13:27:35 J.36
+EN work/contjohn 1288873667 FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/contjohn/Behavioral 1288873668 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/contjohn.vhd EN work/contjohn 1288873667
+FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd 2010/11/04.14:22:36 J.36
+EN work/Placa 1288876974 FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991
+AR work/Placa/Behavioral 1288876975 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/practica4.vhd EN work/Placa 1288876974 \
+      CP contjohn CP contbcd CP bcdssg
+FL C:/MJ/2/ElectronicaDigital/practica4/simulacion.vhw 2010/11/04.14:19:51 J.36
+EN work/simulacion 1288876993 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/simulacion.vhw \
+      PB ieee/std_logic_1164 1179176983 PB ieee/std_logic_arith 1179176985 \
+      PB ieee/STD_LOGIC_UNSIGNED 1179176991 PB ieee/STD_LOGIC_TEXTIO 1179176993 \
+      PB std/textio 1179176969
+AR work/simulacion/testbench_arch 1288876994 \
+      FL C:/MJ/2/ElectronicaDigital/practica4/simulacion.vhw EN work/simulacion 1288876993 \
+      CP Placa

@@ -65,6 +65,7 @@ with mux select
 salida <= opcion0 when '1',
 			opcion1 when others;
 
+<<<<<<< HEAD
 process (salida)
 begin
 case salida is 
@@ -105,6 +106,27 @@ case salida is
    end case;
 
 end process;
+=======
+
+    with salida SELect
+   ssg<= "01111001" when "0001",   --1
+         "00100100" when "0010",   --2
+         "00110000" when "0011",   --3
+         "00011001" when "0100",   --4
+         "00010010" when "0101",   --5
+         "00000010" when "0110",   --6
+         "01111000" when "0111",   --7
+         "00000000" when "1000",   --8
+         "00010000" when "1001",   --9
+         "10001000" when "1010",   --A
+         "10000011" when "1011",   --b
+         "11000110" when "1100",   --C
+         "10100001" when "1101",   --d
+         "10000110" when "1110",   --E
+         "10001110" when "1111",   --F
+         "01000000" when others;   --0
+
+>>>>>>> ElecDig
 		
 
 an <= "1000";

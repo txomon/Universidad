@@ -1,0 +1,115 @@
+--------------------------------------------------------------------------------
+Release 9.2i Trace 
+Copyright (c) 1995-2007 Xilinx, Inc.  All rights reserved.
+
+C:\Archivos de programa\Xilinx ISE 9.2i\bin\nt\trce.exe -ise
+C:/MJ/2/ElectronicaDigital/practica3/practica3.ise -intstyle ise -e 3 -s 4 -xml
+entidad entidad.ncd -o entidad.twr entidad.pcf -ucf nexys.ucf
+
+Design file:              entidad.ncd
+Physical constraint file: entidad.pcf
+Device,package,speed:     xc3s400,ft256,-4 (PRODUCTION 1.39 2007-04-13)
+Report level:             error report
+
+Environment Variable      Effect 
+--------------------      ------ 
+NONE                      No environment variables were set
+--------------------------------------------------------------------------------
+
+INFO:Timing:2698 - No timing constraints found, doing default enumeration.
+INFO:Timing:2752 - To get complete path coverage, use the unconstrained paths 
+   option. All paths that are not constrained will be reported in the 
+   unconstrained paths section(s) of the report.
+INFO:Timing:3339 - The clock-to-out numbers in this timing report are based on 
+   a 50 Ohm transmission line loading model.  For the details of this model, 
+   and for more information on accounting for different loading conditions, 
+   please see the device datasheet.
+
+
+
+Data Sheet report:
+-----------------
+All values displayed in nanoseconds (ns)
+
+Pad to Pad
+---------------+---------------+---------+
+Source Pad     |Destination Pad|  Delay  |
+---------------+---------------+---------+
+swt<0>         |led<0>         |    7.325|
+swt<0>         |ssg<0>         |   14.058|
+swt<0>         |ssg<1>         |   13.522|
+swt<0>         |ssg<2>         |   13.460|
+swt<0>         |ssg<3>         |   12.590|
+swt<0>         |ssg<4>         |   11.953|
+swt<0>         |ssg<5>         |   13.391|
+swt<0>         |ssg<6>         |   12.457|
+swt<0>         |ssg<7>         |   12.520|
+swt<1>         |led<1>         |    7.422|
+swt<1>         |ssg<0>         |   12.669|
+swt<1>         |ssg<1>         |   12.133|
+swt<1>         |ssg<2>         |   12.071|
+swt<1>         |ssg<3>         |   11.201|
+swt<1>         |ssg<4>         |   10.564|
+swt<1>         |ssg<5>         |   12.002|
+swt<1>         |ssg<6>         |   11.068|
+swt<1>         |ssg<7>         |   11.131|
+swt<2>         |led<2>         |    8.234|
+swt<2>         |ssg<0>         |   11.698|
+swt<2>         |ssg<1>         |   11.291|
+swt<2>         |ssg<2>         |   11.229|
+swt<2>         |ssg<3>         |   10.230|
+swt<2>         |ssg<4>         |    9.722|
+swt<2>         |ssg<5>         |   11.160|
+swt<2>         |ssg<6>         |   10.226|
+swt<2>         |ssg<7>         |   10.289|
+swt<3>         |led<3>         |    7.143|
+swt<4>         |led<4>         |    6.970|
+swt<4>         |ssg<0>         |   13.177|
+swt<4>         |ssg<1>         |   12.641|
+swt<4>         |ssg<2>         |   12.579|
+swt<4>         |ssg<3>         |   11.709|
+swt<4>         |ssg<4>         |   11.072|
+swt<4>         |ssg<5>         |   12.510|
+swt<4>         |ssg<6>         |   11.576|
+swt<4>         |ssg<7>         |   11.639|
+swt<5>         |led<5>         |    6.636|
+swt<5>         |ssg<0>         |   13.246|
+swt<5>         |ssg<1>         |   12.710|
+swt<5>         |ssg<2>         |   12.648|
+swt<5>         |ssg<3>         |   11.778|
+swt<5>         |ssg<4>         |   11.141|
+swt<5>         |ssg<5>         |   12.579|
+swt<5>         |ssg<6>         |   11.645|
+swt<5>         |ssg<7>         |   11.708|
+swt<6>         |led<6>         |    7.261|
+swt<6>         |ssg<0>         |   12.196|
+swt<6>         |ssg<1>         |   11.645|
+swt<6>         |ssg<2>         |   11.583|
+swt<6>         |ssg<3>         |   10.728|
+swt<6>         |ssg<4>         |   10.076|
+swt<6>         |ssg<5>         |   11.514|
+swt<6>         |ssg<6>         |   10.580|
+swt<6>         |ssg<7>         |   10.643|
+swt<7>         |led<7>         |    6.970|
+swt<7>         |ssg<0>         |   12.582|
+swt<7>         |ssg<1>         |   12.324|
+swt<7>         |ssg<2>         |   12.541|
+swt<7>         |ssg<3>         |   11.029|
+swt<7>         |ssg<4>         |   10.485|
+swt<7>         |ssg<5>         |   12.187|
+swt<7>         |ssg<6>         |   11.595|
+swt<7>         |ssg<7>         |   11.450|
+---------------+---------------+---------+
+
+
+Analysis completed Thu Oct 28 13:49:36 2010 
+--------------------------------------------------------------------------------
+
+Trace Settings:
+-------------------------
+Trace Settings 
+
+Peak Memory Usage: 78 MB
+
+
+

@@ -1,0 +1,167 @@
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr
+ngdbuild -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -dd _ngo -nt timestamp -uc "nexys.ucf" -p xc3s400-ft256-4 "Placa.ngc" Placa.ngd
+map -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -p xc3s400-ft256-4 -cm area -pr b -k 4 -c 100 -o Placa_map.ncd Placa.ngd Placa.pcf
+par -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -w -intstyle ise -ol std -t 1 Placa_map.ncd Placa.ncd Placa.pcf
+trce -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -e 3 -s 4 -xml Placa Placa.ncd -o Placa.twr Placa.pcf -ucf nexys.ucf
+bitgen -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -f Placa.ut Placa.ncd
+xst -ise "C:/MJ/2/ElectronicaDigital/practica4/practica4.ise" -intstyle ise -ifn Placa.xst -ofn Placa.syr

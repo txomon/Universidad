@@ -51,34 +51,69 @@ COMPONENT contjohn
 		);
 	END COMPONENT;
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> ElecDig
 COMPONENT contbcd
 	PORT(
 		clk : IN std_logic;
 		rst : IN std_logic;
 		dir : IN std_logic;
 		enable : IN std_logic;          
+<<<<<<< HEAD
+=======
+		bcd : OUT std_logic_vector(3 downto 0)
+		);
+	END COMPONENT;
+	
+	
+	COMPONENT bcdssg
+	PORT(
+		bcd : IN std_logic_vector(3 downto 0);          
+>>>>>>> ElecDig
 		ssg : OUT std_logic_vector(7 downto 0)
 		);
 	END COMPONENT;
 
+<<<<<<< HEAD
 signal enable,rst,clk,dir	:	std_logic;
 signal contador				:	std_logic_vector(25 downto 0);
+=======
+signal enable,rst,enable_slow,dir	:	std_logic;
+signal contador				:	std_logic_vector(25 downto 0);
+signal bcd						:	std_logic_vector(3 downto 0);
+>>>>>>> ElecDig
 
 begin
 	enable <= swt(0);	-- 1 si 0 no
 	rst <= btn(0);
 	dir <= swt(1); 	-- 1 para arriba 0 para abajo
 	
+<<<<<<< HEAD
 	process(mclk)
 	begin
 		contador <= contador+1;
 		clk <= contador(25);
+=======
+	process(mclk) is
+	begin
+	if rising_edge(mclk) then
+			contador <= contador+1;
+			enable_slow <= contador(23); --FPGA
+	end if;
+>>>>>>> ElecDig
 	end process;
 	
 		
 		cont1 : contjohn
 		port map (
+<<<<<<< HEAD
 			clk => clk,
+=======
+			clk => mclk, -- Simulacion
+--			clk => enable_slow, -- FPGA
+>>>>>>> ElecDig
 			led => led,
 			rst => rst,
 			dir => dir,
@@ -87,14 +122,30 @@ begin
 
 		cont2 : contbcd
 		port map (
+<<<<<<< HEAD
 			clk => clk,
 			ssg => ssg,
+=======
+			clk => mclk, -- Simulacion
+--			clk => enable_slow, -- FPGA
+			bcd => bcd,
+>>>>>>> ElecDig
 			rst => rst,
 			dir => dir,
 			enable => enable
 		);
+<<<<<<< HEAD
 
 
+=======
+		
+		conversor : bcdssg
+		port map (
+			bcd => bcd,
+			ssg => ssg
+		);
+an <= "1000";
+>>>>>>> ElecDig
 
 end Behavioral;
 

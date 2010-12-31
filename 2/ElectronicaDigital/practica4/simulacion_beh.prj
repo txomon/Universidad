@@ -1,0 +1,5 @@
+vhdl work "contjohn.vhd"
+vhdl work "contbcd.vhd"
+vhdl work "bcdssg.vhd"
+vhdl work "practica4.vhd"
+vhdl work "simulacion.vhw"
