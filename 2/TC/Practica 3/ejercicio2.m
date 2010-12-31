@@ -6,13 +6,13 @@ function [ output_args ] = ejercicio2( audiowav )
 
 %% a)
 hold on;
-subplot(1,3,1);
+subplot(3,1,1);
 hist(audiowav.data,1000);
 xalaw=alaw(audiowav.data,87.6);
-subplot(1,3,2);
+subplot(3,1,2);
 hist(xalaw,1000);
 xinvalaw=alawinv(xalaw,87.6);
-subplot(1,3,3);
+subplot(3,1,3);
 hist(xinvalaw,1000);
 %sound(xinvalaw);
 pause;
