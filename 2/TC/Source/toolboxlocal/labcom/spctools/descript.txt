@@ -1,0 +1,126 @@
+
+Description of the SPC Toolbox GUI applications
+-----------------------------------------------
+The Signal Processing and Communications (SPC) software was designed to
+assist in the application of the signal processing concepts learned in
+the classroom and to illustrate their advantages and drawbacks.  We
+used the MATLAB Version 4 environment to take advantage of various
+graphical interface controls.  SPC is a window-based, user-friendly set
+of tools that allows the user to develop and to apply digital filters,
+analyze speech signals, and design basic signal models easily.  Thus,
+time is freed during the quarter for class projects and students can
+better visualize what the theory allows them to do.
+
+SPC functions are divided into five main groups: time-domain signal 
+analysis, spectral estimation, filtering, signal modeling and signal 
+generation. 
+
+1. Time-domain signal analysis: This group provides command line
+functions for computing the short-time energy, magnitude, and zero-
+crossing curves of speech signals and demodulation routines for
+communication signals. Three interactive time domain tools are
+included. The first is used to edit (cut and paste) general signals.
+The second is a specialized version of the first for editing speech
+signal with the aid of the short-time information curves. Either of
+these tools allow the user to launch filtering and frequency domain
+tools with all or a portion of the signal being edited. The third
+interactive time-domain tool is for generating plots of speech signal
+short-time information curves. These applications are SIGEDIT,
+VOICEDIT, and VECTTIME.
+
+2. Spectral estimation: Two interactive tools are provided for spectral
+estimation. The first is for power spectral density estimation using
+classical FFT based methods, parametric Auto-Regressive (AR) or
+Auto-Regressive Moving Average (ARMA) modeling methods, and eigen value
+based methods such as the Multiple Signal Classification (MUSIC)
+algorithm. Multiple spectral estimates can displayed on the same
+frequency axes allowing direct comparison of the various methods. The
+second interactive tool uses the FFT to generate three-dimensional
+spectral estimates (time/frequency/magnitude). Either a spectrogram or
+any of several three-dimensional surfaces can be generated.  These
+applications are SPECT2D and SPECT3D.
+
+3. Filtering: This group contains command line functions for a number of 
+smoothing and adaptive filters. An interactive "front-end" tool for 
+designing digital prototypes of analog filters using the Matlab Signal 
+Processing Toolbox filter design functions is provided along with 
+interactive front-ends for the adaptive filters (SIGFILT and ALEDSGN).
+
+4. Signal modeling: An interactive tool for modeling signals using a
+variety of AR and ARMA methods is provided. This tool allows the user
+to study the pros and cons of the various methods. A number of command
+line functions are provided, including the AR/ARMA methods and some
+least squares methods.
+
+5. Signal generation: A large number of functions for generating
+baseband and passband communication signals are included. Communication
+signals include on-off keyed, binary phase-shift keyed and binary
+frequency-shift keyed signals which can be generated with known or
+random message contents.  These signals can be combined with noise and
+used to simulate communication channels when used in conjunction with
+the demodulation routines. Additionally, signal can be generated for
+studying the various spectrum estimation techniques.  In addition to
+these groups, a number of utility functions and a large number of
+programming routines (used in the development of the SPC tools) are
+provided. SPC tools can be customized to provide additional
+capabilities with use of these programming tools.
+
+
+Example use of the SPC Toolbox
+------------------------------
+
+A typical session with SPC tools begins with the user loading a file
+containing sampled speech data into Matlab using one of the Matlab's
+file input routines (auread) or one of the SPC routines for loading
+audio or flat data files (loadvoc, ld8bit). Once the speech signal is
+loaded into the workspace, analysis begins with the voice edit tool
+(voicedit). The voicedit tool displays the time-domain signal along
+with curves containing the short-time energy and zero-crossing data.
+
+The first use of voicedit is to cut and crop periods of silence from
+the signal. Most speech processing includes some form of spectral
+analysis and so, a 3D spectrum analysis tool (spect3d) is launched
+directly from the voicedit tool. Using spect3d, a time versus frequency
+plot is generated using either the tradition spectrogram or using one
+of Matlab's three-dimensional plots. After the plot is generated, the
+colors and shading are adjusted to display the most detail. In the case
+of a three-dimensional surface, the surface is spun to find the best
+viewing angle.
+
+In viewing the frequency domain, the user notices 60 Hz line
+interference. It is desired to remove this interference and so a
+filtering tool is launched. With the filtering tool, a highpass
+Chebychev filter is designed using the mouse to set the desired filter
+parameters and cutoff frequency. Once the filter transfer function
+looks acceptable, the filter is applied and filtered signal returned to
+the voicedit tool.
+
+Phonetic analysis begins with adjusting the short-time curves to
+distinctly display transitions between voiced and unvoiced phonemes and
+periods of silence. A word containing a voiced phoneme is found using
+the short-time information curves and the display zoomed for a better
+look. Using cursors as deliminators, the user launches a signal
+modeling tool containing just the phoneme.
+
+In the signal modeling tool, a single pitch period is marked with
+cursors indicating the length of the desired model. Several periods are
+then marked with additional cursors indicating data from these periods
+is to be used in generating the model. An AR or ARMA modeling method
+selected from a popup menu and the user begins a process of selecting a
+model order and then generating the model until the modeled pitch
+period accurately reproduces the actual pitch period. Once
+accomplished, several modeled pitch periods are chained together and
+played over the workstation's audio output to see how closely the
+modeled phoneme sounds to the real thing. Satisfied, the user saves the
+model parameters to the Matlab workspace and returns to the voicedit
+tool to select another phoneme and repeat the process. After of few
+minutes, the user has built a small library of phonetic models.
+
+
+To start the scenario just presented, 
+
+>> s = loadvoc('seatsit');
+>> voicedit(s)
+
+will get you started.
+

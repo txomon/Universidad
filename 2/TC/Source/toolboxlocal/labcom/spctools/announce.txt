@@ -1,0 +1,262 @@
+
+
+Announcing a new beta release of the SPC Toolbox.
+
+The Signal Processing and Communications (SPC) Toolbox is a
+collection of Graphical Use Interfaced applications for 
+performing signal processing.  It is built using a custom
+runtime GUI programming paradigm that does not require the
+use of global variables or the storing of GUI object handles
+in the figure window UserData property (except for when speed
+is of the utmost importance).  This is accomplished with a
+number of routines which go out at runtime and find objects
+from the object parent/child structure by searching for the 
+object with a set of known property values.  In Matlab v4.1 
+and earlier, a set of m-file accomplishes this with an 
+exhaustive, iterative search.  Matlab v4.2 however, now supports
+the runtime paradigm with the FINDOBJ built-in function and
+the addition of a Tag property to uniquely identify and find
+objects.  Since the function is built-in, it is much faster
+than the m-file implementation.  In the SPC Toolbox, the m-file
+routines have been modified to use FINDOBJ when running under
+version 4.2.
+
+In addition to the GUI Applications, a number of routines are 
+provided for signal generation, modeling, spectral estimation, 
+and other functions.  Descriptions of some of the utilities
+and GUI applications are given below.
+
+
+Utility functions:
+
+---------------------------
+zoomtool - Vector plot zoom/inspection tool, example usage:
+
+Use zoomtool as an oscilloscope to measure the period of a 100 Hz
+sinusoid.
+
+>> fs = 1000;				% sampling frequency
+>> ind = 0:1/fs:0.1;			% time index
+>> y = sin(2 * pi * 100 .* ind);	% generate sinusoid
+>> plot(ind,y);				% plot sine wave
+>> zoomtool				% start zoomtool
+
+Use the cursor controls to move the cursor to the maxima of two
+successive waveforms and read the period from the Delta X readout.
+
+Use zoomtool to measure the null-to-null bandwidth of a band pass
+filter.
+
+>> [b,a] = cheby2(10,5,[.4 .5]);	% design filter
+>> [h,w] = freqz(b,a,512);		% compute transfer function
+>> mag = 20*log10(abs(h));		% compute magnitude
+>> w = w/pi;				% convert to scale digital 
+					%     frequencies
+>> plot(w,mag);				% plot transfer function
+>> zoomtool(gca)			% start zoomtool
+
+Use the cursor controls to move the cursors to either side of the
+passband and read the bandwidth from the Delta X readout.
+
+Use zoomtool to find the index of the impulse function resulting from
+the correlation of gaussian white noise.
+
+>> s = randn(256,1) * 2;		% a "noise" signal
+>> t1 = randn(1024,1);			% a noise source
+>> t2 = randn(1024,1);			% a second noise source
+>> t1(1:256) = t1(1:256) + s;		% add signal to first noise
+>> t2(201:200+256) = t2(201:200+256) + s;	% mix "signal" with noise
+>> t1t2xx = xcorr(t1,t2);		% compute cross-correlation
+>> plot(t1t2xx)				% plot the cross-correlation
+>> zoomtool				% start zoomtool
+
+Use the edit box to position cursor 1 at sample 1024 (identically zero
+in the cross-correlation). Grab cursor 2 and drag it into close
+proximity to the impulse. Use the cursor 2 peak ("<<" or ">>") to place
+the cursor exactly on the impulse. The index of the impulse can be read
+from the cursor 2 X-axis readout. Note the Delta X readout displays the
+offset of the "signal.
+---------------------------
+
+v3dtool - 3D plot viewer, examples
+
+>> peaks
+>> v3dtool
+
+Use the slider controls and/or edit boxes to change the azimuth and
+elevation.  Use the menus to change colormap/shading.  Use edit boxes
+to set color axis limits.  Press "Apply" push button to make changes
+take affect.  Use the brightness control to change the brightness.
+Press the "Q"uit push button to remove v3dtool and leave the plot in
+it's last state.
+-------------------------------
+
+
+Graphical tools
+
+
+sigedit - Visual signal editor, allows cut and pasting.
+
+>> spcdata			% loads example data
+>> sigedit(seatsit)		% sampling rate fs = 8192 default
+>> sigedit(seatsit,1)		% sets sampling rate to one Hz.
+
+Move the cursors around parts of the speech signal.  Cut and paste
+to your hearts delight.  Try changing the order of the words around.
+
+voicedit - Visual speech signal editor, show short-time magnitude, 
+energy and/or zero-crossing data to assist in picking phonemes out
+of words in order to model them using the sigmodel tool.
+
+spect2d - Spectral estimation tool.  Allows applying several different
+spectral estimation techniques to a signal and see them all at once.
+Cursors allow taking measurements.
+
+Method include:
+
+	Classical	Average periodogram.
+			Blackman-Tukey
+			Daniell periodogram
+			Welch (spectrum command from Signal Processing
+				Toolbox)
+
+	Parametric	AR/MA/ARMA models
+				Correlation
+				Covariance
+				Modified Covariance
+				Burg
+				Prony
+				Shank
+				Durbin
+			Linear prediction
+
+	Subspace	Minimum variance (maximum likelihood)
+			Music (use Mod Covar for Rxx method for
+				forward-backward MUSIC)
+			Weighted MUSIC
+			Pisarenko (use MUSIC with Rxx Size one
+				greater than number of complex
+				sinusoids)
+
+>> spect2d(datac,1)
+
+Spect3d - Three dimensional time/frequency/magnitude surfaces.
+You select the frame length and overlap percentage, colormap,
+surface and shading.  v3dtool is used to view the spectral 
+surface.  Uses the FFT with a smoothing window (rectangular,
+Blackman, Bartlett, Hanning or Hamming) of your choice.
+
+>> spect3d(seatsit)
+
+sigmodel - Signal modeling tool.  Use cursors to select data
+to model and define the length (period) of the model to generate.
+Use the "chain" feature to chain several models together in order
+to model entire phonemes, etc.
+
+>> sigmodel(uuu)
+
+sigfilt - Signal filter tool.  A graphical front-end to the 
+analog prototype filters (fir1, butter, cheby1, cheby2, ellip)
+contained in the Signal Processing Toolbox.
+
+Demodulate a BPSK signal.
+
+>> s = bpsk(64,1024);		% Rb = 64, Fc = 1024, Fs = 8192
+				%  one second worth of signal
+>> x = setsnrbw(s,15,1024,64);	% mix in Gaussian white noise
+				%  such that the equivalent noise
+				%  bandwidth SNR is appros 15 dB.
+				%  This simulates the xmtted signal.
+>> y = x .* coswave(1024);	% Simulate reception, mix with
+				% sinusoid to create images of 
+				% signal at baseband and 2*Fc.
+>> sigfilt(y)			% start the tool
+
+When the tool is open, you'll see the spectrum in the main window
+and the time-domain signal in a second using zoomtool to allow
+zooming in on the signal.  The default filter will be an order 30
+FIR filter with a hanning window.  Move the cursor defining the
+lower cutoff frequency so that it surround the image at baseband
+and select the Apply-Filter menu item.  The signal will be filtered
+and the time-domain display updated.  If all goes well, you should
+see bauds in the time-domain window.
+
+
+gfilterd - Graphical Filter Design Tool.  Design filters by placing
+poles and zeros on the Z-plain and observe the frequency magnitude
+and phase response.  Study the difference between minimum and maximum
+phase systems.  This is the ideal tool for a first course in
+digital signal processing.  Inputs to gfilterd must be in the same
+form required for the FREQZ command (negative Z powers).
+
+Start from scratch
+
+>> gfilterd
+
+Start using a predefined filter,
+
+>> [b,a] = cheby1(6,.25);
+>> gfilterd(b,a)
+
+Note to previous users of gfilterd (or grafilt):
+
+	WARNING - The previous version was totally hosed.  This 
+	version is almost a complete re-write with a lot more
+	flexibility built-in.  The old versions phase was in 
+	error (especially when the number of poles and zeros
+	did not match).  
+
+-------------------------------------------------
+
+The toolbox is available from:
+
+ftp.ece.ucdavis.edu
+	/pub/dsplab/brown/spctools.tar.Z.5.31
+
+	To install:
+		1. create an "spctools" directory in the toolbox
+			directory.
+		2. move the tar file to spctools and rename it
+			mv spctools.tar.Z.5.31 spctools.tar.Z
+		3. uncompress the file
+			uncompress spctools.tar.Z
+		4. untar the file
+			tar xvf spctools.tar
+		5. see the install.txt file for further instructions
+
+ftp.mathworks.com
+	/pub/contrib/signal/spctools.sh (make sure date is 5/31 or later)
+
+	To install:
+		1. move spctools.sh to toolbox directory
+		2. unshar the file
+			sh spctools.sh
+		3. see install.txt in the spctools directory created
+			by sh for further instruction.
+
+If a directory other the a subdirectory off the toolbox directory is
+used, appropriate changes will have to be made to the path.  The 
+spcpath.m file makes the appropriate matlabpath changes if the MATLAB
+environment variable points to the root matlab directory.  There
+are six subdirectories below the spctools directory that have to be
+added to the path.  A copy for MS-Windows can be made using the spc2flop
+script (you may have to modify it for your sight).  Mex files for the
+sun4 platform are include along with mex files for DOS.  If your're
+running 4.2 for DOS, you'll need to use the mex files in the dos42mex
+directory in place of the mex files in the spcutil, spcspch, and
+spcline subdirectories.  I'll work at getting a spctools.zip format.
+
+
+SPC Tools have been tested on Sun Sparcstations running 4.1 and 4.2
+(version 4.0a is not supported) and MS-Windows Matlab versions 4.0
+and 4.2.
+
+
+The documentation is still not complete.  Documentation for an older
+version is available at both sites.
+
+
+Enjoy!  Let me know what you think.
+
+Dennis
+

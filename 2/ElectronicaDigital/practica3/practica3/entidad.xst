@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 set -tmpdir "xst/projnav.tmp"
 set -xsthdpdir "xst"
+=======
+set -tmpdir "./xst/projnav.tmp"
+set -xsthdpdir "./xst"
+>>>>>>> TC
 run
 -ifn entidad.prj
 -ifmt mixed
@@ -10,8 +15,13 @@ run
 -opt_mode Speed
 -opt_level 1
 -iuc NO
+<<<<<<< HEAD
 -keep_hierarchy No
 -netlist_hierarchy As_Optimized
+=======
+-lso entidad.lso
+-keep_hierarchy NO
+>>>>>>> TC
 -rtlview Yes
 -glob_opt AllClockNets
 -read_cores YES
@@ -19,28 +29,47 @@ run
 -cross_clock_analysis NO
 -hierarchy_separator /
 -bus_delimiter <>
+<<<<<<< HEAD
 -case Maintain
+=======
+-case maintain
+>>>>>>> TC
 -slice_utilization_ratio 100
 -bram_utilization_ratio 100
 -verilog2001 YES
 -fsm_extract YES -fsm_encoding Auto
 -safe_implementation No
+<<<<<<< HEAD
 -fsm_style LUT
+=======
+-fsm_style lut
+>>>>>>> TC
 -ram_extract Yes
 -ram_style Auto
 -rom_extract Yes
 -mux_style Auto
 -decoder_extract YES
+<<<<<<< HEAD
 -priority_extract Yes
+=======
+-priority_extract YES
+>>>>>>> TC
 -shreg_extract YES
 -shift_extract YES
 -xor_collapse YES
 -rom_style Auto
 -auto_bram_packing NO
+<<<<<<< HEAD
 -mux_extract Yes
 -resource_sharing YES
 -async_to_sync NO
 -mult_style Auto
+=======
+-mux_extract YES
+-resource_sharing YES
+-async_to_sync NO
+-mult_style auto
+>>>>>>> TC
 -iobuf YES
 -max_fanout 500
 -bufg 8
@@ -51,6 +80,10 @@ run
 -use_clock_enable Yes
 -use_sync_set Yes
 -use_sync_reset Yes
+<<<<<<< HEAD
 -iob Auto
+=======
+-iob auto
+>>>>>>> TC
 -equivalent_register_removal YES
 -slice_utilization_ratio_maxmargin 5
