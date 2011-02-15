@@ -1,0 +1,43 @@
+MPLINK 4.38, Linker
+Linker Map File - Created Tue Feb 15 17:05:14 2011
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .cinit    romdata   0x000000    program   0x000004
+                   .org_0       code   0x000003    program   0x000034
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000001      
+                            0x000003    0x00001c      
+            28 out of 8455 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   ESPERA   0x00000d    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   INITPA   0x000015    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                 LAZOPPAL   0x000005    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   PAUS11   0x00000e    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   PAUS12   0x000010    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                 PROGPPAL   0x000004    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 PROGPPAL   0x000004    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                 LAZOPPAL   0x000005    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   ESPERA   0x00000d    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   PAUS11   0x00000e    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   PAUS12   0x000010    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+                   INITPA   0x000015    program     static C:\Universidad\2\labSED\Practica2\ejercicio2.asm
+
+
