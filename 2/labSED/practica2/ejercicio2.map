@@ -1,0 +1,42 @@
+MPLINK 4.30.01, Linker
+Linker Map File - Created Tue Mar 01 17:21:27 2011
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000000
+                   .org_1       code   0x000003    program   0x000034
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000003    0x00001c      
+            26 out of 8454 program addresses used, program memory utilization is 0%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   ESPERA   0x00000d    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   INITPA   0x000015    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                 LAZOPPAL   0x000005    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   PAUS11   0x00000e    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   PAUS12   0x000010    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                 PROGPPAL   0x000004    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                 PROGPPAL   0x000004    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                 LAZOPPAL   0x000005    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   ESPERA   0x00000d    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   PAUS11   0x00000e    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   PAUS12   0x000010    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+                   INITPA   0x000015    program     static C:\Universidad\2\labSED\practica2\ejercicio2.asm
+
+
