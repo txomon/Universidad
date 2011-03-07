@@ -247,8 +247,10 @@ RETI:
 ;******************************************************************
 
 TIMER1INTER:
-	INCF	FASE,F;
-	BTFSC	STATUS,DC;
+	INCF	FASE;
+	MOVFW	FASE;
+	SUBLW	H'A';	
+	BTFSC	STATUS,Z;
 		CALL	RESETEA_FASE;
 	MOVFW	FASE;
 	SUBWF	CICLO,W;
@@ -264,18 +266,24 @@ TIMER1INTER:
 RESETEA_FASE:
 	CLRF	FASE;
 	INCF	CICLO,F;
-	BTFSC	STATUS,DC;
+	MOVFW	CICLO;
+	SUBLW	H'A';
+	BTFSC	STATUS,Z;
 		CLRF	CICLO;
 	BCF	P_LED,B_LED;
 	RETURN;
 	
 INI_PPAL:
-	CALL INITMR1;
+	CALL	INITMR1;
 PROG_PPAL:
 	GOTO PROG_PPAL;
 
 INITMR1:
-;***** CONFIGURAMOS EL PUERTO ******
+;***** INICIALIZAMOS VARIABLES *******
+	CLRF	FASE;
+	CLRF	CICLO;
+	
+;***** CONFIGURAMOS EL PUERTO ********
 	BANKSEL	TRISA;
 	BCF	P_LED,B_LED;
 	BANKSEL	P_LED;
@@ -294,6 +302,7 @@ INITMR1:
 	BSF	T1CON,T1CKPS0;configuro el prescalador
 	BSF	T1CON,TMR1ON;enciendo el contador
 ;***** CONFIGURAMOS LAS INTERRUPCIONES *****
+	BCF	PIR1,TMR1IF;
 	BSF	INTCON,GIE;Activo las interrupciones globales
 	BSF	INTCON,PEIE;Activo las interrupciones de perifericos
 	BANKSEL	PIE1;Me muevo al banco 1
