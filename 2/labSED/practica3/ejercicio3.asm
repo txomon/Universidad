@@ -76,9 +76,9 @@ INITPA:
 INITTMR0:
 	BSF	STATUS,RP0;vamos al banco 1
 	MOVLW	B'00000110';
-	MOVWF	OPTION_REG&7F;inicializamos el 
+	MOVWF	OPTION_REG&7F;ponemos el prescalador a 1:16
 	BCF	STATUS,RP0;Me cambio al banco 0 otra vez
 	BSF	P_LED,b_LED;enciendo el led
-	BSF	INTCON,T0IE;
+	BSF	INTCON,T0IE;habilitamos las interrupciones del timer 0
 	RETURN;
 	END;
