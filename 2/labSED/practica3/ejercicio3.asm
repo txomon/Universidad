@@ -1,4 +1,5 @@
-;ejemplo3.asm: LED intermitente en A0 (por interrupción);
+;ejemplo3.asm: LED intermitente en A0 (por interrupciï¿½n);
+; javier Domingo la mesa ni idea
 ;************************************************************************************
 	LIST P=16F887
 	INCLUDE "P16F887.INC"
@@ -34,7 +35,7 @@ INTERR:;Se guarda todo lo necesario para despues seguir correctamente
 
 	MOVLW	d'10';
 	MOVWF	TMR0;ponemos el timer 0 en el numero 10
-	BCF	INTCON,T0IF;quitamos el bit de aviso a la interrupción
+	BCF	INTCON,T0IF;quitamos el bit de aviso a la interrupciï¿½n
 	BTFSS	P_LED,b_LED;Un ejemplo de if/else en ensamblador
 	GOTO	INT2;
 	BCF	P_LED,b_LED;Ponemos a 0 el led
@@ -42,7 +43,7 @@ INTERR:;Se guarda todo lo necesario para despues seguir correctamente
 INT2:
 	BSF 	P_LED,b_LED;Ponemos a 1 el led
 RETINT:
-	MOVF	SAVEPCL,W;
+	MOVF	SAVEPCL,W;ponemos los valores en su sitio
 	MOVWF	PCLATH;
 	MOVF	SAVEFSR,W;
 	MOVWF	FSR;
