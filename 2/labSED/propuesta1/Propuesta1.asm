@@ -275,6 +275,7 @@ RESETEA_FASE:
 	
 INI_PPAL:
 	CALL	INITMR1;
+	BSF	INTCON,GIE;Activo las interrupciones globales
 PROG_PPAL:
 	GOTO PROG_PPAL;
 
@@ -305,14 +306,11 @@ INITMR1:
 	BSF	T1CON,TMR1ON;enciendo el contador
 ;***** CONFIGURAMOS LAS INTERRUPCIONES *****
 	BCF	PIR1,TMR1IF;Quito el bit de interrupcion del timer1(por si acaso)
-	BSF	INTCON,GIE;Activo las interrupciones globales
+	;Aqui antes tenia el activador de gie, pero he decidido ponerlo despues de 
+	; las inicializaciones
 	BSF	INTCON,PEIE;Activo las interrupciones de perifericos
 	BANKSEL	PIE1;Me muevo al banco 1
 	BSF	PIE1&7f,TMR1IE;Activo la interrupción del timer1
 	RETURN;
 	
 	END;
-;DUDAS!!
-;
-;
-;	CUANDO GUARDAMOS, SE SUPONE QUE SE USA EL PCLATH!
