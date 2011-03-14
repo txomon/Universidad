@@ -247,8 +247,10 @@ RETI:
 ;******************************************************************
 
 TIMER1INTER:
-	INCF	FASE,F;
-	BTFSC	STATUS,DC;
+	INCF	FASE;
+	MOVFW	FASE;
+	SUBLW	H'A';	
+	BTFSC	STATUS,Z;
 		CALL	RESETEA_FASE;
 	MOVFW	FASE;
 	SUBWF	CICLO,W;
@@ -264,44 +266,51 @@ TIMER1INTER:
 RESETEA_FASE:
 	CLRF	FASE;
 	INCF	CICLO,F;
-	BTFSC	STATUS,DC;
+	MOVFW	CICLO;
+	SUBLW	H'A';
+	BTFSC	STATUS,Z;
 		CLRF	CICLO;
 	BCF	P_LED,B_LED;
 	RETURN;
 	
 INI_PPAL:
-	CALL INITMR1;
+	CALL	INITMR1;
+	BSF	INTCON,GIE;Activo las interrupciones globales
 PROG_PPAL:
 	GOTO PROG_PPAL;
 
 INITMR1:
-;***** CONFIGURAMOS EL PUERTO ******
-	BANKSEL	TRISA;
-	BCF	P_LED,B_LED;
-	BANKSEL	P_LED;
-	BSF	P_LED,B_LED;
+;***** HACEMOS QUE NO NOS INTERRUPAN *****
+	BCF	INTCON,GIE;Deshabilito las interrupciones
+;***** INICIALIZAMOS VARIABLES *******
+	CLRF	FASE;Inicializo las dos variables a 0
+	CLRF	CICLO;
+	
+;***** CONFIGURAMOS EL PUERTO ********
+	BANKSEL	TRISA;me coloco para modificar el trisa
+	BCF	P_LED,B_LED;Digo que va a ser de output
+	BANKSEL	P_LED;me coloco en el porta
+	BCF	P_LED,B_LED;Apago el led
 	
 ;***** CONFIGURAMOS EL TEMPORIZADOR *****
 	BSF	PIR1,TMR1IF; Quitamos el bit de overflow
 	; por si acaso ya se ha activado
 	CLRF	TMR1L;ponemos a 0 el byte bajo del cont
 	CLRF	TMR1H;lo mismo con el alto
-	MOVLW	H'3C';incializamos los 2
-	MOVWF	TMR1H;
+	MOVLW	H'3C';incializamos los 2 registros (2Bytes)
+	MOVWF	TMR1H;del contador
 	MOVLW	H'B0';
 	MOVWF	TMR1L;
 	CLRF	T1CON;reseteamos la configuracion del contador
 	BSF	T1CON,T1CKPS0;configuro el prescalador
 	BSF	T1CON,TMR1ON;enciendo el contador
 ;***** CONFIGURAMOS LAS INTERRUPCIONES *****
-	BSF	INTCON,GIE;Activo las interrupciones globales
+	BCF	PIR1,TMR1IF;Quito el bit de interrupcion del timer1(por si acaso)
+	;Aqui antes tenia el activador de gie, pero he decidido ponerlo despues de 
+	; las inicializaciones
 	BSF	INTCON,PEIE;Activo las interrupciones de perifericos
 	BANKSEL	PIE1;Me muevo al banco 1
 	BSF	PIE1&7f,TMR1IE;Activo la interrupción del timer1
 	RETURN;
 	
 	END;
-;DUDAS!!
-;
-;
-;	CUANDO GUARDAMOS, SE SUPONE QUE SE USA EL PCLATH!
