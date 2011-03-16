@@ -83,4 +83,5 @@ INITTECLADO:
 	BANKSEL PORTPAD;Nos ponemos en el banco del puerto del teclado
 	MOVLW	B'00000000';
 	MOVWF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
-	RETURN; 
+	RETURN;
+	 
