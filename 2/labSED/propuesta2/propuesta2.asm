@@ -4,30 +4,50 @@
 ;***************************************** LAS EQUIVALENCIAS Y LAS VARIABLES *************************************************************
 ;*****************************************************************************************************************************************
 ;******** DIRECCIONES DE LAS TABLAS ********;
-POSACOMPD	EQU	H'800';
+POSACOMPD	EQU	H'800';Tabla de conversión de posición en el teclado a compraración
+NUMAKEYRD	EQU	H'810';Tabla de conversión de numero de tecla a bit del registro
 
 
-;******** VARIABLES PARA GUARDAR AL ENTRAR EN LA RSI *********;
-SAVEW	EQU	H'20'
-SAVEST	EQU	H'21'
-SAVEFSR	EQU	H'22'
-SAVEPCL	EQU	H'23'
+;********
+;******** VARIABLES EN LA RSI *********;
 
-;******** VARIABLES PARA EL TECLADO ********;
+;**** variables para guardar los parametros de entrada ****;
+SAVEW	EQU	H'20'; workspace
+SAVEST	EQU	H'21'; status
+SAVEFSR	EQU	H'22'; fsr (indirect addressing)
+SAVEPCL	EQU	H'23'; pclath
+;**** varios ****;
+BIT_CONT	EQU	H'2F'; Para llevar un contador
+TEMP	EQU	H'2E';Para guardar cosas importantes
+REG_TEMP	EQU	H'2D'; Para guardar el registro con el que trabajamos
 
-KEYHL	EQU	H'30'; KEY HARD LOW
-KEYHH	EQU	H'31'; Para tener guardadas cuales son las teclas presionadas comprobadas
-KEYCTRL	EQU	H'32'; Control del timer
-KEYSL	EQU	H'33'; KEY SOFT LOW
-KEYSH	EQU	H'34'; Para tener guardadas cuales son las teclas presionadas a comprobar
-;******** BITS DENTRO DEL KEYCTRL ********;
-KCONT_E	EQU	0; 
+;******** EL TECLADO ********;
+;**** control de teclas *****
+KEYHL	EQU	H'30'; KEY HARD LOWER
+KEYHU	EQU	H'31'; Para tener guardadas cuales son las teclas presionadas comprobadas
+KEYSL	EQU	H'32'; KEY SOFT LOWER
+KEYSU	EQU	H'33'; Para tener guardadas cuales son las teclas presionadas a comprobar
+
+KEYRCTL	EQU	H'34'; Voy a utilizarlo como un registro para pasar parametros a funciones
+	;** bits de configuración de KEYRCTL **;
+	KRP0	EQU	H'0';
+	KRP1	EQU	H'1';
+	KRP2	EQU	H'2';
+	KEYL_U	EQU	H'3'; seleccionar lower/upper (0/1)
+	KEYH_S	EQU	H'4'; seleccionar hard/soft (0/1)
+	KEYS_C	EQU	H'5'; bit set/bit clear (0/1)
 
 
-
-;******** EQUIVALENCIAS DE PUERTOS ****;
+;**** equivalencias de puertos ****;
 PORTPAD	EQU	PORTB
 TRISPAD	EQU	TRISB
+;********
+
+
+;********
+
+
+
 
 
 
@@ -57,13 +77,13 @@ RSI:
 
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
 RETI:
-	CLRF	STATUS;
+	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
 	BTFSC	PIR1,TMR2IF; Miro si el timer ha sido llamado
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF;
 		GOTO	PADINTER;
 	;AQUI ACABA LA TABLA DE RSI
-
+	;devolvemos los valores a su sitio
 ;PCLATH
 	MOVF	SAVEPCL,W;
 	MOVWF	PCLATH;
@@ -82,116 +102,48 @@ RETI:
 
 ;****** CONFIRMAR  TECLAS ******;
 TMR2INTER:
-	BTFSS	KEYSL,H'0';
-		GOTO	KEYSL1;
-	PAGESELW	POSACOMP;
-	MOVWF	H'0';
-	CALL	POSACOMP;
-	
-	KEYSL1:
-	BTFSS	KEYSL,H'1';
-		GOTO	KEYSL2;
-	PAGESELW	POSACOMP
-	MOVWF	H'1';
-	CALL	POSACOMP;
-	
-	KEYSL2:
-	BTFSS	KEYSL,H'2';
-		GOTO	KEYSL3;
-	PAGESELW	POSACOMP;
-	MOVWF	H'2';
-	CALL	POSACOMP;
-	
-	KEYSL3:
-	BTFSS	KEYSL,H'3';
-		GOTO	KEYSL4;
-	PAGESELW	POSACOMP;
-	MOVLW	H'3';
-	CALL	POSACOMP;
-	
-	KEYSL4:
-	BTFSS	KEYSL,H'4';
-		GOTO	KEYSL5;
-	PAGESELW	POSACOMP;
-	MOVLW	H'4';
-	CALL	POSACOMP;
-	
-	KEYSL5:
-	BTFSS	KEYSL,H'5';
-		GOTO	KEYSL6;	
-	PAGESELW	POSACOMP;
-	MOVLW	H'5';
-	CALL	POSACOMP;
-	
-	KEYSL6:
-	BTFSS	KEYSL,H'6';
-		GOTO	KEYSL7;
-	PAGESELW	POSACOMP;
-	MOVLW	H'6'
-	CALL	POSACOMP;
-	
-	KEYSL7:
-	BTFSS	KEYSL,H'7';
-		GOTO	KEYSH0;
-	PAGESELW	POSACOMP;
-	MOVLW	H'7';
-	CALL	POSACOMP;
-	
-	KEYSH0:
-	BTFSS	KEYSH,H'0';
-		GOTO	KEYSH1;
-	PAGESELW	POSACOMP;
-	MOVLW	H'8'
-	CALL	POSACOMP;
-	
-	KEYSH1:
-	BTFSS	KEYSH,H'1';
-		GOTO	KEYSH2;
-	PAGESELW	POSACOMP;
-	MOVLW	H'9'
-	CALL	POSACOMP;
-	
-	KEYSH2:
-	BTFSS	KEYSH,H'2';
-		GOTO	KEYSH3;
-	PAGESELW	POSACOMP;
-	MOVLW	H'A'
-	CALL	POSACOMP;
-	
-	KEYSH3:
-	BTFSS	KEYSH,H'3';
-		GOTO	KEYSH4;
-	PAGESELW	POSACOMP;
-	MOVLW	H'B'
-	CALL	POSACOMP;
-	
-	KEYSH4:
-	BTFSS	KEYSH,H'4';
-		GOTO	KEYSH5;
-	PAGESELW	POSACOMP;
-	MOVLW	H'C'
-	CALL	POSACOMP;
-	
-	KEYSH5:
-	BTFSS	KEYSH,H'5';
-		GOTO	KEYSH6;
-	PAGESELW	POSACOMP;
-	MOVLW	H'D'
-	CALL	POSACOMP;
-	
-	KEYSH6:
-	BTFSS	KEYSH,H'6';
-		GOTO	KEYSH7;
-	PAGESELW	POSACOMP;
-	MOVLW	H'E'	
-	CALL	POSACOMP;
-	
-	KEYSH7:
-	BTFSS	KEYSH,H'7';
-		GOTO	TMR2INTERFIN;
-	PAGESELW	POSACOMP;
-	MOVLW	H'F'
-	CALL	POSACOMP;
+	CLRF	BIT_CONT;
+	MOVLW	KEYSL;
+	MOVWF	REG_TEMP;
+	TMR2PADBUCLE:
+	;primero comprobaremos si está en la lista que comprobar
+		PAGESEL	NUMAKEYR;Consultar tabla de numero a bit del registro
+		MOVLW	H'07';seleccionamos que bits a utilizar de indice 3 LSB
+		ANDWF	BIT_CONT,W;cargamos esos bits
+		CALL	NUMAKEYR;llamamos a la tabla
+		ANDWF	REG_TEMP,W;comparamos lo que nos devuelve con nuestro registro de control
+		MOVWF	TEMP;Guardamos la comparación (0 falso) para después
+		PAGESEL	TMR2PADBUCLEDES;actualizamos el pclath para seguir aqui y no irnos por ahí
+		MOVF	TEMP,F;Recuperamos la comparación (cambiamos el status [Z])
+		BTFSS	STATUS,Z;comprobamos si el que comprobamos esta vacio
+			GOTO	TMR2PADBUCLEDES;si no está pasamos al siguiente
+	;una vez verificado que está en la lista, comprobar su estado
+		PAGESEL	POSACOMP;Consultar tabla de posición a comparación
+		MOVF	BIT_CONT,W;Cargamos el índice de la tabla
+		CALL	POSACOMP;Consultamos la tabla
+		PAGESEL	COMPPAD;Nos preparamos para comprobar si está pulsado o no la tecla
+		CALL	COMPPAD;llamamos a la función que lo hace
+		ANDLW	H'01';Comprobamos si es falso
+		BTFSC	STATUS,Z;
+			GOTO	TMR2PADBORRARREG;Ha sido una pulsación inválida
+		CLRF	KEYRCTL;Al ser valida, se pasa al registro HARD
+		MOVF	BIT_CONT,W;
+		MOVWF	KEYRCLT;
+		CALL	KEYPADREGW;
+	TMR2PADBORRARREG:
+		MOVF	BIT_CONT,W;y se borra el registro SOFT
+		IORLW	B'00110000'
+		MOVWF	KEYRCTL;
+		CALL	KEYPADREGW;
+	TMR2PADBULCEDES:
+		INCF	BIT_CONT;
+		MOVF	KEYSL,W;
+		BTFSS	BIT_CONT,4;
+			MOVF	KEYSU,W;
+		MOVWF	REG_TEMP	
+		BTFSS	BIT_CONT,5;
+			GOTO	TMR2INTERFIN
+		GOTO	TMR2PADBUCLE;
 	
 	TMR2INTERFIN:
 	BCF	PIR1,TMR2IF
@@ -212,6 +164,7 @@ PADCOMPR:
 PROG:
 	BCF	INTCON,GIE;
 	CALL	PADINIT;
+	BSF	INTCON,GIE;
 BUCLEOCIOSO:
 	GOTO	BUCLEOCIOSO;	
 	
@@ -226,13 +179,15 @@ PADINIT:
 	MOVWF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
 	CLRF	IOCB;Para habilitar las interrupciones en cada pin
 	COMF	IOCB,F;Lo inicializo a 1 todo
-	BSF	INTCON,RBIE;Habilito las interrupciones para todo
+	BSF	INTCON,RBIE;Habilito las interrupciones para todo el puerto B
 	RETURN;
 
 
-;******	TABLA DE TRADUCCIONES DE "CARACTER" A BITS DE MATRIZ*******;
-	ORG POSACOMPD;
+;******** TABLAS *********;
+;**** traduccion de num de caracter a bits de comparación ****;
+	ORG	POSACOMPD;
 POSACOMP:
+	ADDWF	PCL,F;
 	RETLW	B'10110111';0
 	RETLW	B'01111110';1
 	RETLW	B'10111110';2
@@ -250,4 +205,16 @@ POSACOMP:
 	RETLW	B'11010111';#
 	RETLW	B'01110111';*
 
+;**** traducción de num de caracter a bit en el registro ****;
+	ORG	NUMAKEYRD;
+NUMAKEYR:
+	ADDWF	PCL,F;
+	RETLW	H'01'
+	RETLW	H'02'
+	RETLW	H'04'
+	RETLW	H'08'
+	RETLW	H'10'
+	RETLW	H'20'
+	RETLW	H'40'
+	RETLW	H'80'
 	END;
