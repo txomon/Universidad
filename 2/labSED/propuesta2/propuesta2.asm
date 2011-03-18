@@ -238,6 +238,11 @@ COMPPAD:
 INICIATMP2:
 	
 
+
+
+
+;*******************************************************************;
+;********** Programa principal ***********;
 PROG:
 	BCF	INTCON,GIE;
 	CALL	PADINIT;
