@@ -1,3 +1,4 @@
+;**** Javier Domingo (2do Ing. Tecn. Teleco. Espec. en Telemática) para labSED****;
 	LIST	P=16F887; Para el compilador
 	INCLUDE	"P16F887.INC"; Para las EQU del micro
 	errorlevel -207;quito los warnings de labels

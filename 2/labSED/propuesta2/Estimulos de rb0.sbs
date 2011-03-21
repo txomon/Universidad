@@ -71,8 +71,8 @@ Set High
 -1
 --
 Pin
-RB0
-Set High
+RB7
+Set Low
 
 
 -1
