@@ -42,8 +42,10 @@ KEYRCTL	EQU	H'34'; Voy a utilizarlo como un registro para pasar parametros a fun
 ;**** equivalencias de puertos ****;
 PORTPAD	EQU	PORTB
 TRISPAD	EQU	TRISB
-;********
 
+;******** EL LED ********;
+B_LED	EQU	0;Posicion en el puerto
+P_LED	EQU	PORTA;Puerto
 
 ;********
 
@@ -77,14 +79,26 @@ RSI:
 	; no queremos saltar a ningún banco de memoria
 
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
+	CLRW;Limpiamos el espacio de trabajo
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
-	BTFSC	PIR1,TMR2IF; Miro si el timer ha sido llamado
+	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
 		GOTO	TMR2INTER;
-	BTFSC	INTCON,RBIF;
+	ANDLW	H'FF';
+	BTFSS	STATUS,Z;
+		GOTO	RETITRAMPA;
+	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
 		GOTO	PADINTER;
+RETITRAMPA:
+	BANKSEL	P_LED;
+	BTFSC	KEYHL,0;se enciende el led si está el registro Hard activado y si no, se apaga
+		BCF	P_LED,B_LED;
+	BTFSS	KEYHL,0;
+		BSF	P_LED,B_LED;
+
 	;AQUI ACABA LA TABLA DE RSI
 	;devolvemos los valores a su sitio
+	BANKSEL	SAVEPCL;
 ;PCLATH
 	MOVF	SAVEPCL,W;
 	MOVWF	PCLATH;
@@ -117,7 +131,11 @@ TMR2INTER:
 		PAGESEL	TMR2PADBUCLEDES;actualizamos el pclath para seguir aqui y no irnos por ahí
 		MOVF	TEMP,F;Recuperamos la comparación (cambiamos el status [Z])
 		BTFSS	STATUS,Z;comprobamos si el que comprobamos esta vacio
-			GOTO	TMR2PADBUCLEDES;si no está pasamos al siguiente
+			GOTO	TMR2PADBUCLEDE0;si esta vacio, borramos el hard
+		BTFSC	STATUS,Z;lo mismo
+			GOTO	TMR2PADBUCLEDE1;si esta lleno, borramos el soft y ponemos el hard
+		
+	TMR2PADBUCLEDE1:
 	;una vez verificado que está en la lista, comprobar su estado
 		PAGESELW	POSACOMP;Consultar tabla de posición a comparación
 		MOVF	BIT_CONT,W;Cargamos el índice de la tabla
@@ -136,7 +154,7 @@ TMR2INTER:
 		IORLW	B'00110000'
 		MOVWF	KEYRCTL;
 		CALL	KEYPADREGW;
-	TMR2PADBUCLEDES:
+	TMR2PADBUCLEDE0:
 		INCF	BIT_CONT,F;Se incrementa el contador de comprobación
 		MOVF	KEYSL,W; Se carga el registro soft
 		BTFSC	BIT_CONT,4; Si el contador es más de 8, 
@@ -149,107 +167,139 @@ TMR2INTER:
 	TMR2INTERFIN:
 	BCF	PIR1,TMR2IF;Quitamos la interrupción
 	BCF	T2CON,TMR2ON;Deshabilitamos el temporizador
-	BANKSEL	TMR2IE;banco1
+	BANKSEL	PIE1;banco1
 	BCF	PIE1&7F,TMR2IE;Quitamos el aviso de interrupción
 	BANKSEL	TMR2IF;banco0
+	BSF	INTCON,RBIE;
 	GOTO	RETI;
 
 ;******	Comprobar el keypad ******;
 PADINTER:
 	CLRF	BIT_CONT;
-	; Comprobamos por filas
-	BTFSS	PORTPAD,7;
-		CALL	COMPFILA;
+	; Comprobamos por columnas
+	BTFSS	PORTPAD,7;miramos si la columna 1 se ha activado
+		CALL	COMPCOLUM;comparamos la columna 1 (de 0 a 3)
+	MOVLW	H'F0'
+	BTFSC	PORTPAD,7;
+		ANDWF	KEYSL,F;
 	MOVLW	H'4';
 	MOVF	BIT_CONT,F
-	BTFSS	PORTPAD,6;
-		CALL	COMPFILA;
+	BTFSS	PORTPAD,6;columna 2
+		CALL	COMPCOLUM;columna2 (de 4 a 7)
+	MOVLW	H'0F'
+	BTFSC	PORTPAD,6;
+		ANDWF	KEYSL,F;
 	MOVLW	H'8';
-	MOVF	BIT_CONT,F
-	BTFSS	PORTPAD,5;
-		CALL	COMPFILA;
+	MOVF	BIT_CONT,F;
+	BTFSS	PORTPAD,5;columna 3
+		CALL	COMPCOLUM;columna3 (de 8 a 11)
+	MOVLW	H'F0'
+	BTFSC	PORTPAD,5;
+		ANDWF	KEYSU,F;
 	MOVLW	H'B';
 	MOVF	BIT_CONT,F
-	BTFSS	PORTPAD,4;
-		CALL	COMPFILA;
+	BTFSS	PORTPAD,4;columna 4
+		CALL	COMPCOLUM;columna4 (de 12 a 15)
+	MOVLW	H'0F'
+	BTFSC	PORTPAD,7;
+		ANDWF	KEYSU,F;
 	MOVF	KEYSL,W;
+	ANDWF	KEYHL,W;
 	ADDWF	KEYSU,W;
-	BTFSC	STATUS,Z;
+	ADDWF	KEYHU,W;
+	BTFSS	STATUS,Z;Si hay algo en el Soft, programar temporizacion
 		CALL	INICIATMP2;
-	RETURN;
+	CLRF	PORTPAD;
+	BCF	INTCON,RBIE;
+	GOTO	RETI;
 		
-;**** COMPFILA (comprueba las filas recurrentemente ****;
-COMPFILA:
+;**** COMPCOLUM Comprueba las filas recurrentemente ****;
+COMPCOLUM:
 	PAGESELW	POSACOMP
 	MOVF	BIT_CONT,W;
-	CALL	POSACOMP&7FF
+	CALL	POSACOMP&7FF;Conseguimos la comparación para la tecla
 	PAGESEL	COMPPAD;
-	CALL	COMPPAD;
-	MOVWF	TEMP;
+	CALL	COMPPAD;Comparamos si está pulsada
+	MOVWF	TEMP;El resultado lo guardamos
+	CLRF	KEYRCTL;
+	MOVF	BIT_CONT,W;Cargamos el num de bit en W
+	IORLW	B'00010000';Añadimos que escriba en el soft
 	BTFSS	TEMP,0;
-		GOTO	COMPFILAFIN;
-	CLRF	BIT_CONT;
-	MOVF	BIT_CONT,W;
+		IORLW	B'00100000';Añadimos que haga un clear
+	MOVWF	KEYRCTL;
 	CALL	KEYPADREGW;
-COMPFILAFIN:
-	CLRF	TEMP;
 	INCF	BIT_CONT,F;
-	MOVF	BIT_CONT,W;HAY QUE COMPROBAR SI ES NECESARIO ESTO PARA QUE SE QUEDE EN W
-	BTFSS	BIT_CONT,0;
+	MOVF	BIT_CONT,W;
+	CLRF	TEMP;
+	BTFSS	BIT_CONT,0;Compruebo si hemos llegado al XX00(cambio de columna)
 		INCF	TEMP,F;
 	BTFSS	BIT_CONT,1;
 		INCF	TEMP,F;
 	BTFSC	TEMP,1;
 		RETURN;
-	GOTO	COMPFILA;
+	GOTO	COMPCOLUM;
 	
 
 
 ;**** KEYPADREGW (escritor del registro del teclado) ****;
 KEYPADREGW:
-	MOVLW	KEYHL;
-	BTFSC	KEYRCTL,KRH_S;
-		ADDLW	H'2';
-	BTFSC	KEYRCTL,KRL_U;
-		ADDLW	H'1';
-	MOVWF	FSR;
+	MOVLW	KEYHL; Pongo la posición del 1er registro
+	BTFSC	KEYRCTL,KRH_S;registro Soft?
+		ADDLW	H'2';sumo dos al FSR (para que apunte al Soft)
+	BTFSC	KEYRCTL,KRL_U;registro Up?
+		ADDLW	H'1';sumo uno al FSR (para que apunte a la parte alta)
+	MOVWF	FSR;Escribo el FSR
 	PAGESELW	NUMAKEYR;
-	MOVF	KEYRCTL,W;
-	ANDLW	H'7';
-	CALL	NUMAKEYR&7FF;
+	MOVF	KEYRCTL,W;Elijo cual quiero
+	ANDLW	H'7';Cortamos el numero a 3 bits
+	CALL	NUMAKEYR&7FF;Nos dice el bit del registro que tiene que ser
 	CLRF	PCLATH;Esta no la puedo hacer a con el pageselw
+	MOVWF	TEMP;Guardo en temp
+	MOVF	INDF,W;
+	ANDWF	TEMP,W;
+	BTFSS	STATUS,Z;
+		GOTO	EN1;
+	MOVF	TEMP,W;
 	BTFSS	KEYRCTL,KRS_C;
-		IORWF	INDF,F;
+		IORWF	INDF,F;Escribo uno en el registro
+	RETURN;
+EN1:	
+	MOVF	TEMP,W;
 	BTFSC	KEYRCTL,KRS_C;
-		XORWF	INDF,F;
+		XORWF	INDF,F;Escribo 0 en el registro	
 	RETURN;
 
-;********* COMPPAD (Comprobador de si una tecla está activada) ********;
+;**** COMPPAD (Comprobador de si una tecla está activada) ****;
 COMPPAD:
-	MOVWF	TEMP;
-	MOVWF	PORTPAD;
-	MOVF	PORTPAD,W;
-	XORWF	TEMP,W;
-	XORWF	TEMP,W;
+	MOVWF	TEMP;tenemos la comparación a realizar EJ:01111110
+	MOVWF	PORTPAD;cargamos la comparación en el puerto EJ; 01011110
+	COMF	TEMP,F;Invertimos la comparación EJ:10000001
+	COMF	PORTPAD,W;Invertimos la lectura EJ: 10100001;
+	ANDWF	TEMP,W;Comparamos EJ: 10000001 & 10100001 = 10000001
+	ANDLW	H'F0';Cortamos los 4 de arriba EJ: 10000000
 	BTFSS	STATUS,Z;
-		RETLW	H'01';
-	RETLW	H'00';
-;********* INICIATMP2(Programa el timer para que salte a lo máximo posible
-INICIATMP2:
-	BANKSEL	PR2
-	CLRF	PR2
+		RETLW	H'01';Devolvemos true
+	RETLW	H'00';Devolvemos false
+;**** INICIATMP2(Programa el timer para que salte a lo máximo posible) ****;
+INICIATMP2:;Vaciamos los pre/post escaladores
+	BANKSEL	PR2;banco1
+	BSF	PIE1&7F,TMR2IE;Habilitamos las interrupciones
+	MOVLW	H'01'
+	MOVWF	PR2&7F;
 	BANKSEL	T2CON
-	BCF	PIR1,TMR2IF
-	CLRF	T2CON
-	BSF	T2CON,TMR2ON
-T2ICL:	BTFSS	PIR1,TMR2IF;
+	BCF	PIR1,TMR2IF;Borramos la interrupción
+	CLRF	T2CON;ponemos preescalador y postacalador 1:1
+	BSF	T2CON,TMR2ON;encendemos el reloj
+	CLRF	TMR2;borramos la cuenta en curso
+T2ICL:	BTFSS	PIR1,TMR2IF;Cuando ponga la interrupción que salga
 		GOTO	T2ICL;
-	BCF	T2CON,TMR2ON
+	BCF	T2CON,TMR2ON;Apagamos el temporizador
+	BCF	PIR1,TMR2IF;Quitamos la señal de interrupción
 	BANKSEL	PR2
-	MOVLW	H'FF'
-	MOVWF	PR2;
-	BANKSEL	T2CON
-	MOVWF	T2CON
+	MOVLW	H'FF';ponemos al maximo la comparación
+	MOVWF	PR2&7F;
+	BANKSEL	T2CON 
+	MOVWF	T2CON;encendemos y ponemos al maximo los post/pre escaladores
 	RETURN;
 
 
@@ -259,12 +309,15 @@ T2ICL:	BTFSS	PIR1,TMR2IF;
 PROG:
 	BCF	INTCON,GIE;
 	CALL	PADINIT;
+	CALL	LEDINIT;
 	BSF	INTCON,GIE;
 BUCLEOCIOSO:
 	GOTO	BUCLEOCIOSO;	
 	
 	
 PADINIT:
+	BANKSEL	ANSELH;Banco4
+	CLRF	ANSELH&7F;modo digital
 	BANKSEL	TRISPAD;Banco1
 	MOVLW	B'11110000';Configuramos como 4 entradas y 4 salidas
 	MOVWF	TRISPAD&7F;
@@ -276,9 +329,23 @@ PADINIT:
 	CLRF	IOCB&7F;Para habilitar las interrupciones en cada pin
 	COMF	IOCB&7F,F;Lo inicializo a 1 todo
 	BANKSEL	INTCON;Banco0
+	CLRF	KEYSL;Inicializo a 0 los registros de control de teclas
+	CLRF	KEYSU;
+	CLRF	KEYHL;
+	CLRF	KEYHU;
 	BSF	INTCON,RBIE;Habilito las interrupciones para todo el puerto B
+	BSF	INTCON,PEIE;Habilito las interrupciones de dispositivos
 	RETURN;
 
+;****** LEDINIT para inicializar el led ******;
+LEDINIT:
+	BANKSEL	ANSEL;
+	CLRF	ANSEL;
+	BANKSEL	TRISA;me coloco para modificar el trisa
+	BCF	P_LED,B_LED;Digo que va a ser de output
+	BANKSEL	P_LED;me coloco en el porta
+	BSF	P_LED,B_LED;Apago el led
+	
 
 ;******** TABLAS *********;
 ;**** traduccion de num de caracter a bits de comparación ****;

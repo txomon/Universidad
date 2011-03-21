@@ -6,14 +6,30 @@
 
 ## PINREGACTIONS
 cyc
-No Repeat
+1
+0
+RB4
+RB5
+RB6
+--
+0
+1
+1
+1
 --
 &
 ## ADVPINREGACTIONS
-RB0
+RB7
 --
-1
+2
 COND1
+Cont
+0
+cyc
+0
+--
+2
+COND2
 Cont
 0
 cyc
@@ -23,51 +39,24 @@ cyc
 --
 COND1
 Pin
-RB7
+RB0
 =
 0
+0
+cyc
 
-
+--
+COND2
+Pin
+RB0
+=
+1
+0
+cyc
 
 --
 &
 ## CLOCK
-portb0
-RB0
-Always
-Never
-High
-0
-0
-
---
-
-RB1
-Always
-Never
-High
-0
-0
-
---
-
-RB2
-Always
-Never
-High
-0
-0
-
---
-
-RB3
-Always
-Never
-High
-0
-0
-
---
 &
 ## STIMULUSFILE
 &
@@ -75,9 +64,16 @@ High
 &
 ## ASYNCH
 Pin
+RB7
+Set High
+
+
+-1
+--
+Pin
 RB0
-Pulse Low
-500000 cyc
+Set High
+
 
 -1
 --
