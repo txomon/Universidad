@@ -130,7 +130,7 @@ TMR2INTER:
 		MOVWF	TEMP;
 		ANDWF	REG_TEMP,W;comparamos lo que nos devuelve con nuestro registro de control
 		PAGESEL	TMR2PADBUCLEDES;actualizamos el pclath para seguir aqui y no irnos por ahí
-		BTFSS	STATUS,Z;comprobamos si en el que estamos hay que comprobar
+		BTFSC	STATUS,Z;comprobamos si en el que estamos hay que comprobar
 			GOTO	TMR2PADBUCLEDES;si no hay que comprobar
 	;una vez verificado que está en la lista, comprobar su estado
 		CLRF	KEYRCTL;
@@ -141,9 +141,9 @@ TMR2INTER:
 		CALL	COMPPAD;llamamos a la función que lo hace
 		ANDLW	H'01';Comprobamos si es falso
 		BTFSC	STATUS,Z;
-			BTFSS	KEYRCTL,KRS_C;Ha sido una pulsación inválida
+			BSF	KEYRCTL,KRS_C;Ha sido una pulsación inválida
 		MOVF	BIT_CONT,W;
-		MOVWF	KEYRCTL;
+		IORWF	KEYRCTL,F;
 		CALL	KEYPADREGW;
 		MOVF	BIT_CONT,W;Se borra el registro SOFT
 		IORLW	B'00110000'
@@ -203,13 +203,23 @@ PADINTER:
 	BTFSC	PORTPAD,7;
 		ANDWF	KEYSU,F;
 	MOVF	KEYSL,W;
-	ANDWF	KEYHL,W;
-	ADDWF	KEYSU,W;
-	ADDWF	KEYHU,W;
+	XORWF	KEYHL,W;
+	MOVWF	TEMP;
+	MOVF	KEYSU,W;
+	XORWF	KEYHU,W;
+	IORWF	TEMP,W;
 	BTFSS	STATUS,Z;Si hay algo en el Soft, programar temporizacion
 		CALL	INICIATMP2;
 	CLRF	PORTPAD;
-	BCF	INTCON,RBIE;
+	MOVF	KEYSL,W;
+	XORWF	KEYHL,W;
+	MOVWF	TEMP;
+	MOVF	KEYSU,W;
+	XORWF	KEYHU,W;
+	IORWF	TEMP,W;
+	BTFSS	STATUS,Z;Si hay algo, deshabilitar interrupciones
+		BCF	INTCON,RBIE;
+	BCF	INTCON,RBIF
 	GOTO	RETI;
 		
 ;**** COMPCOLUM Comprueba las filas recurrentemente ****;
@@ -234,6 +244,7 @@ COMPCOLUM:
 		INCF	TEMP,F;
 	BTFSS	BIT_CONT,1;
 		INCF	TEMP,F;
+	CLRF	PORTPAD;
 	BTFSC	TEMP,1;
 		RETURN;
 	GOTO	COMPCOLUM;
@@ -254,17 +265,17 @@ KEYPADREGW:
 	CALL	NUMAKEYR&7FF;Nos dice el bit del registro que tiene que ser
 	CLRF	PCLATH;Esta no la puedo hacer a con el pageselw
 	MOVWF	TEMP;Guardo en temp
-	MOVF	INDF,W;
-	ANDWF	TEMP,W;
-	BTFSS	STATUS,Z;
-		GOTO	EN1;
-	MOVF	TEMP,W;
+	MOVF	INDF,W;Comparo el valor del registro
+	ANDWF	TEMP,W;con el valor de la comparación
+	BTFSS	STATUS,Z;si esta en 1, salto
+		GOTO	EN1;esta en 1
+	MOVF	TEMP,W;esta en 0
 	BTFSS	KEYRCTL,KRS_C;
 		IORWF	INDF,F;Escribo uno en el registro
 	RETURN;
 EN1:	
 	MOVF	TEMP,W;
-	BTFSC	KEYRCTL,KRS_C;
+	BTFSC	KEYRCTL,KRS_C;Si dice que hay que borrarlo
 		XORWF	INDF,F;Escribo 0 en el registro	
 	RETURN;
 
@@ -279,6 +290,7 @@ COMPPAD:
 	BTFSS	STATUS,Z;
 		RETLW	H'01';Devolvemos true
 	RETLW	H'00';Devolvemos false
+	
 ;**** INICIATMP2(Programa el timer para que salte a lo máximo posible) ****;
 INICIATMP2:;Vaciamos los pre/post escaladores
 	BANKSEL	PR2;banco1
@@ -344,6 +356,7 @@ LEDINIT:
 	BCF	P_LED,B_LED;Digo que va a ser de output
 	BANKSEL	P_LED;me coloco en el porta
 	BSF	P_LED,B_LED;Apago el led
+	RETURN;
 	
 
 ;******** TABLAS *********;
