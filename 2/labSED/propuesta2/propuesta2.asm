@@ -118,25 +118,22 @@ RETITRAMPA:
 ;****** CONFIRMAR  TECLAS ******;
 TMR2INTER:
 	CLRF	BIT_CONT;
-	MOVLW	KEYSL;
+	MOVF	KEYSL,W;
+	XORWF	KEYHL,W;
 	MOVWF	REG_TEMP;
 	TMR2PADBUCLE:
-	;primero comprobaremos si está en la lista que comprobar
+	;primero comprobaremos si está en la lista que comprobar (Si hay diferencias entre el hard y el soft)
 		PAGESELW	NUMAKEYR;Consultar tabla de numero a bit del registro
 		MOVLW	H'07';seleccionamos que bits a utilizar de indice 3 LSB
 		ANDWF	BIT_CONT,W;cargamos esos bits
 		CALL	NUMAKEYR&7FF;llamamos a la tabla
+		MOVWF	TEMP;
 		ANDWF	REG_TEMP,W;comparamos lo que nos devuelve con nuestro registro de control
-		MOVWF	TEMP;Guardamos la comparación (0 falso) para después
 		PAGESEL	TMR2PADBUCLEDES;actualizamos el pclath para seguir aqui y no irnos por ahí
-		MOVF	TEMP,F;Recuperamos la comparación (cambiamos el status [Z])
-		BTFSS	STATUS,Z;comprobamos si el que comprobamos esta vacio
-			GOTO	TMR2PADBUCLEDE0;si esta vacio, borramos el hard
-		BTFSC	STATUS,Z;lo mismo
-			GOTO	TMR2PADBUCLEDE1;si esta lleno, borramos el soft y ponemos el hard
-		
-	TMR2PADBUCLEDE1:
+		BTFSS	STATUS,Z;comprobamos si en el que estamos hay que comprobar
+			GOTO	TMR2PADBUCLEDES;si no hay que comprobar
 	;una vez verificado que está en la lista, comprobar su estado
+		CLRF	KEYRCTL;
 		PAGESELW	POSACOMP;Consultar tabla de posición a comparación
 		MOVF	BIT_CONT,W;Cargamos el índice de la tabla
 		CALL	POSACOMP&7FF;Consultamos la tabla
@@ -144,21 +141,23 @@ TMR2INTER:
 		CALL	COMPPAD;llamamos a la función que lo hace
 		ANDLW	H'01';Comprobamos si es falso
 		BTFSC	STATUS,Z;
-			GOTO	TMR2PADBORRARREG;Ha sido una pulsación inválida
-		CLRF	KEYRCTL;Al ser valida, se pasa al registro HARD
+			BTFSS	KEYRCTL,KRS_C;Ha sido una pulsación inválida
 		MOVF	BIT_CONT,W;
 		MOVWF	KEYRCTL;
 		CALL	KEYPADREGW;
-	TMR2PADBORRARREG:
 		MOVF	BIT_CONT,W;Se borra el registro SOFT
 		IORLW	B'00110000'
 		MOVWF	KEYRCTL;
 		CALL	KEYPADREGW;
-	TMR2PADBUCLEDE0:
+	TMR2PADBUCLEDES:
 		INCF	BIT_CONT,F;Se incrementa el contador de comprobación
 		MOVF	KEYSL,W; Se carga el registro soft
 		BTFSC	BIT_CONT,4; Si el contador es más de 8, 
 			MOVF	KEYSU,W;entonces, Se carga la parte alta
+		BTFSS	BIT_CONT,4;
+			ANDWF	KEYHL,W;
+		BTFSC	BIT_CONT,4;
+			ANDWF	KEYHU,W;	
 		MOVWF	REG_TEMP; Se carga en el registro temporal	
 		BTFSS	BIT_CONT,5; Si el contador ha pasado de 16
 			GOTO	TMR2INTERFIN; entonces finalizamos la rsi
