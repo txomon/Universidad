@@ -61,12 +61,19 @@ P_LED	EQU	PORTA;Puerto
 TMP1	EQU	H'2C'
 TMP2	EQU	H'2D'
 
-:******** CONTROL DEL PROGRAMA ********;
+;******** CONTROL DEL PROGRAMA ********;
 MAQUINA_EST	EQU	H'2E'
 
 	;** ESTADOS DE LA MÁQUINA **;
-	INIT	EQU	H'00';
-	
+	POR	EQU	H'00';
+	STANDBY	EQU	H'01';
+	UNLOCK	EQU	H'02';
+	MENU12_1 EQU	H'03';
+	MARCA	EQU	H'04';
+	MENSAJES_1 EQU	H'05';
+	MENSAJES_2 EQU	H'06';
+	LEER_SMS EQU	H'07';
+	ESCRIBIR_SMS EQU H'08';
 
 
 ; Y aqui empezamos propiamente a programar
@@ -106,9 +113,11 @@ RETI:
 		GOTO	PADINTER;
 RETITRAMPA:
 	BANKSEL	P_LED;
-	BTFSC	KEYHL,0;se enciende el led si está el registro Hard activado y si no, se apaga
+	MOVF	KEYHL,W;
+	ADDWF	KEYHU,W;
+	BTFSS	STATUS,Z;se enciende el led si está el registro Hard activado y si no, se apaga
 		BCF	P_LED,B_LED;
-	BTFSS	KEYHL,0;
+	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
 
 	;AQUI ACABA LA TABLA DE RSI
@@ -132,10 +141,17 @@ RETITRAMPA:
 
 ;****** CONFIRMAR  TECLAS ******;
 TMR2INTER:
-	CLRF	BIT_CONT;
-	MOVF	KEYSL,W;
-	XORWF	KEYHL,W;
-	MOVWF	REG_TEMP;
+	CLRW;
+	MOVF	KEYSL,W;Compruebo que haya cambios en las
+	XORWF	KEYHL,W; 8 teclas de abajo
+	BTFSC	STATUS,Z; No hay nada?
+		MOVLW	H'8';No, buscamos arriba (nos ahorramos 8 iteraciones)
+	MOVWF	BIT_CONT;
+	BTFSS	BIT_CONT,4;Si se ha guardado un 8, cargamos un xor de los
+		MOVF	KEYSU,W;registros de arriba
+	BTFSS	BIT_CONT,4;
+		XORWF	KEYHU,W;
+	MOVWF	REG_TEMP;Guardamos el valor de la xor de los registros (indiferente)
 	TMR2PADBUCLE:
 	;primero comprobaremos si está en la lista que comprobar (Si hay diferencias entre el hard y el soft)
 		PAGESELW	NUMAKEYR;Consultar tabla de numero a bit del registro
@@ -148,7 +164,7 @@ TMR2INTER:
 		BTFSC	STATUS,Z;comprobamos si en el que estamos hay que comprobar
 			GOTO	TMR2PADBUCLEDES;si no hay que comprobar
 	;una vez verificado que está en la lista, comprobar su estado
-		CLRF	KEYRCTL;
+		CLRF	KEYRCTL;Borramos el registro de control de escrituras
 		PAGESELW	POSACOMP;Consultar tabla de posición a comparación
 		MOVF	BIT_CONT,W;Cargamos el índice de la tabla
 		CALL	POSACOMP&7FF;Consultamos la tabla
@@ -157,9 +173,9 @@ TMR2INTER:
 		ANDLW	H'01';Comprobamos si es falso
 		BTFSC	STATUS,Z;
 			BSF	KEYRCTL,KRS_C;Ha sido una pulsación inválida
-		MOVF	BIT_CONT,W;
-		IORWF	KEYRCTL,F;
-		CALL	KEYPADREGW;
+		MOVF	BIT_CONT,W;Movemos el contador para añadirlo al
+		IORWF	KEYRCTL,F; KEYRCTL (para saber donde tenemos que 
+		CALL	KEYPADREGW; escribir)
 		MOVF	BIT_CONT,W;Se borra el registro SOFT
 		IORLW	B'00110000'
 		MOVWF	KEYRCTL;
@@ -167,14 +183,14 @@ TMR2INTER:
 	TMR2PADBUCLEDES:
 		INCF	BIT_CONT,F;Se incrementa el contador de comprobación
 		MOVF	KEYSL,W; Se carga el registro soft
-		BTFSC	BIT_CONT,4; Si el contador es más de 8, 
+		BTFSC	BIT_CONT,3; Si el contador es más de 8, 
 			MOVF	KEYSU,W;entonces, Se carga la parte alta
-		BTFSS	BIT_CONT,4;
-			ANDWF	KEYHL,W;
-		BTFSC	BIT_CONT,4;
-			ANDWF	KEYHU,W;	
+		BTFSS	BIT_CONT,3;
+			XORWF	KEYHL,W;si no, se carga la parte baja
+		BTFSC	BIT_CONT,3;
+			XORWF	KEYHU,W;	
 		MOVWF	REG_TEMP; Se carga en el registro temporal	
-		BTFSS	BIT_CONT,5; Si el contador ha pasado de 16
+		BTFSC	BIT_CONT,4; Si el contador ha pasado de 16
 			GOTO	TMR2INTERFIN; entonces finalizamos la rsi
 		GOTO	TMR2PADBUCLE;Volvemos a empezar
 	
@@ -184,7 +200,10 @@ TMR2INTER:
 	BANKSEL	PIE1;banco1
 	BCF	PIE1&7F,TMR2IE;Quitamos el aviso de interrupción
 	BANKSEL	TMR2IF;banco0
+	MOVLW	H'FF';
+	MOVWF	PORTPAD;
 	BSF	INTCON,RBIE;
+	MOVLW	H'FF';Ponemos todo el Workbench a 1 para que sepamos que estabamos para atender al timer
 	GOTO	RETI;
 
 ;******	Comprobar el keypad ******;
@@ -197,21 +216,21 @@ PADINTER:
 	BTFSC	PORTPAD,7;
 		ANDWF	KEYSL,F;
 	MOVLW	H'4';
-	MOVF	BIT_CONT,F
+	MOVWF	BIT_CONT
 	BTFSS	PORTPAD,6;columna 2
 		CALL	COMPCOLUM;columna2 (de 4 a 7)
 	MOVLW	H'0F'
 	BTFSC	PORTPAD,6;
 		ANDWF	KEYSL,F;
 	MOVLW	H'8';
-	MOVF	BIT_CONT,F;
+	MOVWF	BIT_CONT;
 	BTFSS	PORTPAD,5;columna 3
 		CALL	COMPCOLUM;columna3 (de 8 a 11)
 	MOVLW	H'F0'
 	BTFSC	PORTPAD,5;
 		ANDWF	KEYSU,F;
 	MOVLW	H'B';
-	MOVF	BIT_CONT,F
+	MOVWF	BIT_CONT
 	BTFSS	PORTPAD,4;columna 4
 		CALL	COMPCOLUM;columna4 (de 12 a 15)
 	MOVLW	H'0F'
@@ -334,31 +353,101 @@ T2ICL:	BTFSS	PIR1,TMR2IF;Cuando ponga la interrupción que salga
 ;********** Programa principal ***********;
 PROG:
 	BCF	INTCON,GIE;
+	PAGESEL PADINIT;
 	CALL	PADINIT;
+	PAGESEL LEDINIT;
 	CALL	LEDINIT;
+	PAGESEL LCDINIT;
 	CALL	LCDINIT;
+	PAGESEL SERIAL_INIT
+	CALL	SERIAL_INIT
 	CLRF	MAQUINA_EST;
 	BSF	INTCON,GIE;
 BUCLEOCIOSO:
+	;Miramos en que estado estamos
+	;Acabamos de empezar?
+	PAGESELW	POR_;
 	MOVF	MAQUINA_EST,W;
-	XORLW	
+	XORLW	POR;
+	BTFSC	STATUS,Z;
+		CALL	POR_;
+	;Estamos en reposo?
+	PAGESELW	STANDBY_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	STANDBY;
+	BTFSC	STATUS,Z;
+		CALL	STANDBY_;
+	;Estamos en el "escritorio"
+	PAGESELW	UNLOCK_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	UNLOCK;
+	BTFSC	STATUS,Z;
+		CALL	UNLOCK_;
+	;Estamos marcando un número?
+	PAGESELW	MARCA_
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MARCA;
+	BTFSC	STATUS,Z;
+		CALL	MARCA_;
+	;Estamos en el menú principal?
+	PAGESELW	MENU12_1_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MENU12_1;
+	BTFSC	STATUS,Z;
+		CALL	MENU12_1_;
+	;Estamos dentro del menú de mensajes, en el indice 1?
+	PAGESELW	MENSAJES_1_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MENSAJES_1;
+	BTFSC	STATUS,Z;
+		CALL	MENSAJES_1_;
+	;Estamos dentro del menú de mensajes, en el indice 2?
+	PAGESELW	MENSAJES_2_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MENSAJES_2;
+	BTFSC	STATUS,Z;
+		CALL	MENSAJES_2_;
+	;Estamos en el menu para leer sms?
+	PAGESELW	LEER_SMS_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	LEER_SMS;
+	BTFSC	STATUS,Z;
+		CALL	LEER_SMS_;
+	;Estamos escribiendo un sms?
+	PAGESELW	ESCRIBIR_SMS_;
+	CLRF	STATUS;
+	MOVF	MAQUINA_EST,W;
+	XORLW	ESCRIBIR_SMS;
+	BTFSC	STATUS,Z;
+		CALL	ESCRIBIR_SMS_;
+	
 	GOTO	BUCLEOCIOSO;	
 	
 	INCLUDE "LCD.INC"
 ;***** Para inicializar todo lo relacionado con el puerto del teclado ****;
 PADINIT:
+	BANKSEL PORTPAD;Banco0
+	MOVLW	B'00000000';
+	MOVWF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
 	BANKSEL	ANSELH;Banco4
 	CLRF	ANSELH&7F;modo digital
+	BANKSEL	WPUB; Por si acaso...
+	MOVLW	H'F0'
+	MOVWF	WPUB;
 	BANKSEL	TRISPAD;Banco1
 	MOVLW	B'11110000';Configuramos como 4 entradas y 4 salidas
 	MOVWF	TRISPAD&7F;
 	BCF	OPTION_REG&7F,NOT_RBPU;Activamos las resistencias de pull up
-	BANKSEL PORTPAD;Banco0
-	MOVLW	B'00000000';
-	MOVWF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
 	BANKSEL	IOCB;Banco1
-	CLRF	IOCB&7F;Para habilitar las interrupciones en cada pin
-	COMF	IOCB&7F,F;Lo inicializo a 1 todo
+	MOVLW	H'FF';Para habilitar las interrupciones en cada pin
+	MOVWF	IOCB&7F;Lo inicializo a 1 los que cambian, para notar esos cambios
 	BANKSEL	INTCON;Banco0
 	CLRF	KEYSL;Inicializo a 0 los registros de control de teclas
 	CLRF	KEYSU;
@@ -378,24 +467,49 @@ LEDINIT:
 	BSF	P_LED,B_LED;Apago el led
 	RETURN;
 	
+;****** SERIAL_INIT para inicializar la comunicación serial ******;
+SERIAL_INIT:
+	
+	RETURN;
+	
+;******** EJECUCIONES EN CADA ESTADO ********;
+POR_:
+	RETURN;
+STANDBY_:
+	RETURN
+UNLOCK_:
+	RETURN;
+MENU12_1_:
+	RETURN;
+MARCA_:
+	RETURN;
+MENSAJES_1_:
+	RETURN;
+MENSAJES_2_:
+	RETURN;
+ESCRIBIR_SMS_:
+	RETURN;
+LEER_SMS_:
+	RETURN;
+	
 
 ;******** TABLAS *********;
 ;**** traduccion de num de caracter a bits de comparación ****;
 	ORG	POSACOMPD;
 POSACOMP:
 	ADDWF	PCL,F;
-	RETLW	B'01111110';1
-	RETLW	B'01111101';4
-	RETLW	B'01111011';7
-	RETLW	B'01110111';*
-	RETLW	B'10111110';2
-	RETLW	B'10111101';5
-	RETLW	B'10111011';8
-	RETLW	B'10110111';0
-	RETLW	B'11011110';3
-	RETLW	B'11011101';6
-	RETLW	B'11011011';9
-	RETLW	B'11010111';#
+	RETLW	B'01111110';*
+	RETLW	B'01111101';0
+	RETLW	B'01111011';#
+	RETLW	B'01110111';F
+	RETLW	B'10111110';7
+	RETLW	B'10111101';8
+	RETLW	B'10111011';9
+	RETLW	B'10110111';E
+	RETLW	B'11011110';4
+	RETLW	B'11011101';5
+	RETLW	B'11011011';6
+	RETLW	B'11010111';7
 	RETLW	B'11101110';A
 	RETLW	B'11101101';B
 	RETLW	B'11101011';C
