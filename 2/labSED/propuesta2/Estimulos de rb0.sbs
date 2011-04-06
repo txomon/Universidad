@@ -8,9 +8,9 @@
 cyc
 1
 0
-RB4
-RB5
 RB6
+RB7
+RB5
 --
 0
 1
@@ -19,16 +19,16 @@ RB6
 --
 &
 ## ADVPINREGACTIONS
-RB7
+RB4
 --
-2
+1
 COND1
 Cont
 0
 cyc
 0
 --
-2
+1
 COND2
 Cont
 0
@@ -64,14 +64,14 @@ cyc
 &
 ## ASYNCH
 Pin
-RB7
+RB4
 Set High
 
 
 -1
 --
 Pin
-RB7
+RB4
 Set Low
 
 

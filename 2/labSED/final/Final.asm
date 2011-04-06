@@ -32,14 +32,17 @@ SAVEPCL	EQU	H'23'; pclath
 BIT_CONT	EQU	H'24'; Para llevar un contador
 TEMP	EQU	H'25';Para guardar cosas importantes
 REG_TEMP	EQU	H'26'; Para guardar el registro con el que trabajamos
+TEMP2	EQU	H'27';
+	;** Control de origen de llamada **;
+	P_S_H	EQU	7;
 
 ;******** EL TECLADO ********;
 ;**** control de teclas *****
-KEYHL	EQU	H'27'; KEY HARD LOWER
-KEYHU	EQU	H'28'; Para tener guardadas cuales son las teclas presionadas comprobadas
-KEYSL	EQU	H'29'; KEY SOFT LOWER
-KEYSU	EQU	H'2A'; Para tener guardadas cuales son las teclas presionadas a comprobar
-KEYRCTL	EQU	H'2B'; Voy a utilizarlo como un registro para pasar parametros a funciones
+KEYHL	EQU	H'28'; KEY HARD LOWER
+KEYHU	EQU	H'29'; Para tener guardadas cuales son las teclas presionadas comprobadas
+KEYSL	EQU	H'2A'; KEY SOFT LOWER
+KEYSU	EQU	H'2B'; Para tener guardadas cuales son las teclas presionadas a comprobar
+KEYRCTL	EQU	H'2C'; Voy a utilizarlo como un registro para pasar parametros a funciones
 
 	;** bits de configuración de KEYRCTL **;
 	KRP0	EQU	0;
@@ -58,11 +61,11 @@ B_LED	EQU	0;Posicion en el puerto
 P_LED	EQU	PORTA;Puerto
 
 ;******** EL LCD ********;
-TMP1	EQU	H'2C'
-TMP2	EQU	H'2D'
+TMP1	EQU	H'2D'
+TMP2	EQU	H'2E'
 
 ;******** CONTROL DEL PROGRAMA ********;
-MAQUINA_EST	EQU	H'2E'
+MAQUINA_EST	EQU	H'2F'
 
 	;** ESTADOS DE LA MÁQUINA **;
 	POR	EQU	H'00';
@@ -104,14 +107,11 @@ RSI:
 	CLRW;Limpiamos el espacio de trabajo
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
+	CLRF	PCLATH;
 	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
 		GOTO	TMR2INTER;
-	ANDLW	H'FF';
-	BTFSS	STATUS,Z;
-		GOTO	RETITRAMPA;
 	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
 		GOTO	PADINTER;
-RETITRAMPA:
 	BANKSEL	P_LED;
 	MOVF	KEYHL,W;
 	ADDWF	KEYHU,W;
@@ -141,109 +141,79 @@ RETITRAMPA:
 
 ;****** CONFIRMAR  TECLAS ******;
 TMR2INTER:
-	CLRW;
-	MOVF	KEYSL,W;Compruebo que haya cambios en las
-	XORWF	KEYHL,W; 8 teclas de abajo
-	BTFSC	STATUS,Z; No hay nada?
-		MOVLW	H'8';No, buscamos arriba (nos ahorramos 8 iteraciones)
+	MOVLW	H'80';
 	MOVWF	BIT_CONT;
-	BTFSS	BIT_CONT,4;Si se ha guardado un 8, cargamos un xor de los
-		MOVF	KEYSU,W;registros de arriba
-	BTFSS	BIT_CONT,4;
-		XORWF	KEYHU,W;
-	MOVWF	REG_TEMP;Guardamos el valor de la xor de los registros (indiferente)
-	TMR2PADBUCLE:
-	;primero comprobaremos si está en la lista que comprobar (Si hay diferencias entre el hard y el soft)
-		PAGESELW	NUMAKEYR;Consultar tabla de numero a bit del registro
-		MOVLW	H'07';seleccionamos que bits a utilizar de indice 3 LSB
-		ANDWF	BIT_CONT,W;cargamos esos bits
-		CALL	NUMAKEYR&7FF;llamamos a la tabla
-		MOVWF	TEMP;
-		ANDWF	REG_TEMP,W;comparamos lo que nos devuelve con nuestro registro de control
-		PAGESEL	TMR2PADBUCLEDES;actualizamos el pclath para seguir aqui y no irnos por ahí
-		BTFSC	STATUS,Z;comprobamos si en el que estamos hay que comprobar
-			GOTO	TMR2PADBUCLEDES;si no hay que comprobar
-	;una vez verificado que está en la lista, comprobar su estado
-		CLRF	KEYRCTL;Borramos el registro de control de escrituras
-		PAGESELW	POSACOMP;Consultar tabla de posición a comparación
-		MOVF	BIT_CONT,W;Cargamos el índice de la tabla
-		CALL	POSACOMP&7FF;Consultamos la tabla
-		PAGESEL	COMPPAD;Nos preparamos para comprobar si está pulsado o no la tecla
-		CALL	COMPPAD;llamamos a la función que lo hace
-		ANDLW	H'01';Comprobamos si es falso
-		BTFSC	STATUS,Z;
-			BSF	KEYRCTL,KRS_C;Ha sido una pulsación inválida
-		MOVF	BIT_CONT,W;Movemos el contador para añadirlo al
-		IORWF	KEYRCTL,F; KEYRCTL (para saber donde tenemos que 
-		CALL	KEYPADREGW; escribir)
-		MOVF	BIT_CONT,W;Se borra el registro SOFT
-		IORLW	B'00110000'
-		MOVWF	KEYRCTL;
-		CALL	KEYPADREGW;
-	TMR2PADBUCLEDES:
-		INCF	BIT_CONT,F;Se incrementa el contador de comprobación
-		MOVF	KEYSL,W; Se carga el registro soft
-		BTFSC	BIT_CONT,3; Si el contador es más de 8, 
-			MOVF	KEYSU,W;entonces, Se carga la parte alta
-		BTFSS	BIT_CONT,3;
-			XORWF	KEYHL,W;si no, se carga la parte baja
-		BTFSC	BIT_CONT,3;
-			XORWF	KEYHU,W;	
-		MOVWF	REG_TEMP; Se carga en el registro temporal	
-		BTFSC	BIT_CONT,4; Si el contador ha pasado de 16
-			GOTO	TMR2INTERFIN; entonces finalizamos la rsi
-		GOTO	TMR2PADBUCLE;Volvemos a empezar
+	MOVF	KEYSL,W;
+	XORWF	KEYHL,W;
+	BTFSS	STATUS,Z;
+		CALL	COMPCOLUM;
 	
-	TMR2INTERFIN:
+	MOVLW	H'84';
+	MOVWF	BIT_CONT;
+	MOVF	KEYSL,W;
+	XORWF	KEYHL,W;
+	BTFSS	STATUS,Z;
+		CALL	COMPCOLUM;
+		
+	MOVLW	H'88';
+	MOVWF	BIT_CONT;
+	MOVF	KEYSU,W;
+	XORWF	KEYHU,W;
+	BTFSS	STATUS,Z;
+		CALL	COMPCOLUM;
+		
+	MOVLW	H'8C';
+	MOVWF	BIT_CONT;
+	MOVF	KEYSU,W;
+	XORWF	KEYHU,W;
+	BTFSS	STATUS,Z;
+		CALL	COMPCOLUM;
+	
 	BCF	PIR1,TMR2IF;Quitamos la interrupción
 	BCF	T2CON,TMR2ON;Deshabilitamos el temporizador
 	BANKSEL	PIE1;banco1
 	BCF	PIE1&7F,TMR2IE;Quitamos el aviso de interrupción
 	BANKSEL	TMR2IF;banco0
-	MOVLW	H'FF';
-	MOVWF	PORTPAD;
+	CLRF	PORTPAD;
+	BCF	INTCON,RBIF;
 	BSF	INTCON,RBIE;
-	MOVLW	H'FF';Ponemos todo el Workbench a 1 para que sepamos que estabamos para atender al timer
 	GOTO	RETI;
 
 ;******	Comprobar el keypad ******;
 PADINTER:
 	CLRF	BIT_CONT;
 	; Comprobamos por columnas
+	CLRF	PORTPAD;
 	BTFSS	PORTPAD,7;miramos si la columna 1 se ha activado
 		CALL	COMPCOLUM;comparamos la columna 1 (de 0 a 3)
-	MOVLW	H'F0'
-	BTFSC	PORTPAD,7;
-		ANDWF	KEYSL,F;
 	MOVLW	H'4';
 	MOVWF	BIT_CONT
+	
+	CLRF	PORTPAD;
 	BTFSS	PORTPAD,6;columna 2
 		CALL	COMPCOLUM;columna2 (de 4 a 7)
-	MOVLW	H'0F'
-	BTFSC	PORTPAD,6;
-		ANDWF	KEYSL,F;
 	MOVLW	H'8';
 	MOVWF	BIT_CONT;
+
+	CLRF	PORTPAD;	
 	BTFSS	PORTPAD,5;columna 3
 		CALL	COMPCOLUM;columna3 (de 8 a 11)
-	MOVLW	H'F0'
-	BTFSC	PORTPAD,5;
-		ANDWF	KEYSU,F;
-	MOVLW	H'B';
+	MOVLW	H'C';
 	MOVWF	BIT_CONT
+
+	CLRF	PORTPAD;	
 	BTFSS	PORTPAD,4;columna 4
 		CALL	COMPCOLUM;columna4 (de 12 a 15)
-	MOVLW	H'0F'
-	BTFSC	PORTPAD,7;
-		ANDWF	KEYSU,F;
-	MOVF	KEYSL,W;
-	XORWF	KEYHL,W;
+	
+	MOVF	KEYSL,W; Comprobamos si hemos escrito algo en total,
+	XORWF	KEYHL,W; para saber si hay diferencias entre el H y el S
 	MOVWF	TEMP;
 	MOVF	KEYSU,W;
 	XORWF	KEYHU,W;
 	IORWF	TEMP,W;
 	BTFSS	STATUS,Z;Si hay algo en el Soft, programar temporizacion
 		CALL	INICIATMP2;
+	BANKSEL	PORTPAD;
 	CLRF	PORTPAD;
 	MOVF	KEYSL,W;
 	XORWF	KEYHL,W;
@@ -260,26 +230,36 @@ PADINTER:
 COMPCOLUM:
 	PAGESELW	POSACOMP
 	MOVF	BIT_CONT,W;
+	ANDLW	H'0F';
 	CALL	POSACOMP&7FF;Conseguimos la comparación para la tecla
 	PAGESEL	COMPPAD;
 	CALL	COMPPAD;Comparamos si está pulsada
-	MOVWF	TEMP;El resultado lo guardamos
+	MOVWF	TEMP2;El resultado lo guardamos
 	CLRF	KEYRCTL;
 	MOVF	BIT_CONT,W;Cargamos el num de bit en W
 	IORLW	B'00010000';Añadimos que escriba en el soft
-	BTFSS	TEMP,0;
+	BTFSS	TEMP2,0;Si el resultado es 0
 		IORLW	B'00100000';Añadimos que haga un clear
+	BTFSC	BIT_CONT,P_S_H;
+		IORLW	B'00100000';Si el resultado es de S a H
 	MOVWF	KEYRCTL;
 	CALL	KEYPADREGW;
+	
+	BTFSC	BIT_CONT,P_S_H;		
+		GOTO	CALLFROMTMP2;
+	GOTO	CALLFROMCOMPPAD;
+CALLFROMTMP2:
+	MOVF	BIT_CONT,W;
+	BTFSS	TEMP2,0;
+		IORLW	B'00100000';
+	MOVWF	KEYRCTL;
+	CALL	KEYPADREGW;	
+CALLFROMCOMPPAD:
+	CLRF	PORTPAD;
 	INCF	BIT_CONT,F;
 	MOVF	BIT_CONT,W;
-	CLRF	TEMP;
-	BTFSS	BIT_CONT,0;Compruebo si hemos llegado al XX00(cambio de columna)
-		INCF	TEMP,F;
-	BTFSS	BIT_CONT,1;
-		INCF	TEMP,F;
-	CLRF	PORTPAD;
-	BTFSC	TEMP,1;
+	ANDLW	H'03';Compruebo si hemos llegado al XX00(cambio de columna)
+	BTFSC	STATUS,Z;
 		RETURN;
 	GOTO	COMPCOLUM;
 	
@@ -440,7 +420,7 @@ PADINIT:
 	CLRF	ANSELH&7F;modo digital
 	BANKSEL	WPUB; Por si acaso...
 	MOVLW	H'F0'
-	MOVWF	WPUB;
+	MOVWF	WPUB&7F;
 	BANKSEL	TRISPAD;Banco1
 	MOVLW	B'11110000';Configuramos como 4 entradas y 4 salidas
 	MOVWF	TRISPAD&7F;
@@ -501,19 +481,19 @@ POSACOMP:
 	RETLW	B'01111110';*
 	RETLW	B'01111101';0
 	RETLW	B'01111011';#
-	RETLW	B'01110111';F
+	RETLW	B'01110111';D
 	RETLW	B'10111110';7
 	RETLW	B'10111101';8
 	RETLW	B'10111011';9
-	RETLW	B'10110111';E
+	RETLW	B'10110111';C
 	RETLW	B'11011110';4
 	RETLW	B'11011101';5
 	RETLW	B'11011011';6
-	RETLW	B'11010111';7
-	RETLW	B'11101110';A
-	RETLW	B'11101101';B
-	RETLW	B'11101011';C
-	RETLW	B'11100111';D
+	RETLW	B'11010111';B
+	RETLW	B'11101110';1
+	RETLW	B'11101101';2
+	RETLW	B'11101011';3
+	RETLW	B'11100111';A
 	
 ;**** traducción de num de caracter a bit en el registro ****;
 	ORG	NUMAKEYRD;
