@@ -53,7 +53,7 @@ P_LED	EQU	PORTA;Puerto
 	
 	INCLUDE "lcd.inc"
 	INCLUDE	"pad.inc"
-
+	INCLUDE	"serial.inc"
 ; Y aqui empezamos propiamente a programar
 	ORG	H'003'
 	GOTO	PROG; Para iniciar el programa
@@ -94,8 +94,12 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
+;Hasta aqui, desde el comienzo de la RSI,
+; tenemos:
+; 395 ciclos para saber que la hay una tecla pulsada
+; 910 ciclos para confirmarla
 
-	;AQUI ACABA LA TABLA DE RSI
+	;AQUI ACABA LA RSI
 	;devolvemos los valores a su sitio
 	BANKSEL	SAVEPCL;
 ;PCLATH
@@ -115,6 +119,7 @@ RETI:
 ;*******************************;
 
 	include "pad.asm"
+	include	"serial.asm"
 ;*******************************************************************;
 ;********** Programa principal ***********;
 PROG:
@@ -207,10 +212,7 @@ LEDINIT:
 	BSF	P_LED,B_LED;Apago el led
 	RETURN;
 	
-;****** SERIAL_INIT para inicializar la comunicación serial ******;
-SERIAL_INIT:
-	
-	RETURN;
+
 	
 ;******** EJECUCIONES EN CADA ESTADO ********;
 POR_:

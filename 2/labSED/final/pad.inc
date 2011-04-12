@@ -4,8 +4,7 @@
 BIT_CONT; Para llevar un contador
 TEMP;Para guardar cosas importantes
 TEMP2; Para guardar el registro con el que trabajamos
-	;** Control de origen de llamada **;
-	P_S_H;
+
 ;**** control de teclas *****
 KEYHL; KEY HARD LOWER
 KEYHU; Para tener guardadas cuales son las teclas presionadas comprobadas
@@ -14,7 +13,9 @@ KEYSU; Para tener guardadas cuales son las teclas presionadas a comprobar
 KEYRCTL; Voy a utilizarlo como un registro para pasar parametros a funciones
 
 	ENDC
-
+	
+	;** Control de origen de llamada **;
+	P_S_H EQU 7;
 ;**** equivalencias de puertos ****;
 PORTPAD	EQU	PORTB
 TRISPAD	EQU	TRISB
