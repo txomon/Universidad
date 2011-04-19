@@ -2,8 +2,8 @@
 
 	CBLOCK
 BIT_CONT; Para llevar un contador
-TEMP;Para guardar cosas importantes
-TEMP2; Para guardar el registro con el que trabajamos
+PAD_TMP;Para guardar cosas importantes
+PAD_TMP2; Para guardar el registro con el que trabajamos
 
 ;**** control de teclas *****
 KEYHL; KEY HARD LOWER

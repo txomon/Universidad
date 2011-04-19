@@ -1,12 +1,15 @@
 ;******** SERIAL.INC ********;
 ;***** REGISTROS *****; Empezamos con los registros especificos
-RX_CONT	EQU	DOWN_CONT; nº caracter recibido
-RX_MAX 	EQU	DOWN_MAX; para almacenar cuantos hemos recibido en total
-TX_CONT	EQU	UP_CONT; nº caracter enviado
-TX_MAX	EQU	UP_MAX; para almacenar cuantos vamos a enviar, comparacion
 	
 	CBLOCK;
 SERIAL_CTL; Registro de control
+RC_CONT; nº caracter recibido
+RC_MAX; para almacenar cuantos hemos recibido en total
+TX_CONT; nº caracter enviado
+TX_MAX; para almacenar cuantos 
+SER_TMP; registro temporal
 	ENDC;
-ISSENDING	EQU	1;
-
+	;***** SERIAL_CTL BITS *****;
+	IS_SND	EQU	1;
+	EEPROM	EQU	2;
+	TX_RC	EQU	3;TX=0 RC=1

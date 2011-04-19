@@ -68,20 +68,20 @@ PADINTER:
 	
 	MOVF	KEYSL,W; Comprobamos si hemos escrito algo en total,
 	XORWF	KEYHL,W; para saber si hay diferencias entre el H y el S
-	MOVWF	TEMP;
+	MOVWF	PAD_TMP;
 	MOVF	KEYSU,W;
 	XORWF	KEYHU,W;
-	IORWF	TEMP,W;
+	IORWF	PAD_TMP,W;
 	BTFSS	STATUS,Z;Si hay algo en el Soft, programar temporizacion
 		CALL	INICIATMP2;
 	BANKSEL	PORTPAD;
 	CLRF	PORTPAD;
 	MOVF	KEYSL,W;
 	XORWF	KEYHL,W;
-	MOVWF	TEMP;
+	MOVWF	PAD_TMP;
 	MOVF	KEYSU,W;
 	XORWF	KEYHU,W;
-	IORWF	TEMP,W;
+	IORWF	PAD_TMP,W;
 	BTFSS	STATUS,Z;Si hay algo, deshabilitar interrupciones
 		BCF	INTCON,RBIE;
 	BCF	INTCON,RBIF
@@ -95,11 +95,11 @@ COMPCOLUM:
 	CALL	POSACOMP&7FF;Conseguimos la comparación para la tecla
 	PAGESEL	COMPPAD;
 	CALL	COMPPAD;Comparamos si está pulsada
-	MOVWF	TEMP2;El resultado lo guardamos
+	MOVWF	PAD_TMP2;El resultado lo guardamos
 	CLRF	KEYRCTL;
 	MOVF	BIT_CONT,W;Cargamos el num de bit en W
 	IORLW	B'00010000';Añadimos que escriba en el soft
-	BTFSS	TEMP2,0;Si el resultado es 0
+	BTFSS	PAD_TMP2,0;Si el resultado es 0
 		IORLW	B'00100000';Añadimos que haga un clear
 	BTFSC	BIT_CONT,P_S_H;
 		IORLW	B'00100000';Si el resultado es de S a H
@@ -111,7 +111,7 @@ COMPCOLUM:
 	GOTO	CALLFROMCOMPPAD;
 CALLFROMTMP2:
 	MOVF	BIT_CONT,W;
-	BTFSS	TEMP2,0;
+	BTFSS	PAD_TMP2,0;
 		IORLW	B'00100000';
 	MOVWF	KEYRCTL;
 	CALL	KEYPADREGW;	
@@ -139,28 +139,28 @@ KEYPADREGW:
 	ANDLW	H'7';Cortamos el numero a 3 bits
 	CALL	NUMAKEYR&7FF;Nos dice el bit del registro que tiene que ser
 	CLRF	PCLATH;Esta no la puedo hacer a con el pageselw
-	MOVWF	TEMP;Guardo en temp
+	MOVWF	PAD_TMP;Guardo en temp
 	MOVF	INDF,W;Comparo el valor del registro
-	ANDWF	TEMP,W;con el valor de la comparación
+	ANDWF	PAD_TMP,W;con el valor de la comparación
 	BTFSS	STATUS,Z;si esta en 1, salto
 		GOTO	EN1;esta en 1
-	MOVF	TEMP,W;esta en 0
+	MOVF	PAD_TMP,W;esta en 0
 	BTFSS	KEYRCTL,KRS_C;
 		IORWF	INDF,F;Escribo uno en el registro
 	RETURN;
 EN1:	
-	MOVF	TEMP,W;
+	MOVF	PAD_TMP,W;
 	BTFSC	KEYRCTL,KRS_C;Si dice que hay que borrarlo
 		XORWF	INDF,F;Escribo 0 en el registro	
 	RETURN;
 
 ;**** COMPPAD (Comprobador de si una tecla está activada) ****;
 COMPPAD:
-	MOVWF	TEMP;tenemos la comparación a realizar EJ:01111110
+	MOVWF	PAD_TMP;tenemos la comparación a realizar EJ:01111110
 	MOVWF	PORTPAD;cargamos la comparación en el puerto EJ; 01011110
-	COMF	TEMP,F;Invertimos la comparación EJ:10000001
+	COMF	PAD_TMP,F;Invertimos la comparación EJ:10000001
 	COMF	PORTPAD,W;Invertimos la lectura EJ: 10100001;
-	ANDWF	TEMP,W;Comparamos EJ: 10000001 & 10100001 = 10000001
+	ANDWF	PAD_TMP,W;Comparamos EJ: 10000001 & 10100001 = 10000001
 	ANDLW	H'F0';Cortamos los 4 de arriba EJ: 10000000
 	BTFSS	STATUS,Z;
 		RETLW	H'01';Devolvemos true

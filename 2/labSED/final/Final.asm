@@ -54,6 +54,7 @@ P_LED	EQU	PORTA;Puerto
 	INCLUDE "lcd.inc"
 	INCLUDE	"pad.inc"
 	INCLUDE	"serial.inc"
+	INCLUDE "eeprom.inc"
 ; Y aqui empezamos propiamente a programar
 	ORG	H'003'
 	GOTO	PROG; Para iniciar el programa
@@ -120,6 +121,7 @@ RETI:
 
 	include "pad.asm"
 	include	"serial.asm"
+	include "eeprom.asm"
 ;*******************************************************************;
 ;********** Programa principal ***********;
 PROG:
@@ -130,8 +132,9 @@ PROG:
 	CALL	LEDINIT;
 	PAGESEL LCDINIT;
 	CALL	LCDINIT;
-	PAGESEL SERIAL_INIT
-	CALL	SERIAL_INIT
+	PAGESEL SERIAL_INIT;
+	CALL	SERIAL_INIT;
+	PAGESEL	EEPROM_INIT;
 	CLRF	MAQUINA_EST;
 	BSF	INTCON,GIE;
 BUCLEOCIOSO:
