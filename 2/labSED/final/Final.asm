@@ -33,21 +33,7 @@ B_LED	EQU	0;Posicion en el puerto
 P_LED	EQU	PORTA;Puerto
 
 
-;******** CONTROL DEL PROGRAMA ********;
-	CBLOCK
-	MAQUINA_EST
 
-		;** ESTADOS DE LA MÁQUINA **;
-		POR
-		STANDBY
-		UNLOCK
-		MENU12_1
-		MARCA
-		MENSAJES_1
-		MENSAJES_2
-		LEER_SMS
-		ESCRIBIR_SMS
-	ENDC
 ; Includes despues de las propias del programa	
 	ORG H'800'
 	
@@ -55,6 +41,7 @@ P_LED	EQU	PORTA;Puerto
 	INCLUDE	"pad.inc"
 	INCLUDE	"serial.inc"
 	INCLUDE "eeprom.inc"
+	INCLUDE "estados.inc"
 ; Y aqui empezamos propiamente a programar
 	ORG	H'003'
 	GOTO	PROG; Para iniciar el programa
@@ -138,70 +125,10 @@ PROG:
 	CLRF	MAQUINA_EST;
 	BSF	INTCON,GIE;
 BUCLEOCIOSO:
-	;Miramos en que estado estamos
-	;Acabamos de empezar?
-	PAGESELW	POR_;
-	MOVF	MAQUINA_EST,W;
-	XORLW	POR;
-	BTFSC	STATUS,Z;
-		CALL	POR_;
-	;Estamos en reposo?
-	PAGESELW	STANDBY_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	STANDBY;
-	BTFSC	STATUS,Z;
-		CALL	STANDBY_;
-	;Estamos en el "escritorio"
-	PAGESELW	UNLOCK_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	UNLOCK;
-	BTFSC	STATUS,Z;
-		CALL	UNLOCK_;
-	;Estamos marcando un número?
-	PAGESELW	MARCA_
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	MARCA;
-	BTFSC	STATUS,Z;
-		CALL	MARCA_;
-	;Estamos en el menú principal?
-	PAGESELW	MENU12_1_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	MENU12_1;
-	BTFSC	STATUS,Z;
-		CALL	MENU12_1_;
-	;Estamos dentro del menú de mensajes, en el indice 1?
-	PAGESELW	MENSAJES_1_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	MENSAJES_1;
-	BTFSC	STATUS,Z;
-		CALL	MENSAJES_1_;
-	;Estamos dentro del menú de mensajes, en el indice 2?
-	PAGESELW	MENSAJES_2_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	MENSAJES_2;
-	BTFSC	STATUS,Z;
-		CALL	MENSAJES_2_;
-	;Estamos en el menu para leer sms?
-	PAGESELW	LEER_SMS_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	LEER_SMS;
-	BTFSC	STATUS,Z;
-		CALL	LEER_SMS_;
-	;Estamos escribiendo un sms?
-	PAGESELW	ESCRIBIR_SMS_;
-	CLRF	STATUS;
-	MOVF	MAQUINA_EST,W;
-	XORLW	ESCRIBIR_SMS;
-	BTFSC	STATUS,Z;
-		CALL	ESCRIBIR_SMS_;
-	
+
+	include "maquina_de_estados.asm"
+
+	PAGESEL BUCLEOCIOSO;
 	GOTO	BUCLEOCIOSO;	
 	
 
@@ -217,25 +144,6 @@ LEDINIT:
 	
 
 	
-;******** EJECUCIONES EN CADA ESTADO ********;
-POR_:
-	RETURN;
-STANDBY_:
-	RETURN
-UNLOCK_:
-	RETURN;
-MENU12_1_:
-	RETURN;
-MARCA_:
-	RETURN;
-MENSAJES_1_:
-	RETURN;
-MENSAJES_2_:
-	RETURN;
-ESCRIBIR_SMS_:
-	RETURN;
-LEER_SMS_:
-	RETURN;
-	
+	INCLUDE "estados.asm"	
 	INCLUDE	"lcd.asm"
 	END;	 

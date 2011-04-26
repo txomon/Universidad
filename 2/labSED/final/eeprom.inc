@@ -6,14 +6,16 @@
 ;|000000XXXXXXXXXXXXXX|     |XXXXXXXXXXXXXXXXXXX0000000000000000|
 ;|000000XXXXXXXXXXXXXX|     |XXXXXXXXXXXXXXXXXXX0000000000000000|
 ;------|--------------|-------------------------|----------------
-;   UP_CONT        UP_MAX DOWN_MAX           DOWN_CONT                 
+;   READ00         WRITE00 WRITEFF            READFF                 
 
 ;****** RAM CODES *******;
 	CBLOCK;
-DOWN_CONT
-DOWN_MAX
-UP_CONT
-UP_MAX
+READ00
+WRITE00
+;READFF
+;WRITEFF
+EE_CTL
 	ENDC;
-
+	;******* EE_CTL *******;
+	ORI_EXT	EQU	0;
 

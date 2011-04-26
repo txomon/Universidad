@@ -17,9 +17,12 @@ SERIAL_INIT:
 	
 	BSF	PIE1,RCIE;Habilito las interrupciones de recepcion
 	BCF	PIE1,TXIE; y las de transmisión no
+	
 	BANKSEL	RCSTA
 	MOVLW	B'10010000';Habilitado, Habilitado receptor
 	MOVWF	RCSTA
+	BANKSEL	SERIAL_CTL;
+	CLRF	SERIAL_CTL
 	RETURN;
 
 
@@ -28,80 +31,15 @@ SERIAL_INIT:
 ; manda el siguiente caracter en la lista
 SERIAL_SEND:
 	BANKSEL	TXREG;BANCO1
-	BTFSS	TXREG,TRMT;compruebo si se ha enviado
-		GOTO	RETI;
-	PAGESEL	READUP;
-	CALL	SERIAL_GET;
-	BANKSEL TX_MAX;
-	XORWF	TX_MAX,W;
-	BANKSEL PIE1;
-	BTFSS	STATUS,Z;
-		BCF	PIE1,TXIE;
-	BTFSS	STATUS,Z;
-		BCF	SERIAL_CTL,ISSENDING;
-	PAGESEL RETI;
-	GOTO	RETI;
+	MOVWF	TXREG;
+	RETURN;
 	
 ;****** SERIAL_RECEIVE ******;
-; no input,no output
+; no input
+; output = received char
 ; recibe un caracter y llama a una función para que lo guarde
 SERIAL_RECEIVE:
-	BANKSEL RCSTA;
-	BTFSS	RCSTA,FERR;Buscamos problemas en la transmision
-		CALL DESHECHAR;
-	MOVF	RCREG,W;
-	BANKSEL	SERIAL_CTL;
-	BSF	SERIAL_CTL,TX_RC;
-	CALL	SERIAL_SAVE;
-	PAGESEL RETI;
-	GOTO	RETI;
-	
-;****** DESHECHAR **********;
-; no input no output
-; quita un caracter erróneo
-DESHECHAR:
+	BANKSEL RCREG;
 	MOVF	RCREG,W;
 	RETURN;
-
-;****** SERIAL_SEND_ENQUEUE ********;
-; input = caracter a encolar
-; output = error (1)
-
-SERIAL_SEND_ENQUEUE:
-	BANKSEL	SERIAL_CTL;
-	BCF	SERIAL_CTL,TX_RC;
-	CALL	SERIAL_SAVE;
-	BANKSEL	SERIAL_CTL;
-	BSF	SERIAL_CTL,ISSENDING;
-	RETURN;
-
-;****** SERIAL_RECEIVE_GET ******;
-; input = nothing
-; output = char
-
-SERIAL_RECEIVE_GET:
-	BANKSEL	SERIAL_CTL;
-	BSF	SERIAL_CTL,TX_RC;
-	CALL	SERIAL_GET;
-	RETURN;
-
-
-
-;****** SERIAL_GET ********;
-; input = W => address (if FF => XX_CONT will be taken)
-; output= W => char
-
-SERIAL_GET:
-	BANKSEL	SER_TMP;
-	MOVWF	SER_TMP;
-	BTFSS	
 	
-
-
-
-
-
-
-
-
-
