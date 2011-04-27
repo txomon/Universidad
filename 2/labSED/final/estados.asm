@@ -1,20 +1,20 @@
 ;******** EJECUCIONES EN CADA ESTADO ********;
 ;************ POR_ *************;
 POR_:
-	MOVLW	STANDBY;
-	MOVWF	MAQUINA_EST;
-	RETURN;
+	GOTO STANDBY_;
 ;************ STANDBY_ *************;
 STANDBY_:
 	BANKSEL	KEYHL;
+	MOVLW	STANDBY;
+	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
 	CALL	PUT_STANDBY;
 	CALL	STANDBY_COMP_DESBLQ;
 	RETURN
 	;******	PUT_STANDBY ******;
 	; PONE STANDBY EN LA PANTALLA
 	PUT_STANDBY:
-		BANKSEL	LED_CTL;
-		MOVF	LED_CTL,W;
+		BANKSEL	LCD_CTL;
+		MOVF	LCD_CTL,W;
 		XORLW	LTR_STANDBY_;
 		BTFSC	STATUS,Z;
 			RETURN;
@@ -34,7 +34,7 @@ STANDBY_:
 				GOTO PUT_STANDBY_LOOP_END;si hemos llegado, SALIMOS
 			PAGESEL	LCDDWR;Escribo la letra en pantalla
 			CALL	LCDDWR;
-			PAGESEL PUT_STANBY_LOOP;
+			PAGESEL PUT_STANDBY_LOOP;
 			INCF	TMP1,F;Incremento el contador
 			GOTO	PUT_STANDBY_LOOP;vuelvo a contar
 		PUT_STANDBY_LOOP_END:;Hemos salido
@@ -66,34 +66,59 @@ STANDBY_:
 			GOTO	STANDBY_COMP_DESBLQ_EST1;
 		BTFSS	EST_CTL,2;
 			GOTO	STANDBY_COMP_DESBLQ_EST2;
+		BTFSS	EST_CTL,3;
+			GOTO	STANDBY_COMP_DESBLQ_EST3;
+		MOVLW	UNLOCK
+		BTFSS	EST_CTL,4;
+			MOVWF	MAQUINA_EST;
 		
-		RETURN;Este return esta por si las moscas, no se deberia usar
+		RETURN;Este return esta para antes de saltar a UNLOCK_
 		
-		;***** STANDBY_COMP_DESBLQ_EST0 *****;
+		;**********************************************************************;
+		; Estas rutinas están pensadas teniendo como logico que avanzar es lo normal
+		;
+		;***** STANDBY_COMP_DESBLQ_EST0 *****;llegamos desde la nada, en teoria no hay nada pulsado
 		STANDBY_COMP_DESBLQ_EST0:
-			BTFSC	KEYHL,0; Si la * esta pulsada, est_ctl es 001 
+			BTFSC	KEYHL,0; Si la * esta pulsada, pasamos a siguiente fase 
 				BSF	EST_CTL,0; 
-			BTFSS	KEYHL,0; Si no, est_ctl es 000
+			BTFSS	KEYHL,0; Si no, nos quedamos en esta
 				BCF	EST_CTL,0;
-			BCF	EST_CTL,1;Nos aseguramos de entrar en la siguiente fase
+			BTFSC	KEYHL,2; Si la # esta pulsada, nos quedamos en esta seguro
+				BCF	EST_CTL,0;
+			BCF	EST_CTL,1;Nos aseguramos de entrar en la siguiente fase si podemos
 			RETURN;
-		;***** STANDBY_COMP_DESBLQ_EST1 *****;
+		;***** STANDBY_COMP_DESBLQ_EST1 *****;llegamos por que se ha pulsado la * 
 		STANDBY_COMP_DESBLQ_EST1:
-			BTFSS	KEYHL,0; Si la * esta pulsada, est_ctl es 001
+			BTFSS	KEYHL,0; Si no esta pulsada la *, tenemos que ir hacia atras
 				BCF	EST_CTL,0;
-			BTFSC	KEYHL,0; Si no, est_ctl es 000
-				BSF	EST_CTL,0;
-			BTFSS	KEYHL,2; Si la # esta pulsada, est_ctl es 010
-				BCF	EST_CTL,1;
-			BTFSC	KEYHL,2; Si no, est_ctl es 000
+			BTFSC	KEYHL,2; Si la # esta pulsada, podemos avanzar
 				BSF	EST_CTL,1;
+			BTFSS	KEYHL,2; Si no, nos quedamos aqui
+				BCF	EST_CTL,1;
 			BCF	EST_CTL,2;Nos aseguramos de entrar en la siguiente fase
 			RETURN;
-		;***** STANDBY_COMP_DESBLQ_EST2 *****;
+		;***** STANDBY_COMP_DESBLQ_EST2 *****;llegamos por que se ha pulsado la * y la #
 		STANDBY_COMP_DESBLQ_EST2:
+			BTFSC	KEYHL,0;Si la * esta pulsada aqui nos quedamos
+				BCF	EST_CTL,2;
+			BTFSS	KEYHL,0;Si no, iremos hacia delante
+				BSF	EST_CTL,2; 
+			BTFSS	KEYHL,2;Si la # no esta pulsada vamos hacia atras
+				BCF	EST_CTL,1;
+			BCF	EST_CTL,3;
+			RETURN
+		;***** STANDBY_COMP_DESBLQ_EST3 *****;llegamos por que se ha pulsado la #
+		STANDBY_COMP_DESBLQ_EST3:
 			BTFSC	KEYHL,0;Si la * esta pulsada
-				BCF	EST_CTL,0; Hacemos que salte al estado 0 en la siguiente fase
-			BTFSC	KEYHL,2;Si la # esta pulsada
+				BCF	EST_CTL,2;
+			BTFSS	KEYHL,2;Si la # esta pulsada
+				BCF	EST_CTL,3;
+			BTFSC	KEYHL,2;Si no, se acaba con la ultima fase.
+				BSF	EST_CTL,3;
+			BCF	EST_CTL,4;
+			RETURN;
+				
+				
 UNLOCK_:
 	RETURN;
 MENU12_1_:

@@ -17,7 +17,7 @@ EEPROM_INIT:
 	
 ;******* EEPROM_WRITE_00 ************;
 ; input = w -> data
-;         EE_CTL, ORI_EXT -> 1 if eeaddr has been previously read
+;         EE_CTL, ORI_EXT -> 1 if eeadr has been previously read
  
 EEPROM_WRITE_00:
 	BANKSEL	EEDAT;
@@ -26,9 +26,9 @@ EEPROM_WRITE_00:
 	BANKSEL WRITE00;
 	BTFSS	EE_CTL,ORI_EXT;
 		MOVF	WRITE00,W;
-	BANKSEL EEADDR;
+	BANKSEL EEADR;
 	BTFSS	EE_CTL,ORI_EXT;
-		MOVWF	EEADDR;move address to address field
+		MOVWF	EEADR;move address to address field
 	
 	BANKSEL	EECON1 ;
 	BCF	EECON1, EEPGD ;Point to DATA memory
