@@ -1,6 +1,9 @@
 ;******** EJECUCIONES EN CADA ESTADO ********;
 ;************ POR_ *************;
 POR_:
+	BANKSEL	EST_CTL;
+	CLRF	EST_CTL;
+	CLRF	LCD_CTL; En estado LTR_NONE_
 	GOTO STANDBY_;
 ;************ STANDBY_ *************;
 STANDBY_:
@@ -120,7 +123,22 @@ STANDBY_:
 				
 				
 UNLOCK_:
+	BANKSEL	MAQUINA_EST;
+	MOVLW	UNLOCK;
+	MOVWF	MAQUINA_EST;
+	CALL	PUT_COMPANY;
 	RETURN;
+	;************* PUT_COMPANY **************;
+	PUT_COMPANY:
+		BANKSEL	LCD_CTL;
+		MOVF	LCD_CTL,W;
+		XORLW	LTR_COMPANY_;
+		BTFSC	STATUS,Z;
+			RETURN;
+		
+		RETURN;
+	
+	
 MENU12_1_:
 	RETURN;
 MARCA_:
