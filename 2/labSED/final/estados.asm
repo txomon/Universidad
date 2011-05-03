@@ -30,7 +30,7 @@ STANDBY_:
 		PUT_STANDBY_LOOP:
 			PAGESELW	LTR_STANDBY;
 			MOVF	TMP1,W;Ponemos el indice de la tabla
-			CALL	LTR_STANDBY;
+			CALL	LTR_STANDBY&7FF;
 			XORLW	H'00';
 			PAGESEL	PUT_STANDBY_LOOP_END;
 			BTFSS	STATUS,Z;Comprobamos que no hemos llegado al final

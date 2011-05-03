@@ -39,9 +39,9 @@ P_LED	EQU	PORTA;Puerto
 	
 	INCLUDE "lcd.inc"
 	INCLUDE	"pad.inc"
-	INCLUDE	"serial.inc"
 	INCLUDE "eeprom.inc"
 	INCLUDE "estados.inc"
+	INCLUDE	"serial.inc";Tiene que ir al final por la reserva de memoria RAM
 ; Y aqui empezamos propiamente a programar
 	ORG	H'003'
 	GOTO	PROG; Para iniciar el programa
