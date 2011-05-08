@@ -68,9 +68,13 @@ RSI:
 
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
 	CLRW;Limpiamos el espacio de trabajo
+	BTFSC	PIR1,TXIF;
+		GOTO	SEND_NEXT;	
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
 	CLRF	PCLATH;
+	BTFSC	PIR1,RCIF;
+		GOTO	RECEIVE_NEXT;
 	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
@@ -123,6 +127,9 @@ PROG:
 	CALL	SERIAL_INIT;
 	PAGESEL	EEPROM_INIT;
 	CLRF	MAQUINA_EST;
+	CLRF	EST_CTL
+	CLRF	LCD_CTL
+	CLRF	LCD_CONT
 	BSF	INTCON,GIE;
 BUCLEOCIOSO:
 

@@ -1,10 +1,48 @@
 ;******** EJECUCIONES EN CADA ESTADO ********;
 ;************ POR_ *************;
 POR_:
-	BANKSEL	EST_CTL;
-	CLRF	EST_CTL;
-	CLRF	LCD_CTL; En estado LTR_NONE_
-	GOTO STANDBY_;
+	MOVLW	POR;
+	BANKSEL	MAQUINA_EST;
+	MOVWF	MAQUINA_EST;
+	BTFSS	EST_CTL,0;
+		CALL	POR_CTL_PER_CONFIG;
+	BTFSC	EST_CTL,0;
+		CALL	POR_CTL_PER_ANALIZE;
+	BTFSC	EST_CTL,1;	
+		GOTO STANDBY_;
+	RETURN;
+	
+		;******** POR_CONTROL_PERIPHERIAL_START_NO_ECHO *******;
+		; MODEM => NO ECHO & NUM MODE
+		POR_CTL_PER_CONFIG:
+			CLRF	RCV_CONT;
+			CLRF	SER_CTL;
+			BSF	SER_CTL,IS_CMD;
+			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF';
+			MOVWF	SND_CONT;
+			CALL	SEND_AT;
+			BANKSEL	EST_CTL;
+			BSF	EST_CTL,0;
+			RETURN;
+			
+		;******** POR_CTL_PER_ANALIZE ********;
+		; IF MODEM ANSWER:
+		POR_CTL_PER_ANALIZE:
+			MOVF	RCV_CONT,W;
+			BTFSC	STATUS,Z;
+				RETURN;	
+			ADDLW	H'1F'
+			MOVWF	FSR;
+			BSF	STATUS,IRP;
+			MOVF	INDF,W;
+			XORLW	'0';
+			BTFSS	STATUS,Z;
+				RETURN;
+			BSF	EST_CTL,1;
+			RETURN
+		
+		
+		
 ;************ STANDBY_ *************;
 STANDBY_:
 	BANKSEL	KEYHL;
@@ -22,23 +60,20 @@ STANDBY_:
 		BTFSC	STATUS,Z;
 			RETURN;
 		MOVLW	lcd_clr; limpio la pantalla
-		PAGESEL	LCDIWR;
 		CALL	LCDIWR;
-		MOVLW	cur_set|d'6'; Mover el cursor a la posicion 6
+		MOVLW	cur_set|h'5'; Mover el cursor a la posicion 6
 		CALL	LCDIWR;
-		CLRF	TMP1;
+		CLRF	LCD_CONT;
 		PUT_STANDBY_LOOP:
 			PAGESELW	LTR_STANDBY;
-			MOVF	TMP1,W;Ponemos el indice de la tabla
+			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
 			CALL	LTR_STANDBY&7FF;
-			XORLW	H'00';
+			ANDLW	H'FF';
 			PAGESEL	PUT_STANDBY_LOOP_END;
-			BTFSS	STATUS,Z;Comprobamos que no hemos llegado al final
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
 				GOTO PUT_STANDBY_LOOP_END;si hemos llegado, SALIMOS
-			PAGESEL	LCDDWR;Escribo la letra en pantalla
-			CALL	LCDDWR;
-			PAGESEL PUT_STANDBY_LOOP;
-			INCF	TMP1,F;Incremento el contador
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
 			GOTO	PUT_STANDBY_LOOP;vuelvo a contar
 		PUT_STANDBY_LOOP_END:;Hemos salido
 		BANKSEL LCD_CTL;
@@ -135,7 +170,26 @@ UNLOCK_:
 		XORLW	LTR_COMPANY_;
 		BTFSC	STATUS,Z;
 			RETURN;
-		
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set|h'5'; Mover el cursor a la posicion 6
+		CALL	LCDIWR;
+		CLRF	LCD_CONT;
+		PUT_COMPANY_LOOP:
+			PAGESELW	LTR_COMPANY;
+			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
+			CALL	LTR_COMPANY&7FF;
+			ANDLW	H'FF';
+			PAGESEL	PUT_COMPANY_LOOP_END;
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+				GOTO PUT_COMPANY_LOOP_END;si hemos llegado, SALIMOS
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
+			GOTO	PUT_COMPANY_LOOP;vuelvo a contar
+		PUT_COMPANY_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_COMPANY_;Cambiamos lo que hay en pantalla a "COMPANY"
+		MOVWF	LCD_CTL;
 		RETURN;
 	
 	
