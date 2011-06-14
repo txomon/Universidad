@@ -23,6 +23,14 @@ POR_:
 			CALL	SEND_AT;
 			BANKSEL	EST_CTL;
 			BSF	EST_CTL,0;
+			MOVLW	H'3F';
+			MOVWF	TMP2;
+			POR_WAIT:
+				NOP			; Ajustando al milisegundo
+				NOP			;
+				DECFSZ	TMP2,F		; Se decrementa contador básico
+				GOTO	POR_WAIT	; hasta llegar a cero
+
 			RETURN;
 			
 		;******** POR_CTL_PER_ANALIZE ********;
@@ -31,11 +39,17 @@ POR_:
 			MOVF	RCV_CONT,W;
 			BTFSC	STATUS,Z;
 				RETURN;	
-			ADDLW	H'1F'
+			MOVLW	H'1F'
 			MOVWF	FSR;
 			BSF	STATUS,IRP;
+				MOVLW	cur_set|h'40'; Mover el cursor a la posicion 6
+				CALL	LCDIWR;
+			MOVF	INDF,W;
+				CALL	LCDDWR;Escribo la letra en pantalla
 			MOVF	INDF,W;
 			XORLW	'0';
+			BTFSS	STATUS,Z;
+				BCF	EST_CTL,0;
 			BTFSS	STATUS,Z;
 				RETURN;
 			BSF	EST_CTL,1;
@@ -87,11 +101,6 @@ STANDBY_:
 		MOVF	KEYHU,W;
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
-			
-		MOVF	KEYHU,W;miramos que haya algo pulsado
-		IORWF	KEYHL,W;
-		BTFSC	STATUS,Z;
-			CLRF	EST_CTL; Si no hay nada, se vuelve a 0
 		
 		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y la # pulsadas
 		ANDLW	B'11111010';
@@ -194,7 +203,55 @@ UNLOCK_:
 	
 	
 MENU12_1_:
+	BANKSEL	MAQUINA_EST;
+	MOVLW	MENU12_1;
+	MOVWF	MAQUINA_EST;
+	CALL	PUT_MENU12_1;
+	CALL	MENU12_1_GOIN;
 	RETURN;
+	;************* PUT_COMPANY **************;
+	PUT_MENU12_1:
+		BANKSEL	LCD_CTL;
+		MOVF	LCD_CTL,W;
+		XORLW	LTR_MENU12_1_;
+		BTFSC	STATUS,Z;
+			RETURN;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set; Mover el cursor a la posicion 6
+		CALL	LCDIWR;
+		CLRF	LCD_CONT;
+		PUT_MENU12_1_LOOP:
+			PAGESELW	LTR_MENU12_1;
+			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
+			CALL	LTR_MENU12_1&7FF;
+			MOVWF	EST_CTL;
+			ANDLW	H'FF';
+			PAGESEL	PUT_MENU12_1_LOOP_END;
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+				GOTO PUT_MENU12_1_LOOP_END;si hemos llegado, SALIMOS
+			DECFSZ	EST_CTL,F;Si es 0 saltara
+				GOTO	PUT_MENU12_1_LOOP_SALTO;
+			CALL	GONEXTLINE;
+			INCF	LCD_CONT,F;
+			GOTO	PUT_MENU12_1_LOOP;
+			PUT_MENU12_1_LOOP_SALTO:
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
+			GOTO	PUT_MENU12_1_LOOP;vuelvo a contar
+		PUT_COMPANY_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a "COMPANY"
+		MOVWF	LCD_CTL;
+		RETURN;
+		
+		GONEXTLINE:
+			MOVLW	cur_set|h'40';
+			CALL	LCDIWR;
+			RETURN;
+	PUT_MENU12_1_GOIN:
+	
+		
 MARCA_:
 	RETURN;
 MENSAJES_1_:

@@ -1,12 +1,12 @@
 MPLINK 4.30.01, Linker
-Linker Map File - Created Sun May 08 22:01:39 2011
+Linker Map File - Created Tue May 10 18:04:29 2011
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000000
                    .org_2       code   0x000003    program   0x000002
-                   .org_3       code   0x000004    program   0x000624
+                   .org_3       code   0x000004    program   0x00064e
                    .org_1       code   0x000800    program   0x000076
 
 
@@ -14,89 +14,90 @@ Linker Map File - Created Sun May 08 22:01:39 2011
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000003    0x000315      
+                            0x000003    0x00032a      
                             0x000800    0x00083a      
-            846 out of 8454 program addresses used, program memory utilization is 10%
+            867 out of 8454 program addresses used, program memory utilization is 10%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-              BUCLEOCIOSO   0x0001a2    program     static C:\Universidad\2\labSED\final\Final.asm
-          CALLFROMCOMPPAD   0x000090    program     static C:\Universidad\2\labSED\final\pad.asm
-             CALLFROMTMP2   0x00008b    program     static C:\Universidad\2\labSED\final\pad.asm
-                COMPCOLUM   0x000076    program     static C:\Universidad\2\labSED\final\pad.asm
-                  COMPPAD   0x0000b0    program     static C:\Universidad\2\labSED\final\pad.asm
-                   CURADD   0x0002f9    program     static C:\Universidad\2\labSED\final\lcd.asm
-              EEPROM_INIT   0x000164    program     static C:\Universidad\2\labSED\final\eeprom.asm
-              EEPROM_READ   0x000186    program     static C:\Universidad\2\labSED\final\eeprom.asm
-             EEPROM_WRITE   0x00016d    program     static C:\Universidad\2\labSED\final\eeprom.asm
-                      EN1   0x0000ac    program     static C:\Universidad\2\labSED\final\pad.asm
-            ESCRIBIR_SMS_   0x000290    program     static C:\Universidad\2\labSED\final\estados.asm
-               INICIATMP2   0x0000b9    program     static C:\Universidad\2\labSED\final\pad.asm
-               KEYPADREGW   0x000097    program     static C:\Universidad\2\labSED\final\pad.asm
-                   LCDBS1   0x0002ea    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS2   0x0002f7    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBSY   0x0002e5    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDIN   0x000309    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDDOUT   0x00030f    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDWR   0x0002c5    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDINIT   0x000292    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDIWR   0x0002c7    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW1   0x0002dc    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW2   0x0002de    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDWAIT   0x0002db    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCDWRAUX   0x0002c9    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LEDINIT   0x0001e3    program     static C:\Universidad\2\labSED\final\Final.asm
-                LEER_SMS_   0x000291    program     static C:\Universidad\2\labSED\final\estados.asm
+              BUCLEOCIOSO   0x0001ab    program     static C:\Universidad\2\labSED\final\Final.asm
+          CALLFROMCOMPPAD   0x000091    program     static C:\Universidad\2\labSED\final\pad.asm
+             CALLFROMTMP2   0x00008c    program     static C:\Universidad\2\labSED\final\pad.asm
+                COMPCOLUM   0x000077    program     static C:\Universidad\2\labSED\final\pad.asm
+                  COMPPAD   0x0000b1    program     static C:\Universidad\2\labSED\final\pad.asm
+                   CURADD   0x00030e    program     static C:\Universidad\2\labSED\final\lcd.asm
+              EEPROM_INIT   0x00016d    program     static C:\Universidad\2\labSED\final\eeprom.asm
+              EEPROM_READ   0x00018f    program     static C:\Universidad\2\labSED\final\eeprom.asm
+             EEPROM_WRITE   0x000176    program     static C:\Universidad\2\labSED\final\eeprom.asm
+                      EN1   0x0000ad    program     static C:\Universidad\2\labSED\final\pad.asm
+            ESCRIBIR_SMS_   0x0002a5    program     static C:\Universidad\2\labSED\final\estados.asm
+               INICIATMP2   0x0000ba    program     static C:\Universidad\2\labSED\final\pad.asm
+               KEYPADREGW   0x000098    program     static C:\Universidad\2\labSED\final\pad.asm
+                   LCDBS1   0x0002ff    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS2   0x00030c    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBSY   0x0002fa    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDIN   0x00031e    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDDOUT   0x000324    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDWR   0x0002da    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDINIT   0x0002a7    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDIWR   0x0002dc    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW1   0x0002f1    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW2   0x0002f3    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDWAIT   0x0002f0    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCDWRAUX   0x0002de    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LEDINIT   0x0001ec    program     static C:\Universidad\2\labSED\final\Final.asm
+                LEER_SMS_   0x0002a6    program     static C:\Universidad\2\labSED\final\estados.asm
               LTR_COMPANY   0x000823    program     static C:\Universidad\2\labSED\final\estados.inc
               LTR_STANDBY   0x00081a    program     static C:\Universidad\2\labSED\final\estados.inc
-                   MARCA_   0x00028d    program     static C:\Universidad\2\labSED\final\estados.asm
-              MENSAJES_1_   0x00028e    program     static C:\Universidad\2\labSED\final\estados.asm
-              MENSAJES_2_   0x00028f    program     static C:\Universidad\2\labSED\final\estados.asm
-                MENU12_1_   0x00028c    program     static C:\Universidad\2\labSED\final\estados.asm
+                   MARCA_   0x0002a2    program     static C:\Universidad\2\labSED\final\estados.asm
+              MENSAJES_1_   0x0002a3    program     static C:\Universidad\2\labSED\final\estados.asm
+              MENSAJES_2_   0x0002a4    program     static C:\Universidad\2\labSED\final\estados.asm
+                MENU12_1_   0x0002a1    program     static C:\Universidad\2\labSED\final\estados.asm
     MODEM_CMD_NUM_NO_ECHO   0x00082e    program     static C:\Universidad\2\labSED\final\serial.inc
           MODEM_CMD_RESET   0x000836    program     static C:\Universidad\2\labSED\final\serial.inc
               MODEM_TABLE   0x00082d    program     static C:\Universidad\2\labSED\final\serial.inc
                  NUMAKEYR   0x000811    program     static C:\Universidad\2\labSED\final\pad.inc
-                  PADINIT   0x0000d0    program     static C:\Universidad\2\labSED\final\pad.asm
-                 PADINTER   0x00004e    program     static C:\Universidad\2\labSED\final\pad.asm
-                     POR_   0x0001ed    program     static C:\Universidad\2\labSED\final\estados.asm
-      POR_CTL_PER_ANALIZE   0x000202    program     static C:\Universidad\2\labSED\final\estados.asm
-       POR_CTL_PER_CONFIG   0x0001f8    program     static C:\Universidad\2\labSED\final\estados.asm
+                  PADINIT   0x0000d1    program     static C:\Universidad\2\labSED\final\pad.asm
+                 PADINTER   0x00004f    program     static C:\Universidad\2\labSED\final\pad.asm
+                     POR_   0x0001f6    program     static C:\Universidad\2\labSED\final\estados.asm
+      POR_CTL_PER_ANALIZE   0x000211    program     static C:\Universidad\2\labSED\final\estados.asm
+       POR_CTL_PER_CONFIG   0x000201    program     static C:\Universidad\2\labSED\final\estados.asm
+                 POR_WAIT   0x00020c    program     static C:\Universidad\2\labSED\final\estados.asm
                  POSACOMP   0x000800    program     static C:\Universidad\2\labSED\final\pad.inc
-                     PROG   0x00018e    program     static C:\Universidad\2\labSED\final\Final.asm
-              PUT_COMPANY   0x000270    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_COMPANY_LOOP   0x00027b    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_COMPANY_LOOP_END   0x000287    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_STANDBY   0x000215    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_STANDBY_LOOP   0x000220    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_STANDBY_LOOP_END   0x00022c    program     static C:\Universidad\2\labSED\final\estados.asm
-             RECEIVE_NEXT   0x00015b    program     static C:\Universidad\2\labSED\final\serial.asm
-                     RETI   0x000011    program     static C:\Universidad\2\labSED\final\Final.asm
+                     PROG   0x000197    program     static C:\Universidad\2\labSED\final\Final.asm
+              PUT_COMPANY   0x000285    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_COMPANY_LOOP   0x000290    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_COMPANY_LOOP_END   0x00029c    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_STANDBY   0x00022a    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_STANDBY_LOOP   0x000235    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_STANDBY_LOOP_END   0x000241    program     static C:\Universidad\2\labSED\final\estados.asm
+             RECEIVE_NEXT   0x000164    program     static C:\Universidad\2\labSED\final\serial.asm
+                     RETI   0x000012    program     static C:\Universidad\2\labSED\final\Final.asm
                       RSI   0x000004    program     static C:\Universidad\2\labSED\final\Final.asm
-                  SEND_AT   0x000104    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_CMD   0x000129    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_DAT   0x000136    program     static C:\Universidad\2\labSED\final\serial.asm
-             SEND_DAT_END   0x000140    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_EEP   0x000145    program     static C:\Universidad\2\labSED\final\serial.asm
-             SEND_EEP_END   0x000155    program     static C:\Universidad\2\labSED\final\serial.asm
-                SEND_NEXT   0x000119    program     static C:\Universidad\2\labSED\final\serial.asm
-            SEND_NEXT_END   0x000125    program     static C:\Universidad\2\labSED\final\serial.asm
-              SERIAL_INIT   0x0000ed    program     static C:\Universidad\2\labSED\final\serial.asm
-           SERIAL_RECEIVE   0x000115    program     static C:\Universidad\2\labSED\final\serial.asm
-              SERIAL_SEND   0x000111    program     static C:\Universidad\2\labSED\final\serial.asm
-                 STANDBY_   0x00020e    program     static C:\Universidad\2\labSED\final\estados.asm
-      STANDBY_COMP_DESBLQ   0x000231    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST0   0x00024a    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST1   0x000252    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST2   0x00025a    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST3   0x000262    program     static C:\Universidad\2\labSED\final\estados.asm
-                    T2ICL   0x0000c4    program     static C:\Universidad\2\labSED\final\pad.asm
-                TMR2INTER   0x00002b    program     static C:\Universidad\2\labSED\final\pad.asm
-                  UNLOCK_   0x00026a    program     static C:\Universidad\2\labSED\final\estados.asm
-                     WAIT   0x0002db    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  SEND_AT   0x000105    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_CMD   0x000132    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_DAT   0x00013f    program     static C:\Universidad\2\labSED\final\serial.asm
+             SEND_DAT_END   0x000149    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_EEP   0x00014e    program     static C:\Universidad\2\labSED\final\serial.asm
+             SEND_EEP_END   0x00015e    program     static C:\Universidad\2\labSED\final\serial.asm
+                SEND_NEXT   0x00011a    program     static C:\Universidad\2\labSED\final\serial.asm
+            SEND_NEXT_END   0x00012e    program     static C:\Universidad\2\labSED\final\serial.asm
+              SERIAL_INIT   0x0000ee    program     static C:\Universidad\2\labSED\final\serial.asm
+           SERIAL_RECEIVE   0x000116    program     static C:\Universidad\2\labSED\final\serial.asm
+              SERIAL_SEND   0x000112    program     static C:\Universidad\2\labSED\final\serial.asm
+                 STANDBY_   0x000223    program     static C:\Universidad\2\labSED\final\estados.asm
+      STANDBY_COMP_DESBLQ   0x000246    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST0   0x00025f    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST1   0x000267    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST2   0x00026f    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST3   0x000277    program     static C:\Universidad\2\labSED\final\estados.asm
+                    T2ICL   0x0000c5    program     static C:\Universidad\2\labSED\final\pad.asm
+                TMR2INTER   0x00002c    program     static C:\Universidad\2\labSED\final\pad.asm
+                  UNLOCK_   0x00027f    program     static C:\Universidad\2\labSED\final\estados.asm
+                     WAIT   0x0002f0    program     static C:\Universidad\2\labSED\final\lcd.asm
 
 
 
@@ -104,72 +105,73 @@ Linker Map File - Created Sun May 08 22:01:39 2011
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
                       RSI   0x000004    program     static C:\Universidad\2\labSED\final\Final.asm
-                     RETI   0x000011    program     static C:\Universidad\2\labSED\final\Final.asm
-                TMR2INTER   0x00002b    program     static C:\Universidad\2\labSED\final\pad.asm
-                 PADINTER   0x00004e    program     static C:\Universidad\2\labSED\final\pad.asm
-                COMPCOLUM   0x000076    program     static C:\Universidad\2\labSED\final\pad.asm
-             CALLFROMTMP2   0x00008b    program     static C:\Universidad\2\labSED\final\pad.asm
-          CALLFROMCOMPPAD   0x000090    program     static C:\Universidad\2\labSED\final\pad.asm
-               KEYPADREGW   0x000097    program     static C:\Universidad\2\labSED\final\pad.asm
-                      EN1   0x0000ac    program     static C:\Universidad\2\labSED\final\pad.asm
-                  COMPPAD   0x0000b0    program     static C:\Universidad\2\labSED\final\pad.asm
-               INICIATMP2   0x0000b9    program     static C:\Universidad\2\labSED\final\pad.asm
-                    T2ICL   0x0000c4    program     static C:\Universidad\2\labSED\final\pad.asm
-                  PADINIT   0x0000d0    program     static C:\Universidad\2\labSED\final\pad.asm
-              SERIAL_INIT   0x0000ed    program     static C:\Universidad\2\labSED\final\serial.asm
-                  SEND_AT   0x000104    program     static C:\Universidad\2\labSED\final\serial.asm
-              SERIAL_SEND   0x000111    program     static C:\Universidad\2\labSED\final\serial.asm
-           SERIAL_RECEIVE   0x000115    program     static C:\Universidad\2\labSED\final\serial.asm
-                SEND_NEXT   0x000119    program     static C:\Universidad\2\labSED\final\serial.asm
-            SEND_NEXT_END   0x000125    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_CMD   0x000129    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_DAT   0x000136    program     static C:\Universidad\2\labSED\final\serial.asm
-             SEND_DAT_END   0x000140    program     static C:\Universidad\2\labSED\final\serial.asm
-                 SEND_EEP   0x000145    program     static C:\Universidad\2\labSED\final\serial.asm
-             SEND_EEP_END   0x000155    program     static C:\Universidad\2\labSED\final\serial.asm
-             RECEIVE_NEXT   0x00015b    program     static C:\Universidad\2\labSED\final\serial.asm
-              EEPROM_INIT   0x000164    program     static C:\Universidad\2\labSED\final\eeprom.asm
-             EEPROM_WRITE   0x00016d    program     static C:\Universidad\2\labSED\final\eeprom.asm
-              EEPROM_READ   0x000186    program     static C:\Universidad\2\labSED\final\eeprom.asm
-                     PROG   0x00018e    program     static C:\Universidad\2\labSED\final\Final.asm
-              BUCLEOCIOSO   0x0001a2    program     static C:\Universidad\2\labSED\final\Final.asm
-                  LEDINIT   0x0001e3    program     static C:\Universidad\2\labSED\final\Final.asm
-                     POR_   0x0001ed    program     static C:\Universidad\2\labSED\final\estados.asm
-       POR_CTL_PER_CONFIG   0x0001f8    program     static C:\Universidad\2\labSED\final\estados.asm
-      POR_CTL_PER_ANALIZE   0x000202    program     static C:\Universidad\2\labSED\final\estados.asm
-                 STANDBY_   0x00020e    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_STANDBY   0x000215    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_STANDBY_LOOP   0x000220    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_STANDBY_LOOP_END   0x00022c    program     static C:\Universidad\2\labSED\final\estados.asm
-      STANDBY_COMP_DESBLQ   0x000231    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST0   0x00024a    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST1   0x000252    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST2   0x00025a    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST3   0x000262    program     static C:\Universidad\2\labSED\final\estados.asm
-                  UNLOCK_   0x00026a    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_COMPANY   0x000270    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_COMPANY_LOOP   0x00027b    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_COMPANY_LOOP_END   0x000287    program     static C:\Universidad\2\labSED\final\estados.asm
-                MENU12_1_   0x00028c    program     static C:\Universidad\2\labSED\final\estados.asm
-                   MARCA_   0x00028d    program     static C:\Universidad\2\labSED\final\estados.asm
-              MENSAJES_1_   0x00028e    program     static C:\Universidad\2\labSED\final\estados.asm
-              MENSAJES_2_   0x00028f    program     static C:\Universidad\2\labSED\final\estados.asm
-            ESCRIBIR_SMS_   0x000290    program     static C:\Universidad\2\labSED\final\estados.asm
-                LEER_SMS_   0x000291    program     static C:\Universidad\2\labSED\final\estados.asm
-                  LCDINIT   0x000292    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDWR   0x0002c5    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDIWR   0x0002c7    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCDWRAUX   0x0002c9    program     static C:\Universidad\2\labSED\final\lcd.asm
-                     WAIT   0x0002db    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDWAIT   0x0002db    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW1   0x0002dc    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW2   0x0002de    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBSY   0x0002e5    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS1   0x0002ea    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS2   0x0002f7    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   CURADD   0x0002f9    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDIN   0x000309    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDDOUT   0x00030f    program     static C:\Universidad\2\labSED\final\lcd.asm
+                     RETI   0x000012    program     static C:\Universidad\2\labSED\final\Final.asm
+                TMR2INTER   0x00002c    program     static C:\Universidad\2\labSED\final\pad.asm
+                 PADINTER   0x00004f    program     static C:\Universidad\2\labSED\final\pad.asm
+                COMPCOLUM   0x000077    program     static C:\Universidad\2\labSED\final\pad.asm
+             CALLFROMTMP2   0x00008c    program     static C:\Universidad\2\labSED\final\pad.asm
+          CALLFROMCOMPPAD   0x000091    program     static C:\Universidad\2\labSED\final\pad.asm
+               KEYPADREGW   0x000098    program     static C:\Universidad\2\labSED\final\pad.asm
+                      EN1   0x0000ad    program     static C:\Universidad\2\labSED\final\pad.asm
+                  COMPPAD   0x0000b1    program     static C:\Universidad\2\labSED\final\pad.asm
+               INICIATMP2   0x0000ba    program     static C:\Universidad\2\labSED\final\pad.asm
+                    T2ICL   0x0000c5    program     static C:\Universidad\2\labSED\final\pad.asm
+                  PADINIT   0x0000d1    program     static C:\Universidad\2\labSED\final\pad.asm
+              SERIAL_INIT   0x0000ee    program     static C:\Universidad\2\labSED\final\serial.asm
+                  SEND_AT   0x000105    program     static C:\Universidad\2\labSED\final\serial.asm
+              SERIAL_SEND   0x000112    program     static C:\Universidad\2\labSED\final\serial.asm
+           SERIAL_RECEIVE   0x000116    program     static C:\Universidad\2\labSED\final\serial.asm
+                SEND_NEXT   0x00011a    program     static C:\Universidad\2\labSED\final\serial.asm
+            SEND_NEXT_END   0x00012e    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_CMD   0x000132    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_DAT   0x00013f    program     static C:\Universidad\2\labSED\final\serial.asm
+             SEND_DAT_END   0x000149    program     static C:\Universidad\2\labSED\final\serial.asm
+                 SEND_EEP   0x00014e    program     static C:\Universidad\2\labSED\final\serial.asm
+             SEND_EEP_END   0x00015e    program     static C:\Universidad\2\labSED\final\serial.asm
+             RECEIVE_NEXT   0x000164    program     static C:\Universidad\2\labSED\final\serial.asm
+              EEPROM_INIT   0x00016d    program     static C:\Universidad\2\labSED\final\eeprom.asm
+             EEPROM_WRITE   0x000176    program     static C:\Universidad\2\labSED\final\eeprom.asm
+              EEPROM_READ   0x00018f    program     static C:\Universidad\2\labSED\final\eeprom.asm
+                     PROG   0x000197    program     static C:\Universidad\2\labSED\final\Final.asm
+              BUCLEOCIOSO   0x0001ab    program     static C:\Universidad\2\labSED\final\Final.asm
+                  LEDINIT   0x0001ec    program     static C:\Universidad\2\labSED\final\Final.asm
+                     POR_   0x0001f6    program     static C:\Universidad\2\labSED\final\estados.asm
+       POR_CTL_PER_CONFIG   0x000201    program     static C:\Universidad\2\labSED\final\estados.asm
+                 POR_WAIT   0x00020c    program     static C:\Universidad\2\labSED\final\estados.asm
+      POR_CTL_PER_ANALIZE   0x000211    program     static C:\Universidad\2\labSED\final\estados.asm
+                 STANDBY_   0x000223    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_STANDBY   0x00022a    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_STANDBY_LOOP   0x000235    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_STANDBY_LOOP_END   0x000241    program     static C:\Universidad\2\labSED\final\estados.asm
+      STANDBY_COMP_DESBLQ   0x000246    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST0   0x00025f    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST1   0x000267    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST2   0x00026f    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST3   0x000277    program     static C:\Universidad\2\labSED\final\estados.asm
+                  UNLOCK_   0x00027f    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_COMPANY   0x000285    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_COMPANY_LOOP   0x000290    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_COMPANY_LOOP_END   0x00029c    program     static C:\Universidad\2\labSED\final\estados.asm
+                MENU12_1_   0x0002a1    program     static C:\Universidad\2\labSED\final\estados.asm
+                   MARCA_   0x0002a2    program     static C:\Universidad\2\labSED\final\estados.asm
+              MENSAJES_1_   0x0002a3    program     static C:\Universidad\2\labSED\final\estados.asm
+              MENSAJES_2_   0x0002a4    program     static C:\Universidad\2\labSED\final\estados.asm
+            ESCRIBIR_SMS_   0x0002a5    program     static C:\Universidad\2\labSED\final\estados.asm
+                LEER_SMS_   0x0002a6    program     static C:\Universidad\2\labSED\final\estados.asm
+                  LCDINIT   0x0002a7    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDWR   0x0002da    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDIWR   0x0002dc    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCDWRAUX   0x0002de    program     static C:\Universidad\2\labSED\final\lcd.asm
+                     WAIT   0x0002f0    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDWAIT   0x0002f0    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW1   0x0002f1    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW2   0x0002f3    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBSY   0x0002fa    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS1   0x0002ff    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS2   0x00030c    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   CURADD   0x00030e    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDIN   0x00031e    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDDOUT   0x000324    program     static C:\Universidad\2\labSED\final\lcd.asm
                  POSACOMP   0x000800    program     static C:\Universidad\2\labSED\final\pad.inc
                  NUMAKEYR   0x000811    program     static C:\Universidad\2\labSED\final\pad.inc
               LTR_STANDBY   0x00081a    program     static C:\Universidad\2\labSED\final\estados.inc

@@ -67,9 +67,9 @@ RSI:
 	; no queremos saltar a ningún banco de memoria
 
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
-	CLRW;Limpiamos el espacio de trabajo
-	BTFSC	PIR1,TXIF;
-		GOTO	SEND_NEXT;	
+	BANKSEL	PIE1;
+	BTFSC	PIE1,TXIE;
+		GOTO	SEND_NEXT;
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
 	CLRF	PCLATH;
