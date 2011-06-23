@@ -171,6 +171,7 @@ UNLOCK_:
 	MOVLW	UNLOCK;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_COMPANY;
+	CALL	UNLOCK_GOIN;
 	RETURN;
 	;************* PUT_COMPANY **************;
 	PUT_COMPANY:
@@ -200,6 +201,20 @@ UNLOCK_:
 		MOVLW	LTR_COMPANY_;Cambiamos lo que hay en pantalla a "COMPANY"
 		MOVWF	LCD_CTL;
 		RETURN;
+	UNLOCK_GOIN;
+		BANKSEL KEYHU;miramos que no haya  nada en las dos filas de abajo pulsado
+		MOVF	KEYHL,W;
+		BTFSS	STATUS,Z;
+			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
+		MOVF	KEYHU,W;miramos que abajo haya como mucho pulsado el verde (A)
+		ANDLW	B'11111110';
+		BTFSS	STATUS,Z;
+			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
+			
+		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
+			GOTO	STANDBY_COMP_DESBLQ_EST0;
+		BTFSS	EST_CTL,1;
+			GOTO	STANDBY_COMP_DESBLQ_EST1;
 	
 	
 MENU12_1_:
@@ -218,7 +233,7 @@ MENU12_1_:
 			RETURN;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	cur_set; Mover el cursor a la posicion 6
+		MOVLW	cur_set; Mover el cursor a la posicion 0
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_MENU12_1_LOOP:
@@ -239,7 +254,7 @@ MENU12_1_:
 			CALL	LCDDWR;Escribo la letra en pantalla
 			INCF	LCD_CONT,F;Incremento el contador
 			GOTO	PUT_MENU12_1_LOOP;vuelvo a contar
-		PUT_COMPANY_LOOP_END:;Hemos salido
+		PUT_MENU12_1_LOOP_END:;Hemos salido
 		BANKSEL LCD_CTL;
 		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a "COMPANY"
 		MOVWF	LCD_CTL;
@@ -249,7 +264,21 @@ MENU12_1_:
 			MOVLW	cur_set|h'40';
 			CALL	LCDIWR;
 			RETURN;
-	PUT_MENU12_1_GOIN:
+	MENU12_1_GOIN:
+		BANKSEL KEYHU;miramos que no haya  nada en las dos filas de arriba pulsado
+		MOVF	KEYHU,W;
+		BTFSS	STATUS,Z;
+			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
+		
+		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y la # pulsadas
+		ANDLW	B'11111010';
+		BTFSS	STATUS,Z;
+			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
+			
+		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
+			GOTO	STANDBY_COMP_DESBLQ_EST0;
+		BTFSS	EST_CTL,1;
+			GOTO	STANDBY_COMP_DESBLQ_EST1;
 	
 		
 MARCA_:

@@ -21,6 +21,7 @@
 		LTR_NONE_	EQU	H'00'
 		LTR_STANDBY_	EQU	H'01'
 		LTR_COMPANY_	EQU	H'02'
+		LTR_MENU12_1_	EQU	H'03'
 	
 	LTR_STANDBY:
 	ADDWF	PCL,F;
@@ -28,3 +29,6 @@
 	LTR_COMPANY:
 	ADDWF	PCL,F;
 	DT	"UNLOCKED",0;
+	LTR_MENU12_1:
+	ADDWF	PCL,F;
+	DT	"Escribir mensaje",1,"Leer mensaje";
