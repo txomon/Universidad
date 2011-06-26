@@ -1,19 +1,28 @@
 ;******** EJECUCIONES EN CADA ESTADO ********;
 ;************ POR_ *************;
+;;
+; Power On Reset, inicializa el modem para que no haga echo
+; y para que los resultados los devuelva en modo numérico
+; @param MAQUINA_EST - Inicializa la variable para marcar que está en ese estado
+; @param EST_CTL - Guarda el progreso en la máquina de estados
+;;
 POR_:
-	MOVLW	POR;
-	BANKSEL	MAQUINA_EST;
-	MOVWF	MAQUINA_EST;
-	BTFSS	EST_CTL,0;
+	MOVLW	POR; El estado de power on reset
+	BANKSEL	MAQUINA_EST; siempre al principio de todos los estados
+	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
+	BTFSS	EST_CTL,0; 
 		CALL	POR_CTL_PER_CONFIG;
 	BTFSC	EST_CTL,0;
 		CALL	POR_CTL_PER_ANALIZE;
-	BTFSC	EST_CTL,1;	
+	BTFSC	EST_CTL,1;
 		GOTO STANDBY_;
 	RETURN;
 	
-		;******** POR_CONTROL_PERIPHERIAL_START_NO_ECHO *******;
-		; MODEM => NO ECHO & NUM MODE
+		;******** POR_CTL_PER_CONFIG *******;
+		;;
+		; Se encarga de inicializar el periférico para que no haga echo, y tenga
+		; respuestas numéricas.
+		;;
 		POR_CTL_PER_CONFIG:
 			CLRF	RCV_CONT;
 			CLRF	SER_CTL;
@@ -34,25 +43,30 @@ POR_:
 			RETURN;
 			
 		;******** POR_CTL_PER_ANALIZE ********;
-		; IF MODEM ANSWER:
+		;;
+		; Esta funcion se encarga de debugear las respuestas y mostrarlas en
+		; la pantalla.
+		; @param RCV_CONT - Contador de caracteres recibidos
+		; @return EST_CTL - Control del avance del estado
+		;;
 		POR_CTL_PER_ANALIZE:
 			MOVF	RCV_CONT,W;
 			BTFSC	STATUS,Z;
 				RETURN;	
-			MOVLW	H'1F'
+			MOVLW	H'1F'; La posición en la que voy a poner lo que se recibe.
 			MOVWF	FSR;
 			BSF	STATUS,IRP;
-				MOVLW	cur_set|h'40'; Mover el cursor a la posicion 6
-				CALL	LCDIWR;
+			MOVLW	cur_set|h'4F'; Mover el cursor a la última posicion de la segunda fila
+			CALL	LCDIWR;
 			MOVF	INDF,W;
-				CALL	LCDDWR;Escribo la letra en pantalla
+			CALL	LCDDWR;Escribo la letra en pantalla
 			MOVF	INDF,W;
-			XORLW	'0';
-			BTFSS	STATUS,Z;
-				BCF	EST_CTL,0;
-			BTFSS	STATUS,Z;
+			XORLW	H'0D'; el caracter CR es lo NO que tiene que tener devuelto
+			BTFSS	STATUS,Z; Saltar si el caracter es CR
+				BSF	EST_CTL,0;Si la posición no tenia el caracter 0, entonces ha ejecutado mal la instrucción
+			MOVF	INDF,W
 				RETURN;
-			BSF	EST_CTL,1;
+			BCF	EST_CTL,0; Pasamos al anterior estado, ya que este no ha recibido todavia la respuesta esperada.
 			RETURN
 		
 		
@@ -60,10 +74,16 @@ POR_:
 ;************ STANDBY_ *************;
 STANDBY_:
 	BANKSEL	KEYHL;
+	MOVF	MAQUINA_EST; Comprobamos si estamos aquí por primera vez
+	XORLW	STANDBY;
+	BTFSS	STATUS,Z; Si estamos por primera vez
+		CLRF	EST_CTL;
 	MOVLW	STANDBY;
 	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
 	CALL	PUT_STANDBY;
 	CALL	STANDBY_COMP_DESBLQ;
+	BTFSS	EST_CTL,4;
+		GOTO	UNLOCK_;
 	RETURN
 	;******	PUT_STANDBY ******;
 	; PONE STANDBY EN LA PANTALLA
@@ -115,11 +135,9 @@ STANDBY_:
 			GOTO	STANDBY_COMP_DESBLQ_EST2;
 		BTFSS	EST_CTL,3;
 			GOTO	STANDBY_COMP_DESBLQ_EST3;
-		MOVLW	UNLOCK
-		BTFSS	EST_CTL,4;
-			MOVWF	MAQUINA_EST;
+
 		
-		RETURN;Este return esta para antes de saltar a UNLOCK_
+		RETURN;Este return esta para antes de saltar a UNLOCK_ y NO debería usarse
 		
 		;**********************************************************************;
 		; Estas rutinas están pensadas teniendo como logico que avanzar es lo normal
@@ -168,10 +186,16 @@ STANDBY_:
 				
 UNLOCK_:
 	BANKSEL	MAQUINA_EST;
+	MOVF	MAQUINA_EST;
+	XORLW	UNLOCK;
+	BTFSS	STATUS,Z;
+		CLRF	EST_CTL;
 	MOVLW	UNLOCK;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_COMPANY;
-	CALL	UNLOCK_GOIN;
+	CALL	GOIN;
+	BTFSC	EST_CTL,1;
+		GOTO	MENU12_1_;
 	RETURN;
 	;************* PUT_COMPANY **************;
 	PUT_COMPANY:
@@ -201,28 +225,49 @@ UNLOCK_:
 		MOVLW	LTR_COMPANY_;Cambiamos lo que hay en pantalla a "COMPANY"
 		MOVWF	LCD_CTL;
 		RETURN;
-	UNLOCK_GOIN;
-		BANKSEL KEYHU;miramos que no haya  nada en las dos filas de abajo pulsado
-		MOVF	KEYHL,W;
-		BTFSS	STATUS,Z;
-			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
-		MOVF	KEYHU,W;miramos que abajo haya como mucho pulsado el verde (A)
-		ANDLW	B'11111110';
-		BTFSS	STATUS,Z;
-			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
-			
+	GOIN:	
 		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
-			GOTO	STANDBY_COMP_DESBLQ_EST0;
+			GOTO	UNLOCK_COMP_DESBLQ_EST0;
 		BTFSS	EST_CTL,1;
-			GOTO	STANDBY_COMP_DESBLQ_EST1;
+			GOTO	UNLOCK_COMP_DESBLQ_EST1;
+		RETURN; Este return no se usará, pero por si acaso...
 	
+		;******************************************************************************;
+		;**** Rutinas para el paso del menú exterior al menú interior *****************;
+		;******************************************************************************;
+		;
+		;**** UNLOCK_COMP_DESBLQ_EST0 ****;
+		UNLOCK_COMP_DESBLQ_EST0:
+			MOVF	KEYHL,W;
+			IORWF	KEYHU,W;
+			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
+				BSF	EST_CTL,0;
+			RETURN;
 	
+		;**** UNLOCK_COMP_DESBLQ_EST1 ****;
+		UNLOCK_COMP_DESBLQ_EST1:
+			MOVF	KEYHL;
+			BTFSC	STATUS,Z;
+				BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
+			MOVF	KEYHU;
+			ANDLW	B'11111110';
+			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
+				BCF	EST_CTL,0;
+			BTFSC	KEYHU,0; Si esta pulsado el verde, avanzamos
+				BSF	EST_CTL,1;
+			RETURN;
 MENU12_1_:
 	BANKSEL	MAQUINA_EST;
+	MOVF	MAQUINA_EST;
+	XORLW	MENU12_1_;
+	BTFSS	STATUS,Z;
+		CLRF	EST_CTL;
 	MOVLW	MENU12_1;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_MENU12_1;
-	CALL	MENU12_1_GOIN;
+	CALL	GOIN;
+	BTFSC	EST_CTL,1;
+		GOTO	MARCA_;
 	RETURN;
 	;************* PUT_COMPANY **************;
 	PUT_MENU12_1:
@@ -256,7 +301,7 @@ MENU12_1_:
 			GOTO	PUT_MENU12_1_LOOP;vuelvo a contar
 		PUT_MENU12_1_LOOP_END:;Hemos salido
 		BANKSEL LCD_CTL;
-		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a "COMPANY"
+		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
 		MOVWF	LCD_CTL;
 		RETURN;
 		
@@ -264,21 +309,6 @@ MENU12_1_:
 			MOVLW	cur_set|h'40';
 			CALL	LCDIWR;
 			RETURN;
-	MENU12_1_GOIN:
-		BANKSEL KEYHU;miramos que no haya  nada en las dos filas de arriba pulsado
-		MOVF	KEYHU,W;
-		BTFSS	STATUS,Z;
-			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
-		
-		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y la # pulsadas
-		ANDLW	B'11111010';
-		BTFSS	STATUS,Z;
-			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
-			
-		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
-			GOTO	STANDBY_COMP_DESBLQ_EST0;
-		BTFSS	EST_CTL,1;
-			GOTO	STANDBY_COMP_DESBLQ_EST1;
 	
 		
 MARCA_:
