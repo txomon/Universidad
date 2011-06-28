@@ -16,8 +16,11 @@ EEPROM_INIT:
 	
 	
 ;******* EEPROM_WRITE ************;
-; input = w -> data
-;         EE_CTL, ORI_EXT -> 1 if eeadr has been previously read
+;;
+; @param W - El dato que se quiere escribir
+; @param EE_CTL.ORI_EXT - with this bit to 1, it takes as target position the one saved
+;	in WRITE00, if 0, takes the already saved address in EEADR as position
+;;
  
 EEPROM_WRITE:
 	BANKSEL	EEDAT;
@@ -35,7 +38,7 @@ EEPROM_WRITE:
 	BSF	EECON1&7F, WREN ;Enable writes
 	BCF	INTCON, GIE ;Disable INTs.
 	BTFSC	INTCON, GIE ;SEE AN576
-	GOTO	$-2
+		GOTO	$-2
 	MOVLW	H'55';
 	MOVWF	EECON2&7F ;Write 55h
 	MOVLW	H'AA';
