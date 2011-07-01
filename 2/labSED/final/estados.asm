@@ -390,33 +390,99 @@ ESCRIBIR_SMS_:
 	; Parser que se encarga de tener a punto un diagrama de estados 
 	; en el que ir logueando las teclas que se tienen pulsadas, en esta
 	; versión, será de numeros, pero estará preparado para funciones más complejas
-	; @param KEYHU - 
+	; @param KEYHU - El registro de las teclas de arriba
 	; @param KEYHL -
 	;;
 	ESCRIBIR_SMS_PARSER:
-		PAGESELW	NUMAKEYR;
-		MOVF	PARSER_LETTER,W;
-		ANDLW	H'07';
-		CALL	NUMAKEYR;
-		
-		BTFSS	PARSER_LETTER,3; Si la tecla que tenemos que comparar 
-			ANDWF	KEYHL,W; está en el registro de abajo, cojemos este,
-		BTFSC	PARSER_LETTER,3; si no, cojemos el de arriba 
-			ANDWF	KEYHU,W;
-		
+	
+		MOVF	KEYHL,W;
+		IORWF	KEYHU,W;
 		BTFSS	STATUS,Z;
+			GOTO	PARSER_CT; Si hay una tecla pulsada
+		BTFSC	STATUS,Z;
+			GOTO	PARSER_ST;
 			
-
-
-		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
-			GOTO	ESCRIBIR_SMS_EST0;
-		BTFSS	EST_CTL,1;
-			GOTO	ESCRIBIR_SMS_EST1;
-		BTFSS	EST_CTL,2;
-			GOTO	ESCRIBIR_SMS_EST2;
-		BTFSS	EST_CTL,3;
-			GOTO	ESCRIBIR_SMS_EST3;
+			;;
+			; Parser con tecla, es a donde se entra si hay UNA tecla pulsada.
+			; El metodo consiste en llevar un contador con los bits a 1 que hay,
+			; empezar desde el hard low a comprobar, y ya que los desplazamientos,
+			; llevar otro contador con los desplazamientos realizados, que es 
+			; conveniente iniciarlo en -1 (F) para así poder saltar con una sola comprobación (bit 4)
+			; no se pueden hacer en W, se pasa a una variable y ahí se empieza.
+			;;
 			
-			
-			
-			
+			PARSER_CT:
+				CLRF	PARSER_CTL;
+				MOVF	KEYHL,W;
+				BTFSC	STATUS,Z;
+					GOTO	PARSER_CTLOOP_CHNG;
+				MOVWF	PARSER_TEMP; 
+				BCF	STATUS,C;
+				MOVLW	h'10';
+				MOVWF	PARSER_CON,F;
+				 
+				PARSER_CTLOOPL:
+				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
+				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
+				BTFSC	PARSER_CON,3;
+					GOTO	PARSER_CTLOOP_CHNG;
+				GOTO	PARSER_CTLOOPL;
+				
+				PARSER_CTLOOP_CHNG:
+				MOVF	KEYHU,W; Ahora ponemos el registro de abajo
+				BTFSC	STATUS,Z;
+					GOTO	PARSER_CTLOOP_CHNG;
+				MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
+				CLRF	PARSER_CON; reseteamos el contador de desplazamientos realizados
+				COMF	PARSER_CON,F;
+				BCF	PARSER_CON,7;
+				
+				PARSER_CTLOOPH:
+				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
+				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
+				BTFSC	PARSER_CON,3;
+					GOTO	PARSER_CTCOUNTED;
+				GOTO	PARSER_CTLOOPH;
+				
+				; pasos seguidos, con un registro de ejemplo
+				;PASO	BYTE		C	PARSER_CTL	PARSER_CON
+				;0º: 	00101011	0	0		F - 1111
+				;1º:	00010101	1	1		0 - 0000
+				;2º:	10001010	1	2		1 - 0001
+				;3º:	11000101	0	2		2 - 0010
+				;4º:	01100010	1	3		3 - 0011
+				;5º:	10110001	0	3		4 - 0100
+				;6º:	01011000	1	4		5 - 0101
+				;7º:	10101100	0	4		6 - 0110
+				;8º:	01010110	0	4		7 - 0111
+				;9º:	00101011	0	4		8 - 1000
+				
+						
+				
+				PARSER_CTCOUNTED:
+				DECFSZ	PARSER_CTL; ¿Habrá solo pulsada una tecla?
+					RETURN; por que si no, no nos vale.
+				CLRF	PARSER_CON;
+				MOVF	KEYHU;
+				BTFSC	STATUS,Z;
+					BSF	PARSER_CON,3;
+				BTFSS	PARSER_CON,3
+					MOVF	KEYHL;
+				
+				PARSER_CTWHICHIS:
+				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
+				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
+				BTFSC	PARSER_TEMP,0;
+					GOTO	$+2;
+				GOTO	PARSER_CTWHICHIS;
+				
+				
+				
+				
+				
