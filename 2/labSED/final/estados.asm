@@ -472,15 +472,17 @@ ESCRIBIR_SMS_:
 					BSF	PARSER_CON,3;
 				BTFSS	PARSER_CON,3
 					MOVF	KEYHL;
+				MOVWF	PARSER_TEMP
 				
 				PARSER_CTWHICHIS:
 				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
 				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
 					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
+				BTFSC	PARSER_CTL,0;
+					GOTO	$+3;
 				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
-				BTFSC	PARSER_TEMP,0;
-					GOTO	$+2;
 				GOTO	PARSER_CTWHICHIS;
+				
 				
 				
 				
