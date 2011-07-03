@@ -4,12 +4,21 @@
 	EST_CTL
 	LCD_CTL
 	LCD_CONT
-	PARSER_CUR
+	PARSER_LTR
 	PARSER_CTL
 	PARSER_TEMP
 	PARSER_CONT
-	PARSER_CUR_INFO
+	PARSER_LTR_INFO
 	ENDC
+		;** PARSER_LTR USO **;
+		; PARSER_LTR,<3-0> ULTIMA TECLA
+		; PARSER_LTR,<7-4> VECES PULSADA
+		
+		;** PARSER_LTR_INFO **;
+		PLI_INUSE		H'0'; PARSER_LTR tiene datos validos (está en uso), como tenemos 
+		; que poder validar que todas las pulsaciones de las teclas son para este estado,
+		; tendremos que saber si primero hay que esperar a que no haya nada pulsado para empezar.
+		PLI_WASPRESSED	H'1'; El último estado de PARSER_LTR era pulsado	
 	
 		;** ESTADOS DE LA MÁQUINA **;
 		POR		EQU	H'00'
