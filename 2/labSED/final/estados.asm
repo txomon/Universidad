@@ -377,7 +377,7 @@ ESCRIBIR_SMS_:
 	MOVF	MAQUINA_EST;
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
-		CLRF	EST_CTL;
+		CLRF	PARSER_LTR_INFO;
 	MOVLW	MENU12_1;
 	MOVWF	ESCRIBIR_SMS;
 	CALL	ESCRIBIR_SMS_PARSER;
@@ -400,7 +400,7 @@ ESCRIBIR_SMS_:
 		BTFSS	STATUS,Z;
 			GOTO	PARSER_CT; Si hay una tecla pulsada
 		BTFSC	STATUS,Z;
-			GOTO	PARSER_ST;
+			GOTO	PARSER_ST; Si no la hay
 			
 			;;
 			; Parser con tecla, es a donde se entra si hay UNA tecla pulsada.
@@ -466,7 +466,7 @@ ESCRIBIR_SMS_:
 				PARSER_CTCOUNTED:
 				DECFSZ	PARSER_CTL; ¿Habrá solo pulsada una tecla?
 					RETURN; por que si no, no nos vale.
-				CLRF	PARSER_CON;
+				CLRF	PARSER_CON; Ahora esta variable guardara lo que mas tarde sera para PARSER_LTR
 				MOVF	KEYHU;
 				BTFSC	STATUS,Z;
 					BSF	PARSER_CON,3;
@@ -483,8 +483,115 @@ ESCRIBIR_SMS_:
 				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
 				GOTO	PARSER_CTWHICHIS;
 				
+				MOVF	PARSER_LTR,W;
+				ANDLW	H'0F';
+				XORWF	PARSER_CON,W;
+				BTFSS	STATUS,Z;
+					GOTO	PARSER_CHNG_CHAR;
+	 			BTFSC	STATUS,Z;
+					GOTO	PARSER_SAME_CHAR;
 				
 				
-				
-				
-				
+				;;
+				; Funcion a la que se llega si el caracter pulsado es el mismo que el anterior. Dentro de él,
+				; se comprobará si ha sido soltada la tecla, y si es valida la tecla que hay almacenada.
+				; @param PARSER_LTR_INFO - Variable en la que se comprueba la valided de PARSER_LTR_CHAR
+				;;
+				PARSER_SAME_CHAR:
+					BTFSC	PARSER_LTR_INFO,PLI_INUSE;
+						GOTO	PARSER_CHNG_CHAR;
+					BTFSC	PARSER_LTR_INFO,PLI_WASPRESSED; Si ya estaba pulsado (ha contado como pulsado, se sale)
+						RETURN;
+					; Por lo tanto, aqui llegaremos la primera vez que pasemos de haber estado pulsados a volver a estarlo
+					; esto significa que solo tenemos que incrementar una vez el contador de pulsaciones, y a esperar.
+					; Aqui irían rutinas de temporizador para saber si separarlo o no etc. Para simplificar el trabajo,
+					; nos limitaremos a redirigir como si fuera un cambio de caracter aunque no lo sea, centrando así la dificultad
+					; en la otra función (PARSER_CHNG_CHAR), y dejando que que esta esté liberada por si implementar lo de 
+					; los temporizadores
+					
+					GOTO	PARSER_CHNG_CHAR;
+					
+				;;
+				; Encargada de:
+				; - Hacer los cambios de una letra a otra
+				; - Escribir el carácter que toque a la EEPROM
+				; - Aunque una pulsación sea igual que la anterior, si llega a la función significa que NO es la misma
+				; @param PARSER_LTR - Aqui esta almacenada la letra anterior, que es la que tenemos que escribir y sustituir
+				;;
+				PARSER_CHNG_CHAR:
+					BTFSS	PARSER_LTR_INFO,PLI_INUSE;
+						GOTO	PARSER_NOTINUSE;
+					PAGESELW	PARSER_CHNG_CHAR;
+					MOVF	PARSER_LTR,W;
+					ANDLW	H'0F';
+					ADDWF	PCL,F;
+					GOTO	PARSER_L_ESTR;
+					GOTO	PARSER_L_0;
+					GOTO	PARSER_L_#;
+					GOTO	PARSER_L_ROJO;
+					GOTO	PARSER_L_7;
+					GOTO	PARSER_L_8;
+					GOTO	PARSER_L_9;
+					GOTO	PARSER_L_DOWN;
+					GOTO	PARSER_L_4;
+					GOTO	PARSER_L_5;
+					GOTO	PARSER_L_6;
+					GOTO	PARSER_L_UP;
+					GOTO	PARSER_L_1;
+					GOTO	PARSER_L_2;
+					GOTO	PARSER_L_3;
+					GOTO	PARSER_L_VERD;
+					
+					
+					PARSER_L_ESTR:
+						MOVLW	C'*';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_0:
+						MOVLW	C'0';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_#:
+						MOVLW	C'#';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_ROJO:
+						GOTO	MENU12_1_; Ya se que estoy en un nivel inferior, pero no hay otra;
+					
+					
+					PARSER_L_7:
+						MOVLW	C'7';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_8:
+						MOVLW	C'8';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_9:
+						MOVLW	C'9';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_DOWN:
+						GOTO	PARSER_CHNG_CHNG;
+					
+					
+					PARSER_L_4:
+						MOVLW	C'4';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_5:	
+						MOVLW	C'5';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_6:
+						MOVLW	C'6';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_UP:
+						GOTO	PARSER_CHNG_CHNG;
+						
+					PARSER_L_1:	
+						MOVLW	C'1';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_2:	
+						MOVLW	C'2';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_3:	
+						MOVLW	C'3';
+						GOTO	PARSER_CHNG_SAVE;
+					PARSER_L_VERD:
+						
+						
+
+					PARSER_CHNG_SAVE:
