@@ -131,6 +131,7 @@ PROG:
 	CLRF	LCD_CTL
 	CLRF	LCD_CONT
 	BSF	INTCON,GIE;
+	SLEEP; Si no, no hay manera de conseguir que avance, try1
 BUCLEOCIOSO:
 
 	include "maquina_de_estados.asm"
