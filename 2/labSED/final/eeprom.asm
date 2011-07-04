@@ -18,8 +18,8 @@ EEPROM_INIT:
 ;******* EEPROM_WRITE ************;
 ;;
 ; @param W - El dato que se quiere escribir
-; @param EE_CTL.ORI_EXT - with this bit to 1, it takes as target position the one saved
-;	in WRITE00, if 0, takes the already saved address in EEADR as position
+; @param EE_CTL.ORI_EXT - esta variable si esta a 0, se coje lo que haya en el registro propio, 
+; si está a 1, supone que el valor ya ha sido metido, de origen externo.
 ;;
  
 EEPROM_WRITE:
@@ -48,16 +48,24 @@ EEPROM_WRITE:
 	RETFIE;
 
 ;******* EEPROM_READ ************;
-; input  = eeaddr
-; output = w -> DATA
-	
+;;
+; @param  eeadr - address to read 
+; @return w - Data read
+;;	
 EEPROM_READ:
 	;Address to read
-	BANKSEL EECON1 ;
-	BCF EECON1&7F, EEPGD ;Point to DATA memory
-	BSF EECON1&7F, RD ;EE Read
-	BANKSEL EEDAT;
-	MOVF EEDAT&7F, W ;W <= EEDAT
+	BANKSEL	READ00;
+	BTFSS	EE_CTL,ORI_EXT;
+		MOVF	READ00,W;
+	BANKSEL	EEADR;
+	BTFSS	EE_CTL,ORI_EXT;
+		MOVWF	EEADR&7f;
+		
+	BANKSEL	EECON1 ;
+	BCF	EECON1&7F, EEPGD ;Point to DATA memory
+	BSF	EECON1&7F, RD ;EE Read
+	BANKSEL	EEDAT;
+	MOVF	EEDAT&7F, W ;W <= EEDAT
 	RETURN;
 
 

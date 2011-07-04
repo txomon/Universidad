@@ -24,9 +24,7 @@ SERIAL_INIT:
 	MOVWF	RCSTA
 	
 	CLRF	SER_CTL;
-	CLRF	CMD_CTL;
 	CLRF	SND_CONT;
-	CLRF	DAT_CTL;
 	CLRF	RCV_CONT;
 	RETURN;
 
@@ -44,18 +42,20 @@ SEND_AT:
 	BSF	PIE1&7F,TXIE;
 	RETURN;
 ;****** SERIAL_SEND *******;
-; input <- W = char
-; no output
-; manda el siguiente caracter en la lista
+;;
+; manda el caracter que se le pasa como argumento
+; @param W - El caracter a enviar
+;;
 SERIAL_SEND:
 	BANKSEL	TXREG;BANCO1
 	MOVWF	TXREG;
 	RETURN;
 	
 ;****** SERIAL_RECEIVE ******;
-; no input
-; output = received char
+;;
 ; recibe un caracter y llama a una función para que lo guarde
+; @return W - caracter recibido
+;;
 SERIAL_RECEIVE:
 	BANKSEL RCREG;
 	MOVF	RCREG,W;

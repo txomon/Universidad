@@ -222,3 +222,32 @@ LCDDOUT:			; Bus de datos LCD como salida
 	BCF	STATUS, RP0	;
 	MOVF	TMP1,W		;
 	RETURN
+
+;*****************************************************
+;;
+; Función que se encarga de ir poniendo en la pantalla,
+; a medida que pasan las letras. De momento, solo hacia
+; delante.
+;;	
+LCD_LTRW:	
+	BANKSEL	LCD_LTR_CONT;
+	MOVWF	TMP2;
+	MOVLW	cur_set;
+	IORWF	LCD_LTR_CONT,W;
+	CALL	LCDIWR;
+	MOVF	TMP2,W;
+	CALL	LCDDWR;
+	
+	INCF	LCD_LTR_CONT,W;
+	XORLW	H'20';
+	BTFSC	STATUS,Z;
+		BSF	LCD_LTR_CONT,5;
+	
+	INCF	LCD_LTR_CONT,W;	
+	XORLW	H'50';
+	MOVLW	H'FF'
+	BTFSC	STATUS,Z;
+		MOVWF	LCD_LTR_CONT;
+ 	INCF	LCD_LTR_CONT,F;
+	RETURN;
+	

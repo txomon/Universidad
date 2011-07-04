@@ -85,7 +85,7 @@ POR_:
 ;;
 STANDBY_:
 	BANKSEL	KEYHL;
-	MOVF	MAQUINA_EST; Comprobamos si estamos aquí por primera vez
+	MOVF	MAQUINA_EST,W; Comprobamos si estamos aquí por primera vez
 	XORLW	STANDBY;
 	BTFSS	STATUS,Z; Si estamos por primera vez
 		CLRF	EST_CTL;
@@ -230,7 +230,7 @@ STANDBY_:
 				
 UNLOCK_:
 	BANKSEL	MAQUINA_EST;
-	MOVF	MAQUINA_EST;
+	MOVF	MAQUINA_EST,W;
 	XORLW	UNLOCK;
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
@@ -314,8 +314,8 @@ UNLOCK_:
 			RETURN;
 MENU12_1_:
 	BANKSEL	MAQUINA_EST;
-	MOVF	MAQUINA_EST;
-	XORLW	MENU12_1_;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MENU12_1;
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
 	MOVLW	MENU12_1;
@@ -374,10 +374,10 @@ MENU12_1_:
 ;;
 ESCRIBIR_SMS_:
 	BANKSEL	MAQUINA_EST;
-	MOVF	MAQUINA_EST;
+	MOVF	MAQUINA_EST,W;
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
-		CLRF	PARSER_LTR_INFO;
+		CALL	INIT_ESCRIBIR_SMS;
 	MOVLW	MENU12_1;
 	MOVWF	ESCRIBIR_SMS;
 	CALL	ESCRIBIR_SMS_PARSER;
@@ -385,6 +385,18 @@ ESCRIBIR_SMS_:
 	
 	RETURN;
 	
+	;; 
+	; se encarga de inicializar a 0 siempre que se entre en el estado
+	;;
+	INIT_ESCRIBIR_SMS:
+		CLRF	PARSER_LTR;
+		CLRF	PARSER_LTR_INFO;
+		CLRF	READ00;
+		CLRF	WRITE00;
+		CLRF	LCD_LTR_CONT;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		RETURN;
 	;*********** ESCRIBIR_SMS_PARSER ***********;
 	;;
 	; Parser que se encarga de tener a punto un diagrama de estados 
@@ -418,15 +430,15 @@ ESCRIBIR_SMS_:
 					GOTO	PARSER_CTLOOP_CHNG;
 				MOVWF	PARSER_TEMP; 
 				BCF	STATUS,C;
-				MOVLW	h'10';
-				MOVWF	PARSER_CON,F;
+				MOVLW	H'10';
+				MOVWF	PARSER_CONT;
 				 
 				PARSER_CTLOOPL:
-				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
 				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
-					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
-				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
-				BTFSC	PARSER_CON,3;
+					INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
+				INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
+				BTFSC	PARSER_CONT,3;
 					GOTO	PARSER_CTLOOP_CHNG;
 				GOTO	PARSER_CTLOOPL;
 				
@@ -435,16 +447,15 @@ ESCRIBIR_SMS_:
 				BTFSC	STATUS,Z;
 					GOTO	PARSER_CTLOOP_CHNG;
 				MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
-				CLRF	PARSER_CON; reseteamos el contador de desplazamientos realizados
-				COMF	PARSER_CON,F;
-				BCF	PARSER_CON,7;
+				MOVLW	B'10111111'; reseteamos el contador de desplazamientos realizados
+				MOVWF	PARSER_CONT;
 				
 				PARSER_CTLOOPH:
-				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
 				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
-					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
-				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
-				BTFSC	PARSER_CON,3;
+					INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
+				INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
+				BTFSC	PARSER_CONT,3;
 					GOTO	PARSER_CTCOUNTED;
 				GOTO	PARSER_CTLOOPH;
 				
@@ -464,28 +475,28 @@ ESCRIBIR_SMS_:
 						
 				
 				PARSER_CTCOUNTED:
-				DECFSZ	PARSER_CTL; ¿Habrá solo pulsada una tecla?
+				DECFSZ	PARSER_CTL,F; ¿Habrá solo pulsada una tecla?
 					RETURN; por que si no, no nos vale.
-				CLRF	PARSER_CON; Ahora esta variable guardara lo que mas tarde sera para PARSER_LTR
-				MOVF	KEYHU;
+				CLRF	PARSER_CONT; Ahora esta variable guardara lo que mas tarde sera para PARSER_LTR
+				MOVF	KEYHU,W;
 				BTFSC	STATUS,Z;
-					BSF	PARSER_CON,3;
-				BTFSS	PARSER_CON,3
-					MOVF	KEYHL;
+					BSF	PARSER_CONT,3;
+				BTFSS	PARSER_CONT,3
+					MOVF	KEYHL,W;
 				MOVWF	PARSER_TEMP
 				
 				PARSER_CTWHICHIS:
-				RRF	PARSER_TEMP; Rotamos uno hacia la derecha
+				RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
 				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
-					INCF	PARSER_CTL; si es 1, incrementamos el contador de teclas
+					INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
 				BTFSC	PARSER_CTL,0;
 					GOTO	$+3;
-				INCF	PARSER_CON; Incrementamos el contador de desplazamientos
+				INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
 				GOTO	PARSER_CTWHICHIS;
 				
 				MOVF	PARSER_LTR,W;
 				ANDLW	H'0F';
-				XORWF	PARSER_CON,W;
+				XORWF	PARSER_CONT,W;
 				BTFSS	STATUS,Z;
 					GOTO	PARSER_CHNG_CHAR;
 	 			BTFSC	STATUS,Z;
@@ -517,10 +528,11 @@ ESCRIBIR_SMS_:
 				; - Escribir el carácter que toque a la EEPROM
 				; - Aunque una pulsación sea igual que la anterior, si llega a la función significa que NO es la misma
 				; @param PARSER_LTR - Aqui esta almacenada la letra anterior, que es la que tenemos que escribir y sustituir
+				; @param PARSER_CON - Aqui está almacenada la nueva letra.
 				;;
 				PARSER_CHNG_CHAR:
 					BTFSS	PARSER_LTR_INFO,PLI_INUSE;
-						GOTO	PARSER_NOTINUSE;
+						RETURN;
 					PAGESELW	PARSER_CHNG_CHAR;
 					MOVF	PARSER_LTR,W;
 					ANDLW	H'0F';
@@ -544,54 +556,358 @@ ESCRIBIR_SMS_:
 					
 					
 					PARSER_L_ESTR:
-						MOVLW	C'*';
+						MOVLW	"*";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_0:
-						MOVLW	C'0';
+						MOVLW	"0";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_#:
-						MOVLW	C'#';
+						MOVLW	"#";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_ROJO:
 						GOTO	MENU12_1_; Ya se que estoy en un nivel inferior, pero no hay otra;
 					
 					
 					PARSER_L_7:
-						MOVLW	C'7';
+						MOVLW	"7";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_8:
-						MOVLW	C'8';
+						MOVLW	"8";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_9:
-						MOVLW	C'9';
+						MOVLW	"9";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_DOWN:
-						GOTO	PARSER_CHNG_CHNG;
+						GOTO	PARSER_CHNG_NEW;
 					
 					
 					PARSER_L_4:
-						MOVLW	C'4';
+						MOVLW	"4";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_5:	
-						MOVLW	C'5';
+						MOVLW	"5";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_6:
-						MOVLW	C'6';
+						MOVLW	"6";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_UP:
-						GOTO	PARSER_CHNG_CHNG;
+						GOTO	PARSER_CHNG_NEW;
 						
 					PARSER_L_1:	
-						MOVLW	C'1';
+						MOVLW	"1";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_2:	
-						MOVLW	C'2';
+						MOVLW	"2";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_3:	
-						MOVLW	C'3';
+						MOVLW	"3";
 						GOTO	PARSER_CHNG_SAVE;
 					PARSER_L_VERD:
+						MOVLW	H'00';
+						GOTO	PARSER_CHNG_SAVE
 						
-						
+					;;
+					; Aqui es donde propiamente, guardo el caracter en la pantalla, y lo
+					; escribo en la EEPROM
+					;;
 
 					PARSER_CHNG_SAVE:
+						MOVWF	PARSER_TEMP;
+						CALL	LCD_LTRW;
+						MOVF	PARSER_TEMP,W;
+						BCF	EE_CTL,ORI_EXT;
+						CALL	EEPROM_WRITE;
+						; Hasta aqui hemos guardado y escrito en la pantalla y eeprom
+						; ahora falta cambiar el caracter que hay por el siguiente
+					PARSER_CHNG_NEW:
+						MOVF	PARSER_TEMP,F
+						BTFSC	STATUS,Z;
+							GOTO	MANDAR_SMS_
+						MOVF	PARSER_TEMP,W;
+						ANDLW	H'0F';
+						MOVWF	PARSER_LTR;
+						RETURN;
+						
+			PARSER_ST:
+				SLEEP;
+				BANKSEL	PARSER_TEMP;
+				BSF	PARSER_LTR_INFO, PLI_INUSE;
+				RETURN;
+					
+MANDAR_SMS_:
+	BANKSEL	MAQUINA_EST;
+	MOVF	MAQUINA_EST,W;
+	XORLW	MANDAR_SMS;
+	BTFSS	STATUS,Z;
+		CALL	INIT_ESCRIBIR_SMS; Total vamos a utilizar las mismas variables
+	CALL	MANDAR_SMS_PARSER;
+	RETURN;
+	
+	MANDAR_SMS_PARSER:
+		MOVF	KEYHL,W;
+		IORWF	KEYHU,W;
+		BTFSS	STATUS,Z;
+			GOTO	M_PARSER_CT; Si hay una tecla pulsada
+		BTFSC	STATUS,Z;
+			GOTO	PARSER_ST; Si no la hay (Es la misma rutina)
+	
+		M_PARSER_CT:
+			CLRF	PARSER_CTL;
+			MOVF	KEYHL,W;
+			BTFSC	STATUS,Z;
+				GOTO	M_PARSER_CTLOOP_CHNG;
+			MOVWF	PARSER_TEMP; 
+			BCF	STATUS,C;
+			MOVLW	H'10';
+			MOVWF	PARSER_CONT;
+			 
+			M_PARSER_CTLOOPL:
+			RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
+			BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+				INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
+			INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
+			BTFSC	PARSER_CONT,3;
+				GOTO	M_PARSER_CTLOOP_CHNG;
+			GOTO	M_PARSER_CTLOOPL;
+			
+			M_PARSER_CTLOOP_CHNG:
+			MOVF	KEYHU,W; Ahora ponemos el registro de abajo
+			BTFSC	STATUS,Z;
+				GOTO	M_PARSER_CTLOOP_CHNG;
+			MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
+			MOVLW	B'10111111'; reseteamos el contador de desplazamientos realizados
+			MOVWF	PARSER_CONT;
+			
+			M_PARSER_CTLOOPH:
+			RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
+			BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+				INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
+			INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
+			BTFSC	PARSER_CONT,3;
+				GOTO	M_PARSER_CTCOUNTED;
+			GOTO	M_PARSER_CTLOOPH;
+			
+			; pasos seguidos, con un registro de ejemplo
+			;PASO	BYTE		C	PARSER_CTL	PARSER_CON
+			;0º: 	00101011	0	0		F - 1111
+			;1º:	00010101	1	1		0 - 0000
+			;2º:	10001010	1	2		1 - 0001
+			;3º:	11000101	0	2		2 - 0010
+			;4º:	01100010	1	3		3 - 0011
+			;5º:	10110001	0	3		4 - 0100
+			;6º:	01011000	1	4		5 - 0101
+			;7º:	10101100	0	4		6 - 0110
+			;8º:	01010110	0	4		7 - 0111
+			;9º:	00101011	0	4		8 - 1000
+			
+					
+			
+			M_PARSER_CTCOUNTED:
+			DECFSZ	PARSER_CTL,F; ¿Habrá solo pulsada una tecla?
+				RETURN; por que si no, no nos vale.
+			CLRF	PARSER_CONT; Ahora esta variable guardara lo que mas tarde sera para PARSER_LTR
+			MOVF	KEYHU,W;
+			BTFSC	STATUS,Z;
+				BSF	PARSER_CONT,3;
+			BTFSS	PARSER_CONT,3
+				MOVF	KEYHL,W;
+			MOVWF	PARSER_TEMP
+			
+			M_PARSER_CTWHICHIS:
+			RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
+			BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
+				INCF	PARSER_CTL,F; si es 1, incrementamos el contador de teclas
+			BTFSC	PARSER_CTL,0;
+				GOTO	$+3;
+			INCF	PARSER_CONT,F; Incrementamos el contador de desplazamientos
+			GOTO	M_PARSER_CTWHICHIS;
+			
+			MOVF	PARSER_LTR,W;
+			ANDLW	H'0F';
+			XORWF	PARSER_CONT,W;
+			BTFSS	STATUS,Z;
+				GOTO	M_PARSER_CHNG_CHAR;
+ 			BTFSC	STATUS,Z;
+				GOTO	M_PARSER_SAME_CHAR;
+				
+			M_PARSER_SAME_CHAR:
+				BTFSC	PARSER_LTR_INFO,PLI_INUSE;
+					RETURN;
+				BTFSC	PARSER_LTR_INFO,PLI_WASPRESSED; Si ya estaba pulsado (ha contado como pulsado, se sale)
+					RETURN;
+				GOTO	M_PARSER_CHNG_CHAR;
+				
+				
+				
+			M_PARSER_CHNG_CHAR:
+				BTFSS	PARSER_LTR_INFO,PLI_INUSE;
+					RETURN;
+				PAGESELW	M_PARSER_CHNG_CHAR;
+				MOVF	PARSER_LTR,W;
+				ANDLW	H'0F';
+				ADDWF	PCL,F;
+				GOTO	M_PARSER_L_ESTR;
+				GOTO	M_PARSER_L_0;
+				GOTO	M_PARSER_L_#;
+				GOTO	M_PARSER_L_ROJO;
+				GOTO	M_PARSER_L_7;
+				GOTO	M_PARSER_L_8;
+				GOTO	M_PARSER_L_9;
+				GOTO	M_PARSER_L_DOWN;
+				GOTO	M_PARSER_L_4;
+				GOTO	M_PARSER_L_5;
+				GOTO	M_PARSER_L_6;
+				GOTO	M_PARSER_L_UP;
+				GOTO	M_PARSER_L_1;
+				GOTO	M_PARSER_L_2;
+				GOTO	M_PARSER_L_3;
+				GOTO	M_PARSER_L_VERD;
+				
+				
+				M_PARSER_L_ESTR:
+					MOVLW	"*";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_0:
+					MOVLW	"0";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_#:
+					MOVLW	"#";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_ROJO:
+					GOTO	ESCRIBIR_SMS_; Ya se que estoy en un nivel inferior, pero no hay otra;
+				
+				
+				M_PARSER_L_7:
+					MOVLW	"7";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_8:
+					MOVLW	"8";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_9:
+					MOVLW	"9";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_DOWN:
+					GOTO	M_PARSER_CHNG_NEW;
+				
+				
+				M_PARSER_L_4:
+					MOVLW	"4";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_5:	
+					MOVLW	"5";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_6:
+					MOVLW	"6";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_UP:
+					GOTO	M_PARSER_CHNG_NEW;
+					
+				M_PARSER_L_1:	
+					MOVLW	"1";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_2:	
+					MOVLW	"2";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_3:	
+					MOVLW	"3";
+					GOTO	M_PARSER_CHNG_SAVE;
+				M_PARSER_L_VERD:
+					MOVLW	H'22';
+					GOTO	M_PARSER_CHNG_SAVE
+					
+				;;
+				; Aqui es donde propiamente, guardo el caracter en la pantalla, y lo
+				; escribo en la EEPROM
+				;;
+
+				M_PARSER_CHNG_SAVE:
+					MOVWF	PARSER_TEMP;
+					CALL	LCD_LTRW;
+					
+					;Guardamos en la RAM posiciones 110-11F
+					BSF	STATUS,IRP;
+					MOVLW	LCD_LTR_CONT;
+					ADDLW	H'F';
+					MOVWF	FSR;
+					MOVF	PARSER_TEMP,W;
+					MOVWF	INDF;
+					
+					; Hasta aqui hemos guardado y escrito en la pantalla y eeprom
+					; ahora falta cambiar el caracter que hay por el siguiente
+				M_PARSER_CHNG_NEW:
+					MOVF	PARSER_TEMP,W;
+					XORLW	H'22';
+					BTFSC	STATUS,Z;
+						GOTO	ENVIAR_SMS_
+					MOVF	PARSER_TEMP,W;
+					ANDLW	H'0F';
+					MOVWF	PARSER_LTR;
+					RETURN;
+
+ENVIAR_SMS_:
+	BANKSEL	KEYHL;
+	MOVF	MAQUINA_EST,W; Comprobamos si estamos aquí por primera vez
+	XORLW	ENVIAR_SMS;
+	BTFSS	STATUS,Z; Si estamos por primera vez
+		CLRF	EST_CTL;
+	MOVLW	ENVIAR_SMS;
+	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
+	BTFSS	EST_CTL,0;
+		CALL	ENVIAR;
+	BTFSS	EST_CTL,1;
+		CALL	POR_CTL_PER_ANALIZE;
+	BTFSS	EST_CTL,2;
+		GOTO	MENU12_1_;
+	SLEEP;
+	RETURN
+	;******	PUT_STANDBY ******;
+	;;
+	; Pone STANDBY en la pantalla, cambiando también el estado de la variable
+	; @param LCD_CTL - Variable para controlar lo que tiene la pantalla en ese momento
+	; @return LCD_CTL - Devuelve el estado que hay despues, lo cambia ahí mismo
+	;;
+	ENVIAR:
+		BANKSEL	LCD_CTL;
+		MOVF	LCD_CTL,W;
+		XORLW	LTR_ENVIAR_;
+		BTFSC	STATUS,Z;
+			RETURN;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set|h'5'; Mover el cursor a la posicion 6
+		CALL	LCDIWR;
+		CLRF	LCD_CONT;
+		PUT_ENVIAR_LOOP:
+			PAGESELW	LTR_ENVIAR;
+			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
+			CALL	LTR_ENVIAR&7FF;
+			ANDLW	H'FF';
+			PAGESEL	PUT_ENVIAR_LOOP_END;
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+				GOTO PUT_ENVIAR_LOOP_END;si hemos llegado, SALIMOS
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
+			GOTO	PUT_ENVIAR_LOOP;vuelvo a contar
+		PUT_ENVIAR_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_ENVIAR_;Cambiamos lo que hay en pantalla a "STANDBY"
+		MOVWF	LCD_CTL;
+		; Hasta aqui, hemos puesto "enviando" en la pantalla 
+		
+		MOVLW	B'00000111';
+		BANKSEL	SER_CTL;
+		MOVWF	SER_CTL;
+		MOVLW	MODEM_CMD_SEND_SMS&H'FF';
+		MOVWF	SND_CONT;
+
+		CALL	SEND_AT;
+		BANKSEL	EST_CTL;
+		BSF	EST_CTL,0;
+		MOVLW	H'3F';
+		MOVWF	TMP2;
+		EPOR_WAIT:
+			NOP			; 
+			DECFSZ	TMP2,F		; Se decrementa contador básico
+			GOTO	EPOR_WAIT	; hasta llegar a cero
+		RETURN;
+	
