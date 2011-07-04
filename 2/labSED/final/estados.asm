@@ -16,6 +16,10 @@ POR_:
 		GOTO	POR_CTL_PER_ANALIZE;
 	BTFSS	EST_CTL,2;
 		GOTO	STANDBY_;
+	MOVF	KEYHU,W;
+	IORWF	KEYHL,W;
+	BTFSS	STATUS,Z;
+		BCF	EST_CTL,0;
 	RETURN;
 	
 		;******** POR_CTL_PER_CONFIG *******;
@@ -38,7 +42,7 @@ POR_:
 				NOP			; 
 				DECFSZ	TMP2,F		; Se decrementa contador básico
 				GOTO	POR_WAIT	; hasta llegar a cero
-
+			BCF	EST_CTL,1;
 			RETURN;
 			
 		;******** POR_CTL_PER_ANALIZE ********;

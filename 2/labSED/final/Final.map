@@ -1,12 +1,12 @@
 MPLINK 4.39, Linker
-Linker Map File - Created Mon Jul 04 14:08:31 2011
+Linker Map File - Created Mon Jul 04 21:49:20 2011
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
                    .org_0       code   0x000000    program   0x000000
                    .org_2       code   0x000003    program   0x000002
-                   .org_3       code   0x000004    program   0x0009a4
+                   .org_3       code   0x000004    program   0x0009ae
                    .org_1       code   0x000800    program   0x0000d8
 
 
@@ -14,9 +14,9 @@ Linker Map File - Created Mon Jul 04 14:08:31 2011
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000003    0x0004d5      
+                            0x000003    0x0004da      
                             0x000800    0x00086b      
-            1343 out of 8455 program addresses used, program memory utilization is 15%
+            1348 out of 8455 program addresses used, program memory utilization is 15%
 
 
 
@@ -28,121 +28,120 @@ Linker Map File - Created Mon Jul 04 14:08:31 2011
              CALLFROMTMP2   0x00008c    program     static C:\Universidad\2\labSED\final\pad.asm
                 COMPCOLUM   0x000077    program     static C:\Universidad\2\labSED\final\pad.asm
                   COMPPAD   0x0000b1    program     static C:\Universidad\2\labSED\final\pad.asm
-            COMPROBAR_SMS   0x00043f    program     static C:\Universidad\2\labSED\final\estados.asm
-                   CURADD   0x0004a6    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   CURADD   0x0004ab    program     static C:\Universidad\2\labSED\final\lcd.asm
               EEPROM_INIT   0x00016b    program     static C:\Universidad\2\labSED\final\eeprom.asm
               EEPROM_READ   0x00018d    program     static C:\Universidad\2\labSED\final\eeprom.asm
              EEPROM_WRITE   0x000174    program     static C:\Universidad\2\labSED\final\eeprom.asm
                       EN1   0x0000ad    program     static C:\Universidad\2\labSED\final\pad.asm
-                   ENVIAR   0x000414    program     static C:\Universidad\2\labSED\final\estados.asm
-              ENVIAR_SMS_   0x000404    program     static C:\Universidad\2\labSED\final\estados.asm
-                EPOR_WAIT   0x00043b    program     static C:\Universidad\2\labSED\final\estados.asm
-            ESCRIBIR_SMS_   0x0002e5    program     static C:\Universidad\2\labSED\final\estados.asm
-      ESCRIBIR_SMS_PARSER   0x0002f7    program     static C:\Universidad\2\labSED\final\estados.asm
-                     GOIN   0x00029f    program     static C:\Universidad\2\labSED\final\estados.asm
-               GONEXTLINE   0x0002e2    program     static C:\Universidad\2\labSED\final\estados.asm
+                   ENVIAR   0x000419    program     static C:\Universidad\2\labSED\final\estados.asm
+              ENVIAR_SMS_   0x000409    program     static C:\Universidad\2\labSED\final\estados.asm
+                EPOR_WAIT   0x000440    program     static C:\Universidad\2\labSED\final\estados.asm
+            ESCRIBIR_SMS_   0x0002ea    program     static C:\Universidad\2\labSED\final\estados.asm
+      ESCRIBIR_SMS_PARSER   0x0002fc    program     static C:\Universidad\2\labSED\final\estados.asm
+                     GOIN   0x0002a4    program     static C:\Universidad\2\labSED\final\estados.asm
+               GONEXTLINE   0x0002e7    program     static C:\Universidad\2\labSED\final\estados.asm
                INICIATMP2   0x0000ba    program     static C:\Universidad\2\labSED\final\pad.asm
-        INIT_ESCRIBIR_SMS   0x0002ef    program     static C:\Universidad\2\labSED\final\estados.asm
+        INIT_ESCRIBIR_SMS   0x0002f4    program     static C:\Universidad\2\labSED\final\estados.asm
                KEYPADREGW   0x000098    program     static C:\Universidad\2\labSED\final\pad.asm
-                   LCDBS1   0x000497    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS2   0x0004a4    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBSY   0x000492    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDIN   0x0004b6    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDDOUT   0x0004bc    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDWR   0x000472    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDINIT   0x00043f    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDIWR   0x000474    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW1   0x000489    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW2   0x00048b    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDWAIT   0x000488    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCDWRAUX   0x000476    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCD_LTRW   0x0004c3    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS1   0x00049c    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS2   0x0004a9    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBSY   0x000497    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDIN   0x0004bb    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDDOUT   0x0004c1    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDWR   0x000477    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDINIT   0x000444    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDIWR   0x000479    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW1   0x00048e    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW2   0x000490    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDWAIT   0x00048d    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCDWRAUX   0x00047b    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCD_LTRW   0x0004c8    program     static C:\Universidad\2\labSED\final\lcd.asm
                   LEDINIT   0x0001e4    program     static C:\Universidad\2\labSED\final\Final.asm
               LTR_COMPANY   0x000823    program     static C:\Universidad\2\labSED\final\estados.inc
                LTR_ENVIAR   0x00084c    program     static C:\Universidad\2\labSED\final\estados.inc
              LTR_MENU12_1   0x00082e    program     static C:\Universidad\2\labSED\final\estados.inc
               LTR_STANDBY   0x00081a    program     static C:\Universidad\2\labSED\final\estados.inc
-              MANDAR_SMS_   0x00037a    program     static C:\Universidad\2\labSED\final\estados.asm
-        MANDAR_SMS_PARSER   0x000382    program     static C:\Universidad\2\labSED\final\estados.asm
-                MENU12_1_   0x0002b3    program     static C:\Universidad\2\labSED\final\estados.asm
+              MANDAR_SMS_   0x00037f    program     static C:\Universidad\2\labSED\final\estados.asm
+        MANDAR_SMS_PARSER   0x000387    program     static C:\Universidad\2\labSED\final\estados.asm
+                MENU12_1_   0x0002b8    program     static C:\Universidad\2\labSED\final\estados.asm
     MODEM_CMD_NUM_NO_ECHO   0x000857    program     static C:\Universidad\2\labSED\final\serial.inc
           MODEM_CMD_RESET   0x00085f    program     static C:\Universidad\2\labSED\final\serial.inc
        MODEM_CMD_SEND_SMS   0x000864    program     static C:\Universidad\2\labSED\final\serial.inc
               MODEM_TABLE   0x000856    program     static C:\Universidad\2\labSED\final\serial.inc
-       M_PARSER_CHNG_CHAR   0x0003c0    program     static C:\Universidad\2\labSED\final\estados.asm
-        M_PARSER_CHNG_NEW   0x0003fc    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CHNG_SAVE   0x0003f4    program     static C:\Universidad\2\labSED\final\estados.asm
-              M_PARSER_CT   0x000388    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CTCOUNTED   0x0003a4    program     static C:\Universidad\2\labSED\final\estados.asm
-         M_PARSER_CTLOOPH   0x00039d    program     static C:\Universidad\2\labSED\final\estados.asm
-         M_PARSER_CTLOOPL   0x000390    program     static C:\Universidad\2\labSED\final\estados.asm
-     M_PARSER_CTLOOP_CHNG   0x000397    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CTWHICHIS   0x0003ad    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_#   0x0003db    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_0   0x0003d9    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_1   0x0003ec    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_2   0x0003ee    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_3   0x0003f0    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_4   0x0003e5    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_5   0x0003e7    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_6   0x0003e9    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_7   0x0003de    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_8   0x0003e0    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_9   0x0003e2    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_DOWN   0x0003e4    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_ESTR   0x0003d7    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_ROJO   0x0003dd    program     static C:\Universidad\2\labSED\final\estados.asm
-            M_PARSER_L_UP   0x0003eb    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_VERD   0x0003f2    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_SAME_CHAR   0x0003bb    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CHNG_CHAR   0x0003c5    program     static C:\Universidad\2\labSED\final\estados.asm
+        M_PARSER_CHNG_NEW   0x000401    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CHNG_SAVE   0x0003f9    program     static C:\Universidad\2\labSED\final\estados.asm
+              M_PARSER_CT   0x00038d    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CTCOUNTED   0x0003a9    program     static C:\Universidad\2\labSED\final\estados.asm
+         M_PARSER_CTLOOPH   0x0003a2    program     static C:\Universidad\2\labSED\final\estados.asm
+         M_PARSER_CTLOOPL   0x000395    program     static C:\Universidad\2\labSED\final\estados.asm
+     M_PARSER_CTLOOP_CHNG   0x00039c    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CTWHICHIS   0x0003b2    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_#   0x0003e0    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_0   0x0003de    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_1   0x0003f1    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_2   0x0003f3    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_3   0x0003f5    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_4   0x0003ea    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_5   0x0003ec    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_6   0x0003ee    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_7   0x0003e3    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_8   0x0003e5    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_9   0x0003e7    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_DOWN   0x0003e9    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_ESTR   0x0003dc    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_ROJO   0x0003e2    program     static C:\Universidad\2\labSED\final\estados.asm
+            M_PARSER_L_UP   0x0003f0    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_VERD   0x0003f7    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_SAME_CHAR   0x0003c0    program     static C:\Universidad\2\labSED\final\estados.asm
                  NUMAKEYR   0x000811    program     static C:\Universidad\2\labSED\final\pad.inc
                   PADINIT   0x0000d1    program     static C:\Universidad\2\labSED\final\pad.asm
                  PADINTER   0x00004f    program     static C:\Universidad\2\labSED\final\pad.asm
-         PARSER_CHNG_CHAR   0x000335    program     static C:\Universidad\2\labSED\final\estados.asm
-          PARSER_CHNG_NEW   0x00036e    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CHNG_SAVE   0x000369    program     static C:\Universidad\2\labSED\final\estados.asm
-                PARSER_CT   0x0002fd    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CTCOUNTED   0x000319    program     static C:\Universidad\2\labSED\final\estados.asm
-           PARSER_CTLOOPH   0x000312    program     static C:\Universidad\2\labSED\final\estados.asm
-           PARSER_CTLOOPL   0x000305    program     static C:\Universidad\2\labSED\final\estados.asm
-       PARSER_CTLOOP_CHNG   0x00030c    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CTWHICHIS   0x000322    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_#   0x000350    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_0   0x00034e    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_1   0x000361    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_2   0x000363    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_3   0x000365    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_4   0x00035a    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_5   0x00035c    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_6   0x00035e    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_7   0x000353    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_8   0x000355    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_9   0x000357    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_DOWN   0x000359    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_ESTR   0x00034c    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_ROJO   0x000352    program     static C:\Universidad\2\labSED\final\estados.asm
-              PARSER_L_UP   0x000360    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_VERD   0x000367    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_SAME_CHAR   0x000330    program     static C:\Universidad\2\labSED\final\estados.asm
-                PARSER_ST   0x000375    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CHNG_CHAR   0x00033a    program     static C:\Universidad\2\labSED\final\estados.asm
+          PARSER_CHNG_NEW   0x000373    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CHNG_SAVE   0x00036e    program     static C:\Universidad\2\labSED\final\estados.asm
+                PARSER_CT   0x000302    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CTCOUNTED   0x00031e    program     static C:\Universidad\2\labSED\final\estados.asm
+           PARSER_CTLOOPH   0x000317    program     static C:\Universidad\2\labSED\final\estados.asm
+           PARSER_CTLOOPL   0x00030a    program     static C:\Universidad\2\labSED\final\estados.asm
+       PARSER_CTLOOP_CHNG   0x000311    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CTWHICHIS   0x000327    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_#   0x000355    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_0   0x000353    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_1   0x000366    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_2   0x000368    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_3   0x00036a    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_4   0x00035f    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_5   0x000361    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_6   0x000363    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_7   0x000358    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_8   0x00035a    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_9   0x00035c    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_DOWN   0x00035e    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_ESTR   0x000351    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_ROJO   0x000357    program     static C:\Universidad\2\labSED\final\estados.asm
+              PARSER_L_UP   0x000365    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_VERD   0x00036c    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_SAME_CHAR   0x000335    program     static C:\Universidad\2\labSED\final\estados.asm
+                PARSER_ST   0x00037a    program     static C:\Universidad\2\labSED\final\estados.asm
                      POR_   0x0001ee    program     static C:\Universidad\2\labSED\final\estados.asm
-      POR_CTL_PER_ANALIZE   0x000208    program     static C:\Universidad\2\labSED\final\estados.asm
-       POR_CTL_PER_CONFIG   0x0001f9    program     static C:\Universidad\2\labSED\final\estados.asm
-                 POR_WAIT   0x000204    program     static C:\Universidad\2\labSED\final\estados.asm
+      POR_CTL_PER_ANALIZE   0x00020d    program     static C:\Universidad\2\labSED\final\estados.asm
+       POR_CTL_PER_CONFIG   0x0001fd    program     static C:\Universidad\2\labSED\final\estados.asm
+                 POR_WAIT   0x000208    program     static C:\Universidad\2\labSED\final\estados.asm
                  POSACOMP   0x000800    program     static C:\Universidad\2\labSED\final\pad.inc
                      PROG   0x00019d    program     static C:\Universidad\2\labSED\final\Final.asm
-              PUT_COMPANY   0x000283    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_COMPANY_LOOP   0x00028e    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_COMPANY_LOOP_END   0x00029a    program     static C:\Universidad\2\labSED\final\estados.asm
-          PUT_ENVIAR_LOOP   0x00041f    program     static C:\Universidad\2\labSED\final\estados.asm
-      PUT_ENVIAR_LOOP_END   0x00042b    program     static C:\Universidad\2\labSED\final\estados.asm
-             PUT_MENU12_1   0x0002c0    program     static C:\Universidad\2\labSED\final\estados.asm
-        PUT_MENU12_1_LOOP   0x0002cb    program     static C:\Universidad\2\labSED\final\estados.asm
-    PUT_MENU12_1_LOOP_END   0x0002dd    program     static C:\Universidad\2\labSED\final\estados.asm
-  PUT_MENU12_1_LOOP_SALTO   0x0002da    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_STANDBY   0x000229    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_STANDBY_LOOP   0x000234    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_STANDBY_LOOP_END   0x000240    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_COMPANY   0x000288    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_COMPANY_LOOP   0x000293    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_COMPANY_LOOP_END   0x00029f    program     static C:\Universidad\2\labSED\final\estados.asm
+          PUT_ENVIAR_LOOP   0x000424    program     static C:\Universidad\2\labSED\final\estados.asm
+      PUT_ENVIAR_LOOP_END   0x000430    program     static C:\Universidad\2\labSED\final\estados.asm
+             PUT_MENU12_1   0x0002c5    program     static C:\Universidad\2\labSED\final\estados.asm
+        PUT_MENU12_1_LOOP   0x0002d0    program     static C:\Universidad\2\labSED\final\estados.asm
+    PUT_MENU12_1_LOOP_END   0x0002e2    program     static C:\Universidad\2\labSED\final\estados.asm
+  PUT_MENU12_1_LOOP_SALTO   0x0002df    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_STANDBY   0x00022e    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_STANDBY_LOOP   0x000239    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_STANDBY_LOOP_END   0x000245    program     static C:\Universidad\2\labSED\final\estados.asm
              RECEIVE_NEXT   0x000162    program     static C:\Universidad\2\labSED\final\serial.asm
                      RETI   0x000012    program     static C:\Universidad\2\labSED\final\Final.asm
                       RSI   0x000004    program     static C:\Universidad\2\labSED\final\Final.asm
@@ -157,18 +156,18 @@ Linker Map File - Created Mon Jul 04 14:08:31 2011
               SERIAL_INIT   0x0000ee    program     static C:\Universidad\2\labSED\final\serial.asm
            SERIAL_RECEIVE   0x000114    program     static C:\Universidad\2\labSED\final\serial.asm
               SERIAL_SEND   0x000110    program     static C:\Universidad\2\labSED\final\serial.asm
-                 STANDBY_   0x00021b    program     static C:\Universidad\2\labSED\final\estados.asm
-      STANDBY_COMP_DESBLQ   0x000245    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST0   0x000256    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST1   0x00025e    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST2   0x000266    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST3   0x00026e    program     static C:\Universidad\2\labSED\final\estados.asm
+                 STANDBY_   0x000220    program     static C:\Universidad\2\labSED\final\estados.asm
+      STANDBY_COMP_DESBLQ   0x00024a    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST0   0x00025b    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST1   0x000263    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST2   0x00026b    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST3   0x000273    program     static C:\Universidad\2\labSED\final\estados.asm
                     T2ICL   0x0000c5    program     static C:\Universidad\2\labSED\final\pad.asm
                 TMR2INTER   0x00002c    program     static C:\Universidad\2\labSED\final\pad.asm
-                  UNLOCK_   0x000276    program     static C:\Universidad\2\labSED\final\estados.asm
-    UNLOCK_COMP_GOIN_EST0   0x0002a3    program     static C:\Universidad\2\labSED\final\estados.asm
-    UNLOCK_COMP_GOIN_EST1   0x0002a9    program     static C:\Universidad\2\labSED\final\estados.asm
-                     WAIT   0x000488    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  UNLOCK_   0x00027b    program     static C:\Universidad\2\labSED\final\estados.asm
+    UNLOCK_COMP_GOIN_EST0   0x0002a8    program     static C:\Universidad\2\labSED\final\estados.asm
+    UNLOCK_COMP_GOIN_EST1   0x0002ae    program     static C:\Universidad\2\labSED\final\estados.asm
+                     WAIT   0x00048d    program     static C:\Universidad\2\labSED\final\lcd.asm
 
 
 
@@ -207,110 +206,109 @@ Linker Map File - Created Mon Jul 04 14:08:31 2011
               BUCLEOCIOSO   0x0001b1    program     static C:\Universidad\2\labSED\final\Final.asm
                   LEDINIT   0x0001e4    program     static C:\Universidad\2\labSED\final\Final.asm
                      POR_   0x0001ee    program     static C:\Universidad\2\labSED\final\estados.asm
-       POR_CTL_PER_CONFIG   0x0001f9    program     static C:\Universidad\2\labSED\final\estados.asm
-                 POR_WAIT   0x000204    program     static C:\Universidad\2\labSED\final\estados.asm
-      POR_CTL_PER_ANALIZE   0x000208    program     static C:\Universidad\2\labSED\final\estados.asm
-                 STANDBY_   0x00021b    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_STANDBY   0x000229    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_STANDBY_LOOP   0x000234    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_STANDBY_LOOP_END   0x000240    program     static C:\Universidad\2\labSED\final\estados.asm
-      STANDBY_COMP_DESBLQ   0x000245    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST0   0x000256    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST1   0x00025e    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST2   0x000266    program     static C:\Universidad\2\labSED\final\estados.asm
- STANDBY_COMP_DESBLQ_EST3   0x00026e    program     static C:\Universidad\2\labSED\final\estados.asm
-                  UNLOCK_   0x000276    program     static C:\Universidad\2\labSED\final\estados.asm
-              PUT_COMPANY   0x000283    program     static C:\Universidad\2\labSED\final\estados.asm
-         PUT_COMPANY_LOOP   0x00028e    program     static C:\Universidad\2\labSED\final\estados.asm
-     PUT_COMPANY_LOOP_END   0x00029a    program     static C:\Universidad\2\labSED\final\estados.asm
-                     GOIN   0x00029f    program     static C:\Universidad\2\labSED\final\estados.asm
-    UNLOCK_COMP_GOIN_EST0   0x0002a3    program     static C:\Universidad\2\labSED\final\estados.asm
-    UNLOCK_COMP_GOIN_EST1   0x0002a9    program     static C:\Universidad\2\labSED\final\estados.asm
-                MENU12_1_   0x0002b3    program     static C:\Universidad\2\labSED\final\estados.asm
-             PUT_MENU12_1   0x0002c0    program     static C:\Universidad\2\labSED\final\estados.asm
-        PUT_MENU12_1_LOOP   0x0002cb    program     static C:\Universidad\2\labSED\final\estados.asm
-  PUT_MENU12_1_LOOP_SALTO   0x0002da    program     static C:\Universidad\2\labSED\final\estados.asm
-    PUT_MENU12_1_LOOP_END   0x0002dd    program     static C:\Universidad\2\labSED\final\estados.asm
-               GONEXTLINE   0x0002e2    program     static C:\Universidad\2\labSED\final\estados.asm
-            ESCRIBIR_SMS_   0x0002e5    program     static C:\Universidad\2\labSED\final\estados.asm
-        INIT_ESCRIBIR_SMS   0x0002ef    program     static C:\Universidad\2\labSED\final\estados.asm
-      ESCRIBIR_SMS_PARSER   0x0002f7    program     static C:\Universidad\2\labSED\final\estados.asm
-                PARSER_CT   0x0002fd    program     static C:\Universidad\2\labSED\final\estados.asm
-           PARSER_CTLOOPL   0x000305    program     static C:\Universidad\2\labSED\final\estados.asm
-       PARSER_CTLOOP_CHNG   0x00030c    program     static C:\Universidad\2\labSED\final\estados.asm
-           PARSER_CTLOOPH   0x000312    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CTCOUNTED   0x000319    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CTWHICHIS   0x000322    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_SAME_CHAR   0x000330    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CHNG_CHAR   0x000335    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_ESTR   0x00034c    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_0   0x00034e    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_#   0x000350    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_ROJO   0x000352    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_7   0x000353    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_8   0x000355    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_9   0x000357    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_DOWN   0x000359    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_4   0x00035a    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_5   0x00035c    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_6   0x00035e    program     static C:\Universidad\2\labSED\final\estados.asm
-              PARSER_L_UP   0x000360    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_1   0x000361    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_2   0x000363    program     static C:\Universidad\2\labSED\final\estados.asm
-               PARSER_L_3   0x000365    program     static C:\Universidad\2\labSED\final\estados.asm
-            PARSER_L_VERD   0x000367    program     static C:\Universidad\2\labSED\final\estados.asm
-         PARSER_CHNG_SAVE   0x000369    program     static C:\Universidad\2\labSED\final\estados.asm
-          PARSER_CHNG_NEW   0x00036e    program     static C:\Universidad\2\labSED\final\estados.asm
-                PARSER_ST   0x000375    program     static C:\Universidad\2\labSED\final\estados.asm
-              MANDAR_SMS_   0x00037a    program     static C:\Universidad\2\labSED\final\estados.asm
-        MANDAR_SMS_PARSER   0x000382    program     static C:\Universidad\2\labSED\final\estados.asm
-              M_PARSER_CT   0x000388    program     static C:\Universidad\2\labSED\final\estados.asm
-         M_PARSER_CTLOOPL   0x000390    program     static C:\Universidad\2\labSED\final\estados.asm
-     M_PARSER_CTLOOP_CHNG   0x000397    program     static C:\Universidad\2\labSED\final\estados.asm
-         M_PARSER_CTLOOPH   0x00039d    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CTCOUNTED   0x0003a4    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CTWHICHIS   0x0003ad    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_SAME_CHAR   0x0003bb    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CHNG_CHAR   0x0003c0    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_ESTR   0x0003d7    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_0   0x0003d9    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_#   0x0003db    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_ROJO   0x0003dd    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_7   0x0003de    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_8   0x0003e0    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_9   0x0003e2    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_DOWN   0x0003e4    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_4   0x0003e5    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_5   0x0003e7    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_6   0x0003e9    program     static C:\Universidad\2\labSED\final\estados.asm
-            M_PARSER_L_UP   0x0003eb    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_1   0x0003ec    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_2   0x0003ee    program     static C:\Universidad\2\labSED\final\estados.asm
-             M_PARSER_L_3   0x0003f0    program     static C:\Universidad\2\labSED\final\estados.asm
-          M_PARSER_L_VERD   0x0003f2    program     static C:\Universidad\2\labSED\final\estados.asm
-       M_PARSER_CHNG_SAVE   0x0003f4    program     static C:\Universidad\2\labSED\final\estados.asm
-        M_PARSER_CHNG_NEW   0x0003fc    program     static C:\Universidad\2\labSED\final\estados.asm
-              ENVIAR_SMS_   0x000404    program     static C:\Universidad\2\labSED\final\estados.asm
-                   ENVIAR   0x000414    program     static C:\Universidad\2\labSED\final\estados.asm
-          PUT_ENVIAR_LOOP   0x00041f    program     static C:\Universidad\2\labSED\final\estados.asm
-      PUT_ENVIAR_LOOP_END   0x00042b    program     static C:\Universidad\2\labSED\final\estados.asm
-                EPOR_WAIT   0x00043b    program     static C:\Universidad\2\labSED\final\estados.asm
-                  LCDINIT   0x00043f    program     static C:\Universidad\2\labSED\final\lcd.asm
-            COMPROBAR_SMS   0x00043f    program     static C:\Universidad\2\labSED\final\estados.asm
-                   LCDDWR   0x000472    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDIWR   0x000474    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCDWRAUX   0x000476    program     static C:\Universidad\2\labSED\final\lcd.asm
-                     WAIT   0x000488    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDWAIT   0x000488    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW1   0x000489    program     static C:\Universidad\2\labSED\final\lcd.asm
-                    LCDW2   0x00048b    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBSY   0x000492    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS1   0x000497    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDBS2   0x0004a4    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   CURADD   0x0004a6    program     static C:\Universidad\2\labSED\final\lcd.asm
-                   LCDDIN   0x0004b6    program     static C:\Universidad\2\labSED\final\lcd.asm
-                  LCDDOUT   0x0004bc    program     static C:\Universidad\2\labSED\final\lcd.asm
-                 LCD_LTRW   0x0004c3    program     static C:\Universidad\2\labSED\final\lcd.asm
+       POR_CTL_PER_CONFIG   0x0001fd    program     static C:\Universidad\2\labSED\final\estados.asm
+                 POR_WAIT   0x000208    program     static C:\Universidad\2\labSED\final\estados.asm
+      POR_CTL_PER_ANALIZE   0x00020d    program     static C:\Universidad\2\labSED\final\estados.asm
+                 STANDBY_   0x000220    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_STANDBY   0x00022e    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_STANDBY_LOOP   0x000239    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_STANDBY_LOOP_END   0x000245    program     static C:\Universidad\2\labSED\final\estados.asm
+      STANDBY_COMP_DESBLQ   0x00024a    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST0   0x00025b    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST1   0x000263    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST2   0x00026b    program     static C:\Universidad\2\labSED\final\estados.asm
+ STANDBY_COMP_DESBLQ_EST3   0x000273    program     static C:\Universidad\2\labSED\final\estados.asm
+                  UNLOCK_   0x00027b    program     static C:\Universidad\2\labSED\final\estados.asm
+              PUT_COMPANY   0x000288    program     static C:\Universidad\2\labSED\final\estados.asm
+         PUT_COMPANY_LOOP   0x000293    program     static C:\Universidad\2\labSED\final\estados.asm
+     PUT_COMPANY_LOOP_END   0x00029f    program     static C:\Universidad\2\labSED\final\estados.asm
+                     GOIN   0x0002a4    program     static C:\Universidad\2\labSED\final\estados.asm
+    UNLOCK_COMP_GOIN_EST0   0x0002a8    program     static C:\Universidad\2\labSED\final\estados.asm
+    UNLOCK_COMP_GOIN_EST1   0x0002ae    program     static C:\Universidad\2\labSED\final\estados.asm
+                MENU12_1_   0x0002b8    program     static C:\Universidad\2\labSED\final\estados.asm
+             PUT_MENU12_1   0x0002c5    program     static C:\Universidad\2\labSED\final\estados.asm
+        PUT_MENU12_1_LOOP   0x0002d0    program     static C:\Universidad\2\labSED\final\estados.asm
+  PUT_MENU12_1_LOOP_SALTO   0x0002df    program     static C:\Universidad\2\labSED\final\estados.asm
+    PUT_MENU12_1_LOOP_END   0x0002e2    program     static C:\Universidad\2\labSED\final\estados.asm
+               GONEXTLINE   0x0002e7    program     static C:\Universidad\2\labSED\final\estados.asm
+            ESCRIBIR_SMS_   0x0002ea    program     static C:\Universidad\2\labSED\final\estados.asm
+        INIT_ESCRIBIR_SMS   0x0002f4    program     static C:\Universidad\2\labSED\final\estados.asm
+      ESCRIBIR_SMS_PARSER   0x0002fc    program     static C:\Universidad\2\labSED\final\estados.asm
+                PARSER_CT   0x000302    program     static C:\Universidad\2\labSED\final\estados.asm
+           PARSER_CTLOOPL   0x00030a    program     static C:\Universidad\2\labSED\final\estados.asm
+       PARSER_CTLOOP_CHNG   0x000311    program     static C:\Universidad\2\labSED\final\estados.asm
+           PARSER_CTLOOPH   0x000317    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CTCOUNTED   0x00031e    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CTWHICHIS   0x000327    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_SAME_CHAR   0x000335    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CHNG_CHAR   0x00033a    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_ESTR   0x000351    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_0   0x000353    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_#   0x000355    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_ROJO   0x000357    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_7   0x000358    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_8   0x00035a    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_9   0x00035c    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_DOWN   0x00035e    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_4   0x00035f    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_5   0x000361    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_6   0x000363    program     static C:\Universidad\2\labSED\final\estados.asm
+              PARSER_L_UP   0x000365    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_1   0x000366    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_2   0x000368    program     static C:\Universidad\2\labSED\final\estados.asm
+               PARSER_L_3   0x00036a    program     static C:\Universidad\2\labSED\final\estados.asm
+            PARSER_L_VERD   0x00036c    program     static C:\Universidad\2\labSED\final\estados.asm
+         PARSER_CHNG_SAVE   0x00036e    program     static C:\Universidad\2\labSED\final\estados.asm
+          PARSER_CHNG_NEW   0x000373    program     static C:\Universidad\2\labSED\final\estados.asm
+                PARSER_ST   0x00037a    program     static C:\Universidad\2\labSED\final\estados.asm
+              MANDAR_SMS_   0x00037f    program     static C:\Universidad\2\labSED\final\estados.asm
+        MANDAR_SMS_PARSER   0x000387    program     static C:\Universidad\2\labSED\final\estados.asm
+              M_PARSER_CT   0x00038d    program     static C:\Universidad\2\labSED\final\estados.asm
+         M_PARSER_CTLOOPL   0x000395    program     static C:\Universidad\2\labSED\final\estados.asm
+     M_PARSER_CTLOOP_CHNG   0x00039c    program     static C:\Universidad\2\labSED\final\estados.asm
+         M_PARSER_CTLOOPH   0x0003a2    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CTCOUNTED   0x0003a9    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CTWHICHIS   0x0003b2    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_SAME_CHAR   0x0003c0    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CHNG_CHAR   0x0003c5    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_ESTR   0x0003dc    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_0   0x0003de    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_#   0x0003e0    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_ROJO   0x0003e2    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_7   0x0003e3    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_8   0x0003e5    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_9   0x0003e7    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_DOWN   0x0003e9    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_4   0x0003ea    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_5   0x0003ec    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_6   0x0003ee    program     static C:\Universidad\2\labSED\final\estados.asm
+            M_PARSER_L_UP   0x0003f0    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_1   0x0003f1    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_2   0x0003f3    program     static C:\Universidad\2\labSED\final\estados.asm
+             M_PARSER_L_3   0x0003f5    program     static C:\Universidad\2\labSED\final\estados.asm
+          M_PARSER_L_VERD   0x0003f7    program     static C:\Universidad\2\labSED\final\estados.asm
+       M_PARSER_CHNG_SAVE   0x0003f9    program     static C:\Universidad\2\labSED\final\estados.asm
+        M_PARSER_CHNG_NEW   0x000401    program     static C:\Universidad\2\labSED\final\estados.asm
+              ENVIAR_SMS_   0x000409    program     static C:\Universidad\2\labSED\final\estados.asm
+                   ENVIAR   0x000419    program     static C:\Universidad\2\labSED\final\estados.asm
+          PUT_ENVIAR_LOOP   0x000424    program     static C:\Universidad\2\labSED\final\estados.asm
+      PUT_ENVIAR_LOOP_END   0x000430    program     static C:\Universidad\2\labSED\final\estados.asm
+                EPOR_WAIT   0x000440    program     static C:\Universidad\2\labSED\final\estados.asm
+                  LCDINIT   0x000444    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDWR   0x000477    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDIWR   0x000479    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCDWRAUX   0x00047b    program     static C:\Universidad\2\labSED\final\lcd.asm
+                     WAIT   0x00048d    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDWAIT   0x00048d    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW1   0x00048e    program     static C:\Universidad\2\labSED\final\lcd.asm
+                    LCDW2   0x000490    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBSY   0x000497    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS1   0x00049c    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDBS2   0x0004a9    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   CURADD   0x0004ab    program     static C:\Universidad\2\labSED\final\lcd.asm
+                   LCDDIN   0x0004bb    program     static C:\Universidad\2\labSED\final\lcd.asm
+                  LCDDOUT   0x0004c1    program     static C:\Universidad\2\labSED\final\lcd.asm
+                 LCD_LTRW   0x0004c8    program     static C:\Universidad\2\labSED\final\lcd.asm
                  POSACOMP   0x000800    program     static C:\Universidad\2\labSED\final\pad.inc
                  NUMAKEYR   0x000811    program     static C:\Universidad\2\labSED\final\pad.inc
               LTR_STANDBY   0x00081a    program     static C:\Universidad\2\labSED\final\estados.inc
