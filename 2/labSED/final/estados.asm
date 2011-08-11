@@ -1,4 +1,5 @@
 ;******** EJECUCIONES EN CADA ESTADO ********;
+
 ;************ POR_ *************;
 ;;
 ; Power On Reset, inicializa el modem para que no haga echo
@@ -10,7 +11,7 @@ POR_:
 	MOVLW	POR; El estado de power on reset
 	BANKSEL	MAQUINA_EST; siempre al principio de todos los estados
 	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
-	BTFSS	EST_CTL,0; 
+	BTFSS	EST_CTL,0;
 		GOTO	POR_CTL_PER_CONFIG;
 	BTFSS	EST_CTL,1;
 		GOTO	POR_CTL_PER_ANALIZE;
@@ -73,7 +74,7 @@ POR_:
 
 			MOVF	INDF,W; Comprobamos si el caracter es 0
 			XORLW	'0';
-			BTFSS	STATUS,Z;
+			BTFSC	STATUS,Z;
 				BSF	EST_CTL,1; Pasamos al anterior estado, ya que este no ha recibido todavia la respuesta esperada.
 			RETURN
 		
@@ -93,13 +94,12 @@ STANDBY_:
 	XORLW	STANDBY;
 	BTFSS	STATUS,Z; Si estamos por primera vez
 		CLRF	EST_CTL;
+
 	MOVLW	STANDBY;
 	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
 	CALL	PUT_STANDBY;
 	CALL	STANDBY_COMP_DESBLQ;
-	BTFSS	EST_CTL,4;
-		GOTO	UNLOCK_;
-	SLEEP;
+
 	RETURN
 	;******	PUT_STANDBY ******;
 	;;
@@ -134,6 +134,7 @@ STANDBY_:
 		MOVLW	LTR_STANDBY_;Cambiamos lo que hay en pantalla a "STANDBY"
 		MOVWF	LCD_CTL;
 		RETURN;
+	
 	;****** STANDBY_COMP_DESBLQ ******;
 	;;
 	; Avance del desbloqueo pulsando *, *#, #, y soltando.
@@ -145,8 +146,13 @@ STANDBY_:
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
 		
+		
+		;CALL	ESCRIBE_REG; DEBUG ONLY!
+		
+		
+		
 		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y la # pulsadas
-		ANDLW	B'11111010';
+		ANDLW	B'11011110';
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
 			
@@ -158,40 +164,139 @@ STANDBY_:
 			GOTO	STANDBY_COMP_DESBLQ_EST2;
 		BTFSS	EST_CTL,3;
 			GOTO	STANDBY_COMP_DESBLQ_EST3;
+		BTFSS	EST_CTL,4;
+			GOTO	UNLOCK_;
 
+		;****** ESCRIBE_REG ******;
+		;;
+		; Función que sirve para escribir en la pantalla el registro hard del high y low
+		; @param KEYHU - Registro Hard de la parte de arriba del teclado
+		; @param KEYHL - Registro Hard de la parte de abajo del teclado 
+		;;
+		
+		ESCRIBE_REG:
+			MOVLW	cur_set|h'40';Ponemos el cursor al principio de la pantalla
+			CALL	LCDIWR;
+			
+			BTFSS	KEYHL,0;
+				MOVLW	"0";
+			BTFSC	KEYHL,0;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,1;
+				MOVLW	"0";
+			BTFSC	KEYHL,1;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,2;
+				MOVLW	"0";
+			BTFSC	KEYHL,2;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,3;
+				MOVLW	"0";
+			BTFSC	KEYHL,3;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,4;
+				MOVLW	"0";
+			BTFSC	KEYHL,4;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,5;
+				MOVLW	"0";
+			BTFSC	KEYHL,5;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,6;
+				MOVLW	"0";
+			BTFSC	KEYHL,6;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHL,7;
+				MOVLW	"0";
+			BTFSC	KEYHL,7;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,0;
+				MOVLW	"0";
+			BTFSC	KEYHU,0;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,1;
+				MOVLW	"0";
+			BTFSC	KEYHU,1;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,2;
+				MOVLW	"0";
+			BTFSC	KEYHU,2;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,3;
+				MOVLW	"0";
+			BTFSC	KEYHU,3;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,4;
+				MOVLW	"0";
+			BTFSC	KEYHU,4;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,5;
+				MOVLW	"0";
+			BTFSC	KEYHU,5;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,6;
+				MOVLW	"0";
+			BTFSC	KEYHU,6;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			BTFSS	KEYHU,7;
+				MOVLW	"0";
+			BTFSC	KEYHU,7;
+				MOVLW	"1"
+			CALL	LCDDWR;
+			RETURN;
 		;**********************************************************************;
 		; Estas rutinas están pensadas teniendo como logico que avanzar es lo normal
 		;
+		
 		;***** STANDBY_COMP_DESBLQ_EST0 *****;llegamos desde la nada, en teoria no hay nada pulsado
 		;;
 		; Estado 0, donde solo queremos que este pulsada la *
 		; @param KEYHL - miramos a la * y la #
 		; @return EST_CTL - indica en el estado que estamos dentro de STANDBY
 		;;
+		
 		STANDBY_COMP_DESBLQ_EST0:
 			BTFSC	KEYHL,0; Si la * esta pulsada, pasamos a siguiente fase 
 				BSF	EST_CTL,0; 
 			BTFSS	KEYHL,0; Si no, nos quedamos en esta
 				BCF	EST_CTL,0;
-			BTFSC	KEYHL,2; Si la # esta pulsada, nos quedamos en esta seguro
+			BTFSC	KEYHL,5; Si la # esta pulsada, nos quedamos en esta seguro
 				BCF	EST_CTL,0;
 			BCF	EST_CTL,1;Nos aseguramos de entrar en la siguiente fase si podemos
 			RETURN;
+		
 		;***** STANDBY_COMP_DESBLQ_EST1 *****;llegamos por que se ha pulsado la * 
 		;;
 		; Estado 1, donde queremos que este pulsada la *, y que se pulse la #
 		; @param KEYHL - miramos a la * y la #
 		; @return EST_CTL - indica en el estado que estamos dentro de STANDBY
 		;;
+		
 		STANDBY_COMP_DESBLQ_EST1:
 			BTFSS	KEYHL,0; Si no esta pulsada la *, tenemos que ir hacia atras
 				BCF	EST_CTL,0;
-			BTFSC	KEYHL,2; Si la # esta pulsada, podemos avanzar
+			BTFSC	KEYHL,5; Si la # esta pulsada, podemos avanzar
 				BSF	EST_CTL,1;
-			BTFSS	KEYHL,2; Si no, nos quedamos aqui
+			BTFSS	KEYHL,5; Si no, nos quedamos aqui
 				BCF	EST_CTL,1;
 			BCF	EST_CTL,2;Nos aseguramos de entrar en la siguiente fase
 			RETURN;
+		
 		;***** STANDBY_COMP_DESBLQ_EST2 *****;llegamos por que se ha pulsado la * y la #
 		;;
 		; Estado 2, donde queremos que este pulsada la * y la #, y que se avance soltando la *.
@@ -203,10 +308,11 @@ STANDBY_:
 				BCF	EST_CTL,2;
 			BTFSS	KEYHL,0;Si no, iremos hacia delante
 				BSF	EST_CTL,2; 
-			BTFSS	KEYHL,2;Si la # no esta pulsada vamos hacia atras
+			BTFSS	KEYHL,5;Si la # no esta pulsada vamos hacia atras
 				BCF	EST_CTL,1;
 			BCF	EST_CTL,3;
-			RETURN
+			RETURN;
+
 		;***** STANDBY_COMP_DESBLQ_EST3 *****;llegamos por que se ha pulsado la #
 		;;
 		; Estado 3, donde queremos que este pulsada la #, y cuando se suelte... salimos!
@@ -216,19 +322,19 @@ STANDBY_:
 		STANDBY_COMP_DESBLQ_EST3:
 			BTFSC	KEYHL,0;Si la * esta pulsada
 				BCF	EST_CTL,2;
-			BTFSS	KEYHL,2;Si la # esta pulsada
+			BTFSS	KEYHL,5;Si la # esta pulsada
 				BCF	EST_CTL,3;
-			BTFSC	KEYHL,2;Si no, se acaba con la ultima fase.
+			BTFSC	KEYHL,5;Si no, se acaba con la ultima fase.
 				BSF	EST_CTL,3;
-			BCF	EST_CTL,4;
 			RETURN;
 
 ;*********** UNLOCK_ ***********;
 ;;
 ; El estado en el que el teléfono se encuentra desbloqueado a la espera de
-; que se entre en el menú
-; @param MAQUINAL_EST - Contiene información del estado en el 
-; que se encuentra la máquina de estados generales
+; que se entre en el menú. 
+; Se manda el número 2 por el puerto serie.
+; @param MAQUINAL_EST - Contiene información del estado en
+; el que se encuentra la máquina de estados generales
 ; @return MAQUINA_EST - Devuelve el estado en el que está 
 ;;
 				
@@ -238,6 +344,10 @@ UNLOCK_:
 	XORLW	UNLOCK;
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
+
+	MOVLW	"2";
+	CALL	SERIAL_SEND;
+
 	MOVLW	UNLOCK;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_COMPANY;
@@ -245,6 +355,7 @@ UNLOCK_:
 	BTFSC	EST_CTL,1;
 		GOTO	MENU12_1_;
 	RETURN;
+	
 	;************* PUT_COMPANY **************;
 	;;
 	; Pone en la pantalla el nombre de la compañía telefónica
@@ -278,6 +389,7 @@ UNLOCK_:
 		MOVLW	LTR_COMPANY_;Cambiamos lo que hay en pantalla a "COMPANY"
 		MOVWF	LCD_CTL;
 		RETURN;
+	
 	;********** GOIN ***********;
 	;;
 	; Es una funcion que tiene 1 estado en el que marca si se puede pasar al siguiente estado
@@ -296,32 +408,60 @@ UNLOCK_:
 		;******************************************************************************;
 		;
 		;**** UNLOCK_COMP_GOIN_EST0 ****;
+		;;
+		; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
+		; nada pulsado, si lo hubiera, se estaría regresando a esta función.
+		;;
 		UNLOCK_COMP_GOIN_EST0:
 			MOVF	KEYHL,W;
 			IORWF	KEYHU,W;
 			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
 				BSF	EST_CTL,0;
 			BCF	EST_CTL,1;
+			MOVLW	"g";
+			CALL	SERIAL_SEND;
 			RETURN;
 	
 		;**** UNLOCK_COMP_GOIN_EST1 ****;
+		;;
+		; El paso del menu exterior al interior, en el segundo y último nivel, se comprueba que 
+		; el botón verde esté pulsado, cuando esté pulsado, se señaliza el estado en el bit 2, y
+		; cuando se suelte, se pondrá a 1 el bit 1 también, desbloqueando el estado.
+		;;
 		UNLOCK_COMP_GOIN_EST1:
 			MOVF	KEYHL,F;
-			BTFSC	STATUS,Z;
+			BTFSS	STATUS,Z;
 				BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
 			MOVF	KEYHU,W;
 			ANDLW	B'11111110';
-			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
+			BTFSS	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
 				BCF	EST_CTL,0;
 			BTFSC	KEYHU,7; Si esta pulsado el verde, avanzamos
+				BSF	EST_CTL,2;
+			BTFSS	EST_CTL,2;	
 				BSF	EST_CTL,1;
+			MOVLW	"G";
+			CALL	SERIAL_SEND;
 			RETURN;
+			
+;*************** MENU12_1_ *****************;
+;;
+; En esta función se escribe el menú de opciones, y el paso a la siguiente función
+; se trata a través de la misma función de comprobación que la anterior, pulsando 
+; el botón verde.
+; Se envía el dígito 3 por el puerto serie
+;;
+
 MENU12_1_:
 	BANKSEL	MAQUINA_EST;
 	MOVF	MAQUINA_EST,W;
 	XORLW	MENU12_1;
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
+		
+	MOVLW	"3";
+	CALL	SERIAL_SEND
+	
 	MOVLW	MENU12_1;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_MENU12_1;
@@ -382,13 +522,15 @@ ESCRIBIR_SMS_:
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
 		CALL	INIT_ESCRIBIR_SMS;
+	MOVLW	"4";
+	CALL	SERIAL_SEND;
 	MOVLW	MENU12_1;
 	MOVWF	ESCRIBIR_SMS;
 	CALL	ESCRIBIR_SMS_PARSER;
 	
 	
 	RETURN;
-	
+	;********** INIT_ESCRIBIR_SMS ***********;
 	;; 
 	; se encarga de inicializar a 0 siempre que se entre en el estado
 	;;
@@ -400,6 +542,8 @@ ESCRIBIR_SMS_:
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
+		MOVLW	ESCRIBIR_SMS;
+		MOVWF	MAQUINA_EST
 		RETURN;
 	;*********** ESCRIBIR_SMS_PARSER ***********;
 	;;
@@ -407,7 +551,7 @@ ESCRIBIR_SMS_:
 	; en el que ir logueando las teclas que se tienen pulsadas, en esta
 	; versión, será de numeros, pero estará preparado para funciones más complejas
 	; @param KEYHU - El registro de las teclas de arriba
-	; @param KEYHL -
+	; @param KEYHL - El registro de las teclas de abajo
 	;;
 	ESCRIBIR_SMS_PARSER:
 	
@@ -418,17 +562,20 @@ ESCRIBIR_SMS_:
 		BTFSC	STATUS,Z;
 			GOTO	PARSER_ST; Si no la hay
 			
+			;************ PARSER_CT ************;
 			;;
 			; Parser con tecla, es a donde se entra si hay UNA tecla pulsada.
 			; El metodo consiste en llevar un contador con los bits a 1 que hay,
-			; empezar desde el hard low a comprobar, y ya que los desplazamientos,
-			; llevar otro contador con los desplazamientos realizados, que es 
+			; empezar desde el hard low a comprobar, y ya que los desplazamientos
+			; cuentan el numero que es, se lleva
+			; otro contador con los desplazamientos realizados, que es 
 			; conveniente iniciarlo en -1 (F) para así poder saltar con una sola comprobación (bit 4)
 			; no se pueden hacer en W, se pasa a una variable y ahí se empieza.
 			;;
 			
 			PARSER_CT:
 				CLRF	PARSER_CTL;
+				CLRF	PARSER_CONT;
 				MOVF	KEYHL,W;
 				BTFSC	STATUS,Z;
 					GOTO	PARSER_CTLOOP_CHNG;
@@ -436,7 +583,7 @@ ESCRIBIR_SMS_:
 				BCF	STATUS,C;
 				MOVLW	H'10';
 				MOVWF	PARSER_CONT;
-				 
+				
 				PARSER_CTLOOPL:
 				RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
 				BTFSC	STATUS,C; Comprobamos si la llevada es 0 o 1
@@ -449,10 +596,11 @@ ESCRIBIR_SMS_:
 				PARSER_CTLOOP_CHNG:
 				MOVF	KEYHU,W; Ahora ponemos el registro de abajo
 				BTFSC	STATUS,Z;
-					GOTO	PARSER_CTLOOP_CHNG;
+					GOTO	PARSER_CTCOUNTED;
 				MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
-				MOVLW	B'10111111'; reseteamos el contador de desplazamientos realizados
+				MOVLW	B'11111111'; reseteamos el contador de desplazamientos realizados
 				MOVWF	PARSER_CONT;
+				BCF	STATUS,C;
 				
 				PARSER_CTLOOPH:
 				RRF	PARSER_TEMP,F; Rotamos uno hacia la derecha
@@ -482,9 +630,9 @@ ESCRIBIR_SMS_:
 				DECFSZ	PARSER_CTL,F; ¿Habrá solo pulsada una tecla?
 					RETURN; por que si no, no nos vale.
 				CLRF	PARSER_CONT; Ahora esta variable guardara lo que mas tarde sera para PARSER_LTR
-				MOVF	KEYHU,W;
-				BTFSC	STATUS,Z;
-					BSF	PARSER_CONT,3;
+				MOVF	KEYHU,W; Ponemos el registro de arriba en el W, y comprobamos si es 0
+				BTFSS	STATUS,Z; Si es distinto de 0
+					BSF	PARSER_CONT,3; Entonces sabemos que va a estar en el KEYHU, si no, estara en el KEYHL
 				BTFSS	PARSER_CONT,3
 					MOVF	KEYHL,W;
 				MOVWF	PARSER_TEMP
@@ -637,13 +785,17 @@ ESCRIBIR_SMS_:
 				BANKSEL	PARSER_TEMP;
 				BSF	PARSER_LTR_INFO, PLI_INUSE;
 				RETURN;
-					
+
+;**************** MANDAR_SMS_ *******************;
+;;
+; Esta 
+;;
 MANDAR_SMS_:
 	BANKSEL	MAQUINA_EST;
 	MOVF	MAQUINA_EST,W;
 	XORLW	MANDAR_SMS;
 	BTFSS	STATUS,Z;
-		CALL	INIT_ESCRIBIR_SMS; Total vamos a utilizar las mismas variables
+		CALL	INIT_ESCRIBIR_SMS; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
 	CALL	MANDAR_SMS_PARSER;
 	RETURN;
 	
@@ -677,7 +829,7 @@ MANDAR_SMS_:
 			M_PARSER_CTLOOP_CHNG:
 			MOVF	KEYHU,W; Ahora ponemos el registro de abajo
 			BTFSC	STATUS,Z;
-				GOTO	M_PARSER_CTLOOP_CHNG;
+				GOTO	M_PARSER_CTCOUNTED;
 			MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
 			MOVLW	B'10111111'; reseteamos el contador de desplazamientos realizados
 			MOVWF	PARSER_CONT;
@@ -855,7 +1007,7 @@ ENVIAR_SMS_:
 	BTFSS	STATUS,Z; Si estamos por primera vez
 		CLRF	EST_CTL;
 	MOVLW	ENVIAR_SMS;
-	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
+	MOVWF	MAQUINA_EST;Decimos que estamos en ENVIAR_SMS
 	BTFSS	EST_CTL,0;
 		CALL	ENVIAR;
 	BTFSS	EST_CTL,1;
@@ -864,6 +1016,7 @@ ENVIAR_SMS_:
 		GOTO	MENU12_1_;
 	SLEEP;
 	RETURN
+	
 	;******	PUT_STANDBY ******;
 	;;
 	; Pone STANDBY en la pantalla, cambiando también el estado de la variable
@@ -914,4 +1067,3 @@ ENVIAR_SMS_:
 			DECFSZ	TMP2,F		; Se decrementa contador básico
 			GOTO	EPOR_WAIT	; hasta llegar a cero
 		RETURN;
-	

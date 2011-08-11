@@ -86,6 +86,7 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
+	CALL	ESCRIBE_REG; DEBUG ONLY!
 ;Hasta aqui, desde el comienzo de la RSI,
 ; tenemos:
 ; 395 ciclos para saber que la hay una tecla pulsada
@@ -130,8 +131,7 @@ PROG:
 	CLRF	EST_CTL
 	CLRF	LCD_CTL
 	CLRF	LCD_CONT
-	BSF	INTCON,GIE;
-	SLEEP; Si no, no hay manera de conseguir que avance, try1
+	BSF	INTCON,GIE; 
 BUCLEOCIOSO:
 
 	include "maquina_de_estados.asm"
