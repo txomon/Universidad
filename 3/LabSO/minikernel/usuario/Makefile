@@ -12,7 +12,7 @@ BIBLIOTECA=$(LIBDIR)/libserv.a
 CC=cc
 CFLAGS=-Wall -m32 -g -I$(INCLUDEDIR)
 
-PROGRAMAS=init excep_arit excep_mem simplon
+PROGRAMAS=init excep_arit excep_mem simplon ejemplo
 
 all: biblioteca $(PROGRAMAS)
 
@@ -34,6 +34,11 @@ excep_mem: excep_mem.o $(BIBLIOTECA)
 simplon.o: $(INCLUDEDIR)/servicios.h
 simplon: simplon.o $(BIBLIOTECA)
 	$(CC) -shared -m32 -o $@ simplon.o -L$(LIBDIR) -lserv 
+
+ejemplo.o: $(INCLUDEDIR)/servicios.h
+ejemplo: ejemplo.o $(BIBLIOTECA)
+	$(CC) -shared -m32 -o $@ ejemplo.o -L$(LIBDIR) -lserv
+
 
 clean:
 	rm -f *.o $(PROGRAMAS)

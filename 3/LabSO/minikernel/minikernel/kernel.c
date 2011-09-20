@@ -1,4 +1,4 @@
-/*
+/*	
  *  kernel/kernel.c
  *
  *  Minikernel. Versión 1.0
@@ -340,6 +340,7 @@ int main(){
 	instal_man_int(INT_TERMINAL, int_terminal); 
 	instal_man_int(LLAM_SIS, tratar_llamsis); 
 	instal_man_int(INT_SW, int_sw); 
+	
 
 	iniciar_cont_int();		/* inicia cont. interr. */
 	iniciar_cont_reloj(TICK);	/* fija frecuencia del reloj */
@@ -354,4 +355,14 @@ int main(){
 	cambio_contexto(NULL, &(p_proc_actual->contexto_regs));
 	panico("S.O. reactivado inesperadamente");
 	return 0;
+}
+
+/*
+ * Nueva rutina de la práctica 1
+ *
+ *
+ */
+int sis_nueva(){
+	return p_proc_actual->id;		
+
 }

@@ -2,13 +2,13 @@
 # Makefile
 # 	Makefile global del sistema
 #
-all: sistema programas
+all: clean sistema programas
 
 sistema:
-	cd minikernel; make
+	cd minikernel;  make
 
 programas:
-	cd usuario; make
+	cd usuario; make 
 
 clean:
 	cd minikernel; make clean
