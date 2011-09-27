@@ -362,7 +362,7 @@ int main(){
  *
  *
  */
-int sis_nueva(){
+int sis_obterner_pid(){
 	return p_proc_actual->id;		
 
 }

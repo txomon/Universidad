@@ -87,7 +87,8 @@ typedef struct{
 int sis_crear_proceso();
 int sis_terminar_proceso();
 int sis_escribir();
-int sis_nueva();
+int sis_obtener_pid();
+
 
 /*
  * Variable global que contiene las rutinas que realizan cada llamada
@@ -95,7 +96,7 @@ int sis_nueva();
 servicio tabla_servicios[NSERVICIOS]={	{sis_crear_proceso},
 					{sis_terminar_proceso},
 					{sis_escribir},
-					{sis_nueva}};
+					{sis_obtener_pid}};
 
 #endif /* _KERNEL_H */
 

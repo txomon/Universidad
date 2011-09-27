@@ -24,7 +24,7 @@
 #define CREAR_PROCESO 0
 #define TERMINAR_PROCESO 1
 #define ESCRIBIR 2
-#define NUEVA 3
+#define OBTENER_PID 3
 
 #endif /* _LLAMSIS_H */
 

@@ -45,5 +45,5 @@ int escribir(char *texto, unsigned int longi){
 }
 
 int obtener_id_pr(){
-	return llamsis(NUEVA, 0 );
+	return llamsis(OBTENER_PID, 0 );
 }
