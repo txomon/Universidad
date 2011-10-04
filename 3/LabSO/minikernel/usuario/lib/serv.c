@@ -47,3 +47,7 @@ int escribir(char *texto, unsigned int longi){
 int obtener_id_pr(){
 	return llamsis(OBTENER_PID, 0 );
 }
+
+int dormir(unsigned int tiempo){
+    return llamsis(DORMIR, 1, (long)tiempo);
+}

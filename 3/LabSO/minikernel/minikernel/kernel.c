@@ -28,8 +28,10 @@
 static void iniciar_tabla_proc(){
 	int i;
 
-	for (i=0; i<MAX_PROC; i++)
+	for (i=0; i<MAX_PROC; i++){
 		tabla_procs[i].estado=NO_USADA;
+      
+    }
 }
 
 /*
@@ -93,6 +95,29 @@ static void eliminar_elem(lista_BCPs *lista, BCP * proc){
 	}
 }
 
+/*
+ * Comprobamos si los procesos bloqueados pueden despertarse ya.
+
+ */
+static void comprobar_despertadores(){
+
+    BCP *p_proc_comprobando;
+    
+    p_proc_comprobando=lista_bloqueados.primero;
+    while (p_proc_comprobando!=NULL)
+    {
+        if(p_proc_comprobando->despertar-=1==0)
+        {
+            p_proc_comprobando->estado=LISTO;
+            insertar_ultimo(&lista_listos,p_proc_comprobando);
+            eliminar_elem(&lista_bloqueados,p_proc_comprobando);
+        }
+        p_proc_comprobando=p_proc_comprobando->siguiente;
+
+    }
+
+    return ;
+}
 /*
  *
  * Funciones relacionadas con la planificacion
@@ -204,9 +229,11 @@ static void int_terminal(){
  */
 static void int_reloj(){
 
+ 
 	printk("-> TRATANDO INT. DE RELOJ\n");
-
-        return;
+    comprobar_despertadores();
+    
+    return;
 }
 
 /*
@@ -362,7 +389,25 @@ int main(){
  *
  *
  */
-int sis_obterner_pid(){
+int sis_obtener_pid(){
 	return p_proc_actual->id;		
 
 }
+
+
+int sis_dormir(){
+	unsigned int longi;
+    BCP *p_proc_anterior;
+
+	longi=(unsigned int)leer_registro(1);
+    p_proc_actual->despertar=longi*TICK;
+    p_proc_actual->estado=BLOQUEADO;
+    insertar_ultimo(&lista_bloqueados, p_proc_actual);
+    eliminar_primero(&lista_listos);
+    p_proc_anterior=p_proc_actual;
+    cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
+    return 0;
+}
+
+
+

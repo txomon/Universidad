@@ -31,10 +31,11 @@
 typedef struct BCP_t *BCPptr;
 
 typedef struct BCP_t {
-        int id;				/* ident. del proceso */
-        int estado;			/* TERMINADO|LISTO|EJECUCION|BLOQUEADO*/
-        contexto_t contexto_regs;	/* copia de regs. de UCP */
-        void * pila;			/* dir. inicial de la pila */
+    int id;				/* ident. del proceso */
+    int estado;			/* TERMINADO|LISTO|EJECUCION|BLOQUEADO*/
+    unsigned int despertar;      /* numero de interrupciones en las que despertar*/
+    contexto_t contexto_regs;	/* copia de regs. de UCP */
+    void * pila;			/* dir. inicial de la pila */
 	BCPptr siguiente;		/* puntero a otro BCP */
 	void *info_mem;			/* descriptor del mapa de memoria */
 } BCP;
@@ -70,6 +71,13 @@ BCP tabla_procs[MAX_PROC];
  */
 lista_BCPs lista_listos= {NULL, NULL};
 
+
+/*
+ * Variable global que representa la cola de procesos bloqueados 
+ */
+lista_BCPs lista_bloqueados= {NULL, NULL};
+
+
 /*
  *
  * Definición del tipo que corresponde con una entrada en la tabla de
@@ -88,6 +96,7 @@ int sis_crear_proceso();
 int sis_terminar_proceso();
 int sis_escribir();
 int sis_obtener_pid();
+int sis_dormir();
 
 
 /*
@@ -96,7 +105,8 @@ int sis_obtener_pid();
 servicio tabla_servicios[NSERVICIOS]={	{sis_crear_proceso},
 					{sis_terminar_proceso},
 					{sis_escribir},
-					{sis_obtener_pid}};
+                    {sis_obtener_pid},
+                    {sis_dormir}};
 
 #endif /* _KERNEL_H */
 
