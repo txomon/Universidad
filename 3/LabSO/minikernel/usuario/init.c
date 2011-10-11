@@ -18,7 +18,7 @@ int main(){
     int i;
 
 	printf("init: comienza\n");
-    for (i=4;i;i--)
+    for (i=2;i;i--)
 	    if (crear_proceso("simplon")<0)
             printf("Error creando simplon\n");
 
@@ -35,8 +35,8 @@ int main(){
 //	if (crear_proceso("noexiste")<0)
 //		printf("Error creando noexiste\n");
 
-	if (crear_proceso("ejemplo")<0)
-		printf("Error creando ejemplo\n");
+//	if (crear_proceso("ejemplo")<0)
+//		printf("Error creando ejemplo\n");
 
 	printf("init: termina\n");
 	return 0; 

@@ -21,7 +21,7 @@ int main(){
     printf("simplon: empieza\n");
     printf("simplon tiene id %d\n",obtener_id_pr());
 	for (i=0; i<TOT_ITER; i++)
-		printf("%dsimplon: i %d\n",obtener_id_pr(), i);
+		printf("[id %d] simplon: i %d\n",obtener_id_pr(), i);
 
     dormir(3);
 	printf("simplon: termina\n");
