@@ -142,7 +142,7 @@ static void bloquear_proceso()
     int interrupcion=fijar_nivel_int(3);
     
     p_proc_actual->estado=BLOQUEADO; //cambiamos el estado a BLOQUEADO
-    eliminar_elem(&lista_listos,p_proc_actual);//lo quitamos de la lista de listos
+    eliminar_primero(&lista_listos);//lo quitamos de la lista de listos
     insertar_ultimo(&lista_bloqueados, p_proc_actual);//ponemos el proceso en la lista de
                                                       //bloqueados
     p_proc_anterior=p_proc_actual;//lo ponemos como proceso anterior
@@ -171,8 +171,8 @@ static void desbloquear_proceso(BCP *p_proc)
     printk("desbloquear_proceso()");
     int interrupcion=fijar_nivel_int(3);
     p_proc->estado=LISTO;
-    insertar_ultimo(&lista_listos,p_proc);
     eliminar_elem(&lista_bloqueados,p_proc);
+    insertar_ultimo(&lista_listos,p_proc);
     fijar_nivel_int(interrupcion);
     return;
 }
