@@ -20,7 +20,8 @@ int main(){
 
 //	for (i=0; i<TOT_ITER; i++)
 //		printf("simplon: i %d\n", i);
-
+    printf("simplon: empieza\n");
+    dormir(3);
 	printf("simplon: termina\n");
 	return 0;
 }

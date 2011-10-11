@@ -101,18 +101,22 @@ static void eliminar_elem(lista_BCPs *lista, BCP * proc){
  */
 static void comprobar_despertadores(){
 
-    BCP *p_proc_comprobando;
-    
+    BCP *p_proc_comprobando,*temp;
     p_proc_comprobando=lista_bloqueados.primero;
     while (p_proc_comprobando!=NULL)
     {
-        if(p_proc_comprobando->despertar-=1==0)
+        p_proc_comprobando->despertar-=1;
+        printk("->RSI reloj- depertar del id %d es %d\nº",p_proc_comprobando->id,p_proc_comprobando->despertar);
+        if(p_proc_comprobando->despertar==0)
         {
             p_proc_comprobando->estado=LISTO;
+            temp=p_proc_comprobando->siguiente;
             insertar_ultimo(&lista_listos,p_proc_comprobando);
             eliminar_elem(&lista_bloqueados,p_proc_comprobando);
+            p_proc_comprobando=temp;
         }
-        p_proc_comprobando=p_proc_comprobando->siguiente;
+        else
+            p_proc_comprobando=p_proc_comprobando->siguiente;
 
     }
 
@@ -130,7 +134,7 @@ static void comprobar_despertadores(){
 static void espera_int(){
 	int nivel;
 
-	printk("-> NO HAY LISTOS. ESPERA INT\n");
+	//printk("-> NO HAY LISTOS. ESPERA INT\n");
 
 	/* Baja al mínimo el nivel de interrupción mientras espera */
 	nivel=fijar_nivel_int(NIVEL_1);
@@ -399,13 +403,17 @@ int sis_dormir(){
 	unsigned int longi;
     BCP *p_proc_anterior;
 
-	longi=(unsigned int)leer_registro(1);
-    p_proc_actual->despertar=longi*TICK;
-    p_proc_actual->estado=BLOQUEADO;
-    insertar_ultimo(&lista_bloqueados, p_proc_actual);
-    eliminar_primero(&lista_listos);
-    p_proc_anterior=p_proc_actual;
+	longi=(unsigned int)leer_registro(1); //leemos el tiempo que hay que dormir
+    p_proc_actual->despertar=longi*TICK; //ponemos el valor en despertar
+    printk("despertar de %d es %d\n",p_proc_actual->id, p_proc_actual->despertar);
+    p_proc_actual->estado=BLOQUEADO; //cambiamos el estado a BLOQUEADO
+    eliminar_elem(&lista_listos,p_proc_actual);//lo quitamos de la lista de listos
+    insertar_ultimo(&lista_bloqueados, p_proc_actual);//ponemos el proceso en la lista de
+                                                      //bloqueados
+    p_proc_anterior=p_proc_actual;//lo ponemos como proceso anterior
+    p_proc_actual=planificador();//conseguimos el siguiente proceso que le toca
     cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
+       //cambiamos de contexto al siguiente proceso
     return 0;
 }
 
