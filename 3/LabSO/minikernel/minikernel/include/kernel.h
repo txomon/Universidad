@@ -78,6 +78,18 @@ lista_BCPs lista_listos= {NULL, NULL};
 lista_BCPs lista_bloqueados= {NULL, NULL};
 
 
+
+
+
+
+/*
+ * Variable de los TICS restantes que le quedan a un proceso
+ */
+
+static unsigned int TICKS_restantes;
+
+static unsigned char peticion_de_bloqueo;
+
 /*
  *
  * Definición del tipo que corresponde con una entrada en la tabla de
