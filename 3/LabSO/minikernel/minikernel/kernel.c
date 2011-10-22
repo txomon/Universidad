@@ -28,8 +28,10 @@
 static void iniciar_tabla_proc(){
 	int i;
 
-	for (i=0; i<MAX_PROC; i++)
+	for (i=0; i<MAX_PROC; i++){
 		tabla_procs[i].estado=NO_USADA;
+      
+    }
 }
 
 /*
@@ -56,7 +58,8 @@ static int buscar_BCP_libre(){
  * Inserta un BCP al final de la lista.
  */
 static void insertar_ultimo(lista_BCPs *lista, BCP * proc){
-	if (lista->primero==NULL)
+	printk("insertar_ultimo()");
+    if (lista->primero==NULL)
 		lista->primero= proc;
 	else
 		lista->ultimo->siguiente=proc;
@@ -68,7 +71,7 @@ static void insertar_ultimo(lista_BCPs *lista, BCP * proc){
  * Elimina el primer BCP de la lista.
  */
 static void eliminar_primero(lista_BCPs *lista){
-
+    printk("eliminar_primero()");
 	if (lista->ultimo==lista->primero)
 		lista->ultimo=NULL;
 	lista->primero=lista->primero->siguiente;
@@ -78,6 +81,7 @@ static void eliminar_primero(lista_BCPs *lista){
  * Elimina un determinado BCP de la lista.
  */
 static void eliminar_elem(lista_BCPs *lista, BCP * proc){
+    printk("eliminar_elem()");
 	BCP *paux=lista->primero;
 
 	if (paux==proc)
@@ -93,6 +97,8 @@ static void eliminar_elem(lista_BCPs *lista, BCP * proc){
 	}
 }
 
+
+
 /*
  *
  * Funciones relacionadas con la planificacion
@@ -103,9 +109,10 @@ static void eliminar_elem(lista_BCPs *lista, BCP * proc){
  * Espera a que se produzca una interrupcion
  */
 static void espera_int(){
-	int nivel;
+	printk("espera_int()");
+    int nivel;
 
-	printk("-> NO HAY LISTOS. ESPERA INT\n");
+	//printk("-> NO HAY LISTOS. ESPERA INT\n");
 
 	/* Baja al mínimo el nivel de interrupción mientras espera */
 	nivel=fijar_nivel_int(NIVEL_1);
@@ -117,10 +124,114 @@ static void espera_int(){
  * Función de planificacion que implementa un algoritmo FIFO.
  */
 static BCP * planificador(){
+	printk("planificador()");
+    TICKS_restantes=TICKS_RODAJA;
 	while (lista_listos.primero==NULL)
 		espera_int();		/* No hay nada que hacer */
 	return lista_listos.primero;
 }
+
+
+/*
+ * Función para bloquear un proceso
+ */
+static void bloquear_proceso()
+{
+	printk("bloquear_proceso()");
+    BCP *p_proc_anterior;
+    int interrupcion=fijar_nivel_int(3);
+    
+    p_proc_actual->estado=BLOQUEADO; //cambiamos el estado a BLOQUEADO
+    eliminar_primero(&lista_listos);//lo quitamos de la lista de listos
+    insertar_ultimo(&lista_bloqueados, p_proc_actual);//ponemos el proceso en la lista de
+                                                      //bloqueados
+    p_proc_anterior=p_proc_actual;//lo ponemos como proceso anterior
+    p_proc_actual=planificador();//conseguimos el siguiente proceso que le toca
+
+    peticion_de_bloqueo=0;
+    fijar_nivel_int(interrupcion);
+    cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
+       //cambiamos de contexto al siguiente proceso
+    //aqui no deberia llegar
+    return; 
+}
+
+static void pedir_bloquear_proceso()
+{
+    printk("pedir_bloquear_proceso()");
+    peticion_de_bloqueo=1;
+    activar_int_SW();
+}
+
+/*
+ * Función para desbloquear un proceso
+ */
+static void desbloquear_proceso(BCP *p_proc)
+{
+    printk("desbloquear_proceso()");
+    int interrupcion=fijar_nivel_int(3);
+    p_proc->estado=LISTO;
+    eliminar_elem(&lista_bloqueados,p_proc);
+    insertar_ultimo(&lista_listos,p_proc);
+    fijar_nivel_int(interrupcion);
+    return;
+}
+
+/*
+ * Comprobamos si los procesos bloqueados pueden despertarse ya.
+
+ */
+static void comprobar_despertadores(){
+    printk("comprobar_despertadores()");
+    BCP *p_proc_comprobando,*temp;
+    p_proc_comprobando=lista_bloqueados.primero;
+    while (p_proc_comprobando!=NULL)
+    {
+        if(p_proc_comprobando->despertar)
+            p_proc_comprobando->despertar-=1;
+        printk("->RSI reloj- depertar del id %d es %d\n",p_proc_comprobando->id,p_proc_comprobando->despertar);
+        if(!p_proc_comprobando->despertar)
+        {
+            temp=p_proc_comprobando->siguiente;
+            desbloquear_proceso(p_proc_comprobando);
+            p_proc_comprobando=temp;
+        }
+        else
+            p_proc_comprobando=p_proc_comprobando->siguiente;
+    }
+    return ;
+}
+
+
+/*
+ *
+ * Comprobamos rodajas del round robin
+ *
+ */
+static void comprobar_rodaja()
+{
+    printk("comprobar_rodaja()");
+    BCP *p_proc_anterior;
+    if (p_proc_actual->estado!=BLOQUEADO&&p_proc_actual->estado!=TERMINADO)
+    {
+        TICKS_restantes-=1;
+        printk("A %d le quedan %d TICKS restantes\n",p_proc_actual->id,TICKS_restantes);
+
+        if (TICKS_restantes<1)
+        {
+            printk("A %d se le han acabado los TICKS, cambiando al siguiente proceso"\
+                " id ",p_proc_actual->id,TICKS_restantes);
+            p_proc_anterior=p_proc_actual;
+            eliminar_primero(&lista_listos);
+            insertar_ultimo(&lista_listos,p_proc_anterior);
+            p_proc_actual=planificador();
+            printk("%d\n",p_proc_actual->id);
+            cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
+        }
+    }
+    return;
+}
+
 
 /*
  *
@@ -129,6 +240,7 @@ static BCP * planificador(){
  *
  */
 static void liberar_proceso(){
+    printk("liberar_proceso()");
 	BCP * p_proc_anterior;
 
 	liberar_imagen(p_proc_actual->info_mem); /* liberar mapa */
@@ -163,9 +275,9 @@ static void liberar_proceso(){
  * Tratamiento de excepciones aritmeticas
  */
 static void exc_arit(){
-
+    printk("exc_arit()");
 	if (!viene_de_modo_usuario())
-		panico("excepcion aritmetica cuando estaba dentro del kernel");
+		panico("excepcion aritmetica cuando estaba dentro del kernel\n");
 
 
 	printk("-> EXCEPCION ARITMETICA EN PROC %d\n", p_proc_actual->id);
@@ -178,9 +290,9 @@ static void exc_arit(){
  * Tratamiento de excepciones en el acceso a memoria
  */
 static void exc_mem(){
-
+    printk("exc_mem()");
 	if (!viene_de_modo_usuario())
-		panico("excepcion de memoria cuando estaba dentro del kernel");
+		panico("excepcion de memoria cuando estaba dentro del kernel\n");
 
 
 	printk("-> EXCEPCION DE MEMORIA EN PROC %d\n", p_proc_actual->id);
@@ -193,7 +305,7 @@ static void exc_mem(){
  * Tratamiento de interrupciones de terminal
  */
 static void int_terminal(){
-
+    printk("int_terminal()");
 	printk("-> TRATANDO INT. DE TERMINAL %c\n", leer_puerto(DIR_TERMINAL));
 
         return;
@@ -203,16 +315,20 @@ static void int_terminal(){
  * Tratamiento de interrupciones de reloj
  */
 static void int_reloj(){
-
+    printk("int_reloj()");
+    int interrupcion=fijar_nivel_int(NIVEL_3);
 	printk("-> TRATANDO INT. DE RELOJ\n");
-
-        return;
+    comprobar_rodaja();
+    comprobar_despertadores();
+    fijar_nivel_int(interrupcion);
+    return;
 }
 
 /*
  * Tratamiento de llamadas al sistema
  */
 static void tratar_llamsis(){
+    printk("tratar_llamsis()");
 	int nserv, res;
 
 	nserv=leer_registro(0);
@@ -228,9 +344,12 @@ static void tratar_llamsis(){
  * Tratamiento de interrupciuones software
  */
 static void int_sw(){
-
+    printk("int_sw()");
+    int interrupcion=fijar_nivel_int(NIVEL_2);
 	printk("-> TRATANDO INT. SW\n");
-
+    if (peticion_de_bloqueo)
+        bloquear_proceso();
+    fijar_nivel_int(interrupcion);
 	return;
 }
 
@@ -241,6 +360,8 @@ static void int_sw(){
  *
  */
 static int crear_tarea(char *prog){
+    printk("crear_tarea()");
+
 	void * imagen, *pc_inicial;
 	int error=0;
 	int proc;
@@ -287,6 +408,7 @@ static int crear_tarea(char *prog){
  * funcion auxiliar crear_tarea sis_terminar_proceso
  */
 int sis_crear_proceso(){
+    printk("sis_crear_proceso()");
 	char *prog;
 	int res;
 
@@ -302,6 +424,7 @@ int sis_crear_proceso(){
  */
 int sis_escribir()
 {
+    printk("sis_escribir()");
 	char *texto;
 	unsigned int longi;
 
@@ -317,6 +440,7 @@ int sis_escribir()
  * funcion auxiliar liberar_proceso
  */
 int sis_terminar_proceso(){
+    printk("sis_terminar_proceso()");
 
 	printk("-> FIN PROCESO %d\n", p_proc_actual->id);
 
@@ -331,6 +455,8 @@ int sis_terminar_proceso(){
  *
  */
 int main(){
+    printk("main()");
+
 	/* se llega con las interrupciones prohibidas */
 	iniciar_tabla_proc();
 
@@ -348,12 +474,12 @@ int main(){
 
 	/* crea proceso inicial */
 	if (crear_tarea((void *)"init")<0)
-		panico("no encontrado el proceso inicial");
+		panico("no encontrado el proceso inicial\n");
 	
 	/* activa proceso inicial */
 	p_proc_actual=planificador();
 	cambio_contexto(NULL, &(p_proc_actual->contexto_regs));
-	panico("S.O. reactivado inesperadamente");
+	panico("S.O. reactivado inesperadamente\n");
 	return 0;
 }
 
@@ -362,7 +488,20 @@ int main(){
  *
  *
  */
-int sis_obterner_pid(){
-	return p_proc_actual->id;		
+int sis_obtener_pid(){
+    printk("sis_obtener_pid()");
+	return p_proc_actual->id;
+}
 
+
+int sis_dormir(){
+    printk("sis_dormir()");
+    
+	unsigned int longi;
+
+	longi=(unsigned int)leer_registro(1); //leemos el tiempo que hay que dormir
+    p_proc_actual->despertar=longi*TICK; //ponemos el valor en despertar
+    printk("despertar de %d es %d\n",p_proc_actual->id, p_proc_actual->despertar);
+    pedir_bloquear_proceso();
+    return 0;//Aqui no se llega
 }

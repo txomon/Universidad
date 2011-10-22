@@ -21,7 +21,7 @@ int tot=0;
 int main(){
 	int i;
 	int tot=0;
-
+    printf("");
 	for (i=0; i<TOT_ITER; i++){
 		printf("excep_arit: i %d \n", i);
 
