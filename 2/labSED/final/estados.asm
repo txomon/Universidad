@@ -148,7 +148,7 @@ STANDBY_:
 			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
 		
 		
-		;CALL	ESCRIBE_REG; DEBUG ONLY!
+		CALL	ESCRIBE_REG; DEBUG ONLY!
 		
 		
 		
@@ -783,6 +783,8 @@ ESCRIBIR_SMS_:
 						RETURN;
 						
 			PARSER_ST:
+				MOVLW	"S";
+				CALL	SERIAL_SEND;
 				SLEEP;
 				BANKSEL	PARSER_TEMP;
 				BSF	PARSER_LTR_INFO, PLI_INUSE;

@@ -86,7 +86,7 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
-	CALL	ESCRIBE_REG; DEBUG ONLY!
+	;CALL	ESCRIBE_REG; DEBUG ONLY!
 ;Hasta aqui, desde el comienzo de la RSI,
 ; tenemos:
 ; 395 ciclos para saber que la hay una tecla pulsada
