@@ -1,0 +1,537 @@
+Creando thread consumidor 0
+Creando thread consumidor 1
+Creando thread consumidor 2
+Consumidor: bloqueo mutex_cola
+Consumidor: la cola esta vacia, me bloqueo
+Creando thread consumidor 3
+Consumidor: bloqueo mutex_cola
+Consumidor: la cola esta vacia, me bloqueo
+Creando thread productor 0
+Consumidor: bloqueo mutex_cola
+Consumidor: la cola esta vacia, me bloqueo
+Consumidor: bloqueo mutex_cola
+Consumidor: la cola esta vacia, me bloqueo
+Creando thread productor 1
+Creando thread productor 2
+Productor: el elemento 1 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 1 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:0
+Productor: el elemento 1 ha sido producido
+Consumidor: cojo el elemento 32524 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:1
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 1 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:1
+Productor: el elemento 1 ha sido producido
+Consumidor: cojo el elemento 0 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:2
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 1 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:2
+Consumidor: cojo el elemento 0 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:3
+Productor: el elemento 2 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 2 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:3
+Consumidor: cojo el elemento 0 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:4
+Productor: el elemento 2 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 2 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:4
+Productor: el elemento 2 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 2 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:4
+Consumidor: el elemento 1 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 1 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:6 fin:5
+Consumidor: el elemento 1 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 1 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:6
+Consumidor: el elemento 1 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: la cola esta vacia, me bloqueo
+Productor: el elemento 3 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 3 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:6
+Consumidor: cojo el elemento 1 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:7
+Productor: el elemento 3 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 3 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:7
+Productor: el elemento 3 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 3 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:7
+Consumidor: el elemento 2 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 2 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:9 fin:8
+Productor: el elemento 4 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 4 en la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:0 fin:8
+Productor: el elemento 4 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 4 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:8
+Productor: el elemento 4 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 4 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:8
+Consumidor: el elemento 2 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 2 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:2 fin:9
+Consumidor: el elemento 2 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 2 de la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:2 fin:0
+Consumidor: el elemento 3 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 3 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:2 fin:1
+Productor: el elemento 5 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 5 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:1
+Productor: el elemento 5 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 5 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:1
+Productor: el elemento 5 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 5 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:1
+Consumidor: el elemento 3 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 3 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:5 fin:2
+Productor: el elemento 6 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 6 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:2
+Productor: el elemento 6 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 6 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:2
+Productor: el elemento 6 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 6 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:2
+Consumidor: el elemento 3 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 3 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:8 fin:3
+Consumidor: el elemento 4 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 4 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:8 fin:4
+Consumidor: el elemento 4 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 4 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:8 fin:5
+Productor: el elemento 7 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 7 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:5
+Productor: el elemento 7 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 7 en la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:0 fin:5
+Productor: el elemento 7 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 7 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:5
+Consumidor: el elemento 4 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 4 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:1 fin:6
+Productor: el elemento 8 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 8 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:6
+Productor: el elemento 8 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 8 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:6
+Productor: el elemento 8 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 8 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:6
+Consumidor: el elemento 5 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 5 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:4 fin:7
+Consumidor: el elemento 5 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 5 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:4 fin:8
+Consumidor: el elemento 5 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 5 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:4 fin:9
+Productor: el elemento 9 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 9 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:9
+Productor: el elemento 9 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 9 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:9
+Productor: el elemento 9 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 9 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:9
+Consumidor: el elemento 6 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 6 de la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:7 fin:0
+Productor: el elemento 10 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 10 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:0
+Productor: el elemento 10 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 10 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:0
+Productor: el elemento 10 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 6 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 6 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:9 fin:1
+Productor: inserto el elemento 10 en la lista, en la posicion 9
+Consumidor: el elemento 6 ha sido consumido
+Ahora mismo la situacion es: inicio:0 fin:1
+Consumidor: el elemento 7 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 7 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:0 fin:2
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 6 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:0 fin:3
+Productor: el elemento 11 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 11 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:3
+Productor: el elemento 11 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 11 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:3
+Consumidor: el elemento 7 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 7 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:2 fin:4
+Productor: el elemento 11 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 11 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:4
+Productor: el elemento 12 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 12 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 8 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 8 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:3 fin:5
+Productor: inserto el elemento 12 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:5
+Consumidor: el elemento 7 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 7 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:4 fin:6
+Consumidor: el elemento 8 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 8 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:4 fin:7
+Productor: inserto el elemento 12 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:7
+Productor: el elemento 12 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 12 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:7
+Consumidor: el elemento 8 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 8 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:6 fin:8
+Productor: el elemento 13 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 13 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:8
+Productor: el elemento 13 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 13 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 9 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 9 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:7 fin:9
+Consumidor: el elemento 9 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 9 de la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:7 fin:0
+Consumidor: el elemento 9 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 9 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:7 fin:1
+Productor: inserto el elemento 13 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:1
+Productor: inserto el elemento 13 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:1
+Productor: el elemento 14 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 14 en la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:0 fin:1
+Consumidor: el elemento 10 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 10 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:0 fin:2
+Productor: el elemento 14 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 14 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:2
+Productor: el elemento 14 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 15 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 10 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 10 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:1 fin:3
+Productor: inserto el elemento 14 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:3
+Consumidor: el elemento 10 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 10 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:2 fin:4
+Consumidor: el elemento 11 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 11 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:2 fin:5
+Productor: inserto el elemento 15 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:5
+Productor: el elemento 15 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 15 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:5
+Consumidor: el elemento 11 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 11 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:4 fin:6
+Productor: el elemento 15 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 15 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:6
+Productor: el elemento 16 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 16 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 11 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 11 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:5 fin:7
+Consumidor: el elemento 12 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 12 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:5 fin:8
+Consumidor: el elemento 12 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 12 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:5 fin:9
+Productor: inserto el elemento 16 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:9
+Productor: inserto el elemento 16 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:9
+Productor: el elemento 16 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 16 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:9
+Consumidor: el elemento 12 ha sido consumido
+Productor: el elemento 17 ha sido producido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 12 de la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:8 fin:0
+Productor: el elemento 17 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 17 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:0
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 17 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 13 ha sido consumido
+Consumidor: el elemento 13 ha sido consumido
+Consumidor: el elemento 13 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 13 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:9 fin:1
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 13 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:9 fin:2
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 13 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:9 fin:3
+Productor: inserto el elemento 17 en la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:0 fin:3
+Productor: inserto el elemento 17 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:3
+Productor: el elemento 18 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 18 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:3
+Consumidor: el elemento 14 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 14 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:2 fin:4
+Productor: el elemento 19 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 19 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:4
+Productor: el elemento 18 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 18 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 15 ha sido consumido
+Consumidor: el elemento 14 ha sido consumido
+Consumidor: el elemento 14 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 15 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:3 fin:5
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 14 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:3 fin:6
+Productor: inserto el elemento 18 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:6
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 14 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:4 fin:7
+Productor: inserto el elemento 18 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:7
+Productor: el elemento 20 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 20 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:7
+Consumidor: el elemento 15 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 15 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:6 fin:8
+Productor: el elemento 19 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 19 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:8
+Productor: el elemento 19 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 21 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 15 ha sido consumido
+Consumidor: el elemento 16 ha sido consumido
+Consumidor: el elemento 16 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 15 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:7 fin:9
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 16 de la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:7 fin:0
+Productor: inserto el elemento 21 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:0
+Productor: el elemento 20 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 20 en la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:9 fin:0
+Productor: la cola esta llena, me bloqueo
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 16 de la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:9 fin:1
+Productor: inserto el elemento 19 en la lista, en la posicion 9
+Ahora mismo la situacion es: inicio:0 fin:1
+Consumidor: el elemento 16 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 16 de la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:0 fin:2
+Productor: el elemento 22 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 22 en la lista, en la posicion 0
+Ahora mismo la situacion es: inicio:1 fin:2
+Productor: el elemento 21 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: el elemento 20 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 17 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 17 de la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:1 fin:3
+Consumidor: el elemento 17 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 17 de la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:1 fin:4
+Productor: inserto el elemento 21 en la lista, en la posicion 1
+Ahora mismo la situacion es: inicio:2 fin:4
+Productor: inserto el elemento 20 en la lista, en la posicion 2
+Ahora mismo la situacion es: inicio:3 fin:4
+Consumidor: el elemento 17 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 17 de la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:3 fin:5
+Productor: el elemento 23 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 23 en la lista, en la posicion 3
+Ahora mismo la situacion es: inicio:4 fin:5
+Consumidor: el elemento 18 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 18 de la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:4 fin:6
+Productor: el elemento 24 ha sido producido
+Productor: el elemento 21 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 24 en la lista, en la posicion 4
+Ahora mismo la situacion es: inicio:5 fin:6
+Productor: el elemento 22 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Productor: bloqueo mutex_cola
+Productor: la cola esta llena, me bloqueo
+Consumidor: el elemento 19 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 19 de la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:5 fin:7
+Consumidor: el elemento 18 ha sido consumido
+Consumidor: el elemento 18 ha sido consumido
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 18 de la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:5 fin:8
+Productor: inserto el elemento 22 en la lista, en la posicion 5
+Ahora mismo la situacion es: inicio:6 fin:8
+Consumidor: bloqueo mutex_cola
+Consumidor: cojo el elemento 18 de la lista, en la posicion 8
+Ahora mismo la situacion es: inicio:6 fin:9
+Productor: inserto el elemento 21 en la lista, en la posicion 6
+Ahora mismo la situacion es: inicio:7 fin:9
+Productor: el elemento 25 ha sido producido
+Productor: bloqueo mutex_cola
+Productor: inserto el elemento 25 en la lista, en la posicion 7
+Ahora mismo la situacion es: inicio:8 fin:9
+Finalizando el programa

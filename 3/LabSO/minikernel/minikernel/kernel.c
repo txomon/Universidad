@@ -156,10 +156,27 @@ static void bloquear_proceso()
     return; 
 }
 
-static void pedir_bloquear_proceso()
+static void cambiar_proceso()
 {
-    printk("pedir_bloquear_proceso()");
-    peticion_de_bloqueo=1;
+	printk("cambiar_proceso()");
+    BCP *p_proc_anterior;
+    int interrupcion=fijar_nivel_int(3);
+    
+    p_proc_actual->estado=BLOQUEADO; //cambiamos el estado a BLOQUEADO
+    eliminar_primero(&lista_listos);//lo quitamos de la lista de listos
+    insertar_ultimo(&lista_listos, p_proc_actual);//ponemos el proceso en la lista de
+                                                      //bloqueados
+    p_proc_anterior=p_proc_actual;//lo ponemos como proceso anterior
+    p_proc_actual=planificador();//conseguimos el siguiente proceso que le toca
+
+    peticion_de_cambio=0;
+    fijar_nivel_int(interrupcion);
+    cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
+}
+static void pedir_cambiar_proceso()
+{
+    printk("pedir_cambiar_proceso()");
+    peticion_de_cambio=1;
     activar_int_SW();
 }
 
@@ -221,13 +238,14 @@ static void comprobar_rodaja()
         {
             printk("A %d se le han acabado los TICKS, cambiando al siguiente proceso"\
                 " id ",p_proc_actual->id,TICKS_restantes);
-            p_proc_anterior=p_proc_actual;
+            pedir_cambiar_proceso();
+/*            p_proc_anterior=p_proc_actual;
             eliminar_primero(&lista_listos);
             insertar_ultimo(&lista_listos,p_proc_anterior);
             p_proc_actual=planificador();
             printk("%d\n",p_proc_actual->id);
             cambio_contexto(&(p_proc_anterior->contexto_regs),&(p_proc_actual->contexto_regs));
-        }
+*/        }
     }
     return;
 }
@@ -345,11 +363,9 @@ static void tratar_llamsis(){
  */
 static void int_sw(){
     printk("int_sw()");
-    int interrupcion=fijar_nivel_int(NIVEL_2);
 	printk("-> TRATANDO INT. SW\n");
-    if (peticion_de_bloqueo)
-        bloquear_proceso();
-    fijar_nivel_int(interrupcion);
+    if (peticion_de_cambio)
+        cambiar_proceso();
 	return;
 }
 
@@ -502,6 +518,6 @@ int sis_dormir(){
 	longi=(unsigned int)leer_registro(1); //leemos el tiempo que hay que dormir
     p_proc_actual->despertar=longi*TICK; //ponemos el valor en despertar
     printk("despertar de %d es %d\n",p_proc_actual->id, p_proc_actual->despertar);
-    pedir_bloquear_proceso();
+    bloquear_proceso();
     return 0;//Aqui no se llega
 }

@@ -89,6 +89,7 @@ lista_BCPs lista_bloqueados= {NULL, NULL};
 static unsigned int TICKS_restantes;
 
 static unsigned char peticion_de_bloqueo;
+static unsigned char peticion_de_cambio;
 
 /*
  *
