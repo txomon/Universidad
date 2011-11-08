@@ -12,11 +12,11 @@ POR_:
 	BANKSEL	MAQUINA_EST; siempre al principio de todos los estados
 	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
 	BTFSS	EST_CTL,0;
-		GOTO	POR_CTL_PER_CONFIG;
+		GOTO	POR_CTL_PER_CONFIG; Intenta configurarlo
 	BTFSS	EST_CTL,1;
-		GOTO	POR_CTL_PER_ANALIZE;
+		GOTO	POR_CTL_PER_ANALIZE; Mira si lo ha conseguido
 	BTFSS	EST_CTL,2;
-		GOTO	STANDBY_;
+		GOTO	STANDBY_; Salta a la siguiente etapa
 	MOVF	KEYHU,W;
 	IORWF	KEYHL,W;
 	BTFSS	STATUS,Z;
@@ -31,10 +31,10 @@ POR_:
 		POR_CTL_PER_CONFIG:
 			CLRF	RCV_CONT;
 			CLRF	SER_CTL;
-			BSF	SER_CTL,IS_CMD;
-			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF';
+			BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
+			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
 			MOVWF	SND_CONT;
-			CALL	SEND_AT;
+			CALL	SEND_AT; Mandamos AT
 			BANKSEL	EST_CTL;
 			BSF	EST_CTL,0;
 			MOVLW	H'3F';
@@ -43,9 +43,10 @@ POR_:
 				NOP			; 
 				DECFSZ	TMP2,F		; Se decrementa contador básico
 				GOTO	POR_WAIT	; hasta llegar a cero
-			BCF	EST_CTL,1;
+			BCF	EST_CTL,1; Damos unas cuantas vueltas para dejar que se mande el comando
 			RETURN;
-			
+
+
 		;******** POR_CTL_PER_ANALIZE ********;
 		;;
 		; Esta funcion se encarga de comprobar que el comando ha recibido
@@ -55,8 +56,7 @@ POR_:
 		; @return EST_CTL - Control del avance del estado
 		;;
 		POR_CTL_PER_ANALIZE:
-			MOVF	RCV_CONT,W;
-			BTFSC	STATUS,Z;
+			BTFSS	SER_CTL,IS_RCV;
 				RETURN;	
 			MOVLW	H'1F'; La posición en la que voy a poner lo que se recibe.
 			MOVWF	FSR;
@@ -67,18 +67,19 @@ POR_:
 			MOVF	INDF,W;
 			CALL	LCDDWR;Escribo la letra en pantalla
 
-			MOVF	INDF,W; Comprobamos si el caracter es <CR>
-			XORLW	H'0D'; el caracter <CR> es lo que NO tiene que tener devuelto
-			BTFSC	STATUS,Z; Entrar si el caracter es <CR>
-				BCF	EST_CTL,0;Si la posición no tenia el caracter 0, entonces ha ejecutado mal la instrucción
-
 			MOVF	INDF,W; Comprobamos si el caracter es 0
 			XORLW	'0';
 			BTFSC	STATUS,Z;
-				BSF	EST_CTL,1; Pasamos al anterior estado, ya que este no ha recibido todavia la respuesta esperada.
+				BSF	EST_CTL,1; Si llegamo aqui es que pasamos al siguiente estado,
+				; ya que este ha recibido la respuesta esperada.
+			BTFSS	EST_CTL,1;
+				BCF	EST_CTL,0; Si no ha recibido la respuesta esperada, volver a hacer
+				;la peticion del comando
+			CLRF	RCV_CONT;
+				
 			RETURN
-		
-		
+
+
 		
 ;************ STANDBY_ *************;
 ;;
@@ -147,11 +148,11 @@ STANDBY_:
 			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
 		
 		
-		;CALL	ESCRIBE_REG; DEBUG ONLY!
+		CALL	ESCRIBE_REG; DEBUG ONLY!
 		
 		
 		
-		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y la # pulsadas
+		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y el 8 pulsadas
 		ANDLW	B'11011110';
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
@@ -176,6 +177,7 @@ STANDBY_:
 		
 		ESCRIBE_REG:
 			MOVLW	cur_set|h'40';Ponemos el cursor al principio de la pantalla
+			; en la segunda fila
 			CALL	LCDIWR;
 			
 			BTFSS	KEYHL,0;
@@ -266,7 +268,7 @@ STANDBY_:
 		;***** STANDBY_COMP_DESBLQ_EST0 *****;llegamos desde la nada, en teoria no hay nada pulsado
 		;;
 		; Estado 0, donde solo queremos que este pulsada la *
-		; @param KEYHL - miramos a la * y la #
+		; @param KEYHL - miramos a la * y el 8
 		; @return EST_CTL - indica en el estado que estamos dentro de STANDBY
 		;;
 		
@@ -322,9 +324,9 @@ STANDBY_:
 		STANDBY_COMP_DESBLQ_EST3:
 			BTFSC	KEYHL,0;Si la * esta pulsada
 				BCF	EST_CTL,2;
-			BTFSS	KEYHL,5;Si la # esta pulsada
+			BTFSC	KEYHL,5;Si la # esta pulsada
 				BCF	EST_CTL,3;
-			BTFSC	KEYHL,5;Si no, se acaba con la ultima fase.
+			BTFSS	KEYHL,5;Si no, se acaba con la ultima fase.
 				BSF	EST_CTL,3;
 			RETURN;
 
@@ -781,6 +783,8 @@ ESCRIBIR_SMS_:
 						RETURN;
 						
 			PARSER_ST:
+				MOVLW	"S";
+				CALL	SERIAL_SEND;
 				SLEEP;
 				BANKSEL	PARSER_TEMP;
 				BSF	PARSER_LTR_INFO, PLI_INUSE;
@@ -969,7 +973,7 @@ MANDAR_SMS_:
 					GOTO	M_PARSER_CHNG_SAVE;
 				M_PARSER_L_VERD:
 					MOVLW	H'22';
-					GOTO	M_PARSER_CHNG_SAVE
+					GOTO	M_PARSER_CHNG_NEW
 					
 				;;
 				; Aqui es donde propiamente, guardo el caracter en la pantalla, y lo
@@ -1000,6 +1004,10 @@ MANDAR_SMS_:
 					MOVWF	PARSER_LTR;
 					RETURN;
 
+;;
+; Esta función se encarga de recoger el número de movil al que se quiere enviar
+; el mensaje escrito en la EEPROM
+;;
 ENVIAR_SMS_:
 	BANKSEL	KEYHL;
 	MOVF	MAQUINA_EST,W; Comprobamos si estamos aquí por primera vez
@@ -1047,7 +1055,7 @@ ENVIAR_SMS_:
 			GOTO	PUT_ENVIAR_LOOP;vuelvo a contar
 		PUT_ENVIAR_LOOP_END:;Hemos salido
 		BANKSEL LCD_CTL;
-		MOVLW	LTR_ENVIAR_;Cambiamos lo que hay en pantalla a "STANDBY"
+		MOVLW	LTR_ENVIAR_;Cambiamos lo que hay en pantalla a "Enviando"
 		MOVWF	LCD_CTL;
 		; Hasta aqui, hemos puesto "enviando" en la pantalla 
 		
