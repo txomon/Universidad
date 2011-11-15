@@ -43,6 +43,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/ipc.h>
 #include <time.h>
 #include <signal.h>
 #include "procesos.h"
@@ -112,6 +113,23 @@ int debug3( const char *format , ...)
     return 0;
 }
 
+int hijo(char clase[5], int max_t, FILE *input_file )
+{
+    int id_shm,id_sem;
+    union semun{
+        int val;
+        char *array;
+        struct semid_ds *buff;
+    } arg;
+
+    debug1("%s: Hijo empieza su ejecucion",clase);
+    debug3("\t => max_t=%d",max_t);
+
+    printf("Hijo empieza\n");
+    
+    
+    return 0;
+}
 
 int main(int args, char *argv[])
 {
@@ -123,7 +141,7 @@ int main(int args, char *argv[])
     FILE *aux_f=NULL;
     char aux_char[2]={EOF,0};
     /* variables de programa */ 
-    int n_pro=1,dormir=10;
+    int n_pro=1,dormir=10,max_t;
     pid_t *pid;
     char clase[]="MAIN";
     
@@ -135,7 +153,7 @@ int main(int args, char *argv[])
     debug1("%s: Empieza el programa",clase);
     debug2("%s: clock_gettime()",clase);
     debug3("\t => %d,%d",(int)tiempo_inicio.tv_sec,
-                        (int)tiempo_inicio.tv_nsec);
+                        -(int)tiempo_inicio.tv_nsec);
     debug2("%s: debug_file=stdout",clase);
     debug2("%s: input_file=stdin",clase);
     pid=calloc(1,sizeof(pid_t));
@@ -145,7 +163,7 @@ int main(int args, char *argv[])
     debug2("%s: Hay %d argumento(s)",clase,args-1);
     for(x=0;x<=args-1;x++)
         debug3("\t => arg[%d]: %s",x,argv[x]);
-    while ((opt=getopt(args,argv, "f:n:ir:s:")) != -1){
+    while ((opt=getopt(args,argv, "f:n:ir:s:m:")) != -1){
         debug2("%s: La opcion encontrada es %c",clase,opt);
         switch (opt){
         case 'f':
@@ -167,7 +185,7 @@ int main(int args, char *argv[])
             debug2("%s: Encontrada opcion para cambiar el "
                     "numero de hijos",clase);
             debug3("\t => n_pro=%d",x=atoi(optarg));
-            realloc(pid,x*sizeof(pid_t));
+            pid=realloc(pid,x*sizeof(pid_t));
             debug2("%s: Reservado un tamaño de memoria %d*%d",
                         clase,(int)x,(int)sizeof(pid_t));
             req|=1;
@@ -181,7 +199,7 @@ int main(int args, char *argv[])
             req|=4;
             break;
         case 'r':
-            debug2("%s: Encontrada opcion para poner el fi"
+            -debug2("%s: Encontrada opcion para poner el fi"
                     "chero de entrada normal",clase);
             debug3("\t => %s",optarg);
             req|=2;
@@ -194,7 +212,13 @@ int main(int args, char *argv[])
             debug3("\t => %d a %d",dormir,atoi(optarg));
             dormir=atoi(optarg);
             break;
-            
+        
+        case 'm':
+            debug2("%s: Encontrada opcion para maximo de tiempo que "
+                "tiene que esperar",clase);
+            max_t=atoi(optarg);
+            debug3("\t => max_t=%d",max_t);
+            break;
         case ':':
             debug2("%s: En las opciones falta un operando",clase);
             debug3("\t => opt=%c",optopt);
@@ -224,10 +248,11 @@ int main(int args, char *argv[])
         fclose(aux_f);
         aux_f=stderr;
     }
-    if(req && 0==(req^1&&req^2&&req^4))
+    if( (req!=0) && (req==3 || req==7 || req==5) )
     {
         debug2("%s: No se han cumplido las especificaciones de argumentos",
             clase);
+        debug3("\t => req=%d",req);
         return -1;
     }
 
@@ -236,10 +261,16 @@ int main(int args, char *argv[])
     debug1("%s: Empezamos a crear los hijos",clase);
     for(x=0;x<n_pro&&pid!=0;x++)
     {
+        printf("%s: Creo hijo %d\n",clase,x);
         pid[x]=fork();
+        
         if(pid==0)
         {
-         //   consumidor();
+            printf("Hijo creado\n");
+            if((req&4)&&(x==(n_pro-1)))
+                hijo(clase,max_t,input_file);
+            else
+                hijo(clase,max_t, stdin);
             return 0;
         }
     }
