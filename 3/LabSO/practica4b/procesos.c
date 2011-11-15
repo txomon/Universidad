@@ -44,6 +44,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/ipc.h>
+#include <sys/sem.h>
 #include <time.h>
 #include <signal.h>
 #include "procesos.h"
@@ -126,7 +127,8 @@ int hijo(char clase[5], int max_t, FILE *input_file )
     debug3("\t => max_t=%d",max_t);
 
     printf("Hijo empieza\n");
-    
+    debug2("%s: Abro el semaforo");
+    id_sem=semget(LLAVE,N_PARTES,IPC_CREAT|0666);
     
     return 0;
 }
@@ -264,7 +266,7 @@ int main(int args, char *argv[])
         printf("%s: Creo hijo %d\n",clase,x);
         pid[x]=fork();
         
-        if(pid==0)
+        if(pid[x]==0)
         {
             printf("Hijo creado\n");
             if((req&4)&&(x==(n_pro-1)))

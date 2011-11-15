@@ -18,6 +18,8 @@ struct timespec tiempo_inicio;
 #define DEBUG "DEBUG"
 
 #define LLAVE (key_t)0x22652343341L
-#define SHMTAM 120*sizeof(char)
+#define N_PARTES 4
+#define TAM_PARTES 40
+#define SHMTAM N_PARTES*TAM_PARTES*sizeof(char)
 
 #endif
