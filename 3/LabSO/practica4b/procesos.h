@@ -10,6 +10,7 @@ int debug3(const char *format, ...)
     __attribute__ (( format(printf,1,2) ));
 
 FILE* debug_file;
+FILE* input_file;
 
 struct timespec tiempo_inicio;
 

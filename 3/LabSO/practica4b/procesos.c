@@ -44,7 +44,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <time.h>
-
+#include <signal.h>
 #include "procesos.h"
 
 
@@ -115,12 +115,21 @@ int debug3( const char *format , ...)
 
 int main(int args, char *argv[])
 {
-    int x,n_pro=1,n_con=1,opt,pid;
-    char clase[]="MAIN",aux_char[2]={EOF,0};
+    /* Variables auxiliares */
+    int x;
+    /* Parseador de Argumentos */
+    int opt, req=0;
+    /* variables de debug */
     FILE *aux_f=NULL;
+    char aux_char[2]={EOF,0};
+    /* variables de programa */ 
+    int n_pro=1,dormir=10;
+    pid_t *pid;
+    char clase[]="MAIN";
     
     clock_gettime(CLOCK_REALTIME,&tiempo_inicio);
     debug_file=tmpfile();
+    input_file=stdin;
     printf("%s: Empieza el programa\n",clase);
 
     debug1("%s: Empieza el programa",clase);
@@ -128,12 +137,15 @@ int main(int args, char *argv[])
     debug3("\t => %d,%d",(int)tiempo_inicio.tv_sec,
                         (int)tiempo_inicio.tv_nsec);
     debug2("%s: debug_file=stdout",clase);
+    debug2("%s: input_file=stdin",clase);
+    pid=calloc(1,sizeof(pid_t));
 
+    /*  Parseamos los argumentos */
     debug1("%s: Parseamos los argumentos",clase);
     debug2("%s: Hay %d argumento(s)",clase,args-1);
     for(x=0;x<=args-1;x++)
         debug3("\t => arg[%d]: %s",x,argv[x]);
-    while ((opt=getopt(args,argv, "f:")) != -1){
+    while ((opt=getopt(args,argv, "f:n:ir:s:")) != -1){
         debug2("%s: La opcion encontrada es %c",clase,opt);
         switch (opt){
         case 'f':
@@ -154,15 +166,46 @@ int main(int args, char *argv[])
         case 'n':
             debug2("%s: Encontrada opcion para cambiar el "
                     "numero de hijos",clase);
-            debug3("\t => n_pro=%d",atoi(optarg));
+            debug3("\t => n_pro=%d",x=atoi(optarg));
+            realloc(pid,x*sizeof(pid_t));
+            debug2("%s: Reservado un tamaño de memoria %d*%d",
+                        clase,(int)x,(int)sizeof(pid_t));
+            req|=1;
             n_pro=atoi(optarg);
-            debug2("%s: Numero de productores cambiado",clase);
+            debug2("%s: Numero de hijos cambiado",clase);
             break;
+        case 'i':
+            debug2("%s: Encontrada opcion para tener una e"
+                    "ntrada interactiva",clase);
+            debug3("\t => -i");
+            req|=4;
+            break;
+        case 'r':
+            debug2("%s: Encontrada opcion para poner el fi"
+                    "chero de entrada normal",clase);
+            debug3("\t => %s",optarg);
+            req|=2;
+            input_file=fopen(optarg,"r");
+            debug2("%s: Hemos abierto el fichero de entrada",clase);
+            break;
+        case 's':
+            debug2("%s: Encontrada opcion para tiempo de ejecucion"
+                    "del programa",clase);
+            debug3("\t => %d a %d",dormir,atoi(optarg));
+            dormir=atoi(optarg);
+            break;
+            
+        case ':':
+            debug2("%s: En las opciones falta un operando",clase);
+            debug3("\t => opt=%c",optopt);
+            fprintf(stderr, "La opcion -%c requiere de un operando\n",
+                    optopt);
         default:
             debug2("%s: Encontrada opcion no contenida",clase);
             debug3("\t => opt=%c optarg=%s",opt,optarg);
-            fprintf(stderr, "Uso: %s [-p num_productores] [-c num_co"
-                "nsumidores]\n", argv[0]);
+            fprintf(stderr, "Uso: %s [-n num_procesos -r fichero"
+                " de entrada [-i]] [-f fichero de"
+                " debug]\n", argv[0]);
             debug2("%s: Fallo grave de opciones, salimos del"
                     " programa",clase);
             return -1;
@@ -181,17 +224,35 @@ int main(int args, char *argv[])
         fclose(aux_f);
         aux_f=stderr;
     }
-    debug1("%s: Empezamos a crear los consumidores",clase);
-    for(x=0;x<n_con&&pid!=0;x++)
+    if(req && 0==(req^1&&req^2&&req^4))
     {
-        //pid=fork();
+        debug2("%s: No se han cumplido las especificaciones de argumentos",
+            clase);
+        return -1;
+    }
+
+
+    /* Empezamos con el verdadero programa */
+    debug1("%s: Empezamos a crear los hijos",clase);
+    for(x=0;x<n_pro&&pid!=0;x++)
+    {
+        pid[x]=fork();
         if(pid==0)
         {
          //   consumidor();
-            break;
+            return 0;
         }
     }
+   
+    /* Despues de lanzar todos los procesos hijo, esperamos */
+    sleep(dormir);
 
+    /* Despues de esperar, matamos a todos los procesos hijo */
+    for(x=0;x<n_pro;x++)
+    {
+        kill(pid[x],SIGKILL);
+        debug2("%s: Mandada señal de muerte al proceso hijo %d",clase,x);
+    }
     debug1("%s: Acaba el programa",clase);
     printf("%s: Acaba el programa\n",clase);
     return 0;
