@@ -142,26 +142,29 @@ int hijo(char clase[5], int max_t, FILE *file )
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
     shmat(id_shm,0,0);
-    printf("1\n");
     while (!hayquesalir){
-        printf("2\n");
         debug2("%s: Intento conseguir una posicion dentro del sem"
             "aforo de mi clase",clase);
         debug3("%s=> %d tiene sem_value=%d",clase, NSEM_CONS,
             semctl(id_sem,NSEM_PROD,GETVAL));
-        printf("3\n");
         sem_ops[0].sem_num=NSEM_PROD;
         sem_ops[0].sem_op=SEM_WAIT;
         sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
-        printf("4\n");
 
         sem_arg.array=NULL;
         semctl(id_sem,0,GETALL,sem_arg.array);
-        printf("5\n");
+
+        printf("1\n");
         debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
+        for(x=0;(x<N_PARTES);x++)
+            debug3("%s: SHA%1d=%3u SHA%1dPROD=%3u SHA%1dCONS=%3u",
+                clase,x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD],
+                x,sem_arg.array[x*3+SEM_CONS]);
+        printf("2\n");
+
+        
         for(x=0;(x<N_PARTES)&&(!hayquesalir);x++){
-            printf("6\n");
             printf("%s: SHA%d=%u SHA%dPROD=%u\n",clase,
                 x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD]);
             debug2("%s: Busco un hueco en el semaforo %d",clase,x);
