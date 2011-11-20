@@ -1,6 +1,6 @@
-CC=gcc
+CC = gcc
 
-CFLAGS= -Wall -g -Werror=format 
+CFLAGS = -Wall -g -Werror=format 
 
 LIBRARIES = -lrt
 
