@@ -7,6 +7,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
@@ -45,8 +46,8 @@ char hayquesalir;
  * Especificación del semaforo dentro de las partes que corresponde a cada
  * clase
  */
-#define SEM_PROD 1;
-#define SEM_CONS 2;
+#define SEM_PROD 1
+#define SEM_CONS 2
 /* El tamaño de la memoria compartida se redondeará a este numero*/
 #define PAGE_SIZE getpagesize()
 #define TAM_PARTES PAGE_SIZE 

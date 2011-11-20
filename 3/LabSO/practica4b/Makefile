@@ -8,7 +8,9 @@ CONS_OBJ = consumidor.o
 
 PROD_OBJ = productor.o
 
-EXECS = consumidor productor
+CONT_OBJ = controlador.o
+
+EXECS = controlador consumidor productor
 
 all: $(EXECS)
 
@@ -18,7 +20,10 @@ productor: $(PROD_OBJ)
 
 consumidor: $(CONS_OBJ)
 	$(CC) $(CONS_OBJ) -o $@ $(LIBRARIES)
-        
+
+controlador: $(CONT_OBJ)
+	$(CC) $(CONT_OBJ) -o $@ $(LIBRARIES)
+
 clean:
 	rm -f *.o
 	rm -f $(EXECS)
