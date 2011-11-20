@@ -25,6 +25,7 @@ controlador: $(CONT_OBJ)
 	$(CC) $(CONT_OBJ) -o $@ $(LIBRARIES)
 
 clean:
+	rm -f *.log
 	rm -f *.o
 	rm -f $(EXECS)
 
