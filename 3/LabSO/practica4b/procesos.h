@@ -1,7 +1,19 @@
 #ifndef _PROCESOS_H_
 
 #define _PROCESOS_H_
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdarg.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/sem.h>
+#include <sys/shm.h>
+#include <time.h>
+#include <signal.h>
+#include <errno.h>
+
 int debug1(const char *format, ...)
     __attribute__ (( format(printf,1,2) ));
 int debug2(const char *format, ...)

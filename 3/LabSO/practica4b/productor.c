@@ -38,15 +38,6 @@
                 para las trazas como el de la salida estándar.]
 
 */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/sem.h>
-#include <time.h>
-#include <signal.h>
 #include "procesos.h"
 
 
@@ -132,7 +123,7 @@ int hijo(char clase[5], int max_t, FILE *file )
     char *sh_mem;
     union semun{
         int val;
-        char *array;
+        unsigned short *array;
         struct semid_ds *buf_sem;
     } sem_arg;
     union shmun{
@@ -142,8 +133,8 @@ int hijo(char clase[5], int max_t, FILE *file )
     } shm_arg;
     struct sembuf *sem_ops=calloc(2,sizeof(struct sembuf));
     
-    sem_ops[0]->sem_flg=0;
-    sem_ops[1]->sem_flg=0;
+    sem_ops[0].sem_flg=0;
+    sem_ops[1].sem_flg=0;
 
     debug1("%s: Hijo empieza su ejecucion",clase);
     debug3("\t => max_t=%d",max_t);
@@ -158,15 +149,16 @@ int hijo(char clase[5], int max_t, FILE *file )
     while (!hayquesalir){
         debug2("%s: Intento conseguir una posicion dentro del sem"
             "aforo de mi clase",clase);
-        debug3("\t=> sem_value=%d",clase, semctl(id_sem,
-            /*myclasssemval TODO*/,GETVAL));
+        debug3("%s=> sem_value=%d",clase, semctl(id_sem,
+            NSEM_PROD+1,GETVAL));
 
-        sem_ops[0]->sem_num=/*myclasssemval TODO*/;
-        sem_ops[0]->sem_op=SEM_WAIT;
-        sem_ops[0]->sem_flg=0;
+        sem_ops[0].sem_num=NSEM_PROD+1;
+        sem_ops[0].sem_op=SEM_WAIT;
+        sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
 
-        semctl(id_sem,sem_arg.array,GETALL);
+        sem_arg.array=NULL;
+        semctl(id_sem,0,GETALL,sem_arg.array);
         for(x=0;x<N_PARTES;x++){
             debug2("%s: Busco un hueco en el semaforo %d",clase,x);
             if(1==sem_arg.array[x])
@@ -175,16 +167,16 @@ int hijo(char clase[5], int max_t, FILE *file )
                     "memoria compartida. Me quedare hasta que pueda hacer"
                     " mi trabajo", clase, x);
 
-                sem_ops[0]->sem_num=x;
-                sem_ops[1]->sem_num=x+/*mysemval TODO*/;
-                sem_ops[1]->sem_op=SEM_WAIT;
+                sem_ops[0].sem_num=x;
+                sem_ops[1].sem_num=x+SEM_CONS;
+                sem_ops[1].sem_op=SEM_WAIT;
                 returnvalue=semop(id_sem,sem_ops,2);
                 if(returnvalue==-1&&EINTR==errno){
                     debug2("%s: Se me ha mandado acabar mientras estaba "
                         "en la cola de espera de %d",clase,x);
-                    sem_ops[0]->sem_op=SEM_SIGNAL;
-                    sem_ops[1]->sem_op=SEM_SIGNAL;
-                    sem_ops[1]->sem_num=/*myclasssemval TODO*/;
+                    sem_ops[0].sem_op=SEM_SIGNAL;
+                    sem_ops[1].sem_op=SEM_SIGNAL;
+                    sem_ops[1].sem_num=NSEM_PROD+1;
                     exit(EXIT_SUCCESS);
                 }
                 debug2("%s: He conseguido el acceso a la zona %d",clase,x);
@@ -195,9 +187,9 @@ int hijo(char clase[5], int max_t, FILE *file )
 
                 debug2("%s: He acabado mis cosas en la zona %d, ahora toc"
                     "a salir",clase,x);
-                sem_ops[0]->sem_op=SEM_SIGNAL;
-                sem_ops[1]->sem_num=x+/*otherssemval TODO*/;
-                sem_ops[1]->sem_op=SEM_SIGNAL;
+                sem_ops[0].sem_op=SEM_SIGNAL;
+                sem_ops[1].sem_num=x+SEM_CONS;//Le abro el camino al prod
+                sem_ops[1].sem_op=SEM_SIGNAL;
                 semop(id_sem,sem_ops,2);
                 debug3("%s: He mandado SEM_SIGNAL al otro y he liberado e"
                     "l acceso a esta zona",clase);
@@ -205,8 +197,8 @@ int hijo(char clase[5], int max_t, FILE *file )
             }
         }
         debug2("%s: Como ya he hecho mi trabajo, dejo que otro acceda");
-        sem_ops[0]->sem_op=SEM_SIGNAL;
-        sem_ops[0]->sem_num=/*mysemval TODO*/;
+        sem_ops[0].sem_op=SEM_SIGNAL;
+        sem_ops[0].sem_num=NSEM_PROD+1;
         semop(id_sem,sem_ops,1);
     }    
     exit(EXIT_SUCCESS);
@@ -404,6 +396,7 @@ int main(int args, char *argv[])
         if(pid[x]==0)
         {
             /*TODO problemas entre los dos tipos (stdin) */
+            sprints(clase,"PRO%1d",x+1);
             debug2("%s: He sido creado");
             debug3("\t => CLASE=%s PID=%d",clase,(int)getpid());
             if((req&4)&&(x==(n_pro-1)))
