@@ -126,8 +126,8 @@ int hijo(char clase[5], int max_t, FILE *file )
     union semun{
         int val;
         unsigned short *array;
-        struct semid_ds *buf_sem;
-    } sem_arg;
+        struct semid_ds *bufsem;
+    }  sem_arg;
     struct sembuf *sem_ops=calloc(2,sizeof(struct sembuf));
     
     sem_ops[0].sem_flg=0;
@@ -138,7 +138,31 @@ int hijo(char clase[5], int max_t, FILE *file )
 
     printf("%s: Hijo empieza\n",clase);
     debug2("%s: Abro el semaforo",clase);
-    id_sem=semget(LLAVE,N_PARTES+2,0666);
+    id_sem=semget(LLAVE,(N_PARTES*3)+2,0666);
+    debug3("%s: id_sem=%d",clase,id_sem);
+    if(semctl(id_sem,0,GETALL,sem_arg.array))
+    {
+        switch(errno){
+        case EACCES:
+            debug3("%s: Error EACCES",clase);
+            break;
+        case EFAULT:
+            debug3("%s: Error EFAULT",clase);
+            break;
+        case EIDRM:
+            debug3("%s: Error EIDRM",clase);
+            break;
+        case EINVAL:
+            debug3("%s: Error EINVAL",clase);
+            break;
+        case EPERM:
+            debug3("%s: Error EPERM",clase);
+            break;
+        case ERANGE:
+            debug3("%s: Error ERANGE",clase);
+            break;
+        }
+    }
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
     shmat(id_shm,0,0);
@@ -152,8 +176,7 @@ int hijo(char clase[5], int max_t, FILE *file )
         sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
 
-        sem_arg.array=NULL;
-        semctl(id_sem,0,GETALL,sem_arg.array);
+        printf("0: %d",semctl(id_sem,0,GETALL,sem_arg.array));
 
         printf("1\n");
         debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
@@ -254,7 +277,8 @@ int main(int args, char *argv[])
                         -(int)tiempo_inicio.tv_nsec);
     debug2("%s: debug_file=stdout",clase);
     debug2("%s: archivo=",clase);/*TODO*/
-    debug2("%s: sigaction(%d)=%d",clase,MYSIGNAL,sigaction(MYSIGNAL,&sa,NULL));
+    debug2("%s: sigaction(%d)=%d",clase,MYSIGNAL,
+        sigaction(MYSIGNAL,&sa,NULL));
     pid=calloc(1,sizeof(pid_t));
 
     /*  Parseamos los argumentos */
