@@ -4,18 +4,22 @@ CFLAGS = -Wall -g -Werror=format
 
 LIBRARIES = -lrt
 
-OBJECTS1 = procesos.o
+CONS_OBJ = consumidor.o
 
-EXECS = procesos
+PROD_OBJ = productor.o
+
+EXECS = consumidor productor
 
 all: $(EXECS)
 
 
-procesos: $(OBJECTS1)
-	$(CC) $(OBJECTS1) -o $@ $(LIBRARIES)
+productor: $(PROD_OBJ)
+	$(CC) $(PROD_OBJ) -o $@ $(LIBRARIES)
+
+consumidor: $(CONS_OBJ)
+	$(CC) $(CONS_OBJ) -o $@ $(LIBRARIES)
         
 clean:
 	rm -f *.o
 	rm -f $(EXECS)
-
 
