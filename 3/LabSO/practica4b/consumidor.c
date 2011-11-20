@@ -141,7 +141,7 @@ int hijo(char clase[5], int max_t, FILE *file )
     id_sem=semget(LLAVE,N_PARTES+2,0666);
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
-    shmat(id_shm,0,0);
+    sh_mem=shmat(id_shm,NULL,0);
 
     while (!hayquesalir){
         debug2("%s: Intento conseguir una posicion dentro del sem"
@@ -398,7 +398,7 @@ int main(int args, char *argv[])
             if((req&4)&&(x==(n_pro-1)))
                 hijo(clase,max_t,archivo);
             else
-                hijo(clase,max_t, stdin);
+                hijo(clase,max_t,stdout);
             //Nunca llegarán hasta aqui, y si llegan:
             exit(EXIT_FAILURE);
         }
