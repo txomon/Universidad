@@ -123,11 +123,7 @@ int hijo(char clase[5], int max_t, FILE *file )
     /* Variables de programa */
     int id_shm,id_sem;
     char *sh_mem;
-    union semun{
-        int val;
-        unsigned short *array;
-        struct semid_ds *bufsem;
-    }  sem_arg;
+    union semun sem_arg;
     struct sembuf *sem_ops=calloc(2,sizeof(struct sembuf));
     
     sem_ops[0].sem_flg=0;
@@ -178,13 +174,11 @@ int hijo(char clase[5], int max_t, FILE *file )
 
         printf("0: %d",semctl(id_sem,0,GETALL,sem_arg.array));
 
-        printf("1\n");
         debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
         for(x=0;(x<N_PARTES);x++)
             debug3("%s: SHA%1d=%3u SHA%1dPROD=%3u SHA%1dCONS=%3u",
                 clase,x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD],
                 x,sem_arg.array[x*3+SEM_CONS]);
-        printf("2\n");
 
         
         for(x=0;(x<N_PARTES)&&(!hayquesalir);x++){
@@ -231,6 +225,7 @@ int hijo(char clase[5], int max_t, FILE *file )
         sem_ops[0].sem_op=SEM_SIGNAL;
         sem_ops[0].sem_num=NSEM_PROD;
         semop(id_sem,sem_ops,1);
+        sleep(1);
     }    
     exit(EXIT_SUCCESS);
 }
@@ -250,11 +245,7 @@ int main(int args, char *argv[])
     pid_t *pid;
     char clase[]="MAIN";
     int id_shm,id_sem;
-    union semun{
-        int val;
-        unsigned short *array;
-        struct semid_ds *buf_sem;
-    } sem_arg;
+    union semun sem_arg;
 
     /* Cosas de signal */
     hayquesalir=0;

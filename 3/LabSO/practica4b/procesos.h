@@ -29,6 +29,12 @@ FILE* archivo;
 struct timespec tiempo_inicio;
 char hayquesalir;
 
+union semun{
+    int val;
+    struct semid_ds *bufsem;
+    unsigned short *array;
+};
+
 /*
  * Nombre de la variable de entorno que tiene que tener el valor del 
  * nivel de detalle de las trazas
