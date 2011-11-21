@@ -158,10 +158,12 @@ int hijo(char clase[5], int max_t, FILE *file )
             debug3("%s: Error ERANGE",clase);
             break;
         }
+        debug3("%s: Ha fallado, saliendo\n",clase);
+        exit(EXIT_FAILURE);
     }
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
-    shmat(id_shm,0,0);
+    sh_mem=shmat(id_shm,0,0);
     while (!hayquesalir){
         debug2("%s: Intento conseguir una posicion dentro del sem"
             "aforo de mi clase",clase);
@@ -184,7 +186,7 @@ int hijo(char clase[5], int max_t, FILE *file )
             if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_PROD])
             {
                 debug2("%s: He encontrado un hueco en la zona %d de la "
-                    "memoria compartida. Me quedare hasta que pueda hacer"
+                    "memoria compartida. Me quedare hasta que haga"
                     " mi trabajo", clase, x);
 
                 sem_ops[0].sem_num=x*3;
@@ -201,8 +203,13 @@ int hijo(char clase[5], int max_t, FILE *file )
                 }
                 debug2("%s: He conseguido el acceso a la zona %d",clase,x);
 
-
-                //Aqui hago lo que sea
+                /*
+                 * Aqui hacemos lo que hemos venido a hacer, leemos del 
+                 * archivo que se nos dice y escribimos en la memoria
+                 * compartida
+                 */
+                
+                fscanf(file,"%s",sh_mem+x*TAM_PARTES);
 
 
                 debug2("%s: He acabado mis cosas en la zona %d, ahora toc"
