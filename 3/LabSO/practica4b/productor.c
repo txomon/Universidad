@@ -136,7 +136,7 @@ int hijo(char clase[5], int max_t, FILE *file )
     debug2("%s: Abro el semaforo",clase);
     id_sem=semget(LLAVE,(N_PARTES*3)+2,0666);
     debug3("%s: id_sem=%d",clase,id_sem);
-    if(semctl(id_sem,0,GETALL,sem_arg.array))
+    if(semctl(id_sem,0,GETALL,sem_arg))
     {
         switch(errno){
         case EACCES:
@@ -172,8 +172,6 @@ int hijo(char clase[5], int max_t, FILE *file )
         sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
 
-        printf("0: %d",semctl(id_sem,0,GETALL,sem_arg.array));
-
         debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
         for(x=0;(x<N_PARTES);x++)
             debug3("%s: SHA%1d=%3u SHA%1dPROD=%3u SHA%1dCONS=%3u",
@@ -182,8 +180,6 @@ int hijo(char clase[5], int max_t, FILE *file )
 
         
         for(x=0;(x<N_PARTES)&&(!hayquesalir);x++){
-            printf("%s: SHA%d=%u SHA%dPROD=%u\n",clase,
-                x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD]);
             debug2("%s: Busco un hueco en el semaforo %d",clase,x);
             if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_PROD])
             {
@@ -385,9 +381,9 @@ int main(int args, char *argv[])
             sem_array[x*3+SEM_CONS]=0;
         }
         sem_array[NSEM_PROD]=N_PARTES;
-        sem_array[NSEM_CONS]=N_PARTES;
+        sem_array[NSEM_CONS]=0;
         sem_arg.array=sem_array;
-        semctl(id_sem,0,SETALL,sem_arg.array);
+        semctl(id_sem,0,SETALL,sem_arg);
     }
     else{
         debug1("%s: Como el semaforo exisitia, duermo 1 segundo",clase);
@@ -400,7 +396,7 @@ int main(int args, char *argv[])
     // Creamos la memoria compartida
     if(-1!=(id_shm=shmget(LLAVE,SHMTAM,IPC_CREAT|IPC_EXCL|0666))){
         debug1("%s: La memoria compartida no existe, la creo",clase);
-        printf("%s: La memoria compartida no existe, la creo",clase);
+        printf("%s: La memoria compartida no existe, la creo\n",clase);
     }
 
 

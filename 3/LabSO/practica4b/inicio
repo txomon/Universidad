@@ -1,0 +1,5 @@
+ipcrm -S 0x61733713
+ipcrm -M 0x61733713
+make clean
+make
+export DEBUG=3
