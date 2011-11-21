@@ -10,7 +10,9 @@ PROD_OBJ = productor.o
 
 CONT_OBJ = controlador.o
 
-EXECS = controlador consumidor productor
+TEST_OBJ = testcase.o
+
+EXECS = testcase controlador consumidor productor
 
 all: $(EXECS)
 
@@ -23,6 +25,9 @@ consumidor: $(CONS_OBJ)
 
 controlador: $(CONT_OBJ)
 	$(CC) $(CONT_OBJ) -o $@ $(LIBRARIES)
+
+testcase: $(TEST_OBJ)
+	$(CC) $(TEST_OBJ) -o $@ $(LIBRARIES)
 
 clean:
 	rm -f *.log

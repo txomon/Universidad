@@ -95,8 +95,6 @@ int debug3( const char *format , ...)
     fprintf(debug_file,"[%5.5d.%6.6d]-DBG3 ",
              (int)(tiempo_actual.tv_sec-tiempo_inicio.tv_sec),
              (int)((tiempo_actual.tv_nsec-tiempo_inicio.tv_nsec)/1000));
-                                  
- 
     va_start(argp,format);
     vfprintf(debug_file,format, argp);
     va_end(argp);
@@ -115,14 +113,14 @@ static void manejador (int sig, siginfo_t *si, void *unused)
     hayquesalir=1;
 }
 
-
-
 int hijo(char clase[5], int max_t, FILE *file )
 {
     int x,returnvalue;
     /* Variables de programa */
     int id_shm,id_sem;
     char *sh_mem;
+    ushort sem_array[(N_PARTES*3)+2];
+
     union semun sem_arg;
     struct sembuf *sem_ops=calloc(2,sizeof(struct sembuf));
     
@@ -136,34 +134,13 @@ int hijo(char clase[5], int max_t, FILE *file )
     debug2("%s: Abro el semaforo",clase);
     id_sem=semget(LLAVE,(N_PARTES*3)+2,0666);
     debug3("%s: id_sem=%d",clase,id_sem);
-    if(-1==semctl(id_sem,0,GETALL,sem_arg))
-    {
-        switch(errno){
-        case EACCES:
-            debug3("%s: Error EACCES",clase);
-            break;
-        case EFAULT:
-            debug3("%s: Error EFAULT",clase);
-            break;
-        case EIDRM:
-            debug3("%s: Error EIDRM",clase);
-            break;
-        case EINVAL:
-            debug3("%s: Error EINVAL",clase);
-            break;
-        case EPERM:
-            debug3("%s: Error EPERM",clase);
-            break;
-        case ERANGE:
-            debug3("%s: Error ERANGE",clase);
-            break;
-        }
-        debug3("%s: Ha fallado, saliendo\n",clase);
-        exit(EXIT_FAILURE);
-    }
+    sem_arg.array=sem_array;
+
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
     sh_mem=shmat(id_shm,0,0);
+
+
     while (!hayquesalir){
         debug2("%s: Intento conseguir una posicion dentro del sem"
             "aforo de mi clase",clase);
@@ -173,34 +150,46 @@ int hijo(char clase[5], int max_t, FILE *file )
         sem_ops[0].sem_op=SEM_WAIT;
         sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
+        semctl(id_sem,0,GETALL,sem_arg);
 
         debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
         for(x=0;(x<N_PARTES);x++)
-            debug3("%s: SHA%1d=%3u SHA%1dPROD=%3u SHA%1dCONS=%3u",
+            debug3("%s: SHA%1d=%-3u SHA%1dPROD=%-3u SHA%1dCONS=%-3u",
                 clase,x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD],
                 x,sem_arg.array[x*3+SEM_CONS]);
 
         
         for(x=0;(x<N_PARTES)&&(!hayquesalir);x++){
             debug2("%s: Busco un hueco en el semaforo %d",clase,x);
-            if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_PROD])
-            {
+            if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_PROD]){
                 debug2("%s: He encontrado un hueco en la zona %d de la "
                     "memoria compartida. Me quedare hasta que haga"
                     " mi trabajo", clase, x);
 
                 sem_ops[0].sem_num=x*3;
+                sem_ops[0].sem_op=SEM_WAIT;
                 sem_ops[1].sem_num=x*3+SEM_PROD;
                 sem_ops[1].sem_op=SEM_WAIT;
                 returnvalue=semop(id_sem,sem_ops,2);
-                if(returnvalue==-1&&EINTR==errno){
-                    debug2("%s: Se me ha mandado acabar mientras estaba "
-                        "en la cola de espera de %d",clase,x);
-                    sem_ops[0].sem_op=SEM_SIGNAL;
-                    sem_ops[1].sem_op=SEM_SIGNAL;
-                    sem_ops[1].sem_num=NSEM_PROD;
-                    exit(EXIT_SUCCESS);
+                if(returnvalue==-1){
+                    if(EINTR==errno){
+                        debug2("%s: Se me ha mandado acabar mientras"
+                        " estaba en la cola de espera de %d",clase,x);
+                        sem_ops[0].sem_op=SEM_SIGNAL;
+                        sem_ops[1].sem_op=SEM_SIGNAL;
+                        sem_ops[1].sem_num=NSEM_PROD;
+                        exit(EXIT_SUCCESS);
+                    }
+                    else
+                        debug2("%s: Ha devuelto -1... errno a comprobar",
+                        clase);
                 }
+                semctl(id_sem,0,GETALL,sem_arg);
+                debug3("%s: SHA%1d=%-3u SHA%1dPROD=%-3u SHA%1dCONS=%-3u",
+                    clase,x,sem_arg.array[x*3],x,
+                    sem_arg.array[x*3+SEM_PROD],x,
+                    sem_arg.array[x*3+SEM_CONS]);
+
                 debug2("%s: He conseguido el acceso a la zona %d",clase,x);
 
                 /*
@@ -209,13 +198,16 @@ int hijo(char clase[5], int max_t, FILE *file )
                  * compartida
                  */
                 
-                fscanf(file,"%s",sh_mem+x*TAM_PARTES);
-
+                debug3("%s: Se han metido %d caracteres en memoria compar"
+                    "tida",clase,snprintf(sh_mem+x*3,TAM_PARTES,
+                    "soy el productor %s y tengo un mensaje para ti: mi p"
+                    "id es %d\n",clase,getpid()));
 
                 debug2("%s: He acabado mis cosas en la zona %d, ahora toc"
                     "a salir",clase,x);
+                sem_ops[0].sem_op=x*3;
                 sem_ops[0].sem_op=SEM_SIGNAL;
-                sem_ops[1].sem_num=x+SEM_CONS;//Le abro el camino al prod
+                sem_ops[1].sem_num=x*3+SEM_CONS;//Le abro el camino al cons
                 sem_ops[1].sem_op=SEM_SIGNAL;
                 semop(id_sem,sem_ops,2);
                 debug3("%s: He mandado SEM_SIGNAL al otro y he liberado e"
@@ -226,10 +218,10 @@ int hijo(char clase[5], int max_t, FILE *file )
         debug2("%s: Como ya he hecho mi trabajo, dejo que otro acceda"
             ,clase);
         sem_ops[0].sem_op=SEM_SIGNAL;
-        sem_ops[0].sem_num=NSEM_PROD;
+        sem_ops[0].sem_num=NSEM_CONS;
         semop(id_sem,sem_ops,1);
         sleep(1);
-    }    
+    } 
     exit(EXIT_SUCCESS);
 }
 
@@ -262,7 +254,7 @@ int main(int args, char *argv[])
 
     clock_gettime(CLOCK_REALTIME,&tiempo_inicio);
     debug_file=tmpfile();
-    archivo=stdin;/*TODO*/
+    archivo=fopen("input.txt","r");/*TODO*/
     printf("%s: Empieza el programa\n",clase);
 
     debug1("%s: Empieza el programa",clase);

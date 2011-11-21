@@ -95,8 +95,6 @@ int debug3( const char *format , ...)
     fprintf(debug_file,"[%5.5d.%6.6d]-DBG3 ",
              (int)(tiempo_actual.tv_sec-tiempo_inicio.tv_sec),
              (int)((tiempo_actual.tv_nsec-tiempo_inicio.tv_nsec)/1000));
-                                  
- 
     va_start(argp,format);
     vfprintf(debug_file,format, argp);
     va_end(argp);
@@ -115,33 +113,33 @@ static void manejador (int sig, siginfo_t *si, void *unused)
     hayquesalir=1;
 }
 
-
-
 int hijo(char clase[5], int max_t, FILE *file )
 {
     int x,returnvalue;
     /* Variables de programa */
     int id_shm,id_sem;
     char *sh_mem;
-    union semun{
-        int val;
-        unsigned short *array;
-        struct semid_ds *buf_sem;
-    } sem_arg;
+    ushort sem_array[(N_PARTES*3)+2];
+
+    union semun sem_arg;
     struct sembuf *sem_ops=calloc(2,sizeof(struct sembuf));
     
     sem_ops[0].sem_flg=0;
     sem_ops[1].sem_flg=0;
 
     debug1("%s: Hijo empieza su ejecucion",clase);
+    printf("%s: Hijo empieza\n",clase);
     debug3("%s: max_t=%d",clase,max_t);
 
-    printf("%s: Hijo empieza\n",clase);
     debug2("%s: Abro el semaforo",clase);
-    id_sem=semget(LLAVE,N_PARTES+2,0666);
+    id_sem=semget(LLAVE,(N_PARTES*3)+2,0666);
+    debug3("%s: id_sem=%d",clase,id_sem);
+    sem_arg.array=sem_array;
+
     debug2("%s: Abro la memoria compartida",clase);
     id_shm=shmget(LLAVE,SHMTAM,0666);
-    sh_mem=shmat(id_shm,NULL,0);
+    sh_mem=shmat(id_shm,0,0);
+
 
     while (!hayquesalir){
         debug2("%s: Intento conseguir una posicion dentro del sem"
@@ -153,37 +151,60 @@ int hijo(char clase[5], int max_t, FILE *file )
         sem_ops[0].sem_op=SEM_WAIT;
         sem_ops[0].sem_flg=0;
         semop(id_sem,sem_ops,1);
+        semctl(id_sem,0,GETALL,sem_arg);
 
-        sem_arg.array=NULL;
-        semctl(id_sem,0,GETALL,sem_arg.array);
-        for(x=0;x<N_PARTES&&!hayquesalir;x++){
+        debug3("%s: Antes de entrar, hayquesalir=%d",clase,hayquesalir);
+        for(x=0;(x<N_PARTES);x++)
+            debug3("%s: SHA%1d=%-3u SHA%1dPROD=%-3u SHA%1dCONS=%-3u",
+                clase,x,sem_arg.array[x*3],x,sem_arg.array[x*3+SEM_PROD],
+                x,sem_arg.array[x*3+SEM_CONS]);
+
+        
+        for(x=0;(x<N_PARTES)&&(!hayquesalir);x++){
             debug2("%s: Busco un hueco en el semaforo %d",clase,x);
-            if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_CONS])
-            {
+            if(1==sem_arg.array[x*3]&&1==sem_arg.array[x*3+SEM_CONS]){
                 debug2("%s: He encontrado un hueco en la zona %d de la "
-                    "memoria compartida. Me quedare hasta que pueda hacer"
+                    "memoria compartida. Me quedare hasta que haga"
                     " mi trabajo", clase, x);
 
                 sem_ops[0].sem_num=x*3;
+                sem_ops[0].sem_op=SEM_WAIT;
                 sem_ops[1].sem_num=x*3+SEM_CONS;
                 sem_ops[1].sem_op=SEM_WAIT;
                 returnvalue=semop(id_sem,sem_ops,2);
-                if(returnvalue==-1&&EINTR==errno){
-                    debug2("%s: Se me ha mandado acabar mientras estaba "
-                        "en la cola de espera de %d",clase,x);
-                    sem_ops[0].sem_op=SEM_SIGNAL;
-                    sem_ops[1].sem_op=SEM_SIGNAL;
-                    sem_ops[1].sem_num=NSEM_CONS;
-                    exit(EXIT_SUCCESS);
+                if(returnvalue==-1){
+                    if(EINTR==errno){
+                        debug2("%s: Se me ha mandado acabar mientras"
+                        " estaba en la cola de espera de %d",clase,x);
+                        sem_ops[0].sem_op=SEM_SIGNAL;
+                        sem_ops[1].sem_op=SEM_SIGNAL;
+                        sem_ops[1].sem_num=NSEM_PROD;
+                        exit(EXIT_SUCCESS);
+                    }
+                    else
+                        debug2("%s: Ha devuelto -1... errno a comprobar",
+                        clase);
                 }
+                semctl(id_sem,0,GETALL,sem_arg);
+                debug3("%s: SHA%1d=%-3u SHA%1dPROD=%-3u SHA%1dCONS=%-3u",
+                    clase,x,sem_arg.array[x*3],x,
+                    sem_arg.array[x*3+SEM_PROD],x,
+                    sem_arg.array[x*3+SEM_CONS]);
+
                 debug2("%s: He conseguido el acceso a la zona %d",clase,x);
 
-
-                //Aqui hago lo que sea
-
+                /*
+                 * Aqui hacemos lo que hemos venido a hacer, leemos del 
+                 * archivo de la memoria compartida y escribimos en el 
+                 * archivo
+                 */
+                
+                debug3("%s: Se han leido %d caracteres en memoria compar"
+                    "tida",clase,fprintf(file,"%s",sh_mem+TAM_PARTES*x));
 
                 debug2("%s: He acabado mis cosas en la zona %d, ahora toc"
                     "a salir",clase,x);
+                sem_ops[0].sem_op=x*3;
                 sem_ops[0].sem_op=SEM_SIGNAL;
                 sem_ops[1].sem_num=x*3+SEM_PROD;//Le abro el camino al prod
                 sem_ops[1].sem_op=SEM_SIGNAL;
@@ -196,9 +217,10 @@ int hijo(char clase[5], int max_t, FILE *file )
         debug2("%s: Como ya he hecho mi trabajo, dejo que otro acceda"
             ,clase);
         sem_ops[0].sem_op=SEM_SIGNAL;
-        sem_ops[0].sem_num=NSEM_CONS;
+        sem_ops[0].sem_num=NSEM_PROD;
         semop(id_sem,sem_ops,1);
-    }    
+        sleep(1);
+    } 
     exit(EXIT_SUCCESS);
 }
 
@@ -217,11 +239,7 @@ int main(int args, char *argv[])
     pid_t *pid;
     char clase[]="MAIN";
     int id_shm,id_sem;
-    union semun{
-        int val;
-        unsigned short *array;
-        struct semid_ds *buf_sem;
-    } sem_arg;
+    union semun sem_arg;
 
     /* Cosas de signal */
     hayquesalir=0;
@@ -244,7 +262,8 @@ int main(int args, char *argv[])
                         -(int)tiempo_inicio.tv_nsec);
     debug2("%s: debug_file=stdout",clase);
     debug2("%s: archivo=",clase);/*TODO*/
-    debug2("%s: sigaction(%d)=%d",clase,MYSIGNAL,sigaction(MYSIGNAL,&sa,NULL));
+    debug2("%s: sigaction(%d)=%d",clase,MYSIGNAL,
+        sigaction(MYSIGNAL,&sa,NULL));
     pid=calloc(1,sizeof(pid_t));
 
     /*  Parseamos los argumentos */
@@ -360,9 +379,9 @@ int main(int args, char *argv[])
             sem_array[x*3+SEM_CONS]=0;
         }
         sem_array[NSEM_PROD]=N_PARTES;
-        sem_array[NSEM_CONS]=N_PARTES;
+        sem_array[NSEM_CONS]=0;
         sem_arg.array=sem_array;
-        semctl(id_sem,0,SETALL,sem_arg.array);
+        semctl(id_sem,0,SETALL,sem_arg);
     }
     else{
         debug1("%s: Como el semaforo exisitia, duermo 1 segundo",clase);
@@ -375,11 +394,7 @@ int main(int args, char *argv[])
     // Creamos la memoria compartida
     if(-1!=(id_shm=shmget(LLAVE,SHMTAM,IPC_CREAT|IPC_EXCL|0666))){
         debug1("%s: La memoria compartida no existe, la creo",clase);
-        printf("%s: La memoria compartida no existe, la creo",clase);
-    }
-    else{
-        debug1("%s: La memoria compartida ya existe",clase);
-        printf("%s: La memoria compartida ya existe",clase);
+        printf("%s: La memoria compartida no existe, la creo\n",clase);
     }
 
 

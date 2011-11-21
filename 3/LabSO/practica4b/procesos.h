@@ -61,7 +61,7 @@ union semun{
 #define SHMTAM (N_PARTES*TAM_PARTES*sizeof(char))
 
 // Definicion de operaciones en semaforo
-#define SEM_WAIT -1
+#define SEM_WAIT (-1)
 #define SEM_SIGNAL 1
 
 /* Definicion de señales */
