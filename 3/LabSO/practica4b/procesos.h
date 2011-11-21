@@ -31,8 +31,9 @@ char hayquesalir;
 
 union semun{
     int val;
+    struct semid_ds *buf;
     unsigned short *array;
-    struct semid_ds *bufsem;
+    struct seminfo *__buf;
 };
 
 /*

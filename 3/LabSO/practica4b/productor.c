@@ -130,13 +130,13 @@ int hijo(char clase[5], int max_t, FILE *file )
     sem_ops[1].sem_flg=0;
 
     debug1("%s: Hijo empieza su ejecucion",clase);
+    printf("%s: Hijo empieza\n",clase);
     debug3("%s: max_t=%d",clase,max_t);
 
-    printf("%s: Hijo empieza\n",clase);
     debug2("%s: Abro el semaforo",clase);
     id_sem=semget(LLAVE,(N_PARTES*3)+2,0666);
     debug3("%s: id_sem=%d",clase,id_sem);
-    if(semctl(id_sem,0,GETALL,sem_arg))
+    if(-1==semctl(id_sem,0,GETALL,sem_arg))
     {
         switch(errno){
         case EACCES:
