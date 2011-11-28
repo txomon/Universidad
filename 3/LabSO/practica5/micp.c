@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
 
 int copiar(char [], char []);
 
@@ -11,34 +12,47 @@ int copiar(char [], char []);
 
 int copiar(char dir_destino[], char dir_origen[]){
     int x;
-    int *ficheros;
+    FILE *f_destino,*f_origen;
     void *zona;
     long tam;
     int pagina;
     size_t volumen;
 
-    ficheros=(int)calloc(sizeof(int),2);
-    ficheros[0]=open(dir_destino,O_WRONLY|O_TRUNC|O_CREAT,
-        S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP);
-    ficheros[1]=open(dir_origen,O_RDONLY);
+    if((dir_destino!=NULL&&strlen(dir_destino)==0)||
+        (dir_origen!=NULL&&strlen(dir_origen)==0)){
+        printf("Argument fault\n");
+        return 2;
+    }
+    else
+        printf("Arguments OK\n");
+    f_destino=fopen(dir_destino,"wb");
+    f_origen=fopen(dir_origen,"rb");
 
-    fseek(ficheros[1],0L,SEEK_END);
-    tam=ftell(ficheros[1]);
+    fseek(f_origen,0L,SEEK_END);
+    tam=ftell(f_origen);
+    fseek(f_origen,0L,SEEK_SET);
     pagina=getpagesize();
-    if(tam/pagina<1)
+    if((tam/pagina)<1)
         zona=calloc(sizeof(char),tam);
     else
         zona=calloc(sizeof(char),pagina);
-    printf("while(0!=\n");
-    while(0!=(volumen=read(zona,pagina,sizeof(char),ficheros[1]))){
-        printf("He leido, ahora escribo %d",(int)volumen);
-        write(zona,volumen,sizeof(char),ficheros[0]);
+    if(zona==NULL)
+        printf("Error al cojer zona de memoria\n");
+    printf("tam=%ld,pagina=%d,f_origen=%d,f_destino=%d\n"
+        "ftell(f_origen)=%ld\n",tam,pagina,fileno(f_origen),
+        fileno(f_destino),ftell(f_origen));
+
+    volumen=fread(zona,sizeof(char),tam,f_origen);
+    do{
+        printf("He leido %d\n",(int)volumen);
+        fwrite(zona,sizeof(char),volumen,f_destino);
+        printf("He escrito %d\n",(int)volumen);
     }
+    while(0!=(volumen=fread(zona,pagina,sizeof(char),f_origen)));
 
     free(zona); 
-    for(x=0;x<2;x++)
-        free(ficheros[x]);
-    free(ficheros);
+    free(f_destino);
+    free(f_origen);
 
     return 0;
 
@@ -52,11 +66,12 @@ int main(int args, char* argv[]){
         printf("El arg[%d] => \"%s\"\n",x,argv[x]);
     /* Cojemos los argumentos y los interpretamos */
     while(-1!=(opt=getopt(args,argv,""))){
-        printf("Ha salido la opcion %c",opt);
+        printf("Ha salido la opcion %c\n",opt);
     }
     
     /* De ahí, empezamos la copia */
-
+    if(args<2)
+        return 1;
     copiar(argv[args-1],argv[args-2]);
 
     return 0;    
