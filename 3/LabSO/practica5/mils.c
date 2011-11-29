@@ -68,7 +68,7 @@ int mostrardir(char dir_origen[],int flags)
                     fecha->tm_mday,fecha->tm_mon,fecha->tm_year%100);
                     
             printf("%s\n",dir_element->d_name);
-            if(SMI_RECUR(flags)){
+            if(SMI_RECUR(flags)&&(dir_element->d_type&DT_DIR)){
                 mostrardir(ndiror,flags);
             }
             bucle:

@@ -49,7 +49,7 @@ int copiar(char dir_destino[], char dir_origen[]){
         fwrite(zona,sizeof(char),volumen,f_destino);
         printf("He escrito %d\n",(int)volumen);
     }
-    while(0!=(volumen=fread(zona,pagina,sizeof(char),f_origen)));
+    while(0!=(volumen=fread(zona,sizeof(char),pagina,f_origen)));
 
     printf("Para acabar, libero la memoria");
     free(zona); 
