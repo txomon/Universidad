@@ -1,13 +1,17 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <errno.h>
 
 int main (int args, char *argv[]){
-    int sockfd,msgsock,x;
-    struct sockaddr_in addr_mio,addr_cliente;
+    int sockfd,msgsock;
+    socklen_t length;
+    struct sockaddr_in addr_servidor;
     char data;
+    FILE *log;
 
 
     sockfd=socket(AF_INET,SOCK_STREAM,0);
@@ -17,21 +21,22 @@ int main (int args, char *argv[]){
     }
     printf("Socket creado\n");
 
-    addr_mio.sin_family=AF_INET;
-    addr_mio.sin_port=htons(5284);
-    addr_mio.sin_addr.s_addr=INADDR_ANY;
-    if(bind(sockfd,(struct sockaddr *) &addr_mio, sizeof(addr_mio))){
+    addr_servidor.sin_family=AF_INET;
+    addr_servidor.sin_port=htons(5284);
+    addr_servidor.sin_addr.s_addr=INADDR_ANY;
+    if(bind(sockfd,(struct sockaddr *) &addr_servidor, 
+        sizeof(addr_servidor))){
         perror("Inicializando el socket");
         exit(1);
     }
     printf("Inicializado el socket\n");
 
-    x=sizeof(addr_mio);
-    if(getsockname(sockfd,(struct sockaddr *) &addr_mio,&x)){
+    length=sizeof(addr_servidor);
+    if(getsockname(sockfd,(struct sockaddr *) &addr_servidor,&length)){
         perror("getsockname()");
     }
     printf("El servidor se ha puesto en el puerto %d\n", 
-        ntohs(addr_mio.sin_port));
+        ntohs(addr_servidor.sin_port));
 
     if(listen(sockfd,5)==-1){
         perror("Escuchando el socket");
@@ -44,14 +49,24 @@ int main (int args, char *argv[]){
         perror("accept");
     printf("Aceptada conexión\n");
     /* Aqui viene la parte en la que hacemos algo */
-    
+
+    log=fopen("log.txt","w");    
+
     do{
         read(msgsock,&data,1);
-        if(data!=-1)
-            printf("%c",data);
-            fflush(stdout);
+        if(data!=-1){
+            write(1,&data,1);
+            fprintf(log,"La letra es: %d\n",(int)data);
+        }
+        else{
+            if(errno==EINTR){
+                fprintf(log,"He recibido la llamada EINTR");
+                break;
+            }
+        }
     }while(data!=-1);
 
+    fclose(log);
 
     return 0;
 }
