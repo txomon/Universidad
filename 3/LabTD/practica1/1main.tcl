@@ -1,0 +1,2 @@
+set ns [new Simulator]
+

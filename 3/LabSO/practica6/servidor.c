@@ -10,7 +10,7 @@ int main (int args, char *argv[]){
     int sockfd,msgsock;
     socklen_t length;
     struct sockaddr_in addr_servidor;
-    char data;
+    char data,error=0;
     FILE *log;
 
 
@@ -53,7 +53,10 @@ int main (int args, char *argv[]){
     log=fopen("log.txt","w");    
 
     do{
-        read(msgsock,&data,1);
+        if(-1==read(msgsock,&data,1)){
+            perror("Error en el read");
+            error=1;
+        }
         if(data!=-1){
             write(1,&data,1);
             fprintf(log,"La letra es: %d\n",(int)data);
@@ -64,8 +67,8 @@ int main (int args, char *argv[]){
                 break;
             }
         }
-    }while(data!=-1);
-
+    }while(error!=1);
+    printf("Cerrada conexión por caracter %d\n",(int)data);
     fclose(log);
 
     return 0;
