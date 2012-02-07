@@ -8,7 +8,7 @@ $simulacion_1 color 2 Red
 # Abrimos un archivo como escritura y lo hacemos salida para los datos de 
 # representación
 set nf [open out.nam w]
-$ns namtrace-all $nf
+$simulacion_1 namtrace-all $nf
 
 # Creamos la funcion de cierre, en la que se ejecuta el comando nam
 proc finish {} {
@@ -28,12 +28,12 @@ set destino [$simulacion_1 node]
 # Enlazamos los nodos entre sí
 $simulacion_1 simplex-link $fuente_1 $acceso 100Gb 0s DropTail 
 $simulacion_1 simplex-link $fuente_2 $acceso 100Gb 0s DropTail
-$simulacion_1 simplex-link $acceso $destino 100Mb 0s DropTail
+$simulacion_1 simplex-link $acceso $destino 20Kb 0s DropTail
 
 # Orientamos los nodos
-$simulacion_1 simplex-link-op $fuente_1 $acceso right-down
-$simulacion_1 simplex-link-op $fuente_2 $acceso right-up
-$simulacion_1 simplex-link-op $acceso $destino right
+$simulacion_1 simplex-link-op $fuente_1 $acceso orient right-down
+$simulacion_1 simplex-link-op $fuente_2 $acceso orient right-up
+$simulacion_1 simplex-link-op $acceso $destino orient right
 
 
 # Creamos los agentes inyectores
@@ -64,7 +64,7 @@ $CBR1 attach-agent $inyector_1
 # Configuramos el creador de tráfico CBR1 para que inyecte 
 # paquetes de 20 bytes a intervalos de 0.0000016 y lo añadimos al nodo
 $CBR2 set packetSize_ 20
-$CBR2 set interval_ 0.0000016
+$CBR2 set interval_ 0.0036
 $CBR2 attach-agent $inyector_2  
 
 # Creamos las conexiones entre los inyectores y el receptor
