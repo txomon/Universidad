@@ -69,7 +69,7 @@ $CBR2 attach-agent $inyector_2
 
 # Creamos las conexiones entre los inyectores y el receptor
 $simulacion_1 connect $inyector_1 $receptor
-$simulacion_2 connect $inyector_2 $receptor
+$simulacion_1 connect $inyector_2 $receptor
 
 # Creamos los eventos para que empiezen a transmitir
 $simulacion_1 at 0.1 "$CBR1 start"
