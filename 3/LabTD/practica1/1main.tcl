@@ -28,7 +28,7 @@ set destino [$simulacion_1 node]
 # Enlazamos los nodos entre sí
 $simulacion_1 simplex-link $fuente_1 $acceso 100Gb 0s DropTail 
 $simulacion_1 simplex-link $fuente_2 $acceso 100Gb 0s DropTail
-$simulacion_1 simplex-link $acceso $destino 20Kb 0s DropTail
+$simulacion_1 simplex-link $acceso $destino 100Mb 10ms DropTail
 
 # Orientamos los nodos
 $simulacion_1 simplex-link-op $fuente_1 $acceso orient right-down
@@ -64,7 +64,7 @@ $CBR1 attach-agent $inyector_1
 # Configuramos el creador de tráfico CBR1 para que inyecte 
 # paquetes de 20 bytes a intervalos de 0.0000016 y lo añadimos al nodo
 $CBR2 set packetSize_ 20
-$CBR2 set interval_ 0.0036
+$CBR2 set interval_ 0.0000016
 $CBR2 attach-agent $inyector_2  
 
 # Creamos las conexiones entre los inyectores y el receptor
@@ -72,15 +72,14 @@ $simulacion_1 connect $inyector_1 $receptor
 $simulacion_1 connect $inyector_2 $receptor
 
 # Creamos los eventos para que empiezen a transmitir
-$simulacion_1 at 0.1 "$CBR1 start"
-$simulacion_1 at 9.9 "$CBR1 stop"
-$simulacion_1 at 0.1 "$CBR2 start"
-$simulacion_1 at 9.9 "$CBR2 stop"
+$simulacion_1 at 0.001 "$CBR1 start"
+$simulacion_1 at 0.099 "$CBR1 stop"
+
+$simulacion_1 at 0.01 "$CBR2 start"
+$simulacion_1 at 0.099 "$CBR2 stop"
 
 # Creamos el evento de finalización
-$simulacion_1 at 10.0 "finish"
+$simulacion_1 at 0.1 "finish"
 
 # Ejecutamos el programa
 $simulacion_1 run
-
-
