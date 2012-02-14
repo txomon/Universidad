@@ -4,6 +4,14 @@ set simulacion [new Simulator]
 # Resolvemos el Warning de la clase Tracefile
 Tracefile set debug_ 0
 
+# Compruebo que haya argumentos, que si no, da error
+if { $argc != 1 } {
+    puts "Pon un argumento con la ruta al archivo que se quiere"
+    exit 0
+} else {
+    set fichero [lindex $argv 0]
+    puts $fichero
+}
 # Definimos los colores para cada tipo de tráfico
 $simulacion color 1 Blue
 $simulacion color 2 Red
@@ -67,7 +75,8 @@ $CBR1 set interval_ 0.016
 $CBR1 attach-agent $inyector_1
 
 # Configuramos el contenedor de trazas
-$ficherodetrazas filename poisson_0.75_100Mbps_350.tr
+$ficherodetrazas filename $fichero; #FIXME 
+# $ficherodetrazas filename  poisson_0.75_100Mbps_350.tr
 
 # Configuramos el creador de tráfico personalizado para que inyecte 
 # paquetes del contenedor de trazas y lo añadimos al nodo
