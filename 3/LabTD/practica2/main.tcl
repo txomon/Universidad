@@ -10,23 +10,21 @@ if { $argc != 1 } {
     exit 0
 } else {
     set fichero [lindex $argv 0]
-    puts $fichero
+    puts "Usando el fichero $fichero como origen de trazas"
 }
 # Definimos los colores para cada tipo de tráfico
 $simulacion color 1 Blue
 $simulacion color 2 Red
 
 # Abrimos un archivo como escritura y lo hacemos salida para los datos de 
-# representación
-set nf [open out.nam w]
-$simulacion namtrace-all $nf
+# representación nam
+set tr [open out.tr w]
 
 # Creamos la funcion de cierre, en la que se ejecuta el comando nam
 proc finish {} {
-        global simulacion nf
+        global simulacion tr
         $simulacion flush-trace
-        close $nf
-        exec nam out.nam &
+        close $tr
         exit 0
 }
 
@@ -51,6 +49,9 @@ set inyector_1 [new Agent/UDP]
 set inyector_2 [new Agent/UDP]
 set receptor [new Agent/Null]
 
+# Creamos el objeto de trazas
+$simulacion trace-queue $acceso $destino $tr
+
 # Definimos los tráficos como de diferentes clases, y les asociamos
 # diferentes colores
 $inyector_1 set class_ 1
@@ -70,7 +71,7 @@ set ficherodetrazas [new Tracefile]
 
 # Configuramos el creador de tráfico CBR1 para que inyecte 
 # paquetes de 20 bytes a intervalos de 0.016 y lo añadimos al nodo
-$CBR1 set packetSize_ 20
+$CBR1 set packetSize_ 2000
 $CBR1 set interval_ 0.016
 $CBR1 attach-agent $inyector_1
 
