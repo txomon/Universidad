@@ -1,0 +1,52 @@
+ns main.tcl ../trazas/poisson/poisson_0.75_100Mbps_350.tr 10
+Porcentaje de pérdidas: 1.8330398822902589
+ns main.tcl ../trazas/poisson/poisson_0.75_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.75_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.925_100Mbps_350.tr 10
+Porcentaje de pérdidas: 6.7780467705187757
+ns main.tcl ../trazas/poisson/poisson_0.925_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.034503309181016906
+ns main.tcl ../trazas/poisson/poisson_0.925_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.9_100Mbps_350.tr 10
+Porcentaje de pérdidas: 5.6220849242708795
+ns main.tcl ../trazas/poisson/poisson_0.9_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.9_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.25_100Mbps_350.tr 10
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.25_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.25_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.5_100Mbps_350.tr 10
+Porcentaje de pérdidas: 0.10223206679161698
+ns main.tcl ../trazas/poisson/poisson_0.5_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.5_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+ns main.tcl ../trazas/poisson/poisson_0.95_100Mbps_350.tr 10
+Porcentaje de pérdidas: 8.0486317491590711
+ns main.tcl ../trazas/poisson/poisson_0.95_100Mbps_350.tr 100
+Porcentaje de pérdidas: 0.096303225468201997
+ns main.tcl ../trazas/poisson/poisson_0.95_100Mbps_350.tr 1000
+Porcentaje de pérdidas: 0.0
+\    ro  |          |          |          |          |          |          |
+ ------- |   0'25   |   0'5    |   0'75   |   0'9    |   0'925  |   0'95   |
+Tam cola\|          |          |          |          |          |          |
+----------------------------------------------------------------------------
+         |          |          |          |          |          |          |
+   10    |   0'0    | 0'102232 | 0'345033 | 5'622084 | 6'778046 | 8'048631 |
+         |          |          |          |          |          |          |
+----------------------------------------------------------------------------
+         |          |          |          |          |          |          |
+   100   |   0'0    |   0'0    |   0'0    |   0'0    | 0'034503 | 0'096303 |
+         |          |          |          |          |          |          |
+----------------------------------------------------------------------------
+         |          |          |          |          |          |          |
+  1000   |   0'0    |   0'0    |   0'0    |   0'0    |   0'0    |   0'0    |
+         |          |          |          |          |          |          |
+----------------------------------------------------------------------------

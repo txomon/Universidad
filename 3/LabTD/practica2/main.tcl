@@ -23,16 +23,21 @@ if { $argc < 1 } {
 $simulacion color 1 Blue
 $simulacion color 2 Red
 
+# Trato el nombre del fichero para que no se sobreescriba la salida
+set fichero_no_rute [lindex $[split $fichero /] end]
+set nombre_generico $fichero_no_rute 
+
 # Abrimos un archivo como escritura y lo hacemos salida para los datos de 
 # representación nam
-set traza_paquetes [open paquetes.tr w]
-set traza_monitor [open monitor.tr w]
+set traza_paquetes [open "paquetes_${tam_cola}_$nombre_generico" w]
+set traza_monitor [open "monitor_${tam_cola}_$nombre_generico" w]
 
 # Función que imprime el número total de paquetes tirados y de paquetes enviados
 proc sacar_info_final_monitor {} {
     global monitor
-    puts "parrivals_\tpdrops_\tpdepartures_"
-    puts "[$monitor set parrivals_]\t\t[$monitor set pdrops_]\t[$monitor set pdepartures_]"
+    puts "Llegadas\tPerdidas\tSalidas"
+    puts "[$monitor set parrivals_]\t\t[$monitor set pdrops_]\t\t[$monitor set pdepartures_]"
+    puts "Porcentaje de pérdidas: [ expr 100*double([$monitor set pdrops_])/[$monitor set parrivals_] ]"
 }
 
 # Creamos la funcion de cierre, en la que se ejecuta el comando nam
@@ -53,11 +58,12 @@ proc sacar_info_monitor {} {
     global simulacion
     global monitor
     global pdrop_ant
+    global traza_monitor
 
     set ahora [$simulacion now]
-    puts "$ahora [$monitor set pkts_] [expr [$monitor set pdrops_] - $pdrop_ant]"
+    puts $traza_monitor "$ahora [$monitor set pkts_] [expr [$monitor set pdrops_] - $pdrop_ant]"
     set pdrop_ant [$monitor set pdrops_] 
-    $simulacion at [expr $ahora+0.01] "sacar_info_monitor"
+    $simulacion at [expr $ahora+1] "sacar_info_monitor"
 }
 
 
@@ -135,7 +141,7 @@ $simulacion at 0.1 "$poisson1 start"
 $simulacion at 9.99 "$poisson1 stop"
 
 # Empezamos a sacar la información del monitor
-#$simulacion at 0.0 "sacar_info_monitor"
+$simulacion at 0.0 "sacar_info_monitor"
 
 # Creamos el evento de finalización
 $simulacion at 10 "finish"
