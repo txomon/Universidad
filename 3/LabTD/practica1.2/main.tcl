@@ -9,7 +9,7 @@ if { $argc < 1 } {
     puts "Pon un argumento con la ruta al archivo que se quiere"
     exit 0
 } elseif { $argc == 1 } {
-    set tam_cola 1000
+    set tam_cola 100
     set fichero [lindex $argv 0]
     puts "Usando el fichero $fichero como origen de trazas"
 } else {
@@ -24,7 +24,7 @@ $simulacion color 1 Blue
 $simulacion color 2 Red
 
 # Trato el nombre del fichero para que no se sobreescriba la salida
-set fichero_no_rute [lindex $[split $fichero /] end]
+set fichero_no_rute [lindex [split $fichero /] end]
 set nombre_generico $fichero_no_rute 
 
 # Abrimos un archivo como escritura y lo hacemos salida para los datos de 

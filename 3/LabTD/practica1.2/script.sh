@@ -19,9 +19,7 @@ do
         echo $a sale adelante
         for b in `echo $2| xargs -0 -d,` ; do
             if [ $b -ge 1 ];then
-                comando="ns main.tcl $string $b"
-                echo $comando
-                $comando
+                ns main.tcl $string $b
             else
                 echo bad string $b
             fi
