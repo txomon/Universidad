@@ -20,6 +20,10 @@ do
         for b in `echo $2| xargs -0 -d,` ; do
             if [ $b -ge 1 ];then
                 ns main.tcl $string $b
+                awk -f queuedelay.awk $string | grep ^1 > delays
+                retardo=`awk -f delaycalc.awk delays`
+                ro=`echo "$a"| awk -F_ '{print $2}'`
+                echo "$ro $retardo $b"
             else
                 echo bad string $b
             fi

@@ -127,6 +127,7 @@ $ficherodetrazas filename $fichero
 # Configuramos el creador de tráfico personalizado para que inyecte 
 # paquetes del contenedor de trazas y lo añadimos al nodo
 $poisson1 attach-tracefile $ficherodetrazas
+$inyector_2 set packetSize_ 60000
 $poisson1 attach-agent $inyector_2  
 
 # Creamos las conexiones entre los inyectores y el receptor
