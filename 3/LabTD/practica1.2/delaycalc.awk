@@ -10,5 +10,5 @@ BEGIN{
 
 END {
     calculo=suma/total;
-    print calculo;
+    printf("%.11f\n",calculo);
 }
