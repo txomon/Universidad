@@ -99,7 +99,7 @@ set destino [$simulacion node]
 for { set i 0 } { $i < $num_fuentes} { incr i }  {
     $simulacion simplex-link $fuentes($i) $acceso 100Gb 0s DropTail
 }
-$simulacion simplex-link $acceso $destino 1Gb 10ms DropTail
+$simulacion simplex-link $acceso $destino 1Mb 10ms DropTail
 
 # Orientamos los nodos
 $simulacion simplex-link-op $acceso $destino orient right
@@ -169,8 +169,14 @@ for { set i 0 } { $i < $num_fuentes} { incr i } {
 }
 
 # Creamos los eventos para que empiezen a transmitir
+set rng [new RNG ]
+$rng seed [expr [clock clicks] % 100000000 ]
+puts "[$rng exponential]"
+
 for { set i 0 } { $i < $num_fuentes} { incr i } {
-    $simulacion at 0.01 "$generadores($i) start"
+    set var [$rng exponential ]
+    puts "El tiempo de salida es $var"
+    $simulacion at $var "$generadores($i) start"
     $simulacion at 9.99 "$generadores($i) stop"
 
 }
