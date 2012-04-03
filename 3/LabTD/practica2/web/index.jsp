@@ -14,18 +14,31 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>LMB Inicio</title>
+        <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
     <body>
-        <ul>
-            <% Database a= new Database();
-            ResultSet rs= a.getSelect("SELECT 1+3");
-            out.print(rs);
-            %>
-            <li>Personas</li>
-            <li>Cargos</li>
-            <li>Partituras</li>
-            <li>Temporadas</li>
-        </ul>
+        <div id="menu-wrapper">
+            <div id="menu">
+                <ul>
+                    <li>Personas</li>
+                    <li>Cargos</li>
+                    <li>Partituras</li>
+                    <li>Temporadas</li>
+                </ul>
+            </div>
+        </div>
+        <div id="header-wrapper">
+            <div id="wrapper">
+                <div id="logo">
+                    <h1>Leioako Musika Banda</h1>
+                </div>
+            </div>
+        </div>
+        <div id="wrapper">
+            <div id="page">
+                
+            </div>
+        </div>
    
     </body>
 </html>
