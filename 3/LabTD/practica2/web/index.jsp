@@ -67,7 +67,7 @@
                                     <p class="links"><a href="#">Read More</a>&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Comments</a></p>
                                 </div>
                             </div>
-                            <div style="clear: both;">&nbsp;</div>
+                            <!--<div style="clear: both;">&nbsp;</div>-->
                         </div>
 				<!-- end #content -->
                         <div id="sidebar">
