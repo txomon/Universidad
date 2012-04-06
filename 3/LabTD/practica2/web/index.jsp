@@ -4,11 +4,22 @@
     Author     : javier
 --%>
 
+<%@page import="javax.print.attribute.standard.PagesPerMinute"%>
+<%@page import="java.util.*"%>
 <%@page import="java.rmi.Remote"%>
 <%@page import="org.txomon.Database"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<%!
+    Map<String,String> pages=new LinkedHashMap<String,String>();
+%>
+<%
+    pages.put("Inicio","home");
+    pages.put("Partituras", "musicsheets");
+    pages.put("Personas", "people");
+    pages.put("Asistencias", "assists");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,10 +31,27 @@
         <div id="menu-wrapper">
             <div id="menu">
                 <ul>
-                    <li class="current_page_item"><a>Personas</a></li>
-                    <li><a>Cargos</a></li>
-                    <li><a>Partituras</a></li>
-                    <li><a>Temporadas</a></li>
+                    <%
+                        Map.Entry<String,String> n;
+                        Iterator it;
+                        try{ 
+                            it=pages.entrySet().iterator();
+                            while(it.hasNext()){
+                                n=(Map.Entry<String,String>)it.next();
+                                out.print("<li");
+                                System.out.println("The requested page is "+request.getParameter("page"));
+                                System.out.println("The actual menu creation point is "+n.getValue());
+                                if((request.getParameter("page")!=null) && 
+                                        (n.getValue().equals(pages.get(request.getParameter("page"))))){
+                                    System.out.println("Requested page equals to the current menu creation");
+                                    out.print(" class=\"current_page_item\"");
+                                }
+                                out.print("><a href=\""+request.getRequestURL()+"?page="+
+                                        n.getValue()+"\">"+n.getKey()+"</a></li>\n");
+                            }
+                        }catch(java.util.NoSuchElementException ex){ }
+                        
+                    %>
                 </ul>
             </div>
         </div>
@@ -41,7 +69,6 @@
                         <div id="content">
                             <div class="post">
                                 <h2 class="title"><a href="#">Bienvenido a Leioako Musika Banda</a></h2>
-                                <p class="meta"><span class="date">April 1, 2012</span><span class="posted">Posted by <a href="#">Someone</a></span></p>
                                 <div style="clear: both;">&nbsp;</div>
                                 <div class="entry">
                                     <p>This is <strong>Hand Crafted </strong>, a free, fully standards-compliant CSS template designed by FreeCssTemplates<a href="http://www.nodethirtythree.com/"></a> for <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.  This free template is released under a <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attributions 2.5</a> license, so you’re pretty much free to do whatever you want with it (even use it commercially) provided you keep the links in the footer intact. Aside from that, have fun with it :)</p>
@@ -73,30 +100,11 @@
                         <div id="sidebar">
                             <ul>
                                 <li>
-                                    <h2>Search Here:</h2>
-                                    <div id="search" >
-                                        <form method="get" action="#">
-                                            <div>
-                                                <input type="text" name="s" id="search-text" value="" />
-                                                <input type="submit" id="search-submit" value="" />
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div style="clear: both;">&nbsp;</div>
-                                </li>
-                                <li>
-                                    <h2>Aliquam tempus</h2>
-                                    <p>Mauris vitae nisl nec metus placerat perdiet est. Phasellus dapibus semper consectetuer hendrerit.</p>
-                                </li>
-                                <li>
-                                    <h2>Categories</h2>
+                                    <h2>Acciones</h2>
                                     <ul>
-                                        <li><a href="#">Aliquam libero</a></li>
-                                        <li><a href="#">Consectetuer adipiscing elit</a></li>
-                                        <li><a href="#">Metus aliquam pellentesque</a></li>
-                                        <li><a href="#">Suspendisse iaculis mauris</a></li>
-                                        <li><a href="#">Urnanet non molestie semper</a></li>
-                                        <li><a href="#">Proin gravida orci porttitor</a></li>
+                                        <li>Insertar</li>
+                                        <li>Modificar</li>
+                                        <li>Eliminar</li>
                                     </ul>
                                 </li>
                                 <li>
