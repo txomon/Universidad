@@ -17,14 +17,13 @@ import java.sql.ResultSet;
 public class Database {
     private Connection conn;
     private String database;
+    private Statement st;
+    private ResultSet rs=null;
 
     private ResultSet executeQuery(String query, String iferror)
     {
-        Statement st=null;
-        ResultSet rs=null; 
-        
         try{
-            rs = st.executeQuery(query);
+            rs = conn.createStatement().executeQuery(query);
             if (st.execute(query)) {
                 rs = st.getResultSet();
             }
@@ -53,7 +52,6 @@ public class Database {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://192.168.56.2:3306/example?" +
             "user=user&password=password");
-            
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
@@ -68,9 +66,7 @@ public class Database {
     
     public ResultSet getTables()
     {
-        ResultSet rs;
-        rs=executeQuery("SHOW tables","Error adquiring Tables in Database");
-        return rs;
+        return executeQuery("SHOW tables","Error adquiring Tables in Database");
     }
     
     public ResultSet getColumns(String table)
