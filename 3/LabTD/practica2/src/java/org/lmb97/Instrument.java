@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package org.lmb97;
-import java.util.TreeSet;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.util.TreeSet;
 public class Instrument {
     private int id;
     private String instrument;
-    private static TreeSet<Instrument> instruments;
+    private static Set<Instrument> instruments=new HashSet<Instrument>();
 
     public Instrument() {
         instruments.add(this);
@@ -34,7 +35,7 @@ public class Instrument {
         this.instrument = instrument;
     }
 
-    public static TreeSet<Instrument> getInstruments() {
+    public static Set<Instrument> getInstruments() {
         return instruments;
     }
 

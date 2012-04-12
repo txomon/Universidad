@@ -3,7 +3,8 @@
  * and open the template in the editor.
  */
 package org.lmb97;
-import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashSet;
 /**
  *
  * @author javier
@@ -11,7 +12,7 @@ import java.util.TreeSet;
 public class Email {
     private int id;
     private String email;
-    private static TreeSet<Email> emails;
+    private static Set<Email> emails=new HashSet<Email>();
 
     public Email(){
         emails.add(this);
@@ -21,7 +22,7 @@ public class Email {
         return email;
     }
     
-    public static TreeSet<Email> getEmails() {
+    public static Set<Email> getEmails() {
         return emails;
     }
 

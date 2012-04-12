@@ -4,7 +4,7 @@
  */
 package org.lmb97;
 
-import java.util.TreeSet;
+import java.util.HashSet;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,9 +25,8 @@ public class Person {
     private Person joinRef;
     private String password;
     private String nick;
-    private TreeSet<Email> emails;
-    private TreeSet<Instrument> instruments;
-    private static TreeSet<Person> people;
+    private Set<Email> emails=new HashSet<Email>();
+    private static Set<Person> people=new HashSet<Person>();
 
     public Person() {
         people.add(this);
@@ -69,11 +68,11 @@ public class Person {
         this.dniNumber = dniNumber;
     }
 
-    public TreeSet<Email> getEmails() {
+    public Set<Email> getEmails() {
         return emails;
     }
 
-    public void setEmails(TreeSet<Email> emails) {
+    public void setEmails(Set<Email> emails) {
         this.emails = emails;
     }
 
@@ -81,7 +80,7 @@ public class Person {
         this.emails.add(email);
     }
 
-    public void dropEmail(Email email) {
+    public void removeEmail(Email email) {
         this.emails.remove(email);
     }
 
@@ -91,22 +90,6 @@ public class Person {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public TreeSet<Instrument> getInstruments() {
-        return instruments;
-    }
-
-    public void setInstruments(TreeSet<Instrument> instruments) {
-        this.instruments = instruments;
-    }
-    
-    public void addInstrument(Instrument instrument){
-        this.instruments.add(instrument);
-    }
-
-    public void dropInstrument(Instrument instrument){
-        this.instruments.remove(instrument);
     }
 
     public Person getJoinRef() {
