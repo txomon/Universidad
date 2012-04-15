@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lmb97;
+package org.lmb97.db;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Date;
