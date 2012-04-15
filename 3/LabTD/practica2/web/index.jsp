@@ -4,6 +4,9 @@
     Author     : javier
 --%>
 
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>--%>
+
 <%@page import="javax.print.attribute.standard.PagesPerMinute"%>
 <%@page import="java.util.*"%>
 <%@page import="java.rmi.Remote"%>
@@ -21,12 +24,12 @@
     pages.put("people","Personas");
     pages.put("assists","Asistencias");
     pages.put("musicsheets","Partituras");
+
     // Initialize the states map
-    
     actions.put("insert","Insertar");
     actions.put("modify","Modificar");
     actions.put("delete","Eliminar");
-    
+
 %>
 <!DOCTYPE html>
 <html>
