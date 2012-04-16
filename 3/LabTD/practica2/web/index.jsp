@@ -4,15 +4,13 @@
     Author     : javier
 --%>
 
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions" %>--%>
-
+<%@ taglib prefix="stripes" uri="http://stripes.sourceforge.net/stripes.tld"%>
 <%@page import="javax.print.attribute.standard.PagesPerMinute"%>
 <%@page import="java.util.*"%>
 <%@page import="java.rmi.Remote"%>
 <%@page import="org.txomon.Database"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 
 <%!
     Map<String,String> pages=new LinkedHashMap<String,String>();
