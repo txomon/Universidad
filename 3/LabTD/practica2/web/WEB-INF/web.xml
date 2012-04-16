@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
-
+             <!-- Aqui empiezo a definir Stripes -->
 	<filter>
 		<display-name>Stripes Filter</display-name>
 		<filter-name>StripesFilter</filter-name>
@@ -15,7 +15,7 @@
 			<param-value>org.lmb97</param-value>
 		</init-param>
  	</filter>
-	
+            
 	<filter-mapping>
 		<filter-name>StripesFilter</filter-name>
 		<servlet-name>StripesDispatcher</servlet-name>
@@ -32,4 +32,6 @@
 		<servlet-name>StripesDispatcher</servlet-name>
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
+            <!--Aqui empiezo a definir Spring -->
+        
 </web-app>
