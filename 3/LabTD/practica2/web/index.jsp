@@ -8,7 +8,6 @@
 <%@page import="javax.print.attribute.standard.PagesPerMinute"%>
 <%@page import="java.util.*"%>
 <%@page import="java.rmi.Remote"%>
-<%@page import="org.txomon.Database"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 
