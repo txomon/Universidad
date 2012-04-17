@@ -25,7 +25,7 @@
     </bean>
 
     <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
-    <context:component-scan base-package="org.lmb97.service" />
+    <context:component-scan base-package="org.lmb97.data" />
 
     <!-- enable autowire -->
     <context:annotation-config />
@@ -35,7 +35,7 @@
 
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.lmb97.persistence" />
+        <property name="basePackage" value="org.lmb97.data" />
     </bean>
     
     <!-- In theory, this has to be for making a transaction manager (don't know what it is for) -->

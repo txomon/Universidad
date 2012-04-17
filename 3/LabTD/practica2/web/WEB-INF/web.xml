@@ -37,5 +37,7 @@
         <url-pattern>*.action</url-pattern>
     </servlet-mapping>
         <!--Aqui empiezo a definir Spring -->
-    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 </web-app>
