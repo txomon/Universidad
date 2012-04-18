@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
-<!DOCTYPE html>
 <%@ taglib prefix="stripes"
            uri="http://stripes.sourceforge.net/stripes.tld"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -20,14 +19,14 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
         <title>Lmb97 DataBase</title>
         <stripes:layout-component name="htmlhead">
-            <jsp:include page="HtmlHead.jsp"/>
+            <jsp:include page="/WEB-INF/jsp/common/HtmlHead.jsp"/>
         </stripes:layout-component>
     </head>
     <body>
         <div id="menu-wrapper">
             <div id="menu">
                 <stripes:layout-component name="topbar">
-                    <jsp:include page="TopBar.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/common/TopBar.jsp"/>
                 </stripes:layout-component>
             </div>
         </div>
@@ -52,7 +51,7 @@
                         <stripes:layout-component name="bodypage">
                             <div id="sidebar">
                                 <stripes:layout-component name="sidebar">
-                                    <jsp:include page="Sidebar.jsp"/>
+                                    <jsp:include page="/WEB-INF/jsp/common/Sidebar.jsp"/>
                                 </stripes:layout-component>
                             </div>
                             <div style="clear: both;">&nbsp;</div>

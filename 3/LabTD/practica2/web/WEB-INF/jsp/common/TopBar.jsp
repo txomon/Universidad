@@ -10,31 +10,31 @@
            uri="http://stripes.sourceforge.net/stripes.tld"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <stripes:layout-definition>
     <stripes:layout-component name="topbar">
-                <ul>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.actions.PeopleActionBean"
-                            event="viewGrid">
-                            Personas
-                        </stripes:link> 
-                    </li>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.actions.AssistencesActionBean"
-                            event="viewGrid">
-                            Asistencias
-                        </stripes:link> 
-                    </li>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.actions.MusicsheetsActionBean"
-                            event="viewGrid">
-                            Partituras
-                        </stripes:link> 
-                    </li>
-                </ul>
+        <ul>
+            <li>
+                <stripes:link
+                    beanclass="org.lmb97.web.actions.PeopleActionBean"
+                    event="viewGrid">
+                    Personas
+                </stripes:link> 
+            </li>
+            <li>
+                <stripes:link
+                    beanclass="org.lmb97.web.actions.AssistencesActionBean"
+                    event="viewGrid">
+                    Asistencias
+                </stripes:link> 
+            </li>
+            <li>
+                <stripes:link
+                    beanclass="org.lmb97.web.actions.MusicsheetsActionBean"
+                    event="viewGrid">
+                    Partituras
+                </stripes:link> 
+            </li>
+        </ul>
     </stripes:layout-component>
 </stripes:layout-definition>
