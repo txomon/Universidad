@@ -85,10 +85,6 @@
                             </div>
                             <!--<div style="clear: both;">&nbsp;</div>-->
                         <% }else{ %>
-                        <div id="content">
-                        <%
-                             
-                        %>
                         </div>
                         <div id="sidebar">
                             <ul>
@@ -118,9 +114,14 @@
                                 </li>
                             </ul>
                         </div>
-                        <% } %>
                         <!-- end #sidebar -->
                         <div style="clear: both;">&nbsp;</div>
+                        <div id="content">
+                        <%
+                             
+                        %>
+                        
+                        <% } %>
                     </div>
                 </div>
             </div>
