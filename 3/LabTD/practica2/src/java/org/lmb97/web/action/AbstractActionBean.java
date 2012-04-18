@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.lmb97.web.actions;
+package org.lmb97.web.action;
 
 /**
  *
@@ -14,7 +14,7 @@ import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.SimpleMessage;
 
-abstract class AbstractActionBean implements ActionBean, Serializable {
+public abstract class AbstractActionBean implements ActionBean, Serializable {
     
     protected static final String ERROR = "/WEB-INF/jsp/common/Error.jsp";
     protected transient ActionBeanContext context;

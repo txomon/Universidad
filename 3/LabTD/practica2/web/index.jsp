@@ -8,6 +8,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <html>
     <head>
-        <meta HTTP-EQUIV="REFRESH" content="0; url=/Main.action"/>
+        <meta HTTP-EQUIV="REFRESH" content="0; url=Main.action"/>
     </head>
 </html>
