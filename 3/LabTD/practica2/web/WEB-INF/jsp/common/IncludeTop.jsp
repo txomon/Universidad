@@ -33,8 +33,8 @@
                 <ul>
                     <li>
                         <stripes:link
-                        beanclass="org.lmb97.web.actions.PeopleActionBean"
-                        event="viewGrid">
+                            beanclass="org.lmb97.web.actions.PeopleActionBean"
+                            event="viewGrid">
                             Personas
                         </stripes:link> 
                     </li>
@@ -76,6 +76,14 @@
                                     <h2>Acciones</h2>
                                     <ul>
                                         <li>Modificar</li>
+                                        <li>
+                                            <stripes:link
+                                                beanclass="org.mybatis.jpetstore.web.actions.CatalogActionBean"
+                                                event="viewCategory">
+                                                <stripes:param name="categoryId" value="FISH" />
+                                                <img src="../images/sm_fish.gif" />
+                                            </stripes:link> 
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
