@@ -10,7 +10,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
  *
  * @author javier
  */
-public class MainActionBean {
+public class MainActionBean extends AbstractActionBean {
     private static final String MAIN="/WEB-INF/jsp/main/Main.jsp";
     public Resolution showMain(){
         return new ForwardResolution(MAIN);
