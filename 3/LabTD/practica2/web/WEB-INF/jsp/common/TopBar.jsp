@@ -17,22 +17,19 @@
         <ul>
             <li>
                 <stripes:link
-                    beanclass="org.lmb97.web.actions.PeopleActionBean"
-                    event="viewGrid">
+                    beanclass="org.lmb97.web.action.PeopleActionBean">
                     Personas
                 </stripes:link> 
             </li>
             <li>
                 <stripes:link
-                    beanclass="org.lmb97.web.actions.AssistencesActionBean"
-                    event="viewGrid">
+                    beanclass="org.lmb97.web.action.AssistancesActionBean">
                     Asistencias
                 </stripes:link> 
             </li>
             <li>
                 <stripes:link
-                    beanclass="org.lmb97.web.actions.MusicsheetsActionBean"
-                    event="viewGrid">
+                    beanclass="org.lmb97.web.action.MusicsheetsActionBean">
                     Partituras
                 </stripes:link> 
             </li>

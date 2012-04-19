@@ -17,9 +17,20 @@
                 <ul>
                     <li>
                         <stripes:link
-                            beanclass="org.lmb97.web.actions.${page}ActionBean"
-                            event="modify${page}">
-                            <stripes:param name="categoryId" value="FISH" />
+                            beanclass="org.lmb97.web.action.${actionBean['class']}"
+                            event="modify${actionBean['view']}">
+                        </stripes:link> 
+                    </li>
+                    <li>
+                        <stripes:link
+                            beanclass="org.lmb97.web.action.${actionBean['class']}"
+                            event="insert${actionBean['view']}">
+                        </stripes:link> 
+                    </li>
+                    <li>
+                        <stripes:link
+                            beanclass="org.lmb97.web.action.${actionBean['class']}"
+                            event="delete${actionBean['view']}">
                         </stripes:link> 
                     </li>
                 </ul>
@@ -27,4 +38,3 @@
         </ul>
     </stripes:layout-component>
 </stripes:layout-definition>
-        

@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@ taglib prefix="stripes"
            uri="http://stripes.sourceforge.net/stripes.tld"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -19,14 +18,14 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
         <title>Lmb97 DataBase</title>
         <stripes:layout-component name="htmlhead">
-            <jsp:include page="/WEB-INF/jsp/common/HtmlHead.jsp"/>
+            <stripes:layout-render name="/WEB-INF/jsp/common/HtmlHead.jsp"/>
         </stripes:layout-component>
     </head>
     <body>
         <div id="menu-wrapper">
             <div id="menu">
                 <stripes:layout-component name="topbar">
-                    <jsp:include page="/WEB-INF/jsp/common/TopBar.jsp"/>
+                    <stripes:layout-render name="/WEB-INF/jsp/common/TopBar.jsp"/>
                 </stripes:layout-component>
             </div>
         </div>
@@ -36,7 +35,7 @@
                     <div id="logo">
                         <h1>
                             <stripes:link 
-                            beanclass="org.lmb97.web.actions.StartActionBean">
+                            beanclass="org.lmb97.web.action.MainActionBean">
                                 Leioako<span>Musika Banda 97</span>
                             </stripes:link>
                         </h1>
@@ -51,7 +50,10 @@
                         <stripes:layout-component name="bodypage">
                             <div id="sidebar">
                                 <stripes:layout-component name="sidebar">
-                                    <jsp:include page="/WEB-INF/jsp/common/Sidebar.jsp"/>
+                                    <stripes:layout-render name="/WEB-INF/jsp/common/Sidebar.jsp">
+                                        <stripes:param name="page" value="${actionBean['entity']}"/>
+                                        <stripes:param name="view" value="${actionBean['view']}"/>
+                                    </stripes:layout-render>
                                 </stripes:layout-component>
                             </div>
                             <div style="clear: both;">&nbsp;</div>
