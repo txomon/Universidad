@@ -23,8 +23,8 @@
             </li>
             <li>
                 <stripes:link
-                    beanclass="org.lmb97.web.action.AssistancesActionBean">
-                    Asistencias
+                    beanclass="org.lmb97.web.action.EventsActionBean">
+                    Eventos
                 </stripes:link> 
             </li>
             <li>
