@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : FormEvents
     Created on : 19-abr-2012, 11:59:52
     Author     : javier
@@ -13,7 +13,7 @@
 
 <stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp">
     <stripes:layout-component name="content">
-        <stripes:form beanclass="org.lmb97.web.action.EventsActionBean">
+        <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" >
             <stripes:text name="event.id" size="20" value="${actionBean.event.id}" disabled="${actionBean.readonly}" />
             <stripes:text name="event.date" size="50" value="${actionBean.event.date}" disabled="${actionBean.readonly}" />
             <stripes:select name="event.season" value="${actionBean.event.season}" disabled="${actionBean.readonly}">
@@ -21,7 +21,7 @@
             </stripes:select>
             <stripes:checkbox name="event.season.spell" value="${actionBean.event.season.spell}" disabled="${actionBean.readonly}"/>
             <stripes:select name="event.eventType" value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
-                <stripes:options-collection collection="${actionBean.eventTypes}" 
+                <stripes:options-collection collection="${actionBean.eventTypes}"
                                             value="id" label="name" />
             </stripes:select>
             <table>
@@ -54,7 +54,6 @@
                     </c:forEach>
                 </tbody>
             </table>
-            <stripes:submit name="saveForm" value="Save Changes" disabled="${actionBean.readonly}"/>
-        </stripes:form>
+        </stripes:form >
     </stripes:layout-component>
 </stripes:layout-render>
