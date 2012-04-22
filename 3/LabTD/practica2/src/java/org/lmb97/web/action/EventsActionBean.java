@@ -6,7 +6,6 @@ package org.lmb97.web.action;
 
 import java.lang.Integer;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,8 @@ import org.lmb97.data.Seasons;
 import org.lmb97.data.SeasonsExample;
 import org.lmb97.data.SeasonsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 
 
 /**
@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
  * @author javier
  */
 
-@Component
+
 public class EventsActionBean extends AbstractActionBean {
     //First, the two pages this Action bean is going to use
     private static final String GRID = "/WEB-INF/jsp/events/GridEvents.jsp";
@@ -153,6 +153,48 @@ public class EventsActionBean extends AbstractActionBean {
             this.people.put(person.getId(), person);
         }
     }
+
+    public AssistancesMapper getAssistancesMapper() {
+        return assistancesMapper;
+    }
+
+    public void setAssistancesMapper(AssistancesMapper assistancesMapper) {
+        this.assistancesMapper = assistancesMapper;
+    }
+
+    public EventTypesMapper getEventTypesMapper() {
+        return eventTypesMapper;
+    }
+
+    public void setEventTypesMapper(EventTypesMapper eventTypesMapper) {
+        this.eventTypesMapper = eventTypesMapper;
+    }
+
+    public EventsMapper getEventsMapper() {
+        return eventsMapper;
+    }
+
+    public void setEventsMapper(EventsMapper eventsMapper) {
+        this.eventsMapper = eventsMapper;
+    }
+
+    public PeopleMapper getPeopleMapper() {
+        return peopleMapper;
+    }
+
+    public void setPeopleMapper(PeopleMapper peopleMapper) {
+        this.peopleMapper = peopleMapper;
+    }
+
+    public SeasonsMapper getSeasonsMapper() {
+        return seasonsMapper;
+    }
+
+    public void setSeasonsMapper(SeasonsMapper seasonsMapper) {
+        this.seasonsMapper = seasonsMapper;
+    }
+    
+    
 
     public boolean isReadonly() {
         return readonly;

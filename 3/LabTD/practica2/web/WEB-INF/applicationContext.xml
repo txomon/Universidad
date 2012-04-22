@@ -13,9 +13,6 @@
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
     <!-- transaction manager, use JtaTransactionManager for global tx -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
@@ -24,8 +21,17 @@
         <property name="password" value="password"/>
     </bean>
 
+    <!-- In theory, this has to be for making a transaction manager (don't know what it is for) -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="org.lmb97.data" />
+    </bean>
     <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
-    <context:component-scan base-package="org.lmb97.data" />
+    <context:component-scan base-package="org.lmb97.web.action" />
 
     <!-- enable autowire -->
     <context:annotation-config />
@@ -35,12 +41,7 @@
 
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.lmb97.data" />
-    </bean>
-    
-    <!-- In theory, this has to be for making a transaction manager (don't know what it is for) -->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
+        <property name="basePackage" value="org.lmb97.data.*Mapper" />
     </bean>
     
 
