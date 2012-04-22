@@ -31,7 +31,7 @@
         <property name="typeAliasesPackage" value="org.lmb97.data" />
     </bean>
     <!-- enable component scanning (beware that this does not enable mapper scanning!) -->    
-    <context:component-scan base-package="org.lmb97.web.action" />
+    <context:component-scan base-package="org.lmb97" />
 
     <!-- enable autowire -->
     <context:annotation-config />
