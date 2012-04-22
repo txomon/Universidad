@@ -13,6 +13,37 @@
 
 <stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp">
     <stripes:layout-component name="content">
-        
+        <table>
+            <thead>
+                <tr>
+                    <th>Id de evento</th>
+                    <th>Tipo</th>
+                    <th>Hora de llegada prevista</th>
+                    <th>Asistentes totales</th>
+                    <th>Asistentes puntuales</th>
+                    <th>Asistentes impuntuales</th>
+                </tr>
+            </thead>
+            <!--Se me ha ocurrido que para evitar pegarme con si la abstracción de la base de datos está bien
+            o mal, puedo coger y hacerlo como un TreeMap, de tal manera que me vengan en orden los elementos
+            y además, pueda refererirme a los elementos como tales.-->
+            <tbody>
+                <c:forEach var="Event" items="${actionBean.Events}">
+                    <tr>
+                        <td>${Event.id}</td>
+                        <td>
+                            <stripes:select name="Event.eventType" value="${Event.eventType}">
+                                <stripes:options-collection collection="${actionBean.eventTypes}"
+                                                            label="name" id="id"/>
+                            </stripes:select>
+                        </td>
+                        <td><fmt:formatDate value="${Event.date}" pattern="yyyy-mm-dd HH:mm" /></td>
+                        <td>${actionBean.totalassistants['${Event.id}']}</td>
+                        <td>${actionBean.ontimeassistants['${Event.id}']}</td>
+                        <td>${actionBean.totalassistants['${Event.id}'] - actionBean.ontimeassistants['${Event.id}']}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </stripes:layout-component>
 </stripes:layout-render>
