@@ -29,11 +29,15 @@ import org.lmb97.data.Seasons;
 import org.lmb97.data.SeasonsExample;
 import org.lmb97.data.SeasonsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 
 /**
  *
  * @author javier
  */
+
+@Component
 public class EventsActionBean extends AbstractActionBean {
     //First, the two pages this Action bean is going to use
     private static final String GRID = "/WEB-INF/jsp/events/GridEvents.jsp";
@@ -50,15 +54,15 @@ public class EventsActionBean extends AbstractActionBean {
     private boolean readonly;
     //At last, all the entity mappers
     @Autowired
-    private transient AssistancesMapper assistancesMapper;
+    private AssistancesMapper assistancesMapper;
     @Autowired
-    private transient EventsMapper eventsMapper;
+    private EventsMapper eventsMapper;
     @Autowired
-    private transient EventTypesMapper eventTypesMapper;
+    private EventTypesMapper eventTypesMapper;
     @Autowired
-    private transient PeopleMapper peopleMapper;
+    private PeopleMapper peopleMapper;
     @Autowired
-    private transient SeasonsMapper seasonsMapper;
+    private SeasonsMapper seasonsMapper;
     
     
     @DefaultHandler
@@ -148,6 +152,10 @@ public class EventsActionBean extends AbstractActionBean {
             person=(People)iterator.next();
             this.people.put(person.getId(), person);
         }
+    }
+
+    public boolean isReadonly() {
+        return readonly;
     }
 
     public Map<Integer, Integer> getOntimeassistants() {

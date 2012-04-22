@@ -5,6 +5,15 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>	
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>StripesResources</param-value>
+    </context-param>
+    
              <!-- Aqui empiezo a definir Stripes -->
     <filter>
         <display-name>Stripes Filter</display-name>
@@ -36,7 +45,7 @@
         <servlet-name>StripesDispatcher</servlet-name>
         <url-pattern>*.action</url-pattern>
     </servlet-mapping>
-        <!--Aqui empiezo a definir Spring -->
+    <!--Aqui empiezo a definir Spring -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
