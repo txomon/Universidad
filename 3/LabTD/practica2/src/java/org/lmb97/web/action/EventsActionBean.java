@@ -12,6 +12,7 @@ import java.util.Map;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.integration.spring.SpringBean;
 import org.lmb97.data.Assistances;
 import org.lmb97.data.AssistancesExample;
 import org.lmb97.data.AssistancesMapper;
@@ -27,7 +28,6 @@ import org.lmb97.data.PeopleMapper;
 import org.lmb97.data.Seasons;
 import org.lmb97.data.SeasonsExample;
 import org.lmb97.data.SeasonsMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 
@@ -51,15 +51,15 @@ public class EventsActionBean extends AbstractActionBean {
     private Map<Integer, Integer> ontimeassistants;
     private boolean readonly;
     //At last, all the entity mappers
-    @Autowired
+    @SpringBean
     private AssistancesMapper assistancesMapper;
-    @Autowired
+    @SpringBean
     private EventsMapper eventsMapper;
-    @Autowired
+    @SpringBean
     private EventTypesMapper eventTypesMapper;
-    @Autowired
+    @SpringBean
     private PeopleMapper peopleMapper;
-    @Autowired
+    @SpringBean
     private SeasonsMapper seasonsMapper;
     
     
@@ -72,7 +72,7 @@ public class EventsActionBean extends AbstractActionBean {
         this.readonly=true;
         eventsExample.createCriteria();
         this.events=eventsMapper.selectByExample(eventsExample);
-        
+
         seasonsExample.createCriteria();
         this.seasons=seasonsMapper.selectByExample(seasonsExample);
 
@@ -151,7 +151,7 @@ public class EventsActionBean extends AbstractActionBean {
             this.people.put(person.getId(), person);
         }
     }
-
+    
     public boolean isReadonly() {
         return readonly;
     }
