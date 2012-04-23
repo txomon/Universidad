@@ -16,21 +16,21 @@
             <ul>
                 <li>
                     <stripes:link
-                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        beanclass="${actionBean['class']}"
                         event="modify${view}">
                         Modificar
                     </stripes:link> 
                 </li>
                 <li>
                     <stripes:link
-                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        beanclass="${actionBean['class']}"
                         event="insert${view}">
                         Insertar
                     </stripes:link> 
                 </li>
                 <li>
                     <stripes:link
-                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        beanclass="${actionBean['class']}"
                         event="delete${view}">
                         Eliminar
                     </stripes:link> 
