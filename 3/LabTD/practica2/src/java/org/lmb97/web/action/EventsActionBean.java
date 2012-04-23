@@ -134,7 +134,7 @@ public class EventsActionBean extends AbstractActionBean {
             assistancesExample.createCriteria().andEventEqualTo(theEvent.getId()).andArrivalLessThanOrEqualTo(theEvent.getDate());
             this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
             assistancesExample.createCriteria().andEventEqualTo(theEvent.getId());
-            this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
+            this.totalassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
         }
         
     }

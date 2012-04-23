@@ -10,31 +10,32 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 
 <stripes:layout-definition>
-    <stripes:layout-component name="sidebar">
-        <ul>
-            <li>
-                <h2>Acciones</h2>
-                <ul>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.action.${page}"
-                            event="modify${view}">
-                        </stripes:link> 
-                    </li>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.action.${page}"
-                            event="insert${view}">
-                        </stripes:link> 
-                    </li>
-                    <li>
-                        <stripes:link
-                            beanclass="org.lmb97.web.action.${page}"
-                            event="delete${view}">
-                        </stripes:link> 
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </stripes:layout-component>
+    <ul>
+        <li>
+            <h2>Acciones</h2>
+            <ul>
+                <li>
+                    <stripes:link
+                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        event="modify${view}">
+                        Modificar
+                    </stripes:link> 
+                </li>
+                <li>
+                    <stripes:link
+                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        event="insert${view}">
+                        Insertar
+                    </stripes:link> 
+                </li>
+                <li>
+                    <stripes:link
+                        beanclass="org.lmb97.web.action.${actionBean['class']}"
+                        event="delete${view}">
+                        Eliminar
+                    </stripes:link> 
+                </li>
+            </ul>
+        </li>
+    </ul>
 </stripes:layout-definition>

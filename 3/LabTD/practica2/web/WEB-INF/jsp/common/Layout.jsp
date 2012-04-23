@@ -48,16 +48,16 @@
                     <div id="page-bgtop">
                         <div id="page-bgbtm">
                             <stripes:layout-component name="bodypage">
-                                <div id="sidebar">
-                                    <stripes:layout-component name="sidebar">
-                                        <stripes:layout-render name="/WEB-INF/jsp/common/Sidebar.jsp" 
-                                                               page="${actionBean.class}" view="${view}">
-                                        </stripes:layout-render>
-                                    </stripes:layout-component>
-                                </div>
-                                <div style="clear: both;">&nbsp;</div>
                                 <div id="content">
                                     <stripes:layout-component name="content"/>
+                                    <div style="clear: both;">&nbsp;</div>
+                                </div>
+                                <div style="clear: both;">&nbsp;</div>
+                                <div id="sidebar">
+                                    <stripes:layout-component name="sidebar">
+                                        <stripes:layout-render name="/WEB-INF/jsp/common/Sidebar.jsp"
+                                                               view="${view}"/>
+                                    </stripes:layout-component>
                                 </div>
                             </stripes:layout-component>
                         </div>
