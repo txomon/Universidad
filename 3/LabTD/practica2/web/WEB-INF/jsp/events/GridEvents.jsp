@@ -11,8 +11,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
-<stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp" 
-                       class="EventsActionBean" view="Grid">
+<stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp" view="Grid">
     <stripes:layout-component name="content">
         <table>
             <thead>

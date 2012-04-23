@@ -51,7 +51,7 @@
                                 <div id="sidebar">
                                     <stripes:layout-component name="sidebar">
                                         <stripes:layout-render name="/WEB-INF/jsp/common/Sidebar.jsp" 
-                                                               page="${class}" view="${view}">
+                                                               page="${actionBean.class}" view="${view}">
                                         </stripes:layout-render>
                                     </stripes:layout-component>
                                 </div>
