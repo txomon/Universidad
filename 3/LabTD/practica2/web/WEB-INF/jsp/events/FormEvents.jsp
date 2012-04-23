@@ -11,7 +11,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 
-<stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp">
+<stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp"  
+                       class="EventsActionBean" view="Form">
     <stripes:layout-component name="content">
         <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" >
             <stripes:text name="event.id" size="20" value="${actionBean.event.id}" disabled="${actionBean.readonly}" />

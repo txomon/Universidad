@@ -17,20 +17,20 @@
                 <ul>
                     <li>
                         <stripes:link
-                            beanclass="org.lmb97.web.action.${actionBean['class']}"
-                            event="modify${actionBean['view']}">
+                            beanclass="org.lmb97.web.action.${page}"
+                            event="modify${view}">
                         </stripes:link> 
                     </li>
                     <li>
                         <stripes:link
-                            beanclass="org.lmb97.web.action.${actionBean['class']}"
-                            event="insert${actionBean['view']}">
+                            beanclass="org.lmb97.web.action.${page}"
+                            event="insert${view}">
                         </stripes:link> 
                     </li>
                     <li>
                         <stripes:link
-                            beanclass="org.lmb97.web.action.${actionBean['class']}"
-                            event="delete${actionBean['view']}">
+                            beanclass="org.lmb97.web.action.${page}"
+                            event="delete${view}">
                         </stripes:link> 
                     </li>
                 </ul>

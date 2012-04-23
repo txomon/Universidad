@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -50,6 +51,7 @@ public class EventsActionBean extends AbstractActionBean {
     private Map<Integer, Integer> totalassistants;
     private Map<Integer, Integer> ontimeassistants;
     private boolean readonly;
+    private String view;
     //At last, all the entity mappers
     @SpringBean
     private AssistancesMapper assistancesMapper;
@@ -69,6 +71,7 @@ public class EventsActionBean extends AbstractActionBean {
         EventTypesExample eventTypesExample=new EventTypesExample();
         SeasonsExample seasonsExample=new SeasonsExample();
 
+        this.view="Grid";
         this.readonly=true;
         eventsExample.createCriteria();
         this.events=eventsMapper.selectByExample(eventsExample);
@@ -91,6 +94,8 @@ public class EventsActionBean extends AbstractActionBean {
         PeopleExample peopleExample=new PeopleExample();
         SeasonsExample seasonsExample=new SeasonsExample();
 
+        this.readonly=true;
+        this.view="Form";
         int id;
         if(null!=context.getRequest().getParameter("id")){
             id=new Integer(context.getRequest().getParameter("id")).intValue();
@@ -121,10 +126,12 @@ public class EventsActionBean extends AbstractActionBean {
         AssistancesExample assistancesExample=new AssistancesExample();
         Iterator iterator=this.events.iterator();
         Events theEvent;
+        this.ontimeassistants=new TreeMap<Integer,Integer>();
+        this.totalassistants=new TreeMap<Integer,Integer>();
         
         while(iterator.hasNext()){
             theEvent=(Events)iterator.next();
-            assistancesExample.createCriteria().andEventEqualTo(theEvent.getId()).andArrivalLessThanOrEqualTo(event.getDate());
+            assistancesExample.createCriteria().andEventEqualTo(theEvent.getId()).andArrivalLessThanOrEqualTo(theEvent.getDate());
             this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
             assistancesExample.createCriteria().andEventEqualTo(theEvent.getId());
             this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
@@ -150,6 +157,10 @@ public class EventsActionBean extends AbstractActionBean {
             person=(People)iterator.next();
             this.people.put(person.getId(), person);
         }
+    }
+
+    public String getView() {
+        return view;
     }
     
     public boolean isReadonly() {
