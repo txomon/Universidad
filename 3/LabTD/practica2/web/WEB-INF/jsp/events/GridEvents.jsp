@@ -33,12 +33,12 @@
                         <tr>
                             <td>${Event.id}</td>
                             <td>
-                                <stripes:select name="Event.eventType" value="${Event.eventType}">
+                                <stripes:select name="Event.eventType" value="${Event.eventType}" disabled="${actionBean.readonly}">
                                     <stripes:options-collection collection="${actionBean.eventTypes}"
                                                                 label="name" id="id"/>
                                 </stripes:select>
                             </td>
-                            <td><fmt:formatDate value="${Event.date}" pattern="yyyy-mm-dd HH:mm" /></td>
+                            <td><fmt:formatDate value="${Event.date}" pattern="yyyy-MM-dd HH:mm" /></td>
                             <td>${actionBean.totalassistants[Event.id]}</td>
                             <td>${actionBean.ontimeassistants[Event.id]}</td>
                             <td>${actionBean.totalassistants[Event.id] - actionBean.ontimeassistants[Event.id]}</td>
