@@ -43,6 +43,6 @@ public class SeasonFormatter implements Formatter<Seasons>{
             spell_output="Invierno";
         else
             spell_output="Verano";
-        return season_output+": "+spell_output;
+        return season_output+" - "+spell_output;
     }
 }

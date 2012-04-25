@@ -24,7 +24,7 @@
             <br/>
             <stripes:label name="event.season">Temporada:</stripes:label>
             <stripes:select name="event.season" value="event.season" disabled="${actionBean.readonly}">
-                <stripes:options-collection collection="${actionBean.seasons}" value="id" label="class"/>
+                <stripes:options-collection collection="${actionBean.seasons}" value="id"/>
             </stripes:select>
             <stripes:errors field="event.season"/>
             <br/>
