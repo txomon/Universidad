@@ -31,14 +31,14 @@
                 <tbody>
                     <c:forEach var="Event" items="${actionBean.events}">
                         <tr>
-                            <td>${Event.id}</td>
+                            <td><stripes:text name="Event.id" value="${Event.id}" disabled="${actionBean.readonly}"/></td>
                             <td>
                                 <stripes:select name="Event.eventType" value="${Event.eventType}" disabled="${actionBean.readonly}">
                                     <stripes:options-collection collection="${actionBean.eventTypes}"
-                                                                label="name" id="id"/>
+                                                                label="name" value="id"/>
                                 </stripes:select>
                             </td>
-                            <td><fmt:formatDate value="${Event.date}" pattern="yyyy-MM-dd HH:mm" /></td>
+                            <td><stripes:text name="Event.date" value="${Event.date}" disabled="${actionBean.readonly}"/></td>
                             <td>${actionBean.totalassistants[Event.id]}</td>
                             <td>${actionBean.ontimeassistants[Event.id]}</td>
                             <td>${actionBean.totalassistants[Event.id] - actionBean.ontimeassistants[Event.id]}</td>
@@ -46,6 +46,9 @@
                     </c:forEach>
                 </tbody>
             </table>
+            <c:if test="${!actionBean.readonly}">
+                <stripes:submit name="saveGrid" value="Save changes"/>
+            </c:if>
         </stripes:form>
     </stripes:layout-component>
 </stripes:layout-render>

@@ -20,8 +20,16 @@
         <filter-name>StripesFilter</filter-name>
         <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
         <init-param>
+            <param-name>FormatterFactory.Class</param-name>
+            <param-value>org.lmb97.util.FormatterFactory</param-value>
+        </init-param>
+        <init-param>
             <param-name>ActionResolver.Packages</param-name>
             <param-value>org.lmb97.web.action</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LocalePicker.Locales</param-name>
+            <param-value>en_ES:UTF-8</param-value>
         </init-param>
         <init-param>
             <param-name>Interceptor.Classes</param-name>

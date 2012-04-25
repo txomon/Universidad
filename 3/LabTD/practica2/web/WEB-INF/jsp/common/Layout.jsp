@@ -50,16 +50,60 @@
                             <stripes:layout-component name="bodypage">
                                 <div id="content">
                                     <stripes:layout-component name="content"/>
-                                    <div style="clear: both;">&nbsp;</div>
                                 </div>
-                                <div style="clear: both;">&nbsp;</div>
                                 <div id="sidebar">
                                     <stripes:layout-component name="sidebar">
-                                        <stripes:layout-render name="/WEB-INF/jsp/common/Sidebar.jsp"
-                                                               view="${view}"/>
+                                        <ul>
+                                            <li>
+                                                <h2>Acciones</h2>
+                                                <ul>
+                                                    <li>
+                                                        <stripes:link
+                                                            beanclass="${actionBean['class']}"
+                                                            event="modify${view}">
+                                                            Modificar
+                                                        </stripes:link> 
+                                                    </li>
+                                                    <li>
+                                                        <stripes:link
+                                                            beanclass="${actionBean['class']}"
+                                                            event="insert${view}">
+                                                            Insertar
+                                                        </stripes:link> 
+                                                    </li>
+                                                    <li>
+                                                        <stripes:link
+                                                            beanclass="${actionBean['class']}"
+                                                            event="delete${view}">
+                                                            Eliminar
+                                                        </stripes:link> 
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <h2>Vistas</h2>
+                                                <ul>
+                                                    <li>
+                                                        <stripes:link
+                                                            beanclass="${actionBean['class']}"
+                                                            event="viewGrid">
+                                                            Tabla
+                                                        </stripes:link>
+                                                    </li>
+                                                    <li>
+                                                        <stripes:link
+                                                            beanclass="${actionBean['class']}"
+                                                            event="viewForm">
+                                                            Formulario
+                                                        </stripes:link>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </stripes:layout-component>
                                 </div>
                             </stripes:layout-component>
+                                <div style="clear: both;">&nbsp;</div>
                         </div>
                     </div>
                 </div>

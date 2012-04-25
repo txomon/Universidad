@@ -37,5 +37,24 @@
                 </li>
             </ul>
         </li>
+        <li>
+            <h2>Vistas</h2>
+            <ul>
+                <li>
+                    <stripes:link
+                        beanclass="${actionBean['class']}"
+                        event="showGrid">
+                        Tabla
+                    </stripes:link>
+                </li>
+                <li>
+                    <stripes:link
+                        beanclass="${actionBean['class']}"
+                        event="showForm">
+                        Formulario
+                    </stripes:link>
+                </li>
+            </ul>
+        </li>
     </ul>
 </stripes:layout-definition>

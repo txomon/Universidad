@@ -26,6 +26,10 @@ import org.lmb97.data.EventsMapper;
 import org.lmb97.data.People;
 import org.lmb97.data.PeopleExample;
 import org.lmb97.data.PeopleMapper;
+import org.lmb97.data.PostsExample;
+import org.lmb97.data.PostsMapper;
+import org.lmb97.data.RelPostsPeopleExample;
+import org.lmb97.data.RelPostsPeopleMapper;
 import org.lmb97.data.Seasons;
 import org.lmb97.data.SeasonsExample;
 import org.lmb97.data.SeasonsMapper;
@@ -48,6 +52,7 @@ public class EventsActionBean extends AbstractActionBean {
     private List<EventTypes> eventTypes;
     private List<Seasons> seasons;
     private Map<Integer, People> people;
+    private Map<Integer, String> peoplenames;
     private Map<Integer, Integer> totalassistants;
     private Map<Integer, Integer> ontimeassistants;
     private boolean readonly;
@@ -63,6 +68,11 @@ public class EventsActionBean extends AbstractActionBean {
     private PeopleMapper peopleMapper;
     @SpringBean
     private SeasonsMapper seasonsMapper;
+    @SpringBean
+    private PostsMapper postsMapper;
+    @SpringBean
+    private RelPostsPeopleMapper relPostsPeopleMapper;
+
     
     
     @DefaultHandler
@@ -89,7 +99,6 @@ public class EventsActionBean extends AbstractActionBean {
 
     public Resolution viewForm() {
         AssistancesExample assistancesExample=new AssistancesExample();
-        EventsExample eventsExample=new EventsExample();
         EventTypesExample eventTypesExample=new EventTypesExample();
         PeopleExample peopleExample=new PeopleExample();
         SeasonsExample seasonsExample=new SeasonsExample();
@@ -102,14 +111,12 @@ public class EventsActionBean extends AbstractActionBean {
         }else{
             id=1;
         }
-        this.readonly=true;
 
-        eventsExample.createCriteria().andIdEqualTo(id);
-        this.event=eventsMapper.selectByExample(eventsExample).get(id);
-        
+        this.event=eventsMapper.selectByPrimaryKey(id);
+
         assistancesExample.createCriteria().andEventEqualTo(id);
         this.assistances=assistancesMapper.selectByExample(assistancesExample);
-        
+
         peopleExample.createCriteria().andIdIn(getAssistantsIds());
         initializeMapOfPeople(peopleMapper.selectByExample(peopleExample));
         
@@ -122,6 +129,46 @@ public class EventsActionBean extends AbstractActionBean {
         return new ForwardResolution(FORM);
     }
     
+    public Resolution modifyForm(){
+        AssistancesExample assistancesExample=new AssistancesExample();
+        EventTypesExample eventTypesExample=new EventTypesExample();
+        PeopleExample peopleExample=new PeopleExample();
+        SeasonsExample seasonsExample=new SeasonsExample();
+        PostsExample postsExample=new PostsExample();
+        RelPostsPeopleExample relPostsPeopleExample=new RelPostsPeopleExample();
+
+        
+        this.readonly=false;
+        this.view="Form";
+        int id;
+        if(null!=context.getRequest().getParameter("id")){
+            id=new Integer(context.getRequest().getParameter("id")).intValue();
+        }else{
+            id=1;
+        }
+
+        this.event=eventsMapper.selectByPrimaryKey(id);
+
+        assistancesExample.createCriteria().andEventEqualTo(id);
+        this.assistances=assistancesMapper.selectByExample(assistancesExample);
+
+        eventTypesExample.createCriteria();
+        this.eventTypes=eventTypesMapper.selectByExample(eventTypesExample);
+        
+        postsExample.createCriteria().andIdEqualTo(this.eventTypes
+                .get(this.event.getEventType()).getPost());
+        
+        
+        
+        peopleExample.createCriteria();
+        initializeMapOfPeople(peopleMapper.selectByExample(peopleExample));
+        
+        seasonsExample.createCriteria();
+        this.seasons=seasonsMapper.selectByExample(seasonsExample);
+        
+
+        return new ForwardResolution(FORM);
+    }
     private void createAssistancesStatistics(){
         AssistancesExample assistancesExample=new AssistancesExample();
         Iterator iterator=this.events.iterator();
@@ -152,11 +199,22 @@ public class EventsActionBean extends AbstractActionBean {
     
     private void initializeMapOfPeople(List<People> people){
         Iterator iterator=people.iterator();
+        this.people=new TreeMap<Integer,People>();
+        this.peoplenames=new TreeMap<Integer,String>();
         People person;
         while(iterator.hasNext()){
             person=(People)iterator.next();
             this.people.put(person.getId(), person);
+            this.peoplenames.put(person.getId(), person.getName()+" "+person.getSurname());
         }
+    }
+
+    public Map<Integer, String> getPeoplenames() {
+        return peoplenames;
+    }
+
+    public void setPeoplenames(Map<Integer, String> peoplenames) {
+        this.peoplenames = peoplenames;
     }
 
     public String getView() {
