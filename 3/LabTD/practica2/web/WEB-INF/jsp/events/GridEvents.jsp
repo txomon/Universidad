@@ -19,7 +19,7 @@
                     <tr>
                         <th>Id de evento</th>
                         <th>Tipo</th>
-                        <th>Hora de llegada prevista</th>
+                        <th>Fecha del evento</th>
                         <th>Asistentes totales</th>
                         <th>Asistentes puntuales</th>
                         <th>Asistentes impuntuales</th>
@@ -38,7 +38,8 @@
                                                                 label="name" value="id"/>
                                 </stripes:select>
                             </td>
-                            <td><stripes:text name="Event.date" value="${Event.date}" disabled="${actionBean.readonly}"/></td>
+                            <td><stripes:text name="Event.date" value="${Event.date}" 
+                                          formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}"/></td>
                             <td>${actionBean.totalassistants[Event.id]}</td>
                             <td>${actionBean.ontimeassistants[Event.id]}</td>
                             <td>${actionBean.totalassistants[Event.id] - actionBean.ontimeassistants[Event.id]}</td>

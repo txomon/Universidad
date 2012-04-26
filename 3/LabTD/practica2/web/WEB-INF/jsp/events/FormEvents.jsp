@@ -14,7 +14,7 @@
 <stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp" view="Form">
     <stripes:layout-component name="content">
         <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" >
-            <stripes:label name="event.id">Id:</stripes:label>
+            <stripes:label name="event.id">${actionBean.previous}Id:${actionBean.following}</stripes:label>
             <stripes:text name="event.id" value="event.id" disabled="true" />
             <stripes:errors field="event.id"/>
             <br/>
@@ -24,13 +24,16 @@
             <br/>
             <stripes:label name="event.season">Temporada:</stripes:label>
             <stripes:select name="event.season" value="event.season" disabled="${actionBean.readonly}">
-                <stripes:options-collection collection="${actionBean.seasons}" value="id"/>
+                <stripes:options-collection collection="${actionBean.seasons}" value="id" />
             </stripes:select>
             <stripes:errors field="event.season"/>
             <br/>
-            Event Type:<stripes:select name="event.eventType" value="event.eventType" disabled="${actionBean.readonly}">
+            <stripes:label name="event.eventType">Event Type:</stripes:label>
+            <stripes:select name="event.eventType" value="event.eventType" disabled="${actionBean.readonly}">
                 <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
-            </stripes:select><br/>
+            </stripes:select>
+            <stripes:errors field="event.eventType"/>
+            <br/>
             <table>
                 <thead>
                     <tr><th>Id de asistencia</th>
@@ -38,19 +41,17 @@
                         <th>Hora de llegada</th>
                         <th>Razón</th></tr>
                 </thead>
-                <!--Se me ha ocurrido que para evitar pegarme con si la abstracción de la base de datos está bien
-                o mal, puedo coger y hacerlo como un TreeMap, de tal manera que me vengan en orden los elementos
-                y además, pueda refererirme a los elementos como tales.-->
                 <tbody>
                     <c:forEach var="assistance" items="${actionBean.assistances}">
                         <tr>
                             <td>${assistance.id}</td>
                             <td>
                                 <stripes:select name="assistance.person" value="${assistance.person}" disabled="${actionBean.readonly}">
-                                    <stripes:options-map map="${actionBean.peoplenames}"/>
+                                    <stripes:options-collection collection="${actionBean.people}" value="id"/>
                                 </stripes:select>
                             </td>
-                            <td><fmt:formatDate value="${assistance.arrival}" pattern="HH:mm" /></td>
+                            <td><stripes:text name="assistance.arrival" value="${assistance.arrival}" 
+                                          formatPattern="HH:mm" disabled="${actionBean.readonly}"/></td>
                             <td>
                                 <c:if test="${assistance.arrival<=actionBean.event.date}">
                                     A tiempo
@@ -65,7 +66,22 @@
             </table>
             <c:if test="${!actionBean.readonly}">
                 <stripes:submit name="saveForm" value="Save changes"/>
+                <stripes:submit name="viewForm" value="Discard changes"/>
             </c:if>
-        </stripes:form >
+        </stripes:form> 
+        <c:if test="${actionBean.readonly}">
+            <c:if test="${actionBean.previous!=0}">
+                <stripes:link beanclass='org.lmb97.web.action.EventsActionBean' event='viewForm'>
+                    <stripes:param name='id' value='${actionBean.previous}'/>
+                    <input type="submit" value="Anterior"/>
+                </stripes:link>
+            </c:if>    
+            <c:if test="${actionBean.following!=0}">
+                <stripes:link beanclass='org.lmb97.web.action.EventsActionBean' event='viewForm'>
+                    <stripes:param name='id' value='${actionBean.following}' />
+                    <input type="submit" value="Siguiente"/>
+                </stripes:link>
+            </c:if>
+        </c:if>
     </stripes:layout-component>
 </stripes:layout-render>

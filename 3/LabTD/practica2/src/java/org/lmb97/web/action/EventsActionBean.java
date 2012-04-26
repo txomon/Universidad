@@ -51,12 +51,13 @@ public class EventsActionBean extends AbstractActionBean {
     private List<Events> events;
     private List<EventTypes> eventTypes;
     private List<Seasons> seasons;
-    private Map<Integer, People> people;
-    private Map<Integer, String> peoplenames;
+    private List<People> people;
     private Map<Integer, Integer> totalassistants;
     private Map<Integer, Integer> ontimeassistants;
     private boolean readonly;
     private String view;
+    private int following;
+    private int previous;
     //At last, all the entity mappers
     @SpringBean
     private AssistancesMapper assistancesMapper;
@@ -113,12 +114,13 @@ public class EventsActionBean extends AbstractActionBean {
         }
 
         this.event=eventsMapper.selectByPrimaryKey(id);
+        initFollowingAndPrevious(id);
 
         assistancesExample.createCriteria().andEventEqualTo(id);
         this.assistances=assistancesMapper.selectByExample(assistancesExample);
 
         peopleExample.createCriteria().andIdIn(getAssistantsIds());
-        initializeMapOfPeople(peopleMapper.selectByExample(peopleExample));
+        this.people=peopleMapper.selectByExample(peopleExample);
         
         seasonsExample.createCriteria().andIdEqualTo(this.event.getSeason());
         this.seasons=seasonsMapper.selectByExample(seasonsExample);
@@ -148,6 +150,7 @@ public class EventsActionBean extends AbstractActionBean {
         }
 
         this.event=eventsMapper.selectByPrimaryKey(id);
+        initFollowingAndPrevious(id);
 
         assistancesExample.createCriteria().andEventEqualTo(id);
         this.assistances=assistancesMapper.selectByExample(assistancesExample);
@@ -161,7 +164,7 @@ public class EventsActionBean extends AbstractActionBean {
         
         
         peopleExample.createCriteria();
-        initializeMapOfPeople(peopleMapper.selectByExample(peopleExample));
+        this.people=peopleMapper.selectByExample(peopleExample);
         
         seasonsExample.createCriteria();
         this.seasons=seasonsMapper.selectByExample(seasonsExample);
@@ -175,13 +178,15 @@ public class EventsActionBean extends AbstractActionBean {
         Events theEvent;
         this.ontimeassistants=new TreeMap<Integer,Integer>();
         this.totalassistants=new TreeMap<Integer,Integer>();
-        
+        /* FIXME */
         while(iterator.hasNext()){
             theEvent=(Events)iterator.next();
             assistancesExample.createCriteria().andEventEqualTo(theEvent.getId()).andArrivalLessThanOrEqualTo(theEvent.getDate());
             this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
             assistancesExample.createCriteria().andEventEqualTo(theEvent.getId());
             this.totalassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
+            System.out.println("Evento "+theEvent.getId()+" tiene en total "+this.totalassistants.get(theEvent.getId())
+                    +" assistente(s) y "+ this.ontimeassistants.get(theEvent.getId()) + " de ellos han llegado a tiempo");
         }
         
     }
@@ -197,26 +202,42 @@ public class EventsActionBean extends AbstractActionBean {
         return assistantsIds;
     }
     
-    private void initializeMapOfPeople(List<People> people){
-        Iterator iterator=people.iterator();
-        this.people=new TreeMap<Integer,People>();
-        this.peoplenames=new TreeMap<Integer,String>();
-        People person;
-        while(iterator.hasNext()){
-            person=(People)iterator.next();
-            this.people.put(person.getId(), person);
-            this.peoplenames.put(person.getId(), person.getName()+" "+person.getSurname());
+    private void initFollowingAndPrevious(int id){
+        EventsExample eventsExample=new EventsExample();
+        boolean found=false;
+        
+        eventsExample.createCriteria();
+        this.previous=0;
+        this.following=0;
+        for(Events item : eventsMapper.selectByExample(eventsExample)){
+            if(found){
+                this.following=item.getId();
+                return;
+            }
+            if(item.getId()==id)
+                found=true;
+            if(!found)
+                this.previous=item.getId();
         }
     }
 
-    public Map<Integer, String> getPeoplenames() {
-        return peoplenames;
+    public int getFollowing() {
+        return following;
     }
 
-    public void setPeoplenames(Map<Integer, String> peoplenames) {
-        this.peoplenames = peoplenames;
+    public void setFollowing(int following) {
+        this.following = following;
     }
 
+    public int getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(int previous) {
+        this.previous = previous;
+    }
+
+    
     public String getView() {
         return view;
     }
@@ -265,11 +286,11 @@ public class EventsActionBean extends AbstractActionBean {
         this.events = events;
     }
 
-    public Map<Integer, People> getPeople() {
+    public List<People> getPeople() {
         return people;
     }
 
-    public void setPeople(Map<Integer, People> people) {
+    public void setPeople(List<People> people) {
         this.people = people;
     }
 

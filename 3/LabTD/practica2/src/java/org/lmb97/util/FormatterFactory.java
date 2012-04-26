@@ -10,8 +10,8 @@ public class FormatterFactory extends DefaultFormatterFactory {
     @Override
     public void init(Configuration configuration) throws Exception {
         super.init(configuration);
-        add(People.class, PersonFormatter.class);
         add(Seasons.class,SeasonFormatter.class);
+        add(People.class, PersonFormatter.class);
     }
 
 }
