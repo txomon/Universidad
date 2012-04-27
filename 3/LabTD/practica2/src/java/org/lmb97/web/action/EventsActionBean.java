@@ -178,13 +178,29 @@ public class EventsActionBean extends AbstractActionBean {
         Events theEvent;
         this.ontimeassistants=new TreeMap<Integer,Integer>();
         this.totalassistants=new TreeMap<Integer,Integer>();
-        /* FIXME */
+        
         while(iterator.hasNext()){
             theEvent=(Events)iterator.next();
-            assistancesExample.createCriteria().andEventEqualTo(theEvent.getId()).andArrivalLessThanOrEqualTo(theEvent.getDate());
-            this.ontimeassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
-            assistancesExample.createCriteria().andEventEqualTo(theEvent.getId());
-            this.totalassistants.put(theEvent.getId(),assistancesMapper.countByExample(assistancesExample));
+            assistancesExample.createCriteria().
+                    andEventEqualTo(theEvent.getId()).
+                    andArrivalLessThanOrEqualTo(theEvent.getDate());
+            
+            this.ontimeassistants.put(
+                    theEvent.getId(),
+                    assistancesMapper.countByExample(assistancesExample));
+            
+            assistancesExample.clear();
+            
+            assistancesExample.createCriteria().
+                    andEventEqualTo(theEvent.getId());
+            
+            this.totalassistants.put(
+                    theEvent.getId(),
+                    assistancesMapper.countByExample(assistancesExample));
+            
+            assistancesExample.clear();
+            
+            
             System.out.println("Evento "+theEvent.getId()+" tiene en total "+this.totalassistants.get(theEvent.getId())
                     +" assistente(s) y "+ this.ontimeassistants.get(theEvent.getId()) + " de ellos han llegado a tiempo");
         }
