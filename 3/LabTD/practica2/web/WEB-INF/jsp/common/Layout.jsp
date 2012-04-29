@@ -4,6 +4,7 @@
     Author     : javier
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@ taglib prefix="stripes"
            uri="http://stripes.sourceforge.net/stripes.tld"%>
@@ -52,55 +53,7 @@
                                     <stripes:layout-component name="content"/>
                                 </div>
                                 <div id="sidebar">
-                                    <stripes:layout-component name="sidebar">
-                                        <ul>
-                                            <li>
-                                                <h2>Acciones</h2>
-                                                <ul>
-                                                    <li>
-                                                        <stripes:link
-                                                            beanclass="${actionBean['class']}"
-                                                            event="modify${view}">
-                                                            Modificar
-                                                        </stripes:link> 
-                                                    </li>
-                                                    <li>
-                                                        <stripes:link
-                                                            beanclass="${actionBean['class']}"
-                                                            event="insert${view}">
-                                                            Insertar
-                                                        </stripes:link> 
-                                                    </li>
-                                                    <li>
-                                                        <stripes:link
-                                                            beanclass="${actionBean['class']}"
-                                                            event="delete${view}">
-                                                            Eliminar
-                                                        </stripes:link> 
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <h2>Vistas</h2>
-                                                <ul>
-                                                    <li>
-                                                        <stripes:link
-                                                            beanclass="${actionBean['class']}"
-                                                            event="viewGrid">
-                                                            Tabla
-                                                        </stripes:link>
-                                                    </li>
-                                                    <li>
-                                                        <stripes:link
-                                                            beanclass="${actionBean['class']}"
-                                                            event="viewForm">
-                                                            Formulario
-                                                        </stripes:link>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </stripes:layout-component>
+                                    <stripes:layout-component name="sidebar"/>
                                 </div>
                             </stripes:layout-component>
                                 <div style="clear: both;">&nbsp;</div>
