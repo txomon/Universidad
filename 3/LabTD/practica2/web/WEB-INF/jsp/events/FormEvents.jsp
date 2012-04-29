@@ -105,21 +105,28 @@
                             <th>Llegada</th></tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="assistance" items="${actionBean.assistances}">
+                        <!-- FIXME: This repeats for each foreach
+                        06:43:31,271  INFO DefaultPopulationStrategy:176 - 
+                        Could not find property [Assistance.person] on 
+                        ActionBean.net.sourceforge.stripes.util.bean.NoSuchPropertyException: 
+                        Bean class org.lmb97.web.action.EventsActionBean does not contain a 
+                        property called 'Assistance'. As a result the following expression could
+                        not be evaluated: Assistance.person -->
+                        <c:forEach items="${actionBean.assistances}" var="Assistance">
                             <tr>
-                                <td>${assistance.id}</td>
+                                <td>${Assistance.id}</td>
                                 <td>
-                                    <stripes:select name="assistance.person" value="${assistance.person}" disabled="${actionBean.readonly}">
+                                    <stripes:select name="Assistance.person" value="${Assistance.person}" disabled="${actionBean.readonly}">
                                         <stripes:options-collection collection="${actionBean.people}" value="id"/>
                                     </stripes:select>
                                 </td>
-                                <td><stripes:text name="assistance.arrival" value="${assistance.arrival}" 
+                                <td><stripes:text name="Assistance.arrival" value="${Assistance.arrival}" 
                                               formatPattern="HH:mm" disabled="${actionBean.readonly}"/></td>
                                 <td>
-                                    <c:if test="${assistance.arrival<=actionBean.event.date}">
+                                    <c:if test="${Assistance.arrival<=actionBean.event.date}">
                                         A tiempo
                                     </c:if>
-                                    <c:if test="${assistance.arrival>actionBean.event.date}">
+                                    <c:if test="${Assistance.arrival>actionBean.event.date}">
                                         Tarde
                                     </c:if>
                                 </td>
