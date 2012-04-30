@@ -210,7 +210,11 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
 
         return new ForwardResolution(FORM);
     }
-
+    
+    public Resolution modifyingForm(){
+        
+        return modifyForm();
+    }
     private void createAssistancesStatistics() {
         AssistancesExample assistancesExample = new AssistancesExample();
         this.ontimeassistants = new TreeMap<Integer, Integer>();

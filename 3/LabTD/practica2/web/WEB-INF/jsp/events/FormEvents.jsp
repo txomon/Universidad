@@ -87,13 +87,16 @@
             </h2>
         </c:if>
         <c:if test="${actionBean.event!=null}" >
-            <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" >
+            <stripes:url var="modifying" beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
+                <stripes:param name="id" value="event.id"/>
+            </stripes:url>
+            <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" action="${modifying}" >
                 <stripes:label name="event.id">Id:</stripes:label>
-                <stripes:text name="event.id" value="event.id" disabled="true" />
+                <stripes:text name="event.id" value="${actionBean.event.id}" disabled="true" />
                 <stripes:errors field="event.id"/>
                 <br/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
-                <stripes:text name="event.date" value="event.date" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
+                <stripes:text name="event.date" value="${actionBean.event.date}" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
                 <stripes:label name="event.season">Temporada:</stripes:label>
@@ -103,7 +106,7 @@
                 <stripes:errors field="event.season"/>
                 <br/>
                 <stripes:label name="event.eventType">Event Type:</stripes:label>
-                <stripes:select name="event.eventType" onchange="invoke(this.form,this.name, 'content-table');" value="event.eventType" disabled="${actionBean.readonly}">
+                <stripes:select name="event.eventType" onchange="document.form.submit()" value="event.eventType" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
@@ -119,7 +122,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody>               
                             <c:forEach items="${actionBean.assistances}" var="Assistance">
                                 <tr>
                                     <td>${Assistance.id}</td>
