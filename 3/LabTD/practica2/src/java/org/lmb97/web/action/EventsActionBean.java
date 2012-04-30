@@ -4,16 +4,24 @@
  */
 package org.lmb97.web.action;
 
+import java.io.StringReader;
 import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrorHandler;
+import net.sourceforge.stripes.validation.ValidationErrors;
 import org.lmb97.data.Assistances;
 import org.lmb97.data.AssistancesExample;
 import org.lmb97.data.AssistancesMapper;
@@ -40,20 +48,31 @@ import org.lmb97.data.SeasonsMapper;
  *
  * @author javier
  */
-public class EventsActionBean extends AbstractActionBean {
+public class EventsActionBean extends AbstractActionBean implements ValidationErrorHandler {
     //First, the two pages this Action bean is going to use
 
     private static final String GRID = "/WEB-INF/jsp/events/GridEvents.jsp";
     private static final String FORM = "/WEB-INF/jsp/events/FormEvents.jsp";
     //Then the data the JSP are going to use, correctly adecuated in each case
+    
+    @ValidateNestedProperties({
+        @Validate(field="eventType", required=true),
+        @Validate(field="date", required=true),
+        @Validate(field="season", required=true)
+    })
     private Events event;
     private Posts post;
+    
+    @ValidateNestedProperties({
+        @Validate(field="person", required=true),
+        @Validate(field="arrival", required=true)
+    })
     private List<Assistances> assistances;
+    
     private List<Events> events;
     private List<EventTypes> eventTypes;
     private List<Seasons> seasons;
     private List<People> people;
-    private List<Posts> posts;
     private List<RelPostsPeople> relPostsPeople;
     private Map<Integer, Integer> totalassistants;
     private Map<Integer, Integer> ontimeassistants;
@@ -78,6 +97,7 @@ public class EventsActionBean extends AbstractActionBean {
     private RelPostsPeopleMapper relPostsPeopleMapper;
 
     @DefaultHandler
+    @DontValidate
     public Resolution viewGrid() {
         EventsExample eventsExample = new EventsExample();
         EventTypesExample eventTypesExample = new EventTypesExample();
@@ -99,6 +119,7 @@ public class EventsActionBean extends AbstractActionBean {
         return new ForwardResolution(GRID);
     }
 
+    @DontValidate
     public Resolution viewForm() {
         AssistancesExample assistancesExample = new AssistancesExample();
         EventTypesExample eventTypesExample = new EventTypesExample();
@@ -132,12 +153,12 @@ public class EventsActionBean extends AbstractActionBean {
         return new ForwardResolution(FORM);
     }
 
+    @DontValidate
     public Resolution modifyForm() {
         AssistancesExample assistancesExample = new AssistancesExample();
         EventTypesExample eventTypesExample = new EventTypesExample();
         PeopleExample peopleExample = new PeopleExample();
         SeasonsExample seasonsExample = new SeasonsExample();
-        PostsExample postsExample = new PostsExample();
         RelPostsPeopleExample relPostsPeopleExample = new RelPostsPeopleExample();
 
 
@@ -149,14 +170,15 @@ public class EventsActionBean extends AbstractActionBean {
         } else {
             id = 1;
         }
-
-        this.event = eventsMapper.selectByPrimaryKey(id);
+        
+        if(this.event==null)
+            this.event = eventsMapper.selectByPrimaryKey(id);
         initFollowingAndPrevious(id);
 
         eventTypesExample.createCriteria();
         this.eventTypes = eventTypesMapper.selectByExample(eventTypesExample);
 
-        this.post = postsMapper.selectByPrimaryKey(this.eventTypes.get(this.event.getEventType()).getPost());
+        this.post = postsMapper.selectByPrimaryKey(eventTypesMapper.selectByPrimaryKey(event.getEventType()).getPost());
 
         relPostsPeopleExample.or().
                 andPostEqualTo(this.post.getId()).
@@ -186,8 +208,6 @@ public class EventsActionBean extends AbstractActionBean {
 
         this.assistances = assistancesMapper.selectByExample(assistancesExample);
 
-
-
         return new ForwardResolution(FORM);
     }
 
@@ -215,12 +235,22 @@ public class EventsActionBean extends AbstractActionBean {
                     assistancesMapper.countByExample(assistancesExample));
 
             assistancesExample.clear();
+        }
+    }
+    
+    @Override
+    public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
+        StringBuilder message = new StringBuilder();
 
-
-            System.out.println("Evento " + item.getId() + " tiene en total " + this.totalassistants.get(item.getId())
-                    + " assistente(s) y " + this.ontimeassistants.get(item.getId()) + " de ellos han llegado a tiempo");
+        for (List<ValidationError> fieldErrors : errors.values()) {
+            for (ValidationError error : fieldErrors) {
+                message.append("<div class=\"error\">");
+                message.append(error.getMessage(getContext().getLocale()));
+                message.append("</div>");
+            }
         }
 
+        return new StreamingResolution("text/html", new StringReader(message.toString()));
     }
 
     private List<Integer> getPeopleIds() {

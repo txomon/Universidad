@@ -12,6 +12,17 @@
 
 
 <stripes:layout-render name="/WEB-INF/jsp/common/Layout.jsp">
+    <c:if test="${!actionBean.readonly}">
+        <stripes:layout-component name="scripts">
+            <script type="text/javascript" xml:space="preserve">
+                function invoke(form, event, container) {
+                    if (!form.onsubmit) { form.onsubmit = function() { return false } };
+                    var params = Form.serialize(form, {submit:event});
+                    new Ajax.Updater(container, form.action, {method:'post', parameters:params});
+                }
+            </script>
+        </stripes:layout-component>
+    </c:if>
     <stripes:layout-component name="sidebar">
         <ul>
             <li>
@@ -92,48 +103,58 @@
                 <stripes:errors field="event.season"/>
                 <br/>
                 <stripes:label name="event.eventType">Event Type:</stripes:label>
-                <stripes:select name="event.eventType" value="event.eventType" disabled="${actionBean.readonly}">
+                <stripes:select name="event.eventType" onchange="invoke(this.form,this.name, 'content-table');" value="event.eventType" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
                 <br/>
-                <table>
-                    <thead>
-                        <tr><th>Id de asistencia</th>
-                            <th>Persona</th>
-                            <th>Hora de llegada</th>
-                            <th>Llegada</th></tr>
-                    </thead>
-                    <tbody>
-                        <!-- FIXME: This repeats for each foreach
-                        06:43:31,271  INFO DefaultPopulationStrategy:176 - 
-                        Could not find property [Assistance.person] on 
-                        ActionBean.net.sourceforge.stripes.util.bean.NoSuchPropertyException: 
-                        Bean class org.lmb97.web.action.EventsActionBean does not contain a 
-                        property called 'Assistance'. As a result the following expression could
-                        not be evaluated: Assistance.person -->
-                        <c:forEach items="${actionBean.assistances}" var="Assistance">
+                <div class="content-table">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>${Assistance.id}</td>
-                                <td>
-                                    <stripes:select name="Assistance.person" value="${Assistance.person}" disabled="${actionBean.readonly}">
-                                        <stripes:options-collection collection="${actionBean.people}" value="id"/>
-                                    </stripes:select>
-                                </td>
-                                <td><stripes:text name="Assistance.arrival" value="${Assistance.arrival}" 
-                                              formatPattern="HH:mm" disabled="${actionBean.readonly}"/></td>
-                                <td>
-                                    <c:if test="${Assistance.arrival<=actionBean.event.date}">
-                                        A tiempo
-                                    </c:if>
-                                    <c:if test="${Assistance.arrival>actionBean.event.date}">
-                                        Tarde
-                                    </c:if>
-                                </td>
+                                <th>Id de asistencia</th>
+                                <th>Persona</th>
+                                <th>Hora de llegada</th>
+                                <th>Llegada</th>
+                                <th></th>
                             </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <c:forEach items="${actionBean.assistances}" var="Assistance">
+                                <tr>
+                                    <td>${Assistance.id}</td>
+                                    <td>
+                                        <stripes:select name="Assistance.person" value="${Assistance.person}" disabled="${actionBean.readonly}">
+                                            <stripes:options-collection collection="${actionBean.people}" value="id"/>
+                                        </stripes:select>
+                                    </td>
+                                    <td>
+                                        <stripes:text name="Assistance.arrival" value="${Assistance.arrival}" 
+                                                      formatPattern="HH:mm" disabled="${actionBean.readonly}"/>
+                                    </td>
+                                    <td>
+                                        <c:set var="arrivalTime">
+                                            <fmt:formatDate value="${Assistance.arrival}" pattern="HH:mm" />
+                                        </c:set>
+                                        <c:set var="eventDate">
+                                            <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
+                                        </c:set>
+                                        <c:if test="${arrivalTime<=eventDate}">
+                                            A tiempo
+                                        </c:if>
+                                        <c:if test="${arrivalTime>eventDate}">
+                                            Tarde
+                                        </c:if>
+                                    </td>
+                                    <td>
+                                        <stripes:errors field="Assistance.person"/>
+                                        <stripes:errors field="Assistance.arrival"/>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
                 <c:if test="${!actionBean.readonly}">
                     <stripes:link beanclass="org.lmb97.web.action.EventsActionBean" event="saveForm">
                         <stripes:param name="id" value="${actionBean.event.id}" />

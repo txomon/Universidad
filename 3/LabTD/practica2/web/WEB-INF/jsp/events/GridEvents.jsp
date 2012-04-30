@@ -32,15 +32,17 @@
                     <stripes:form beanclass="org.lmb97.web.action.EventsActionBean">
                         <c:forEach var="Event" items="${actionBean.events}">
                             <tr>
-                                <td><stripes:text name="Event.id" value="${Event.id}" disabled="${actionBean.readonly}"/></td>
+                                <td><stripes:text name="Event.id" value="${Event.id}" disabled="true"/></td>
                                 <td>
                                     <stripes:select name="Event.eventType" value="${Event.eventType}" disabled="${actionBean.readonly}">
                                         <stripes:options-collection collection="${actionBean.eventTypes}"
                                                                     label="name" value="id"/>
                                     </stripes:select>
                                 </td>
-                                <td><stripes:text name="Event.date" value="${Event.date}" 
-                                            formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}"/></td>
+                                <td>
+                                    <stripes:text name="Event.date" value="${Event.date}" 
+                                            formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}"/>
+                                </td>
                                 <td><center>${actionBean.totalassistants[Event.id]}</center></td>
                                 <td><center>${actionBean.ontimeassistants[Event.id]}</center></td>
                                 <td><center>${actionBean.totalassistants[Event.id] - actionBean.ontimeassistants[Event.id]}</center></td>
@@ -53,6 +55,9 @@
                                         <stripes:param name="id" value="${Event.id}"/>
                                         Modificar
                                     </stripes:link>
+                                </td>
+                                <td>
+                                    <stripes:errors field="Event.eventType" />
                                 </td>
                             </tr>
                         </c:forEach>
