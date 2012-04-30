@@ -88,9 +88,9 @@
         </c:if>
         <c:if test="${actionBean.event!=null}" >
             <stripes:url var="modifying" beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
-                <stripes:param name="id" value="event.id"/>
+                <stripes:param name="id" value="${actionBean.event.id}"/>
             </stripes:url>
-            <stripes:form beanclass="org.lmb97.web.action.EventsActionBean" action="${modifying}" >
+            <stripes:form action="${modifying}" name="form" >
                 <stripes:label name="event.id">Id:</stripes:label>
                 <stripes:text name="event.id" value="${actionBean.event.id}" disabled="true" />
                 <stripes:errors field="event.id"/>
@@ -105,7 +105,7 @@
                 </stripes:select>
                 <stripes:errors field="event.season"/>
                 <br/>
-                <stripes:label name="event.eventType">Event Type:</stripes:label>
+                <stripes:label name="event.eventType">Tipo de Evento:</stripes:label>
                 <stripes:select name="event.eventType" onchange="document.form.submit()" value="event.eventType" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
@@ -123,21 +123,21 @@
                             </tr>
                         </thead>
                         <tbody>               
-                            <c:forEach items="${actionBean.assistances}" var="Assistance">
+                            <c:forEach items="${actionBean.assistances}" var="assistance">
                                 <tr>
-                                    <td>${Assistance.id}</td>
+                                    <td>${assistance.id}</td>
                                     <td>
-                                        <stripes:select name="Assistance.person" value="${Assistance.person}" disabled="${actionBean.readonly}">
+                                        <stripes:select name="assistance.person" value="${assistance.person}" disabled="${actionBean.readonly}">
                                             <stripes:options-collection collection="${actionBean.people}" value="id"/>
                                         </stripes:select>
                                     </td>
                                     <td>
-                                        <stripes:text name="Assistance.arrival" value="${Assistance.arrival}" 
+                                        <stripes:text name="assistance.arrival" value="${assistance.arrival}" 
                                                       formatPattern="HH:mm" disabled="${actionBean.readonly}"/>
                                     </td>
                                     <td>
                                         <c:set var="arrivalTime">
-                                            <fmt:formatDate value="${Assistance.arrival}" pattern="HH:mm" />
+                                            <fmt:formatDate value="${assistance.arrival}" pattern="HH:mm" />
                                         </c:set>
                                         <c:set var="eventDate">
                                             <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
