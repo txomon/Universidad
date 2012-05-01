@@ -211,7 +211,6 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     }
     
     public Resolution modifyingForm(){
-        
         return modifyForm();
     }
     private void createAssistancesStatistics() {

@@ -90,6 +90,7 @@
             <stripes:url var="modifying" beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
                 <stripes:param name="id" value="${actionBean.event.id}"/>
             </stripes:url>
+            <stripes:errors/>
             <stripes:form action="${modifying}" name="form" >
                 <stripes:label name="event.id">Id:</stripes:label>
                 <stripes:text name="event.id" value="${actionBean.event.id}" readonly="true" disabled="${actionBean.readonly}" />
@@ -97,7 +98,7 @@
                 <br/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
                 <stripes:text name="event.date" value="${actionBean.event.date}" 
-                              formatType="datetime" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
+                              formatType="datetime" formatPattern="yyyy/MM/dd-HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
                 <stripes:label name="event.season">Temporada:</stripes:label>
