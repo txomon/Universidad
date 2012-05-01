@@ -92,11 +92,12 @@
             </stripes:url>
             <stripes:form action="${modifying}" name="form" >
                 <stripes:label name="event.id">Id:</stripes:label>
-                <stripes:text name="event.id" value="${actionBean.event.id}" disabled="true" />
+                <stripes:text name="event.id" value="${actionBean.event.id}" readonly="true" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.id"/>
                 <br/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
-                <stripes:text name="event.date" value="${actionBean.event.date}" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
+                <stripes:text name="event.date" value="${actionBean.event.date}" 
+                              formatType="datetime" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
                 <stripes:label name="event.season">Temporada:</stripes:label>
@@ -122,25 +123,25 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>               
-                            <c:forEach items="${actionBean.assistances}" var="assistance">
+                        <tbody>
+                        <c:set var="eventDate">
+                            <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
+                        </c:set>
+                            <c:forEach items="${actionBean.assistances}" var="assistance" varStatus="loop">
                                 <tr>
                                     <td>${assistance.id}</td>
                                     <td>
-                                        <stripes:select name="assistance.person" value="${assistance.person}" disabled="${actionBean.readonly}">
+                                        <stripes:select name="assistances[${loop.index}].person" value="${assistance.person}" disabled="${actionBean.readonly}">
                                             <stripes:options-collection collection="${actionBean.people}" value="id"/>
                                         </stripes:select>
                                     </td>
                                     <td>
-                                        <stripes:text name="assistance.arrival" value="${assistance.arrival}" 
-                                                      formatPattern="HH:mm" disabled="${actionBean.readonly}"/>
+                                        <stripes:text name="assistances[${loop.index}].arrival" value="${assistance.arrival}"
+                                                      formatPattern="HH:mm" formatType="time" disabled="${actionBean.readonly}"/>
                                     </td>
                                     <td>
                                         <c:set var="arrivalTime">
                                             <fmt:formatDate value="${assistance.arrival}" pattern="HH:mm" />
-                                        </c:set>
-                                        <c:set var="eventDate">
-                                            <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
                                         </c:set>
                                         <c:if test="${arrivalTime<=eventDate}">
                                             A tiempo
@@ -148,6 +149,7 @@
                                         <c:if test="${arrivalTime>eventDate}">
                                             Tarde
                                         </c:if>
+                                            :${arrivalTime}<==>${actionBean.event.date}
                                     </td>
                                     <td>
                                         <stripes:errors field="Assistance.person"/>

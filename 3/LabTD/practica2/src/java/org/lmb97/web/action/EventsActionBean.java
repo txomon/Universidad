@@ -43,6 +43,7 @@ import org.lmb97.data.RelPostsPeopleMapper;
 import org.lmb97.data.Seasons;
 import org.lmb97.data.SeasonsExample;
 import org.lmb97.data.SeasonsMapper;
+import org.lmb97.util.NormalDateTimeTypeConverter;
 
 /**
  *
@@ -57,7 +58,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     
     @ValidateNestedProperties({
         @Validate(field="eventType", required=true),
-        @Validate(field="date", required=true),
+        @Validate(field="date", converter=NormalDateTimeTypeConverter.class, required=true),
         @Validate(field="season", required=true)
     })
     private Events event;
@@ -65,7 +66,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     
     @ValidateNestedProperties({
         @Validate(field="person", required=true),
-        @Validate(field="arrival", required=true)
+        @Validate(field="arrival",converter=NormalDateTimeTypeConverter.class , required=true)
     })
     private List<Assistances> assistances;
     
