@@ -41,6 +41,7 @@
         <filter-name>StripesFilter</filter-name>
         <servlet-name>StripesDispatcher</servlet-name>
         <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 	
     <servlet>
@@ -57,4 +58,8 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <welcome-file-list>
+        <welcome-file>Main.action</welcome-file>
+    </welcome-file-list>
 </web-app>

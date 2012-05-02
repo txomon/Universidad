@@ -203,7 +203,7 @@ CREATE  TABLE IF NOT EXISTS `assistances` (
   `event` INT NOT NULL ,
   `reason` INT NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `unique-assistances` (`person` ASC, `event` ASC, `reason` ASC) ,
+  UNIQUE INDEX `unique-assistances` (`person` ASC, `event` ASC) ,
   INDEX `index-assistances-person` (`person` ASC) ,
   INDEX `index-assistances-reason` (`reason` ASC) ,
   INDEX `index-assistances-event` (`event` ASC) ,

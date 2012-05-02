@@ -91,14 +91,11 @@
                 <stripes:param name="id" value="${actionBean.event.id}"/>
             </stripes:url>
             <stripes:errors/>
-            <stripes:form action="${modifying}" name="form" >
-                <stripes:label name="event.id">Id:</stripes:label>
-                <stripes:text name="event.id" value="${actionBean.event.id}" readonly="true" disabled="${actionBean.readonly}" />
-                <stripes:errors field="event.id"/>
-                <br/>
+            <stripes:form action="${modifying}" name="input" >
+                <stripes:hidden name="event.id" value="${actionBean.event.id}"/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
-                <stripes:text name="event.date" value="${actionBean.event.date}" 
-                              formatType="datetime" formatPattern="yyyy/MM/dd-HH:mm" disabled="${actionBean.readonly}" />
+                <stripes:text name="event.date" value="${actionBean.event.date}" class="required"
+                              formatType="datetime" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
                 <stripes:label name="event.season">Temporada:</stripes:label>
@@ -108,7 +105,7 @@
                 <stripes:errors field="event.season"/>
                 <br/>
                 <stripes:label name="event.eventType">Tipo de Evento:</stripes:label>
-                <stripes:select name="event.eventType" onchange="document.form.submit()" value="event.eventType" disabled="${actionBean.readonly}">
+                <stripes:select name="event.eventType" onchange="document.input.submit()" value="event.eventType" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
@@ -117,7 +114,6 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Id de asistencia</th>
                                 <th>Persona</th>
                                 <th>Hora de llegada</th>
                                 <th>Llegada</th>
@@ -130,14 +126,13 @@
                         </c:set>
                             <c:forEach items="${actionBean.assistances}" var="assistance" varStatus="loop">
                                 <tr>
-                                    <td>${assistance.id}</td>
                                     <td>
                                         <stripes:select name="assistances[${loop.index}].person" value="${assistance.person}" disabled="${actionBean.readonly}">
                                             <stripes:options-collection collection="${actionBean.people}" value="id"/>
                                         </stripes:select>
                                     </td>
                                     <td>
-                                        <stripes:text name="assistances[${loop.index}].arrival" value="${assistance.arrival}"
+                                        <stripes:text name="assistances[${loop.index}].arrival" value="${assistance.arrival}" class="required"
                                                       formatPattern="HH:mm" formatType="time" disabled="${actionBean.readonly}"/>
                                     </td>
                                     <td>
@@ -150,7 +145,6 @@
                                         <c:if test="${arrivalTime>eventDate}">
                                             Tarde
                                         </c:if>
-                                            :${arrivalTime}<==>${actionBean.event.date}
                                     </td>
                                     <td>
                                         <stripes:errors field="Assistance.person"/>

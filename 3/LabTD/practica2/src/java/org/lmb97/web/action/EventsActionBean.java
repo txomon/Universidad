@@ -242,17 +242,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
-        StringBuilder message = new StringBuilder();
-
-        for (List<ValidationError> fieldErrors : errors.values()) {
-            for (ValidationError error : fieldErrors) {
-                message.append("<div class=\"error\">");
-                message.append(error.getMessage(getContext().getLocale()));
-                message.append("</div>");
-            }
-        }
-
-        return new StreamingResolution("text/html", new StringReader(message.toString()));
+        return null;
     }
 
     private List<Integer> getPeopleIds() {
