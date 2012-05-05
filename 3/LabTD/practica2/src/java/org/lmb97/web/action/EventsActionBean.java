@@ -4,23 +4,25 @@
  */
 package org.lmb97.web.action;
 
-import java.io.StringReader;
 import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import net.sourceforge.stripes.action.DontValidate;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.integration.spring.SpringBean;
+import net.sourceforge.stripes.validation.SimpleError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationError;
 import net.sourceforge.stripes.validation.ValidationErrorHandler;
 import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 import org.lmb97.data.Assistances;
 import org.lmb97.data.AssistancesExample;
 import org.lmb97.data.AssistancesMapper;
@@ -53,21 +55,14 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     private static final String GRID = "/WEB-INF/jsp/events/GridEvents.jsp";
     private static final String FORM = "/WEB-INF/jsp/events/FormEvents.jsp";
     //Then the data the JSP are going to use, correctly adecuated in each case
-    
     @ValidateNestedProperties({
-        @Validate(field="eventType", required=true),
-        @Validate(field="date", converter=NormalDateTimeTypeConverter.class, required=true),
-        @Validate(field="season", required=true)
+        @Validate(field = "eventType", required = true),
+        @Validate(field = "date", converter = NormalDateTimeTypeConverter.class, required = true),
+        @Validate(field = "season", required = true)
     })
     private Events event;
     private Posts post;
-    
-    @ValidateNestedProperties({
-        @Validate(field="person", required=true),
-        @Validate(field="arrival",converter=NormalDateTimeTypeConverter.class , required=true)
-    })
     private List<Assistances> assistances;
-    
     private List<Events> events;
     private List<EventTypes> eventTypes;
     private List<Seasons> seasons;
@@ -75,6 +70,10 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
     private List<RelPostsPeople> relPostsPeople;
     private Map<Integer, Integer> totalassistants;
     private Map<Integer, Integer> ontimeassistants;
+    @ValidateNestedProperties({
+        @Validate(field = "arrival", converter = NormalDateTimeTypeConverter.class)
+    })
+    private Map<Integer, Assistances> assists;
     private boolean readonly;
     private String view;
     private int following;
@@ -124,6 +123,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
         EventTypesExample eventTypesExample = new EventTypesExample();
         PeopleExample peopleExample = new PeopleExample();
         SeasonsExample seasonsExample = new SeasonsExample();
+        RelPostsPeopleExample relPostsPeopleExample = new RelPostsPeopleExample();
 
         this.readonly = true;
         this.view = "Form";
@@ -134,21 +134,47 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
             id = 1;
         }
 
+        // We check if the event has been mapped by the form, if not, we define it
         this.event = eventsMapper.selectByPrimaryKey(id);
+
+        //We init the following and previous parameters.
         initFollowingAndPrevious(id);
 
-        assistancesExample.createCriteria().andEventEqualTo(id);
-        this.assistances = assistancesMapper.selectByExample(assistancesExample);
-
-        peopleExample.createCriteria().andIdIn(getAssistantsIds());
-        this.people = peopleMapper.selectByExample(peopleExample);
-
-        seasonsExample.createCriteria().andIdEqualTo(this.event.getSeason());
-        this.seasons = seasonsMapper.selectByExample(seasonsExample);
-
+        //We take the EventTypes
         eventTypesExample.createCriteria().andIdEqualTo(this.event.getEventType());
         this.eventTypes = eventTypesMapper.selectByExample(eventTypesExample);
 
+        //We take the post related to this event, related to this evenType
+        this.post = postsMapper.selectByPrimaryKey(eventTypesMapper.selectByPrimaryKey(event.getEventType()).getPost());
+
+        //We take all the RelPostsPeople that should be assisting to that event
+        relPostsPeopleExample.or().
+                andPostEqualTo(this.post.getId()).
+                andJoinDateLessThanOrEqualTo(this.event.getDate()).
+                andOutDateGreaterThan(this.event.getDate());
+        relPostsPeopleExample.or().
+                andPostEqualTo(this.post.getId()).
+                andJoinDateLessThanOrEqualTo(this.event.getDate()).
+                andOutDateIsNull();
+
+        this.relPostsPeople = relPostsPeopleMapper.selectByExample(relPostsPeopleExample);
+
+        //We take this season
+        seasonsExample.createCriteria().andIdEqualTo(this.event.getSeason());
+        this.seasons = seasonsMapper.selectByExample(seasonsExample);
+
+        //We take now all the people that should be going to that event
+        List<Integer> posiblePeopleIds = getPeopleIds();
+
+        peopleExample.createCriteria().andIdIn(posiblePeopleIds);
+        this.people = peopleMapper.selectByExample(peopleExample);
+
+        //We take all the assistances related to that event
+        assistancesExample.createCriteria().andEventEqualTo(id);
+        this.assistances = assistancesMapper.selectByExample(assistancesExample);
+
+        createAssistancesMap();
+        //We create a map to be able to be able to access those vars
         return new ForwardResolution(FORM);
     }
 
@@ -164,21 +190,29 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
         this.readonly = false;
         this.view = "Form";
         int id;
+
+        // If the id is in the parameters, we take it, if not, defaults to 1
         if (null != context.getRequest().getParameter("id")) {
             id = new Integer(context.getRequest().getParameter("id")).intValue();
         } else {
             id = 1;
         }
-        
-        if(this.event==null)
+
+        // We check if the event has been mapped by the form, if not, we define it
+        if (this.event == null) {
             this.event = eventsMapper.selectByPrimaryKey(id);
+        }
+        //We init the following and previous parameters.
         initFollowingAndPrevious(id);
 
+        //We take all the posible EventTypes
         eventTypesExample.createCriteria();
         this.eventTypes = eventTypesMapper.selectByExample(eventTypesExample);
 
+        //We take the post related to this event, related to this evenType
         this.post = postsMapper.selectByPrimaryKey(eventTypesMapper.selectByPrimaryKey(event.getEventType()).getPost());
 
+        //We take all the people that should be assisting to that event
         relPostsPeopleExample.or().
                 andPostEqualTo(this.post.getId()).
                 andJoinDateLessThanOrEqualTo(this.event.getDate()).
@@ -190,29 +224,63 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
 
         this.relPostsPeople = relPostsPeopleMapper.selectByExample(relPostsPeopleExample);
 
+        //We take all the seasons it could belong to
         seasonsExample.createCriteria();
         this.seasons = seasonsMapper.selectByExample(seasonsExample);
 
+        //We take now all the people that should be going to that event
         List<Integer> posiblePeopleIds = getPeopleIds();
 
-        if (!posiblePeopleIds.isEmpty()) {
-            peopleExample.createCriteria().andIdIn(posiblePeopleIds);
-            this.people = peopleMapper.selectByExample(peopleExample);
+        peopleExample.createCriteria().andIdIn(posiblePeopleIds);
+        this.people = peopleMapper.selectByExample(peopleExample);
 
-            assistancesExample.createCriteria().andEventEqualTo(id).andPersonIn(posiblePeopleIds);
-        } else {
-            this.people = null;
-            assistancesExample.createCriteria().andEventIsNull().andEventIsNotNull();
-        }
-
+        //We take all the assistances related to that event
+        assistancesExample.createCriteria().andEventEqualTo(id);
         this.assistances = assistancesMapper.selectByExample(assistancesExample);
+
+        if (assists == null || assists.isEmpty()) {
+            createAssistancesMap();
+        }
 
         return new ForwardResolution(FORM);
     }
-    
-    public Resolution modifyingForm(){
+
+    public Resolution modifyingForm() {
         return modifyForm();
     }
+
+    public Resolution saveForm() {
+
+        for (Assistances item : this.assists.values()) {
+            /*
+             * If the arrival is specified in it, then we can be able to insert
+             * it. If the arrival is not specified, it can be that we have to
+             * delete it.
+             */
+            if (item.getArrival() != null) {
+                /*
+                 * If the id of the assistance is put, that means it already
+                 * exists, so we just have to update it. If not, we insert it.
+                 */
+                if (item.getId() == 0 || item.getId() == null) {
+                    this.assistancesMapper.updateByPrimaryKey(item);
+                } else {
+                    this.assistancesMapper.insert(item);
+                }
+            } else {
+                /*
+                 * We check if the id is set. As we dont specify the id of the
+                 * assistances (they are auto_increment fields), if it is set,
+                 * means that has been taken from the DB.
+                 */
+                if (item.getId() != 0) {
+                    this.assistancesMapper.deleteByPrimaryKey(item.getId());
+                }
+            }
+        }
+        return new RedirectResolution(EventsActionBean.class, "viewForm");
+    }
+
     private void createAssistancesStatistics() {
         AssistancesExample assistancesExample = new AssistancesExample();
         this.ontimeassistants = new TreeMap<Integer, Integer>();
@@ -239,7 +307,56 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
             assistancesExample.clear();
         }
     }
-    
+
+
+    /*
+     * Here I have to check wether if the ones in the assists array can go to
+     * the event or not. And put error for all those
+     */
+    @ValidationMethod
+    public void validateAssistancesAndPeople(ValidationErrors errors) {
+        RelPostsPeopleExample relPostsPeopleExample = new RelPostsPeopleExample();
+        EventTypes eventType;
+        Posts thepost;
+        List<RelPostsPeople> expectedPeople;
+        boolean iserror = false;
+
+        eventType = this.eventTypesMapper.selectByPrimaryKey(this.event.getEventType());
+
+        thepost = this.postsMapper.selectByPrimaryKey(eventType.getPost());
+        //We take all the RelPostsPeople that should be assisting to that event
+        relPostsPeopleExample.or().
+                andPostEqualTo(thepost.getId()).
+                andJoinDateLessThanOrEqualTo(this.event.getDate()).
+                andOutDateGreaterThan(this.event.getDate());
+        relPostsPeopleExample.or().
+                andPostEqualTo(thepost.getId()).
+                andJoinDateLessThanOrEqualTo(this.event.getDate()).
+                andOutDateIsNull();
+
+        expectedPeople = relPostsPeopleMapper.selectByExample(relPostsPeopleExample);
+
+        List<Integer> expectedPeopleIds = new ArrayList<Integer>();
+        for (RelPostsPeople item : expectedPeople) {
+            expectedPeopleIds.add(item.getPerson());
+        }
+        for (Entry<Integer, Assistances> item : assists.entrySet()) {
+            if (!expectedPeopleIds.contains(item.getKey()) && item.getValue().getArrival() != null) {
+                iserror = true;
+                People person = this.peopleMapper.selectByPrimaryKey(item.getKey());
+                ValidationError error;
+                error = new SimpleError("El campo de hora de llegada de " + person.getName() + " "
+                        + person.getSurname() + " ({1}) impide el cambio al evento {2}"
+                        + " por que no puede asistir a ese evento", eventType.getName());
+                errors.add("assists[" + item.getKey() + "].arrival", error);
+            }
+        }
+        if (iserror) {
+            this.event.setEventType(eventsMapper.selectByPrimaryKey(this.event.getId()).getEventType());
+            modifyForm();
+        }
+    }
+
     @Override
     public Resolution handleValidationErrors(ValidationErrors errors) throws Exception {
         return null;
@@ -253,12 +370,11 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
         return peopleIds;
     }
 
-    private List<Integer> getAssistantsIds() {
-        List<Integer> assistantsIds = new ArrayList<Integer>();
+    private void createAssistancesMap() {
+        this.assists = new TreeMap<Integer, Assistances>();
         for (Assistances item : this.assistances) {
-            assistantsIds.add(item.getPerson());
+            assists.put(item.getPerson(), item);
         }
-        return assistantsIds;
     }
 
     private void initFollowingAndPrevious(int id) {
@@ -280,6 +396,14 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
                 this.previous = item.getId();
             }
         }
+    }
+
+    public Map<Integer, Assistances> getAssists() {
+        return assists;
+    }
+
+    public void setAssists(Map<Integer, Assistances> assists) {
+        this.assists = assists;
     }
 
     public int getFollowing() {

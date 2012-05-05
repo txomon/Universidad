@@ -87,25 +87,28 @@
             </h2>
         </c:if>
         <c:if test="${actionBean.event!=null}" >
-            <stripes:url var="modifying" beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
-                <stripes:param name="id" value="${actionBean.event.id}"/>
-            </stripes:url>
             <stripes:errors/>
-            <stripes:form action="${modifying}" name="input" >
+            <stripes:form name="input" beanclass="org.lmb97.web.action.EventsActionBean" >
                 <stripes:hidden name="event.id" value="${actionBean.event.id}"/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
-                <stripes:text name="event.date" value="${actionBean.event.date}" class="required"
-                              formatType="datetime" formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
+                <stripes:text name="event.date" value="${actionBean.event.date}" formatType="datetime" 
+                              formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
                 <stripes:label name="event.season">Temporada:</stripes:label>
-                <stripes:select name="event.season" value="event.season" disabled="${actionBean.readonly}">
+                <stripes:select name="event.season" value="${actionBean.event.season}" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.seasons}" value="id" />
                 </stripes:select>
                 <stripes:errors field="event.season"/>
                 <br/>
                 <stripes:label name="event.eventType">Tipo de Evento:</stripes:label>
-                <stripes:select name="event.eventType" onchange="document.input.submit()" value="event.eventType" disabled="${actionBean.readonly}">
+                <div style="display: none;">
+                    <stripes:link beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
+                        <stripes:param name="id" value="${actionBean.event.id}"/>
+                        <stripes:button name="check_form" />
+                    </stripes:link>
+                </div>
+                <stripes:select name="event.eventType" onchange="document.getElementById('check_form').click();" value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
@@ -121,23 +124,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <c:set var="eventDate">
-                            <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
-                        </c:set>
-                            <c:forEach items="${actionBean.assistances}" var="assistance" varStatus="loop">
+                            <c:set var="eventDate">
+                                <fmt:formatDate value="${actionBean.event.date}" pattern="HH:mm" />
+                            </c:set>
+                            <c:forEach items="${actionBean.people}" var="person" varStatus="loop">
                                 <tr>
                                     <td>
-                                        <stripes:select name="assistances[${loop.index}].person" value="${assistance.person}" disabled="${actionBean.readonly}">
-                                            <stripes:options-collection collection="${actionBean.people}" value="id"/>
-                                        </stripes:select>
+                                        <stripes:hidden name="assists[${person.id}].event" value="${actionBean.event.id}"/>
+                                        <stripes:hidden name="assists[${person.id}].person" value="${person.id}"/>
+                                        ${person.name} ${person.surname}
                                     </td>
                                     <td>
-                                        <stripes:text name="assistances[${loop.index}].arrival" value="${assistance.arrival}" class="required"
+                                        <stripes:text name="assists[${person.id}].arrival" value="${actionBean.assists[person.id].arrival}"
                                                       formatPattern="HH:mm" formatType="time" disabled="${actionBean.readonly}"/>
                                     </td>
                                     <td>
                                         <c:set var="arrivalTime">
-                                            <fmt:formatDate value="${assistance.arrival}" pattern="HH:mm" />
+                                            <fmt:formatDate value="${actionBean.assists[person.id].arrival}" pattern="HH:mm" />
                                         </c:set>
                                         <c:if test="${arrivalTime<=eventDate}">
                                             A tiempo
@@ -147,8 +150,7 @@
                                         </c:if>
                                     </td>
                                     <td>
-                                        <stripes:errors field="Assistance.person"/>
-                                        <stripes:errors field="Assistance.arrival"/>
+                                        <stripes:errors field="assists[${person.id}].arrival"/>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -156,10 +158,7 @@
                     </table>
                 </div>
                 <c:if test="${!actionBean.readonly}">
-                    <stripes:link beanclass="org.lmb97.web.action.EventsActionBean" event="saveForm">
-                        <stripes:param name="id" value="${actionBean.event.id}" />
-                        <stripes:button name="saveForm" value="Save changes"/>
-                    </stripes:link>
+                    <stripes:submit name="saveForm" value="Save changes"/>
                     <stripes:link beanclass="org.lmb97.web.action.EventsActionBean" event="viewForm">
                         <stripes:param name="id" value="${actionBean.event.id}" />
                         <stripes:button name="viewForm" value="Discard changes"/>
