@@ -87,7 +87,6 @@
             </h2>
         </c:if>
         <c:if test="${actionBean.event!=null}" >
-            <stripes:errors/>
             <stripes:form name="input" beanclass="org.lmb97.web.action.EventsActionBean" >
                 <stripes:hidden name="event.id" value="${actionBean.event.id}"/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
@@ -103,12 +102,9 @@
                 <br/>
                 <stripes:label name="event.eventType">Tipo de Evento:</stripes:label>
                 <div style="display: none;">
-                    <stripes:link beanclass="org.lmb97.web.action.EventsActionBean" event="modifyingForm" >
-                        <stripes:param name="id" value="${actionBean.event.id}"/>
-                        <stripes:button name="check_form" />
-                    </stripes:link>
+                    <stripes:submit name="modifyingForm" value="modifyingForm" id="modifyingForm"/>
                 </div>
-                <stripes:select name="event.eventType" onchange="document.getElementById('check_form').click();" value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
+                <stripes:select name="event.eventType" onchange="document.getElementById('modifyingForm').click();" value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
@@ -131,6 +127,7 @@
                                 <tr>
                                     <td>
                                         <stripes:hidden name="assists[${person.id}].event" value="${actionBean.event.id}"/>
+                                        <stripes:hidden name="assists[${person.id}].id" value="${actionBean.assists[person.id].id}"/>
                                         <stripes:hidden name="assists[${person.id}].person" value="${person.id}"/>
                                         ${person.name} ${person.surname}
                                     </td>

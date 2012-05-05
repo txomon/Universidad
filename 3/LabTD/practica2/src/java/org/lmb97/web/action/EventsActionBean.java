@@ -262,10 +262,10 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
                  * If the id of the assistance is put, that means it already
                  * exists, so we just have to update it. If not, we insert it.
                  */
-                if (item.getId() == 0 || item.getId() == null) {
-                    this.assistancesMapper.updateByPrimaryKey(item);
-                } else {
+                if (item.getId() == null || item.getId() == 0) {
                     this.assistancesMapper.insert(item);
+                } else {
+                    this.assistancesMapper.updateByPrimaryKey(item);
                 }
             } else {
                 /*
@@ -273,7 +273,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
                  * assistances (they are auto_increment fields), if it is set,
                  * means that has been taken from the DB.
                  */
-                if (item.getId() != 0) {
+                if (item.getId() != null && item.getId() != 0) {
                     this.assistancesMapper.deleteByPrimaryKey(item.getId());
                 }
             }
