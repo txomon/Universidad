@@ -15,10 +15,11 @@
     <c:if test="${!actionBean.readonly}">
         <stripes:layout-component name="scripts">
             <script type="text/javascript" xml:space="preserve">
-                function invoke(form, event, container) {
-                    if (!form.onsubmit) { form.onsubmit = function() { return false } };
-                    var params = Form.serialize(form, {submit:event});
-                    new Ajax.Updater(container, form.action, {method:'post', parameters:params});
+                function BuckRocks()
+                {
+                    inputForm = document.getElementById('input');
+                    inputForm.action = "/practica2/Events.action?modifyingForm=";
+                    inputForm.submit();
                 }
             </script>
         </stripes:layout-component>
@@ -34,7 +35,7 @@
                             event="modifyForm">
                             <stripes:param name="id" value="${actionBean.event.id}"/>
                             Modificar
-                        </stripes:link> 
+                        </stripes:link>
                     </li>
                     <li>
                         <stripes:link
@@ -42,7 +43,7 @@
                             event="insertForm">
                             <stripes:param name="id" value="${actionBean.event.id}"/>
                             Insertar
-                        </stripes:link> 
+                        </stripes:link>
                     </li>
                     <li>
                         <stripes:link
@@ -50,7 +51,7 @@
                             event="deleteForm">
                             <stripes:param name="id" value="${actionBean.event.id}"/>
                             Eliminar
-                        </stripes:link> 
+                        </stripes:link>
                     </li>
                 </ul>
             </li>
@@ -66,7 +67,7 @@
                                     Anterior
                                 </stripes:link>
                             </li>
-                        </c:if>    
+                        </c:if>
                         <c:if test="${actionBean.following!=0}">
                             <li>
                                 <stripes:link beanclass='org.lmb97.web.action.EventsActionBean' event='viewForm'>
@@ -87,10 +88,10 @@
             </h2>
         </c:if>
         <c:if test="${actionBean.event!=null}" >
-            <stripes:form name="input" beanclass="org.lmb97.web.action.EventsActionBean" >
+            <stripes:form id="input" beanclass="org.lmb97.web.action.EventsActionBean" >
                 <stripes:hidden name="event.id" value="${actionBean.event.id}"/>
                 <stripes:label name="event.date">Fecha:</stripes:label>
-                <stripes:text name="event.date" value="${actionBean.event.date}" formatType="datetime" 
+                <stripes:text name="event.date" value="${actionBean.event.date}" formatType="datetime"
                               formatPattern="yyyy/MM/dd HH:mm" disabled="${actionBean.readonly}" />
                 <stripes:errors field="event.date"/>
                 <br/>
@@ -101,10 +102,8 @@
                 <stripes:errors field="event.season"/>
                 <br/>
                 <stripes:label name="event.eventType">Tipo de Evento:</stripes:label>
-                <div style="display: none;">
-                    <stripes:submit name="modifyingForm" value="modifyingForm" id="modifyingForm"/>
-                </div>
-                <stripes:select name="event.eventType" onchange="document.getElementById('modifyingForm').click();" value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
+                <stripes:select id="event.eventType" name="event.eventType" onchange="BuckRocks();"
+                                value="${actionBean.event.eventType}" disabled="${actionBean.readonly}">
                     <stripes:options-collection collection="${actionBean.eventTypes}" value="id" label="name" />
                 </stripes:select>
                 <stripes:errors field="event.eventType"/>
@@ -161,14 +160,14 @@
                         <stripes:button name="viewForm" value="Discard changes"/>
                     </stripes:link>
                 </c:if>
-            </stripes:form> 
+            </stripes:form>
             <c:if test="${actionBean.readonly}">
                 <c:if test="${actionBean.previous!=0}">
                     <stripes:link beanclass='org.lmb97.web.action.EventsActionBean' event='viewForm'>
                         <stripes:param name='id' value='${actionBean.previous}'/>
                         <input type="submit" value="Anterior"/>
                     </stripes:link>
-                </c:if>    
+                </c:if>
                 <c:if test="${actionBean.following!=0}">
                     <stripes:link beanclass='org.lmb97.web.action.EventsActionBean' event='viewForm'>
                         <stripes:param name='id' value='${actionBean.following}' />

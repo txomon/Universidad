@@ -278,7 +278,7 @@ public class EventsActionBean extends AbstractActionBean implements ValidationEr
                 }
             }
         }
-        return new RedirectResolution(EventsActionBean.class, "viewForm");
+        return new RedirectResolution("/Events.action?viewForm=&id="+this.event.getId());
     }
 
     private void createAssistancesStatistics() {
