@@ -40,14 +40,6 @@
                     <li>
                         <stripes:link
                             beanclass="${actionBean['class']}"
-                            event="insertForm">
-                            <stripes:param name="id" value="${actionBean.event.id}"/>
-                            Insertar
-                        </stripes:link>
-                    </li>
-                    <li>
-                        <stripes:link
-                            beanclass="${actionBean['class']}"
                             event="deleteForm">
                             <stripes:param name="id" value="${actionBean.event.id}"/>
                             Eliminar
@@ -82,6 +74,7 @@
         </ul>
     </stripes:layout-component>
     <stripes:layout-component name="content">
+	<stripes:messages/>
         <c:if test="${actionBean.event==null}" >
             <h2>
                 Error: No existe el evento especificado.
@@ -135,20 +128,28 @@
                                                       formatPattern="HH:mm" formatType="time" disabled="${actionBean.readonly}"/>
                                     </td>
                                     <td>
-                                        <c:set var="arrivalTime">
-                                            <fmt:formatDate value="${actionBean.assists[person.id].arrival}" pattern="HH:mm" />
-                                        </c:set>
-                                        <c:if test="${arrivalTime<=eventDate}">
-                                            A tiempo
-                                        </c:if>
-                                        <c:if test="${arrivalTime>eventDate}">
-                                            Tarde
-                                        </c:if>
-                                    </td>
-                                    <td>
-                                        <stripes:errors field="assists[${person.id}].arrival"/>
-                                    </td>
-                                </tr>
+					<c:if test="${actionBean.assists[person.id].arrival!=null}">
+					    <c:set var="arrivalTime">
+						<fmt:formatDate value="${actionBean.assists[person.id].arrival}" pattern="HH:mm" />
+					    </c:set>
+					    <c:if test="${arrivalTime==eventDate}">
+						A tiempo
+					    </c:if>
+					    <c:if test="${arrivalTime<eventDate}">
+						Pronto
+					    </c:if>
+					    <c:if test="${arrivalTime>eventDate}">
+						Tarde
+					    </c:if>
+					</c:if>
+					<c:if test="${actionBean.assists[person.id].arrival==null}">
+					    No ha venido
+					</c:if>
+				    </td>
+				    <td>
+					<stripes:errors field="assists[${person.id}].arrival"/>
+				    </td>
+				</tr>
                             </c:forEach>
                         </tbody>
                     </table>
