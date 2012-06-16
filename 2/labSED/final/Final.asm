@@ -67,20 +67,15 @@ RSI:
 	MOVWF	SAVEPCL;por lo que se puede salvar ahora
 	CLRF	PCLATH;Y lo borramos por que queremos estar en el banco 0 y
 	; no queremos saltar a ningún banco de memoria
-	BANKSEL	P_LED;
-	BCF	P_LED,C_LED;
-	BTFSC	PIR1,RCIF;
-		GOTO	RECEIVE_NEXT;
-
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
 	CLRF	PCLATH;
-	BANKSEL	SER_CTL;
-	BCF	P_LED,D_LED;
-	BTFSS	PIE1&7F,TXIF;
-		GOTO	SEND_NEXT;
-	BCF	P_LED,D_LED;
+	BTFSC	PIR1,RCIF;
+		GOTO	RECEIVE_NEXT;
+	BTFSC	SER_CTL,IS_SND; En vez de mirar si está vacio el txreg, tenemos que mirar si ha podido ser él el que ha
+		GOTO	SEND_NEXT; causado la interrupción.
+	SEND_NEXT_RETI:
 	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
@@ -92,7 +87,6 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
-	BSF	P_LED,C_LED; Apago el led C para saber que hemos salido de la RSI
 
 	;AQUI ACABA LA RSI
 	;devolvemos los valores a su sitio

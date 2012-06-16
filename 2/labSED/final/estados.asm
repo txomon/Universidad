@@ -36,6 +36,8 @@ POR_:
 			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
 			MOVWF	SND_CONT;
 			CALL	SEND_AT; Mandamos AT
+			BANKSEL	PIE1;
+			BSF	PIE1&7F,TXIE;
 			BSF	EST_CTL,0;
 			MOVLW	H'3F';
 			MOVWF	TMP2;
