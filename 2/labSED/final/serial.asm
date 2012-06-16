@@ -89,55 +89,45 @@ SEND_NEXT:
 	
 	;**** SEND_CMD ****;
 	SEND_CMD:
-		PAGESELW MODEM_TABLE; Vamos a conseguir el siguiente caracter a enviar, cambiamos de página (esta en la 2)
+		PAGESELW MODEM_TABLE; Vamos a conseguir el siguiente caracter a enviar, cambiamos de página (esta en la 1)
 		MOVF	SND_CONT,W; Ponemos el número de caracter en W
 		CALL	MODEM_TABLE&7FF; Conseguimos el caracter
 		BTFSC	STATUS,Z; El comando ha acabado de enviarse si W=0
 			BCF	SER_CTL,IS_CMD; Si ya hemos de acabado de enviarlo, deshabilitamos mandar comandos
 		INCF	SND_CONT,F;Aumentamos el contador para la siguiente
-		PAGESEL SEND_NEXT;
-		BTFSC	SER_CTL,IS_CMD;
-			CALL	SERIAL_SEND;
-		BTFSS	SER_CTL,IS_CMD;
-			CLRF	SND_CONT;
-		GOTO	RETI;
+		PAGESEL SEND_NEXT; Volvemos a la página 0
+		BTFSC	SER_CTL,IS_CMD; Si seguimos enviando comandos,
+			CALL	SERIAL_SEND; mandar el caracter
+		BTFSS	SER_CTL,IS_CMD; Si hemos acabado de enviar comandos
+			CLRF	SND_CONT; limpiar el contador para el siguiente proceso
+		GOTO	RETI; Volver a la RETI
 		
 	SEND_DAT:
-		MOVF	SND_CONT,W;
-		ADDLW	SERIAL_SEND_DATA&H'FF';
-		BSF	STATUS,IRP;
-		MOVWF	FSR;
-		MOVF	INDF,W;
-		BTFSC	STATUS,Z;
-			BCF	SER_CTL,IS_DAT;
-		INCF	SND_CONT,F;
-		BTFSC	SER_CTL,IS_DAT;
-			CALL	SERIAL_SEND;
-		BTFSS	SER_CTL,IS_DAT;
-			CLRF	SND_CONT;
-		GOTO	RETI;
+		MOVF	SND_CONT,W; Cojemos el contador y lo ponemos en W
+		ADDLW	SERIAL_SEND_DATA&H'FF'; Le añadimos la dirección a partir de la que tenemos los datos para enviar
+		BSF	STATUS,IRP; preparamos el IRP de direccionamiento indirecto para leer en los bancos 2:3
+		MOVWF	FSR; ponemos la dirección indirecta bits <7:0> en el FSR
+		MOVF	INDF,W; Guardamos lo que ponga en la dirección indirecta en W
+		BTFSC	STATUS,Z; Si el caracter conseguido es 0
+			BCF	SER_CTL,IS_DAT; hemos acabado de enviar datos de la RAM
+		INCF	SND_CONT,F; Aumentamos el contador de datos
+		BTFSC	SER_CTL,IS_DAT; Si seguimos enviando datos de la ram
+			CALL	SERIAL_SEND; mandamos el caracter que acabamos de conseguir
+		BTFSS	SER_CTL,IS_DAT; Si hemos acabado
+			CLRF	SND_CONT; reseteamos el contador
+		GOTO	RETI; y volvemos a la RETI
 		
 	SEND_EEP:
-		MOVF	SND_CONT,W;
-		BANKSEL EEADR;
-		MOVWF	EEADR;
-		CALL	EEPROM_READ;
-		INCF	SND_CONT,F;
-		ANDLW	H'FF';
-		PAGESEL SEND_EEP_END
-		BTFSC	STATUS,Z;
-			CALL	SEND_EEP_END;
-		GOTO	SEND_NEXT_END;
-		
-		;**** SEND_EEP_END ****;
-		; prepares EEP end
-		SEND_EEP_END:
-			BANKSEL	SND_CONT
-			CLRF	SND_CONT;
-			BCF	SER_CTL,IS_EEP;
-			MOVLW	H'1A';
-			RETURN;
-		
+		MOVF	SND_CONT,W; Copiamos el valor del contador a W
+		CALL	EEPROM_READ; Conseguimos de la EEPROM el valor de esa posición
+		BTFSC	STATUS,Z; Si es cero
+			BCF	SER_CTL,IS_EEP; hemos acabado de enviar datos de la EEPROM
+		INCF	SND_CONT,F; Aumentamos el contador
+		BTFSC	SER_CTL,IS_EEP; Si seguimos mandando datos de la eeprom, entonces 
+			CALL	SERIAL_SEND; mandamos el caracter
+		BTFSS	SER_CTL,IS_EEP; Si hemos acabado
+			CLRF	SND_CONT; reseteamos el contador para la siguiente fase
+		GOTO RETI; y volvemos a la RETI
 		
 ;******** RECEIVE_NEXT **********;
 RECEIVE_NEXT:
