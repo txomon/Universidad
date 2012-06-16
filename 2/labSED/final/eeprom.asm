@@ -49,23 +49,19 @@ EEPROM_WRITE:
 
 ;******* EEPROM_READ ************;
 ;;
-; @param  eeadr - address to read 
-; @return w - Data read
+; @param  W - address to read 
+; @return W - Data read
 ;;	
 EEPROM_READ:
 	;Address to read
-	BANKSEL	READ00;
-	BTFSS	EE_CTL,ORI_EXT;
-		MOVF	READ00,W;
-	BANKSEL	EEADR;
-	BTFSS	EE_CTL,ORI_EXT;
-		MOVWF	EEADR&7f;
-		
-	BANKSEL	EECON1 ;
+	BANKSEL	EEADR; BANCO 2
+	MOVWF	EEADR&H"7F";
+	BANKSEL	EECON1; BANCO 3
 	BCF	EECON1&7F, EEPGD ;Point to DATA memory
 	BSF	EECON1&7F, RD ;EE Read
-	BANKSEL	EEDAT;
+	BANKSEL	EEDAT; BANCO 2
 	MOVF	EEDAT&7F, W ;W <= EEDAT
+	BANKSEL	STATUS; BANCO 0
 	RETURN;
 
 

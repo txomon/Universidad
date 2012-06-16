@@ -31,23 +31,22 @@ SERIAL_INIT:
 ;****** SEND_AT ******;
 ; send AT and start trasmission
 SEND_AT:
-	BANKSEL	SER_CTL;
 	BSF	SER_CTL,IS_SND;
-	BANKSEL	TXREG;
 	MOVLW	'A';
 	MOVWF	TXREG;
 	MOVLW	'T';
 	MOVWF	TXREG;
-	BANKSEL	PIE1
+	BANKSEL	PIE1;
 	BSF	PIE1&7F,TXIE;
+	BANKSEL STATUS;
 	RETURN;
+
 ;****** SERIAL_SEND *******;
 ;;
 ; manda el caracter que se le pasa como argumento
 ; @param W - El caracter a enviar
 ;;
 SERIAL_SEND:
-	BANKSEL	TXREG;BANCO1
 	MOVWF	TXREG;
 	RETURN;
 	
@@ -57,7 +56,6 @@ SERIAL_SEND:
 ; @return W - caracter recibido
 ;;
 SERIAL_RECEIVE:
-	BANKSEL RCREG;
 	MOVF	RCREG,W;
 	RETURN;
 
@@ -67,12 +65,15 @@ SERIAL_RECEIVE:
 ; no output	
 
 SEND_NEXT:
-	BANKSEL	PIE1
-	BTFSS	PIE1&7F,TXIF;
+	BANKSEL	PIE1; Banco 1
+	BCF	PIE1&7F,TXIF;
+	BTFSS	PIE1&7F,TXIE;
 		GOTO	RETI;
 	BTFSS	TXSTA&7F,TRMT;
 		GOTO	RETI;
-	BANKSEL	SER_CTL;
+	BANKSEL	SER_CTL; Banco 0
+	BTFSC	SER_CTL,IS_SND;
+		GOTO	RETI;
 	BTFSC	SER_CTL,IS_CMD;
 		GOTO	SEND_CMD;
 	BTFSC	SER_CTL,IS_DAT;
@@ -83,52 +84,43 @@ SEND_NEXT:
 	CLRF	SND_CONT
 	BANKSEL	PIE1;
 	BCF	PIE1&7F,TXIE;
+	BCF	SER_CTL,IS_SND;
 	GOTO	RETI;Por haber acabado la transmision
-	SEND_NEXT_END:
-	CALL	SERIAL_SEND;
-	PAGESEL	RETI;
-	GOTO	RETI;
 	
 	;**** SEND_CMD ****;
 	SEND_CMD:
-		PAGESELW MODEM_TABLE;
-		MOVF	SND_CONT,W;
-		CALL	MODEM_TABLE&7FF;
-		INCF	SND_CONT,F;
-		ANDLW	H'FF';
-		BTFSC	STATUS,Z;
-			BCF	SER_CTL,IS_CMD;
-		PAGESEL SERIAL_SEND;
-		BTFSC	STATUS,Z;
-			GOTO	SEND_NEXT;
-		GOTO	SEND_NEXT_END;
-		
+		PAGESELW MODEM_TABLE; Vamos a conseguir el siguiente caracter a enviar, cambiamos de página (esta en la 2)
+		MOVF	SND_CONT,W; Ponemos el número de caracter en W
+		CALL	MODEM_TABLE&7FF; Conseguimos el caracter
+		BTFSC	STATUS,Z; El comando ha acabado de enviarse si W=0
+			BCF	SER_CTL,IS_CMD; Si ya hemos de acabado de enviarlo, deshabilitamos mandar comandos
+		INCF	SND_CONT,F;Aumentamos el contador para la siguiente
+		PAGESEL SEND_NEXT;
+		BTFSC	SER_CTL,IS_CMD;
+			CALL	SERIAL_SEND;
+		BTFSS	SER_CTL,IS_CMD;
+			CLRF	SND_CONT;
+		GOTO	RETI;
 		
 	SEND_DAT:
 		MOVF	SND_CONT,W;
-		ADDLW	H'10';
+		ADDLW	SERIAL_SEND_DATA&H'FF';
 		BSF	STATUS,IRP;
 		MOVWF	FSR;
 		MOVF	INDF,W;
-		INCF	SND_CONT,F;
-		ANDLW	H'FF';
 		BTFSC	STATUS,Z;
-			CALL	SEND_DAT_END;
-		GOTO	SEND_NEXT_END;
-		
-		;**** SEND_DAT_END ****;
-		SEND_DAT_END:
-			BANKSEL	SER_CTL;
 			BCF	SER_CTL,IS_DAT;
+		INCF	SND_CONT,F;
+		BTFSC	SER_CTL,IS_DAT;
+			CALL	SERIAL_SEND;
+		BTFSS	SER_CTL,IS_DAT;
 			CLRF	SND_CONT;
-			MOVLW	D'10'
+		GOTO	RETI;
 		
 	SEND_EEP:
-		BANKSEL	SND_CONT;
 		MOVF	SND_CONT,W;
 		BANKSEL EEADR;
-		MOVWF	EEADR&7F;
-		PAGESEL EEPROM_READ;
+		MOVWF	EEADR;
 		CALL	EEPROM_READ;
 		INCF	SND_CONT,F;
 		ANDLW	H'FF';

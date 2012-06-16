@@ -30,6 +30,8 @@
 
 ;******** EL LED ********;
 B_LED	EQU	0;Posicion en el puerto
+C_LED	EQU	1;
+D_LED	EQU	2;
 P_LED	EQU	PORTA;Puerto
 
 
@@ -65,16 +67,20 @@ RSI:
 	MOVWF	SAVEPCL;por lo que se puede salvar ahora
 	CLRF	PCLATH;Y lo borramos por que queremos estar en el banco 0 y
 	; no queremos saltar a ningún banco de memoria
+	BANKSEL	P_LED;
+	BCF	P_LED,C_LED;
+	BTFSC	PIR1,RCIF;
+		GOTO	RECEIVE_NEXT;
 
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
-	BANKSEL	PIE1;
-	BTFSC	PIE1&7F,TXIE;
-		GOTO	SEND_NEXT;
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
 	CLRF	PCLATH;
-	BTFSC	PIR1,RCIF;
-		GOTO	RECEIVE_NEXT;
+	BANKSEL	SER_CTL;
+	BCF	P_LED,D_LED;
+	BTFSS	PIE1&7F,TXIF;
+		GOTO	SEND_NEXT;
+	BCF	P_LED,D_LED;
 	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
@@ -86,11 +92,7 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
-	;CALL	ESCRIBE_REG; DEBUG ONLY!
-;Hasta aqui, desde el comienzo de la RSI,
-; tenemos:
-; 395 ciclos para saber que la hay una tecla pulsada
-; 910 ciclos para confirmarla
+	BSF	P_LED,C_LED; Apago el led C para saber que hemos salido de la RSI
 
 	;AQUI ACABA LA RSI
 	;devolvemos los valores a su sitio
@@ -146,8 +148,12 @@ LEDINIT:
 	CLRF	ANSEL&7F;
 	BANKSEL	TRISA;me coloco para modificar el trisa
 	BCF	P_LED,B_LED;Digo que va a ser de output
+	BCF	P_LED,C_LED;
+	BCF	P_LED,D_LED;
 	BANKSEL	P_LED;me coloco en el porta
 	BSF	P_LED,B_LED;Apago el led
+	BSF	P_LED,C_LED;
+	BSF	P_LED,D_LED;
 	RETURN;
 	
 

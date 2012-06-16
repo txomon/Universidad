@@ -9,7 +9,7 @@
 	
 	CBLOCK	H'110'
 	SERIAL_SEND_DATA:H'F' ;Con 16 bytes de memoria deberia ser suficiente
-	SERIAL_RECEIVE_DATA:H'A';
+	SERIAL_RECEIVE_DATA:H'A';Con 10 bytes de memoria para recibir también
 	ENDC
 
 	;**** SER_CTL ****;
@@ -17,10 +17,8 @@
 	IS_DAT	EQU	1; Lo que se va a enviar tiene datos de RAM?
 	IS_EEP	EQU	2; Lo que se va a enviar tiene datos de EEPROM?
 	IS_SIF	EQU	5
-	IS_SND	EQU	6
-	IS_RCV	EQU	7
-	;**** DAT_CTL ***;
-	EEP_MEM	EQU	0;
+	IS_SND	EQU	6; Está enviando ?
+	IS_RCV	EQU	7; Ha recibido una línea acabada con <cr>?
 	
 	
 ;***** MODEM_TABLE *****;

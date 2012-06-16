@@ -32,10 +32,10 @@ POR_:
 			CLRF	RCV_CONT;
 			CLRF	SER_CTL;
 			BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
+			BSF	SER_CTL,IS_SND; Marcamos que vamos a enviar por el puerto serie;
 			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
 			MOVWF	SND_CONT;
 			CALL	SEND_AT; Mandamos AT
-			BANKSEL	EST_CTL;
 			BSF	EST_CTL,0;
 			MOVLW	H'3F';
 			MOVWF	TMP2;
@@ -58,13 +58,13 @@ POR_:
 		POR_CTL_PER_ANALIZE:
 			BTFSS	SER_CTL,IS_RCV;
 				RETURN;	
-			MOVLW	H'1F'; La posición en la que voy a poner lo que se recibe.
+			MOVLW	SERIAL_RECEIVE_DATA&H'FF'; La posición en la que está puesto lo que se recibe.
 			MOVWF	FSR;
 			BSF	STATUS,IRP;
 
-			MOVLW	cur_set|h'4F'; Mover el cursor a la última posicion de la segunda fila
+			MOVLW	cur_set|h'4E'; Mover el cursor a la última posicion de la segunda fila
 			CALL	LCDIWR;
-			MOVF	INDF,W;
+			MOVLW	"A";
 			CALL	LCDDWR;Escribo la letra en pantalla
 
 			MOVF	INDF,W; Comprobamos si el caracter es 0
