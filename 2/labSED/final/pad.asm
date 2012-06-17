@@ -168,45 +168,33 @@ COMPPAD:
 	
 ;**** INICIATMP2(Programa el timer para que salte a lo máximo posible) ****;
 INICIATMP2:;Vaciamos los pre/post escaladores
-	BANKSEL	PR2;banco1
+	BANKSEL	PR2;BANCO1
 	BSF	PIE1&7F,TMR2IE;Habilitamos las interrupciones
-	MOVLW	H'01'
-	MOVWF	PR2&7F;
-	BANKSEL	T2CON
+	MOVLW	H'FF';
+	MOVWF	PR2&7F; Que salte en FF
+	BANKSEL	T2CON;BANCO 0
 	BCF	PIR1,TMR2IF;Borramos la interrupción
-	CLRF	T2CON;ponemos preescalador y postacalador 1:1
-	BSF	T2CON,TMR2ON;encendemos el reloj
+	MOVWF	T2CON;ponemos preescalador y postescalador a tope y encendemos el reloj
 	CLRF	TMR2;borramos la cuenta en curso
-T2ICL:	BTFSS	PIR1,TMR2IF;Cuando ponga la interrupción que salga
-		GOTO	T2ICL;
-	BCF	T2CON,TMR2ON;Apagamos el temporizador
-	BCF	PIR1,TMR2IF;Quitamos la señal de interrupción
-	BANKSEL	PR2
-	MOVLW	H'FF';ponemos al maximo la comparación
-	MOVWF	PR2&7F;
-	BANKSEL	T2CON 
-	MOVWF	T2CON;encendemos y ponemos al maximo los post/pre escaladores
+	BCF	PIR1,TMR2IF;
 	RETURN;
 	
 	
 	;***** Para inicializar todo lo relacionado con el puerto del pad ****;
 PADINIT:
-	BANKSEL PORTPAD;Banco0
-	MOVLW	B'00000000';
-	MOVWF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
-	BANKSEL	ANSELH;Banco4
+	CLRF	PORTPAD;Ponemos a 0 todos los puertos para notar el cambio.
+	BANKSEL	ANSELH; BANCO 3
 	CLRF	ANSELH&7F;modo digital
-	BANKSEL	WPUB; Por si acaso...
+	BANKSEL	WPUB; BANCO 1
 	MOVLW	H'F0'
 	MOVWF	WPUB&7F;
-	BANKSEL	TRISPAD;Banco1
-	MOVLW	B'11110000';Configuramos como 4 entradas y 4 salidas
-	MOVWF	TRISPAD&7F;
+	BANKSEL	TRISPAD; BANCO 3
+	MOVWF	TRISPAD&7F;Configuramos como 4 entradas y 4 salidas aprovechando el h'F0' de antes
 	BCF	OPTION_REG&7F,NOT_RBPU;Activamos las resistencias de pull up
-	BANKSEL	IOCB;Banco1
+	BANKSEL	IOCB; BANCO 1
 	MOVLW	H'FF';Para habilitar las interrupciones en cada pin
 	MOVWF	IOCB&7F;Lo inicializo a 1 los que cambian, para notar esos cambios
-	BANKSEL	INTCON;Banco0
+	BANKSEL	INTCON;BANCO 0
 	CLRF	KEYSL;Inicializo a 0 los registros de control de teclas
 	CLRF	KEYSU;
 	CLRF	KEYHL;

@@ -13,6 +13,7 @@ POR_:
 	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
 	BTFSS	EST_CTL,0;
 		GOTO	POR_CTL_PER_CONFIG; Intenta configurarlo
+	BCF	PORTA,D_LED;
 	BTFSS	EST_CTL,1;
 		GOTO	POR_CTL_PER_ANALIZE; Mira si lo ha conseguido
 	BTFSS	EST_CTL,2;
@@ -36,15 +37,31 @@ POR_:
 			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
 			MOVWF	SND_CONT;
 			CALL	SEND_AT; Mandamos AT
-			BANKSEL	PIE1;
+			BANKSEL	PIE1; BANCO 1
 			BSF	PIE1&7F,TXIE;
+			BANKSEL	STATUS; BANCO 0
 			BSF	EST_CTL,0;
-			MOVLW	H'3F';
-			MOVWF	TMP2;
-			POR_WAIT:
-				NOP			; 
-				DECFSZ	TMP2,F		; Se decrementa contador básico
-				GOTO	POR_WAIT	; hasta llegar a cero
+			
+			MOVLW	lcd_clr; limpio la pantalla
+			CALL	LCDIWR;
+			MOVLW	cur_set|h'1'; Mover el cursor a la posicion 6
+			CALL	LCDIWR;
+			CLRF	LCD_CONT;
+			PUT_POR_LOOP:
+				PAGESELW	LTR_POR;
+				MOVF	LCD_CONT,W;Ponemos el indice de la tabla
+				CALL	LTR_POR&7FF;
+				ANDLW	H'FF'; Necesario para que cambie Z
+				PAGESEL	PUT_POR_LOOP_END;
+				BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+					GOTO PUT_POR_LOOP_END;si hemos llegado, SALIMOS
+				CALL	LCDDWR;Escribo la letra en pantalla
+				INCF	LCD_CONT,F;Incremento el contador
+				GOTO	PUT_POR_LOOP;vuelvo a contar
+			PUT_POR_LOOP_END:;Hemos salido
+			MOVLW	LTR_POR_;Cambiamos lo que hay en pantalla a "STANDBY"
+			MOVWF	LCD_CTL;
+			
 			BCF	EST_CTL,1; Damos unas cuantas vueltas para dejar que se mande el comando
 			RETURN;
 
@@ -63,11 +80,6 @@ POR_:
 			MOVLW	SERIAL_RECEIVE_DATA&H'FF'; La posición en la que está puesto lo que se recibe.
 			MOVWF	FSR;
 			BSF	STATUS,IRP;
-
-			MOVLW	cur_set|h'4E'; Mover el cursor a la última posicion de la segunda fila
-			CALL	LCDIWR;
-			MOVLW	"A";
-			CALL	LCDDWR;Escribo la letra en pantalla
 
 			MOVF	INDF,W; Comprobamos si el caracter es 0
 			XORLW	'0';
@@ -147,13 +159,8 @@ STANDBY_:
 		BANKSEL KEYHU;miramos que no haya  nada en las dos filas de arriba pulsado
 		MOVF	KEYHU,W;
 		BTFSS	STATUS,Z;
-			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)
-		
-		
-		CALL	ESCRIBE_REG; DEBUG ONLY!
-		
-		
-		
+			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)	
+
 		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y el 8 pulsadas
 		ANDLW	B'11011110';
 		BTFSS	STATUS,Z;
@@ -170,99 +177,6 @@ STANDBY_:
 		BTFSS	EST_CTL,4;
 			GOTO	UNLOCK_;
 
-		;****** ESCRIBE_REG ******;
-		;;
-		; Función que sirve para escribir en la pantalla el registro hard del high y low
-		; @param KEYHU - Registro Hard de la parte de arriba del teclado
-		; @param KEYHL - Registro Hard de la parte de abajo del teclado 
-		;;
-		
-		ESCRIBE_REG:
-			MOVLW	cur_set|h'40';Ponemos el cursor al principio de la pantalla
-			; en la segunda fila
-			CALL	LCDIWR;
-			
-			BTFSS	KEYHL,0;
-				MOVLW	"0";
-			BTFSC	KEYHL,0;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,1;
-				MOVLW	"0";
-			BTFSC	KEYHL,1;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,2;
-				MOVLW	"0";
-			BTFSC	KEYHL,2;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,3;
-				MOVLW	"0";
-			BTFSC	KEYHL,3;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,4;
-				MOVLW	"0";
-			BTFSC	KEYHL,4;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,5;
-				MOVLW	"0";
-			BTFSC	KEYHL,5;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,6;
-				MOVLW	"0";
-			BTFSC	KEYHL,6;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHL,7;
-				MOVLW	"0";
-			BTFSC	KEYHL,7;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,0;
-				MOVLW	"0";
-			BTFSC	KEYHU,0;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,1;
-				MOVLW	"0";
-			BTFSC	KEYHU,1;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,2;
-				MOVLW	"0";
-			BTFSC	KEYHU,2;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,3;
-				MOVLW	"0";
-			BTFSC	KEYHU,3;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,4;
-				MOVLW	"0";
-			BTFSC	KEYHU,4;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,5;
-				MOVLW	"0";
-			BTFSC	KEYHU,5;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,6;
-				MOVLW	"0";
-			BTFSC	KEYHU,6;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			BTFSS	KEYHU,7;
-				MOVLW	"0";
-			BTFSC	KEYHU,7;
-				MOVLW	"1"
-			CALL	LCDDWR;
-			RETURN;
 		;**********************************************************************;
 		; Estas rutinas están pensadas teniendo como logico que avanzar es lo normal
 		;

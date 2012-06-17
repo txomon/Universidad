@@ -70,6 +70,7 @@ RSI:
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
+	BCF	P_LED,C_LED; 
 	CLRF	PCLATH;
 	BTFSC	PIR1,RCIF;
 		GOTO	RECEIVE_NEXT;
@@ -87,6 +88,7 @@ RETI:
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;
 		BSF	P_LED,B_LED;
+	BSF	P_LED,C_LED;
 
 	;AQUI ACABA LA RSI
 	;devolvemos los valores a su sitio

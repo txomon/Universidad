@@ -65,12 +65,10 @@ SERIAL_RECEIVE:
 ; no output	
 
 SEND_NEXT:
-	BANKSEL PIR1; BANCO 0;
-	BTFSS	PIR1,TXIF; Si no nos ha llamado esta, tenemos que salir de aquí
+	BTFSS	PIR1,TXIF; Si no nos ha llamado esta, tenemos que salir de aquí y continuar
 		GOTO	SEND_NEXT_RETI; porque sino, se hace un bucle.
 	BTFSC	SER_CTL,IS_CMD;
 		GOTO	SEND_CMD;
-	BCF	P_LED,C_LED;
 	BTFSC	SER_CTL,IS_DAT;
 		GOTO	SEND_DAT;
 	BTFSC	SER_CTL,IS_EEP;
@@ -87,6 +85,7 @@ SEND_NEXT:
 		PAGESELW MODEM_TABLE; Vamos a conseguir el siguiente caracter a enviar, cambiamos de página (esta en la 1)
 		MOVF	SND_CONT,W; Ponemos el número de caracter en W
 		CALL	MODEM_TABLE&7FF; Conseguimos el caracter
+		ANDLW	H'FF'; Hay que hacer esto para que mire si W es 0
 		BTFSC	STATUS,Z; El comando ha acabado de enviarse si W=0
 			BCF	SER_CTL,IS_CMD; Si ya hemos de acabado de enviarlo, deshabilitamos mandar comandos
 		INCF	SND_CONT,F;Aumentamos el contador para la siguiente
