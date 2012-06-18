@@ -77,13 +77,13 @@ RETI:
 	BTFSC	SER_CTL,IS_SND; En vez de mirar si está vacio el txreg, tenemos que mirar si ha podido ser él el que ha
 		GOTO	SEND_NEXT; causado la interrupción.
 	SEND_NEXT_RETI:
-	BTFSC	PIR1,TMR2IF; el timer2 está para comprobar si era un rebote (Soft-> Hard)
+	BTFSC	PIR1,TMR2IF; el timer2 está para leer cuales son las teclas que hay pulsadas tras el rebote 
 		GOTO	TMR2INTER;
-	BTFSC	INTCON,RBIF; esto está para pasar las pulsaciones al registro Soft (primera vez)
-		GOTO	PADINTER;
+	BTFSC	INTCON,RBIF; esto está para programar la lectura después
+		CALL	INICIATMP2; 
 	BANKSEL	P_LED;
 	MOVF	KEYHL,W;
-	ADDWF	KEYHU,W;
+	IORWF	KEYHU,W;
 	BTFSS	STATUS,Z;se enciende el led si está el registro Hard activado y si no, se apaga
 		BCF	P_LED,B_LED;
 	BTFSC	STATUS,Z;

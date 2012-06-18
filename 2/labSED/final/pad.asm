@@ -2,156 +2,85 @@
 
 ;**** Timer2 Interrupt RSI ****;
 TMR2INTER:
-	MOVLW	H'80';
-	MOVWF	BIT_CONT;
-	MOVF	KEYSL,W;
-	XORWF	KEYHL,W;
-	BTFSS	STATUS,Z;
-		CALL	COMPCOLUM;
-	
-	MOVLW	H'84';
-	MOVWF	BIT_CONT;
-	MOVF	KEYSL,W;
-	XORWF	KEYHL,W;
-	BTFSS	STATUS,Z;
-		CALL	COMPCOLUM;
-		
-	MOVLW	H'88';
-	MOVWF	BIT_CONT;
-	MOVF	KEYSU,W;
-	XORWF	KEYHU,W;
-	BTFSS	STATUS,Z;
-		CALL	COMPCOLUM;
-		
-	MOVLW	H'8C';
-	MOVWF	BIT_CONT;
-	MOVF	KEYSU,W;
-	XORWF	KEYHU,W;
-	BTFSS	STATUS,Z;
-		CALL	COMPCOLUM;
-	
-	BCF	PIR1,TMR2IF;Quitamos la interrupción
-	BCF	T2CON,TMR2ON;Deshabilitamos el temporizador
-	BANKSEL	PIE1;banco1
-	BCF	PIE1&7F,TMR2IE;Quitamos el aviso de interrupción
-	BANKSEL	TMR2IF;banco0
-	CLRF	PORTPAD;
-	BCF	INTCON,RBIF;
-	BSF	INTCON,RBIE;
-	GOTO	RETI;
-
-;******	Comprobar el keypad ******;
-PADINTER:
 	CLRF	BIT_CONT;
 	; Comprobamos por columnas
 	CLRF	PORTPAD;
 	BTFSS	PORTPAD,7;miramos si la columna 1 se ha activado
 		CALL	COMPCOLUM;comparamos la columna 1 (de 0 a 3)
+		
 	MOVLW	H'4';
 	MOVWF	BIT_CONT
-	
 	CLRF	PORTPAD;
 	BTFSS	PORTPAD,6;columna 2
 		CALL	COMPCOLUM;columna2 (de 4 a 7)
+
 	MOVLW	H'8';
 	MOVWF	BIT_CONT;
-
 	CLRF	PORTPAD;	
 	BTFSS	PORTPAD,5;columna 3
 		CALL	COMPCOLUM;columna3 (de 8 a 11)
+		
 	MOVLW	H'C';
 	MOVWF	BIT_CONT
-
 	CLRF	PORTPAD;	
 	BTFSS	PORTPAD,4;columna 4
 		CALL	COMPCOLUM;columna4 (de 12 a 15)
 	
-	MOVF	KEYSL,W; Comprobamos si hemos escrito algo en total,
-	XORWF	KEYHL,W; para saber si hay diferencias entre el H y el S
-	MOVWF	PAD_TMP;
-	MOVF	KEYSU,W;
-	XORWF	KEYHU,W;
-	IORWF	PAD_TMP,W;
-	BTFSS	STATUS,Z;Si hay algo en el Soft, programar temporizacion
-		CALL	INICIATMP2;
-	BANKSEL	PORTPAD;
-	CLRF	PORTPAD;
-	MOVF	KEYSL,W;
-	XORWF	KEYHL,W;
-	MOVWF	PAD_TMP;
-	MOVF	KEYSU,W;
-	XORWF	KEYHU,W;
-	IORWF	PAD_TMP,W;
-	BTFSS	STATUS,Z;Si hay algo, deshabilitar interrupciones
-		BCF	INTCON,RBIE;
-	BCF	INTCON,RBIF
-	GOTO	RETI;
+	BCF	PIR1,TMR2IF; Quitamos la interrupción del temporizador
+	BCF	T2CON,TMR2ON; Deshabilitamos el temporizador
+	BANKSEL	PIE1; BANCO 1
+	BCF	PIE1&7F,TMR2IE; Quitamos el aviso de interrupción
+	BANKSEL	TMR2IF; BANCO 0
+	CLRF	PORTPAD; Ponemos el puerto del teclado a 0 para leer futuros cambios
+	BCF	INTCON,RBIF; Limpiamos el bit de interrupción del teclado
+	BSF	INTCON,RBIE; Habilitamos las interrupciones en el puerto del teclado
+	GOTO	RETI; Volvemos a la RETI
 		
 ;**** COMPCOLUM Comprueba las filas recurrentemente ****;
 COMPCOLUM:
-	PAGESELW	POSACOMP
-	MOVF	BIT_CONT,W;
-	ANDLW	H'0F';
-	CALL	POSACOMP&7FF;Conseguimos la comparación para la tecla
-	PAGESEL	COMPPAD;
+	PAGESELW	POSACOMP; La siguiente llamada va a ser a otra página
+	MOVF	BIT_CONT,W; Muevo el contador a W
+	ANDLW	H'0F'; Corto el contado a la parte interesante (la cuenta)
+	CALL	POSACOMP&7FF;Conseguimos la comparación de la tecla para el contador dado
+	PAGESEL	COMPPAD; Volvemos a la página 0
 	CALL	COMPPAD;Comparamos si está pulsada
 	MOVWF	PAD_TMP2;El resultado lo guardamos
-	CLRF	KEYRCTL;
 	MOVF	BIT_CONT,W;Cargamos el num de bit en W
-	IORLW	B'00010000';Añadimos que escriba en el soft
+	MOVWF	KEYRCTL; Empezamos a configurar el registro de control de escrituras en los registros hard
 	BTFSS	PAD_TMP2,0;Si el resultado es 0
-		IORLW	B'00100000';Añadimos que haga un clear
-	BTFSC	BIT_CONT,P_S_H;
-		IORLW	B'00100000';Si el resultado es de S a H
-	MOVWF	KEYRCTL;
-	CALL	KEYPADREGW;
+		BSF	KEYRCTL,KRS_C;Añadimos que haga un clear, el set viene implicito en el 0
+	CALL	KEYPADREGW; Llamamos a que escriba el registro
 	
-	BTFSC	BIT_CONT,P_S_H;		
-		GOTO	CALLFROMTMP2;
-	GOTO	CALLFROMCOMPPAD;
-	CALLFROMTMP2:
-		MOVF	BIT_CONT,W;
-		BTFSS	PAD_TMP2,0;
-			IORLW	B'00100000';
-		MOVWF	KEYRCTL;
-		CALL	KEYPADREGW;	
-	CALLFROMCOMPPAD:
-		CLRF	PORTPAD;
-		INCF	BIT_CONT,F;
-		MOVF	BIT_CONT,W;
-		ANDLW	H'03';Compruebo si hemos llegado al XX00(cambio de columna)
-		BTFSC	STATUS,Z;
-			RETURN;
-	GOTO	COMPCOLUM;
+	INCF	BIT_CONT,F; Incrementamos el contador de todas todas
+	;;;;;;;;;;;;;;;;; Aqui vamos a hacer algo muy especial, vamos a comprobar si dos bits estan a 0, y en caso en el que sí, volveremos,
+	BTFSS	BIT_CONT,0; En caso de ser 0, pasamos a la siguiente comprobación
+	BTFSC	BIT_CONT,1; En caso de ser 0, saltamos la siguiente instrucción
+	;;;;;;;;;;;;;;;;; y en el caso en el que no, saltaremos al siguiente paso.
+	GOTO	COMPCOLUM; En el caso en el que sean distintos de 00
+	RETURN; En el caso en el que los dos bits sean 00
 	
 
 
 ;**** KEYPADREGW (escritor del registro del pad) ****;
 KEYPADREGW:
 	MOVLW	KEYHL; Pongo la posición del 1er registro
-	BTFSC	KEYRCTL,KRH_S;registro Soft?
-		ADDLW	H'2';sumo dos al FSR (para que apunte al Soft)
-	BTFSC	KEYRCTL,KRL_U;registro Up?
-		ADDLW	H'1';sumo uno al FSR (para que apunte a la parte alta)
-	MOVWF	FSR;Escribo el FSR
+	BTFSC	KEYRCTL,KRL_U; registro Up?
+		ADDLW	H'1'; sumo uno al FSR (para que apunte a la parte alta)
+	MOVWF	FSR; Escribo el FSR
 	PAGESELW	NUMAKEYR;
-	MOVF	KEYRCTL,W;Elijo cual quiero
-	ANDLW	H'7';Cortamos el numero a 3 bits
-	CALL	NUMAKEYR&7FF;Nos dice el bit del registro que tiene que ser
-	CLRF	PCLATH;Esta no la puedo hacer a con el pageselw
-	MOVWF	PAD_TMP;Guardo en temp
-	MOVF	INDF,W;Comparo el valor del registro
-	ANDWF	PAD_TMP,W;con el valor de la comparación
-	BTFSS	STATUS,Z;si esta en 1, salto
-		GOTO	EN1;esta en 1
-	MOVF	PAD_TMP,W;esta en 0
-	BTFSS	KEYRCTL,KRS_C;
-		IORWF	INDF,F;Escribo uno en el registro
+	MOVF	KEYRCTL,W; Elijo cual quiero
+	ANDLW	H'7'; Cortamos el numero a 3 bits
+	CALL	NUMAKEYR&7FF; Nos dice el bit del registro que tiene que ser
+	MOVWF	PAD_TMP; Guardo en temp
+	PAGESEL	KEYPADSET; Volvemos a la página de ahora
+	BTFSS	KEYRCTL,KRS_C; Si queremos poner a uno ese bit en el registro
+		GOTO	KEYPADSET; vamos a KEYPADSET
+	COMF	PAD_TMP,W; Complemento el valor de comparación 00001000 => 11110111
+	ANDWF	INDF,F; y al hacer una and, se borre ese bit seguro
 	RETURN;
-EN1:	
+KEYPADSET:	
 	MOVF	PAD_TMP,W;
-	BTFSC	KEYRCTL,KRS_C;Si dice que hay que borrarlo
-		XORWF	INDF,F;Escribo 0 en el registro	
+	IORWF	INDF,F;Escribo 1 en el registro	
 	RETURN;
 
 ;**** COMPPAD (Comprobador de si una tecla está activada) ****;
@@ -161,13 +90,13 @@ COMPPAD:
 	COMF	PAD_TMP,F;Invertimos la comparación EJ:10000001
 	COMF	PORTPAD,W;Invertimos la lectura EJ: 10100001;
 	ANDWF	PAD_TMP,W;Comparamos EJ: 10000001 & 10100001 = 10000001
-	ANDLW	H'F0';Cortamos los 4 de arriba EJ: 10000000
+	ANDLW	PAD_ENT;Cortamos los 4 de arriba EJ: 10000000
 	BTFSS	STATUS,Z;
 		RETLW	H'01';Devolvemos true
 	RETLW	H'00';Devolvemos false
 	
 ;**** INICIATMP2(Programa el timer para que salte a lo máximo posible) ****;
-INICIATMP2:;Vaciamos los pre/post escaladores
+INICIATMP2:;Hacemos que el temp2 tenga un ciclo de interrupción de 0'04 secs
 	BANKSEL	PR2;BANCO1
 	BSF	PIE1&7F,TMR2IE;Habilitamos las interrupciones
 	MOVLW	H'FF';
@@ -175,8 +104,10 @@ INICIATMP2:;Vaciamos los pre/post escaladores
 	BANKSEL	T2CON;BANCO 0
 	BCF	PIR1,TMR2IF;Borramos la interrupción
 	MOVWF	T2CON;ponemos preescalador y postescalador a tope y encendemos el reloj
-	CLRF	TMR2;borramos la cuenta en curso
-	BCF	PIR1,TMR2IF;
+	CLRF	TMR2; borramos la cuenta en curso para que empiece ahora
+	BCF	PIR1,TMR2IF; Quitamos interrupción del reloj, por si ha habido una anterior
+	BCF     INTCON,RBIE; Deshabilitamos las interrupciones de teclado
+      	BCF     INTCON,RBIF; Limpiamos la interrupción de teclado que nos ha traido aquí
 	RETURN;
 	
 	
@@ -186,7 +117,7 @@ PADINIT:
 	BANKSEL	ANSELH; BANCO 3
 	CLRF	ANSELH&7F;modo digital
 	BANKSEL	WPUB; BANCO 1
-	MOVLW	H'F0'
+	MOVLW	PAD_ENT
 	MOVWF	WPUB&7F;
 	BANKSEL	TRISPAD; BANCO 3
 	MOVWF	TRISPAD&7F;Configuramos como 4 entradas y 4 salidas aprovechando el h'F0' de antes
@@ -195,9 +126,7 @@ PADINIT:
 	MOVLW	H'FF';Para habilitar las interrupciones en cada pin
 	MOVWF	IOCB&7F;Lo inicializo a 1 los que cambian, para notar esos cambios
 	BANKSEL	INTCON;BANCO 0
-	CLRF	KEYSL;Inicializo a 0 los registros de control de teclas
-	CLRF	KEYSU;
-	CLRF	KEYHL;
+	CLRF	KEYHL;Inicializo a 0 los registros de control de teclas
 	CLRF	KEYHU;
 	BSF	INTCON,RBIE;Habilito las interrupciones para todo el puerto B
 	BSF	INTCON,PEIE;Habilito las interrupciones de dispositivos
