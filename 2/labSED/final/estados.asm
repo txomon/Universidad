@@ -378,8 +378,8 @@ MENU12_1_:
 	MOVLW	MENU12_1;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_MENU12_1;
-	GOTO	GOIN;
-	BTFSS	EST_CTL,2;
+	CALL	GOIN;
+	BTFSC	EST_CTL,2;
 		GOTO	ESCRIBIR_SMS_;
 	RETURN;
 	;************* PUT_COMPANY **************;
@@ -395,34 +395,30 @@ MENU12_1_:
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_MENU12_1_LOOP:
-			PAGESELW	LTR_MENU12_1;
-			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
-			CALL	LTR_MENU12_1&7FF;
-			MOVWF	EST_CTL;
+			PAGESELW	LTR_MENU12_1; Cambiamos de página
+			MOVF	LCD_CONT,W;Ponemos el contador de la tabla en W
+			CALL	LTR_MENU12_1&7FF; Conseguimos el siguiente caracter
+			MOVWF	EST_CTL; lo guardamos en est_ctl
 			ANDLW	H'FF';
 			PAGESEL	PUT_MENU12_1_LOOP_END;
 			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
 				GOTO PUT_MENU12_1_LOOP_END;si hemos llegado, SALIMOS
 			DECFSZ	EST_CTL,F;Si es 0 saltara
-				GOTO	PUT_MENU12_1_LOOP_SALTO;
-			CALL	GONEXTLINE;
+				GOTO	PUT_MENU12_1_LOOP_SALTO;	
+			MOVLW	cur_set|H'40';
+			CALL	LCDIWR;
 			INCF	LCD_CONT,F;
 			GOTO	PUT_MENU12_1_LOOP;
 			PUT_MENU12_1_LOOP_SALTO:
 			CALL	LCDDWR;Escribo la letra en pantalla
 			INCF	LCD_CONT,F;Incremento el contador
 			GOTO	PUT_MENU12_1_LOOP;vuelvo a contar
-		PUT_MENU12_1_LOOP_END:;Hemos salido
-		BANKSEL LCD_CTL;
-		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
-		MOVWF	LCD_CTL;
-		RETURN;
-		
-		GONEXTLINE:
-			MOVLW	cur_set|h'40';
-			CALL	LCDIWR;
+			PUT_MENU12_1_LOOP_END:;Hemos salido
+			BANKSEL LCD_CTL;
+			MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
+			MOVWF	LCD_CTL;
 			RETURN;
-
+			
 ;************* ESCRIBIR_SMS_ ******************;
 ;;
 ; Estado encargado de escribir (interpretar) las pulsaciones en el teclado

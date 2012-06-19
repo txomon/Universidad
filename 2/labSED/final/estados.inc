@@ -49,7 +49,7 @@
 	DT	"UNLOCKED!",0;
 	LTR_MENU12_1:
 	ADDWF	PCL,F;
-	DT	"Escribir mensaje",1,"Leer mensaje";
+	DT	"Escribir mensaje",1,"Leer mensaje",0;
 	LTR_ENVIAR:
 	ADDWF	PCL,F;
 	DT	"Enviando",0;
