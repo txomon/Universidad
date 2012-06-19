@@ -4,28 +4,7 @@
 TMR2INTER:
 	CLRF	BIT_CONT;
 	; Comprobamos por columnas
-	CLRF	PORTPAD;
-	BTFSS	PORTPAD,7;miramos si la columna 1 se ha activado
-		CALL	COMPCOLUM;comparamos la columna 1 (de 0 a 3)
-		
-	MOVLW	H'4';
-	MOVWF	BIT_CONT
-	CLRF	PORTPAD;
-	BTFSS	PORTPAD,6;columna 2
-		CALL	COMPCOLUM;columna2 (de 4 a 7)
-
-	MOVLW	H'8';
-	MOVWF	BIT_CONT;
-	CLRF	PORTPAD;	
-	BTFSS	PORTPAD,5;columna 3
-		CALL	COMPCOLUM;columna3 (de 8 a 11)
-		
-	MOVLW	H'C';
-	MOVWF	BIT_CONT
-	CLRF	PORTPAD;	
-	BTFSS	PORTPAD,4;columna 4
-		CALL	COMPCOLUM;columna4 (de 12 a 15)
-	
+	CALL	COMPCOLUM;comparamos las columnas
 	BCF	PIR1,TMR2IF; Quitamos la interrupción del temporizador
 	BCF	T2CON,TMR2ON; Deshabilitamos el temporizador
 	BANKSEL	PIE1; BANCO 1
@@ -52,12 +31,11 @@ COMPCOLUM:
 	CALL	KEYPADREGW; Llamamos a que escriba el registro
 	
 	INCF	BIT_CONT,F; Incrementamos el contador de todas todas
-	;;;;;;;;;;;;;;;;; Aqui vamos a hacer algo muy especial, vamos a comprobar si dos bits estan a 0, y en caso en el que sí, volveremos,
-	BTFSS	BIT_CONT,0; En caso de ser 0, pasamos a la siguiente comprobación
-	BTFSC	BIT_CONT,1; En caso de ser 0, saltamos la siguiente instrucción
-	;;;;;;;;;;;;;;;;; y en el caso en el que no, saltaremos al siguiente paso.
-	GOTO	COMPCOLUM; En el caso en el que sean distintos de 00
-	RETURN; En el caso en el que los dos bits sean 00
+	MOVF	BIT_CONT,W;
+	ANDLW	H'0F'; Si es 16, dará 00010000 y por lo tanto, 0
+	BTFSS	STATUS,Z; Si es 1, entonces 
+		GOTO	COMPCOLUM; volvemos a repetir el anterior bucle
+	RETURN; En el caso en el que la parte baja sea 0000 volvemos
 	
 
 
