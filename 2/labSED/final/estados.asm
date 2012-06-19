@@ -263,9 +263,6 @@ UNLOCK_:
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
 
-	MOVLW	"2";
-	CALL	SERIAL_SEND;
-
 	MOVLW	UNLOCK;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_COMPANY;
@@ -336,7 +333,6 @@ UNLOCK_:
 			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
 				BSF	EST_CTL,0;
 			BCF	EST_CTL,1;
-			MOVLW	"g";
 			CALL	SERIAL_SEND;
 			RETURN;
 	
@@ -358,7 +354,6 @@ UNLOCK_:
 				BSF	EST_CTL,2;
 			BTFSS	EST_CTL,2;	
 				BSF	EST_CTL,1;
-			MOVLW	"G";
 			CALL	SERIAL_SEND;
 			RETURN;
 			
@@ -383,8 +378,8 @@ MENU12_1_:
 	MOVLW	MENU12_1;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_MENU12_1;
-	CALL	GOIN;
-	BTFSS	EST_CTL,1;
+	GOTO	GOIN;
+	BTFSS	EST_CTL,2;
 		GOTO	ESCRIBIR_SMS_;
 	RETURN;
 	;************* PUT_COMPANY **************;
