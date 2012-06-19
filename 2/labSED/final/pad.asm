@@ -14,7 +14,7 @@ TMR2INTER:
 	BCF	INTCON,RBIF; Limpiamos el bit de interrupción del teclado
 	BSF	INTCON,RBIE; Habilitamos las interrupciones en el puerto del teclado
 	GOTO	RETI; Volvemos a la RETI
-		
+
 ;**** COMPCOLUM Comprueba las filas recurrentemente ****;
 COMPCOLUM:
 	PAGESELW	POSACOMP; La siguiente llamada va a ser a otra página
@@ -64,11 +64,12 @@ KEYPADSET:
 ;**** COMPPAD (Comprobador de si una tecla está activada) ****;
 COMPPAD:
 	MOVWF	PAD_TMP;tenemos la comparación a realizar EJ:01111110
-	MOVWF	PORTPAD;cargamos la comparación en el puerto EJ; 01011110
+	MOVWF	PORTPAD;cargamos la comparación en el puerto EJ; 01110001
 	COMF	PAD_TMP,F;Invertimos la comparación EJ:10000001
-	COMF	PORTPAD,W;Invertimos la lectura EJ: 10100001;
-	ANDWF	PAD_TMP,W;Comparamos EJ: 10000001 & 10100001 = 10000001
-	ANDLW	PAD_ENT;Cortamos los 4 de arriba EJ: 10000000
+	COMF	PORTPAD,W;Invertimos la lectura EJ: 10001110;
+	ANDWF	PAD_TMP,W;Comparamos EJ: 10000001 & 10001110 = 10000000
+	; vemos si no esta pulsado (1) o si está pulsado (0)
+	ANDLW	PAD_ENT;Cortamos los 4 de abajo EJ: 00000000
 	BTFSS	STATUS,Z;
 		RETLW	H'01';Devolvemos true
 	RETLW	H'00';Devolvemos false

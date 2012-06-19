@@ -113,7 +113,7 @@ STANDBY_:
 	MOVLW	STANDBY;
 	MOVWF	MAQUINA_EST;Decimos que estamos en STANDBY
 	CALL	PUT_STANDBY;
-	CALL	STANDBY_COMP_DESBLQ;
+	GOTO	STANDBY_COMP_DESBLQ;
 
 	RETURN
 	;******	PUT_STANDBY ******;
@@ -270,7 +270,7 @@ UNLOCK_:
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_COMPANY;
 	CALL	GOIN;
-	BTFSC	EST_CTL,1;
+	BTFSC	EST_CTL,2;
 		GOTO	MENU12_1_;
 	RETURN;
 	
@@ -351,7 +351,7 @@ UNLOCK_:
 			BTFSS	STATUS,Z;
 				BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
 			MOVF	KEYHU,W;
-			ANDLW	B'11111110';
+			ANDLW	B'01111111';
 			BTFSS	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
 				BCF	EST_CTL,0;
 			BTFSC	KEYHU,7; Si esta pulsado el verde, avanzamos
