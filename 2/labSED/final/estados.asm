@@ -161,8 +161,8 @@ STANDBY_:
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si lo hay, se vuelve a 0 (secuencia inválida)	
 
-		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y el 8 pulsadas
-		ANDLW	B'11011110';
+		MOVF	KEYHL,W;miramos que abajo haya como mucho la * y el # pulsadas
+		ANDLW	B'11111010';
 		BTFSS	STATUS,Z;
 			CLRF	EST_CTL; Si hay algo aparte, se vuelve a 0 el estado
 			
@@ -193,7 +193,7 @@ STANDBY_:
 				BSF	EST_CTL,0; 
 			BTFSS	KEYHL,0; Si no, nos quedamos en esta
 				BCF	EST_CTL,0;
-			BTFSC	KEYHL,5; Si la # esta pulsada, nos quedamos en esta seguro
+			BTFSC	KEYHL,2; Si la # esta pulsada, nos quedamos en esta seguro
 				BCF	EST_CTL,0;
 			BCF	EST_CTL,1;Nos aseguramos de entrar en la siguiente fase si podemos
 			RETURN;
@@ -208,9 +208,9 @@ STANDBY_:
 		STANDBY_COMP_DESBLQ_EST1:
 			BTFSS	KEYHL,0; Si no esta pulsada la *, tenemos que ir hacia atras
 				BCF	EST_CTL,0;
-			BTFSC	KEYHL,5; Si la # esta pulsada, podemos avanzar
+			BTFSC	KEYHL,2; Si la # esta pulsada, podemos avanzar
 				BSF	EST_CTL,1;
-			BTFSS	KEYHL,5; Si no, nos quedamos aqui
+			BTFSS	KEYHL,2; Si no, nos quedamos aqui
 				BCF	EST_CTL,1;
 			BCF	EST_CTL,2;Nos aseguramos de entrar en la siguiente fase
 			RETURN;
@@ -226,7 +226,7 @@ STANDBY_:
 				BCF	EST_CTL,2;
 			BTFSS	KEYHL,0;Si no, iremos hacia delante
 				BSF	EST_CTL,2; 
-			BTFSS	KEYHL,5;Si la # no esta pulsada vamos hacia atras
+			BTFSS	KEYHL,2;Si la # no esta pulsada vamos hacia atras
 				BCF	EST_CTL,1;
 			BCF	EST_CTL,3;
 			RETURN;
@@ -240,9 +240,9 @@ STANDBY_:
 		STANDBY_COMP_DESBLQ_EST3:
 			BTFSC	KEYHL,0;Si la * esta pulsada
 				BCF	EST_CTL,2;
-			BTFSC	KEYHL,5;Si la # esta pulsada
+			BTFSC	KEYHL,2;Si la # esta pulsada
 				BCF	EST_CTL,3;
-			BTFSS	KEYHL,5;Si no, se acaba con la ultima fase.
+			BTFSS	KEYHL,2;Si no, se acaba con la ultima fase.
 				BSF	EST_CTL,3;
 			RETURN;
 
@@ -285,7 +285,7 @@ UNLOCK_:
 			RETURN;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	cur_set|h'5'; Mover el cursor a la posicion 6
+		MOVLW	cur_set|h'4'; Mover el cursor a la posicion 6
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_COMPANY_LOOP:
@@ -371,10 +371,7 @@ MENU12_1_:
 	XORLW	MENU12_1;
 	BTFSS	STATUS,Z;
 		CLRF	EST_CTL;
-		
-	MOVLW	"3";
-	CALL	SERIAL_SEND
-	
+			
 	MOVLW	MENU12_1;
 	MOVWF	MAQUINA_EST;
 	CALL	PUT_MENU12_1;
@@ -413,11 +410,11 @@ MENU12_1_:
 			CALL	LCDDWR;Escribo la letra en pantalla
 			INCF	LCD_CONT,F;Incremento el contador
 			GOTO	PUT_MENU12_1_LOOP;vuelvo a contar
-			PUT_MENU12_1_LOOP_END:;Hemos salido
-			BANKSEL LCD_CTL;
-			MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
-			MOVWF	LCD_CTL;
-			RETURN;
+		PUT_MENU12_1_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
+		MOVWF	LCD_CTL;
+		RETURN;
 			
 ;************* ESCRIBIR_SMS_ ******************;
 ;;
@@ -473,7 +470,7 @@ ESCRIBIR_SMS_:
 			
 			;************ PARSER_CT ************;
 			;;
-			; Parser con tecla, es a donde se entra si hay UNA tecla pulsada.
+			; Parser con tecla, es a donde se entra si hay alguna tecla pulsada.
 			; El metodo consiste en llevar un contador con los bits a 1 que hay,
 			; empezar desde el hard low a comprobar, y ya que los desplazamientos
 			; cuentan el numero que es, se lleva
@@ -481,14 +478,14 @@ ESCRIBIR_SMS_:
 			; conveniente iniciarlo en -1 (F) para así poder saltar con una sola comprobación (bit 4)
 			; no se pueden hacer en W, se pasa a una variable y ahí se empieza.
 			;;
-			
+
 			PARSER_CT:
 				CLRF	PARSER_CTL;
 				CLRF	PARSER_CONT;
 				MOVF	KEYHL,W;
 				BTFSC	STATUS,Z;
 					GOTO	PARSER_CTLOOP_CHNG;
-				MOVWF	PARSER_TEMP; 
+				MOVWF	PARSER_TEMP;
 				BCF	STATUS,C;
 				MOVLW	H'10';
 				MOVWF	PARSER_CONT;

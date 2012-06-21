@@ -53,4 +53,6 @@
 	LTR_ENVIAR:
 	ADDWF	PCL,F;
 	DT	"Enviando",0;
-	
+	SMS_CHAR:
+	ADDWF	PCL,F;
+	DT	"*0# 789 456 123 ";
