@@ -62,7 +62,7 @@ LCDINIT:
 	MOVLW	D'5'		; Se esperan 5ms
 	CALL	LCDWAIT		;
 
-	MOVLW	lcd_set		; Se envia instrucción para fijar tipo de pantalla
+	MOVLW	lcd_conf	; Se envia instrucción para fijar la configuración de la pantalla
 	CALL	LCDIWR		;
 
 	MOVLW	D'5'		; Se esperan 5ms
@@ -74,10 +74,10 @@ LCDINIT:
 	MOVLW	lcd_on		; Se envia instrucción para encender pantalla
 	CALL	LCDIWR		;
 
-	MOVLW	lcd_mod		; Se envia instrucción para forma de operar pantalla
+	MOVLW	lcd_mod		; Se envia instrucción para la forma de comportarse de la pantalla
 	CALL	LCDIWR		;
 
-	MOVLW	lcd_clr		;
+	MOVLW	lcd_clr		; Se limpia la pantalla
 	CALL	LCDIWR		;
 
 	MOVLW	D'100'		; Se esperan 100 ms
@@ -92,7 +92,7 @@ LCDINIT:
 ; Recibe: W=Dato a escribir
 
 LCDDWR:
-	BSF	P_LCDdi,b_LCDdi	; Dato/instrucción = Dato
+	BSF	P_LCDdi,b_LCDdi	; Dato/Instrucción = Dato
 	GOTO	LCDWRAUX	;
 
 
@@ -102,7 +102,7 @@ LCDDWR:
 ; Recibe: W=Dato a escribir
 
 LCDIWR:
-	BCF	P_LCDdi,b_LCDdi	; Dato/instrucción = Dato
+	BCF	P_LCDdi,b_LCDdi	; Dato/Instrucción = Instrucción
 	GOTO	LCDWRAUX	;
 
 LCDWRAUX:
@@ -116,7 +116,7 @@ LCDWRAUX:
 	IORWF	P_LCDDA,F	;
 	BSF	P_LCDen,b_LCDen	;  activa el strobe
 	BCF	P_LCDen,b_LCDen	;  desactiva el strobe
-
+ 
 	MOVLW	0F0h		; Se borran bits lsb del puerto
 	ANDWF	P_LCDDA,F	;
 	MOVF	TMP1,W		; Se escribe nible inferior	
