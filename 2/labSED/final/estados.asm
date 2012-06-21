@@ -333,7 +333,6 @@ UNLOCK_:
 			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
 				BSF	EST_CTL,0;
 			BCF	EST_CTL,1;
-			CALL	SERIAL_SEND;
 			RETURN;
 	
 		;**** UNLOCK_COMP_GOIN_EST1 ****;
@@ -354,7 +353,6 @@ UNLOCK_:
 				BSF	EST_CTL,2;
 			BTFSS	EST_CTL,2;	
 				BSF	EST_CTL,1;
-			CALL	SERIAL_SEND;
 			RETURN;
 			
 ;*************** MENU12_1_ *****************;
@@ -461,12 +459,50 @@ ESCRIBIR_SMS_:
 	;;
 	ESCRIBIR_SMS_PARSER:
 	
-		MOVF	KEYHL,W;
-		IORWF	KEYHU,W;
-		BTFSS	STATUS,Z;
-			GOTO	PARSER_CT; Si hay una tecla pulsada
-		BTFSC	STATUS,Z;
-			GOTO	PARSER_ST; Si no la hay
+		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
+			GOTO	UNLOCK_COMP_GOIN_EST0;
+		BTFSS	EST_CTL,1;
+			GOTO	UNLOCK_COMP_GOIN_EST1;
+			
+		;******************************************************************************;
+		;************** Rutinas para tener una tecla pulsada y otra no ****************;
+		;******************************************************************************;
+		;
+		;**** UNLOCK_COMP_GOIN_EST0 ****;
+		;;
+		; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
+		; nada pulsado, si lo hubiera, se estaría regresando a esta función.
+		;;
+		UNLOCK_COMP_GOIN_EST0:
+			MOVF	KEYHL,W;
+			IORWF	KEYHU,W;
+			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
+				BSF	EST_CTL,0;
+			BCF	EST_CTL,1;
+			CALL	SERIAL_SEND;
+			RETURN;
+	
+		;**** UNLOCK_COMP_GOIN_EST1 ****;
+		;;
+		; El paso del menu exterior al interior, en el segundo y último nivel, se comprueba que 
+		; el botón verde esté pulsado, cuando esté pulsado, se señaliza el estado en el bit 2, y
+		; cuando se suelte, se pondrá a 1 el bit 1 también, desbloqueando el estado.
+		;;
+		UNLOCK_COMP_GOIN_EST1:
+			MOVF	KEYHL,F;
+			BTFSS	STATUS,Z;
+				BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
+			MOVF	KEYHU,W;
+			ANDLW	B'01111111';
+			BTFSS	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
+				BCF	EST_CTL,0;
+			BTFSC	KEYHU,7; Si esta pulsado el verde, avanzamos
+				BSF	EST_CTL,2;
+			BTFSS	EST_CTL,2;	
+				BSF	EST_CTL,1;
+			CALL	SERIAL_SEND;
+			RETURN;
+			
 			
 			;************ PARSER_CT ************;
 			;;
@@ -504,7 +540,7 @@ ESCRIBIR_SMS_:
 				BTFSC	STATUS,Z;
 					GOTO	PARSER_CTCOUNTED;
 				MOVWF	PARSER_TEMP; lo pasamos a la variable temporal
-				MOVLW	B'11111111'; reseteamos el contador de desplazamientos realizados
+				MOVLW	H'FF'; reseteamos el contador de desplazamientos realizados
 				MOVWF	PARSER_CONT;
 				BCF	STATUS,C;
 				
