@@ -464,115 +464,122 @@ ESCRIBIR_NUMERO_:
 		; Aqui va cuando haya acabado de escribir
 
 	
-			;**** ESC_NUM_EST0 ****;
-			;;
-			; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
-			; nada pulsado, si lo hubiera, se estaría regresando a esta función.
-			;;
-			ESC_NUM_EST0:
-				MOVF	KEYHL,W;
-				IORWF	KEYHU,W;
-				BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
-					BSF	EST_CTL,0;
-				BCF	EST_CTL,1;
-				RETURN;
+		;**** ESC_NUM_EST0 ****;
+		;;
+		; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
+		; nada pulsado, si lo hubiera, se estaría regresando a esta función.
+		;;
+		ESC_NUM_EST0:
+			MOVF	KEYHL,W;
+			IORWF	KEYHU,W;
+			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
+				BSF	EST_CTL,0;
+			BCF	EST_CTL,1;
+			RETURN;
+	
+		;**** ESC_NUM_EST1 ****;
+		;;
+		; El paso de que haya una tecla pulsada, si no la hay, volveremos más tarde. Cuando la haya, 1, entonces se consigue el caracter(numero)
+		; indicado.
+		;;
+		ESC_NUM_EST1:
+			MOVF	KEYHL,F; Juntamos el registro de arriba con
+			IORWF	KEYHU,W; el de abajo
+			BTFSC	STATUS,Z; y si no hay nada pulsado, 
+				RETURN; volvemos
+			CALL	PARSE_NUM;
+			PAGESEL	ESC_NUM_EST1; Hay que hacer esto por que la llamada la hemos devuelto desde otra página
+			MOVWF	PARSER_TEMP; Guardamos el caracter
+			XORLW	"V";
+			BTFSC	STATUS,Z; Si han pulsado el verde, pasamos al siguiente estado
+				BSF	EST_CTL,1;
+			BTFSS	STATUS,Z; Si han pulsado cualquier otra tecla, pasamos al 0
+				BCF	EST_CTL,0;
+			BTFSC	STATUS,Z;
+				GOTO	ESC_NUM_EST1_END;
+			;;;;;;; Aquí guardamos el caracter en la RAM y lo escribimos en la pantalla
+			MOVF	PARSER_TEMP,W;
+			CALL	LCDDWR;
+			MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
+			ADDWF	PARSER_LTR,W; Le sumamos el desplazamiento
+			MOVWF	FSR; Muevo la dirección resultante a FSR
+			BSF	STATUS,IRP; Ponemos que es la segunda página
+			MOVF	PARSER_TEMP,W; Movemos a W el caracter
+			MOVWF	INDF; y lo ponemos en la RAM
+			INCF	PARSER_LTR,F; Incrementamos el contador de letra
+			;;;;;;;
+			ESC_NUM_EST1_END:
+			BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
+			RETURN;
 		
-			;**** ESC_NUM_EST1 ****;
-			;;
-			; El paso de que haya una tecla pulsada, si no la hay, volveremos más tarde. Cuando la haya, 1, entonces se consigue el caracter(numero)
-			; indicado.
-			;;
-			ESC_NUM_EST1:
-				MOVF	KEYHL,F; Juntamos el registro de arriba con
-				IORWF	KEYHU,W; el de abajo
-				BTFSC	STATUS,Z; y si no hay nada pulsado, 
-					RETURN; volvemos
-				CALL	PARSE_NUM;
-				PAGESEL	ESC_NUM_EST1; Hay que hacer esto por que la llamada la hemos devuelto desde otra página
-				MOVWF	PARSER_TEMP; Guardamos el caracter
-				XORLW	"V";
-				BTFSC	STATUS,Z; Si han pulsado el verde, pasamos al siguiente estado
-					BSF	EST_CTL,1;
-				BTFSS	STATUS,Z; Si han pulsado cualquier otra tecla, pasamos al 0
-					BCF	EST_CTL,0;
-				MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
-				ADDWF	PARSER_LTR,W; Le sumamos el desplazamiento
-				MOVWF	FSR; Muevo la dirección resultante a FSR
-				BSF	STATUS,IRP; Ponemos que es la segunda página
-				MOVF	PARSER_TEMP,W; Movemos a W el caracter
-				MOVWF	INDF; y lo ponemos en la RAM
-				INCF	PARSER_LTR,F; Incrementamos el contador de letra
-				BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
-				RETURN;
+		;**** ESC_NUM_EST2 ****;
+		;;
+		; Este paso es cuando ya hemos pulsado el botón verde.
+		;;
+		ESC_NUM_EST2:
+			MOVLW	SERIAL_SEND_DATA&H'FF';
+			ADDWF	PARSER_LTR,W;
+			MOVWF	FSR;
+			BSF	STATUS,IRP;
+			MOVLW	A'"'; Ponemos una comilla
+			MOVWF	INDF;
+			INCF	FSR,F;
+			MOVLW	H'0D'; Ponemos un intro
+			MOVWF	INDF;
+			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
+			; en la eeprom habría que poner ahora el sms en sí.
+			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
+			MOVLW	0; Ponemos el 0
+			INCF	FSR,F;
+			MOVWF	INDF;
+			GOTO	ESCRIBIR_SMS;
+
+		;************ PARSE_NUM ************;
+		;;
+		; Este parser en específico, pasa de teclas a números. Nada más regresar, hacer cambio de página.
+		;;
+
+		PARSE_NUM:
+			; CLRF	PARSER_CTL; a 0 las cosas. No se usa en parse_num.
+			CLRF	PARSER_CONT; que vamos a usar
+			MOVF	KEYHL,W; miramos si el low
+			BTFSC	STATUS,Z; es 0
+				GOTO	PARSE_NUM_U_P; si es 0 vamos a comprobar el up directamente
+			MOVWF	PARSER_TEMP; Se guarda el low en el temporal
+			BCF	STATUS,C; Ya que los bits pasan por carry al hacer un shift, hay que ponerlo a 0
 			
-			;**** ESC_NUM_EST2 ****;
-			;;
-			; Este paso es cuando ya hemos pulsado el botón verde.
-			;;
-			ESC_NUM_EST2:
-				MOVLW	SERIAL_SEND_DATA&H'FF';
-				ADDWF	PARSER_LTR,W;
-				MOVWF	FSR;
-				BSF	STATUS,IRP;
-				MOVLW	A'"'; Ponemos una comilla
-				MOVWF	INDF;
-				INCF	FSR,F;
-				MOVLW	H'0D'; Ponemos un intro
-				MOVWF	INDF;
-				;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
-				; en la eeprom habría que poner ahora el sms en sí.
-				;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
-				MOVLW	0; Ponemos el 0
-				INCF	FSR,F;
-				MOVWF	INDF;
-				GOTO	ESCRIBIR_SMS;
-
-			;************ PARSE_NUM ************;
-			;;
-			; Este parser en específico, pasa de teclas a números. Nada más regresar, hacer cambio de página.
-			;;
-
-			PARSE_NUM:
-				; CLRF	PARSER_CTL; a 0 las cosas. No se usa en parse_num.
-				CLRF	PARSER_CONT; que vamos a usar
-				MOVF	KEYHL,W; miramos si el low
-				BTFSC	STATUS,Z; es 0
-					GOTO	PARSE_NUM_U_P; si es 0 vamos a comprobar el up directamente
-				MOVWF	PARSER_TEMP; Se guarda el low en el temporal
-				BCF	STATUS,C; Ya que los bits pasan por carry al hacer un shift, hay que ponerlo a 0
-				
-				PARSE_NUM_L: ; Parsear el registro low
-				RRF	PARSER_TEMP,F; Rotamos
-				BTFSC	STATUS,C; miramos si estaba a 1 el bit
-					GOTO	PARSE_NUM_K; Ya tenemos la tecla en el contador que está pulsada
-				INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
-				BTFSS	PARSER_CONT,2; Miramos si hemos llegado a 8
-					GOTO	PARSE_NUM_L;
-				
-				PARSE_NUM_U_P: ;Aqui nos preparamos para el siguiente registro (up)
-				MOVLW	H'8';
-				MOVWF	PARSER_CONT;
-				MOVF	KEYHU,W; Movemos el registro a 
-				MOVWF	PARSER_TEMP; parser_temp
-				BCF	STATUS,C; y limpiamos el bit de status por si acaso
-				
-				PARSE_NUM_U: ; Parsear el registro up
-				RRF	PARSER_TEMP,F; Rotamos
-				BTFSC	STATUS,C; miramos si estaba a 1 ese bit
-					GOTO	PARSE_NUM_K; En PARSER_CONT tenemos la tecla en cuestión
-				INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
-				BTFSS	PARSER_CONT,3; Miramos si hemos llegado a 16
-					GOTO	PARSE_NUM_U; Para el siguiente salto
-				;; Si llegamos aqui, es que ha habido un error... por que significa que no hay tecla pulsada,
-				; y esto está preparado solo para que haya una. El hecho de que haya varias no repercute porque 
-				; es muy improbable que haya dos pulsaciones simultáneas. Mandaremos el caracter ! para señalar
-				; que ha habido un error
-				RETLW	"!";
-				
-				PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
-				PAGESELW	NUMACHAR; La siguiente llamada va a ser a otra página
-				MOVF	PARSER_CONT,W; ponemos en W el contador, para saber donde está. En teoría, no debería ser mayor de 15
-				GOTO	NUMACHAR&7FF; Es una tabla que retorna la llamada conla que nos han llamado.
+			PARSE_NUM_L: ; Parsear el registro low
+			RRF	PARSER_TEMP,F; Rotamos
+			BTFSC	STATUS,C; miramos si estaba a 1 el bit
+				GOTO	PARSE_NUM_K; Ya tenemos la tecla en el contador que está pulsada
+			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
+			BTFSS	PARSER_CONT,2; Miramos si hemos llegado a 8
+				GOTO	PARSE_NUM_L;
+			
+			PARSE_NUM_U_P: ;Aqui nos preparamos para el siguiente registro (up)
+			MOVLW	H'8';
+			MOVWF	PARSER_CONT;
+			MOVF	KEYHU,W; Movemos el registro a 
+			MOVWF	PARSER_TEMP; parser_temp
+			BCF	STATUS,C; y limpiamos el bit de status por si acaso
+			
+			PARSE_NUM_U: ; Parsear el registro up
+			RRF	PARSER_TEMP,F; Rotamos
+			BTFSC	STATUS,C; miramos si estaba a 1 ese bit
+				GOTO	PARSE_NUM_K; En PARSER_CONT tenemos la tecla en cuestión
+			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
+			BTFSS	PARSER_CONT,3; Miramos si hemos llegado a 16
+				GOTO	PARSE_NUM_U; Para el siguiente salto
+			;; Si llegamos aqui, es que ha habido un error... por que significa que no hay tecla pulsada,
+			; y esto está preparado solo para que haya una. El hecho de que haya varias no repercute porque 
+			; es muy improbable que haya dos pulsaciones simultáneas. Mandaremos el caracter ! para señalar
+			; que ha habido un error
+			RETLW	"!";
+			
+			PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
+			PAGESELW	NUMACHAR; La siguiente llamada va a ser a otra página
+			MOVF	PARSER_CONT,W; ponemos en W el contador, para saber donde está. En teoría, no debería ser mayor de 15
+			GOTO	NUMACHAR&7FF; Es una tabla que retorna la llamada conla que nos han llamado.
 
 ;**************** MANDAR_SMS_ *******************;
 ;;
@@ -606,33 +613,26 @@ ESCRIBIR_SMS_:
 			BTFSC	STATUS,Z; y si no hay nada pulsado, 
 				RETURN; volvemos
 			CALL	PARSE_NUM; Conseguimos el caracter o lo que sea
-			MOVWF   PARSER_TEMP; Se mueve en el temp
-			CALL    LCD_DWR;
-
-			MOVF    PARSER_TEMP,W;
-			BCF     EE_CTL,ORI_EXT;
-			CALL    EEPROM_WRITE;
-			MOVF    PARSER_TEMP,F;
-			BTFSC   STATUS,Z;
-				GOTO    MANDAR_SMS_;
-			MOVF	PARSER_TEMP,W;
-			ANDLW	H'0F';
-			MOVWF	PARSER_LTR;
-			
 			PAGESEL	ESC_NUM_EST1; Hay que hacer esto por que la llamada la hemos devuelto desde otra página
-			MOVWF	PARSER_TEMP; Guardamos el caracter
+			MOVWF	PARSER_TEMP; Se mueve en el temp
 			XORLW	"V";
 			BTFSC	STATUS,Z; Si han pulsado el verde, pasamos al siguiente estado
 				BSF	EST_CTL,1;
 			BTFSS	STATUS,Z; Si han pulsado cualquier otra tecla, pasamos al 0
 				BCF	EST_CTL,0;
-			MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
-			ADDWF	PARSER_LTR,W; Le sumamos el desplazamiento
-			MOVWF	FSR; Muevo la dirección resultante a FSR
-			BSF	STATUS,IRP; Ponemos que es la segunda página
-			MOVF	PARSER_TEMP,W; Movemos a W el caracter
-			MOVWF	INDF; y lo ponemos en la RAM
-			INCF	PARSER_LTR,F; Incrementamos el contador de letra
+			BTFSC	STATUS,Z;
+				GOTO	ESC_SMS_EST1_END;
+			;;;;;;; Aquí guardo el caracter en la eeprom.
+			MOVF	PARSER_TEMP,W;
+			CALL	LCDDWR;
+			BCF	EE_CTL,ORI_EXT;
+			MOVF	PARSER_TEMP,W;
+			CALL	EEPROM_WRITE;
+			MOVF	PARSER_TEMP,W;
+			ANDLW	H'0F';
+			MOVWF	PARSER_LTR;
+			;;;;;;;
+			ESC_SMS_EST1_END:
 			BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
 			RETURN;
 
@@ -641,27 +641,19 @@ ESCRIBIR_SMS_:
 		; Este paso es cuando ya hemos pulsado el botón verde.
 		;;
 		ESC_SMS_EST2:
-			MOVLW	SERIAL_SEND_DATA&H'FF';
-			ADDWF	PARSER_LTR,W;
-			MOVWF	FSR;
-			BSF	STATUS,IRP;
-			MOVLW	A'"'; Ponemos una comilla
-			MOVWF	INDF;
-			INCF	FSR,F;
-			MOVLW	H'0D'; Ponemos un intro
-			MOVWF	INDF;
+			BCF	EE_CTL,ORI_EXT;
+			MOVLW	H'1B'; Ponemos un escape
+			CALL	EEPROM_WRITE;
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
-			; en la eeprom habría que poner ahora el sms en sí.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
 			MOVLW	0; Ponemos el 0
-			INCF	FSR,F;
-			MOVWF	INDF;
-			GOTO	ESCRIBIR_SMS;
+			CALL	EEPROM_WRITE;
+			GOTO	ENVIAR_SMS;
 
 
 ;;
-; Esta función se encarga de recoger el número de movil al que se quiere enviar
-; el mensaje escrito en la EEPROM
+; Esta función se encarga de enviar el sms, ya que todos los datos necesarios etc.
+; Han sido puestos anteriormente en sus respectivos sitios
 ;;
 ENVIAR_SMS_:
 	BANKSEL	KEYHL;
