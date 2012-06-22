@@ -4,16 +4,12 @@
 	EST_CTL
 	LCD_CTL
 	LCD_CONT
-	PARSER_LTR
-	PARSER_CTL
-	PARSER_TEMP
-	PARSER_CONT
+	PARSER_LTR; Contador del caracter por el que vamos guardando
+	PARSER_CTL; 
+	PARSER_TEMP; Temporal utilizado para shifts etc. se puede utilizar si es necesario
+	PARSER_CONT; Contador utilizado para los shifts
 	PARSER_LTR_INFO
-	ENDC
-		;** PARSER_LTR USO **;
-		; PARSER_LTR,<3-0> ULTIMA TECLA
-		; PARSER_LTR,<7-4> VECES PULSADA
-		
+	ENDC	
 		;** PARSER_LTR_INFO **;
 		PLI_INUSE	EQU	H'0'; PARSER_LTR tiene datos validos (está en uso), como tenemos 
 		; que poder validar que todas las pulsaciones de las teclas son para este estado,
@@ -53,6 +49,3 @@
 	LTR_ENVIAR:
 	ADDWF	PCL,F;
 	DT	"Enviando",0;
-	SMS_CHAR:
-	ADDWF	PCL,F;
-	DT	"*0# 789 456 123 ";

@@ -17,10 +17,10 @@ TMR2INTER:
 
 ;**** COMPCOLUM Comprueba las filas recurrentemente ****;
 COMPCOLUM:
-	PAGESELW	POSACOMP; La siguiente llamada va a ser a otra página
+	PAGESELW	NUMACOMP; La siguiente llamada va a ser a otra página
 	MOVF	BIT_CONT,W; Muevo el contador a W
 	ANDLW	H'0F'; Corto el contado a la parte interesante (la cuenta)
-	CALL	POSACOMP&7FF;Conseguimos la comparación de la tecla para el contador dado
+	CALL	NUMACOMP&7FF;Conseguimos la comparación de la tecla para el contador dado
 	PAGESEL	COMPPAD; Volvemos a la página 0
 	CALL	COMPPAD;Comparamos si está pulsada
 	MOVWF	PAD_TMP2;El resultado lo guardamos

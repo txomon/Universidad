@@ -29,8 +29,8 @@ TRISPAD	EQU	TRISB
 			; krp<0:2>, dado por krl_u, y si es en el registro Hard o Soft, dado por KRH_S. La operación a hacer es poner a 0 o a 1
 
 ;******** TABLAS PAD *********;
-;**** traduccion de num de caracter a bits de comparación ****;
-POSACOMP:
+;**** traduccion de num de tecla a bits de comparación ****;
+NUMACOMP:
 	ADDWF	PCL,F;
 	RETLW	B'01111110';*
 	RETLW	B'01111101';0
@@ -49,7 +49,7 @@ POSACOMP:
 	RETLW	B'11101011';3
 	RETLW	B'11100111';A - VERDE
 	
-;**** traducción de num de caracter a bit en el registro ****;
+;**** traducción de num de tecla a bit en el registro ****;
 NUMAKEYR:
 	ADDWF	PCL,F
 	RETLW	H'01'
@@ -60,3 +60,7 @@ NUMAKEYR:
 	RETLW	H'20'
 	RETLW	H'40'
 	RETLW	H'80'
+
+NUMACHAR:
+	ADDWF	PCL,F;
+	DT	"*0#R789D456U123V";
