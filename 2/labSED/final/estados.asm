@@ -375,7 +375,7 @@ MENU12_1_:
 	CALL	PUT_MENU12_1;
 	CALL	GOIN;
 	BTFSC	EST_CTL,2;
-		GOTO	ESCRIBIR_SMS_;
+		GOTO	ESCRIBIR_NUMERO_;
 	RETURN;
 	;************* PUT_COMPANY **************;
 	PUT_MENU12_1:
@@ -420,25 +420,22 @@ MENU12_1_:
 ; @param KEYHL - números de 7-9, flecha de abajo, rojo, 0 * y #
 ; @param KEYHU - números de 1-3, 4-6, verde y flecha de arriba
 ;;
-ESCRIBIR_SMS_:
+ESCRIBIR_NUMERO_:
 	BANKSEL	MAQUINA_EST;
 	MOVF	MAQUINA_EST,W;
-	XORLW	ESCRIBIR_SMS;
+	XORLW	ESCRIBIR_NUMERO;
 	BTFSS	STATUS,Z;
-		CALL	INIT_ESCRIBIR_SMS;
+		CALL	INIT_ESCRIBIR_NUMERO;
+
 	MOVLW	"4";
 	CALL	SERIAL_SEND;
-	MOVLW	MENU12_1;
-	MOVWF	ESCRIBIR_SMS;
-	CALL	ESCRIBIR_SMS_PARSER;
-	
-	
-	RETURN;
+
+	GOTO	ESCRIBIR_NUMERO_PARSER;
 	;********** INIT_ESCRIBIR_SMS ***********;
 	;; 
 	; se encarga de inicializar a 0 siempre que se entre en el estado
 	;;
-	INIT_ESCRIBIR_SMS:
+	INIT_ESCRIBIR_NUMERO:
 		CLRF	PARSER_LTR;
 		CLRF	PARSER_LTR_INFO;
 		CLRF	READ00;
@@ -446,7 +443,7 @@ ESCRIBIR_SMS_:
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	ESCRIBIR_SMS;
+		MOVLW	ESCRIBIR_NUMERO;
 		MOVWF	MAQUINA_EST
 		RETURN;
 	;*********** ESCRIBIR_SMS_PARSER ***********;
@@ -457,53 +454,49 @@ ESCRIBIR_SMS_:
 	; @param KEYHU - El registro de las teclas de arriba
 	; @param KEYHL - El registro de las teclas de abajo
 	;;
-	ESCRIBIR_SMS_PARSER:
+	ESCRIBIR_NUMERO_PARSER:
 	
 		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
-			GOTO	UNLOCK_COMP_GOIN_EST0;
+			GOTO	ESC_NUM_EST0;
 		BTFSS	EST_CTL,1;
-			GOTO	UNLOCK_COMP_GOIN_EST1;
-			
-		;******************************************************************************;
-		;************** Rutinas para tener una tecla pulsada y otra no ****************;
-		;******************************************************************************;
-		;
-		;**** UNLOCK_COMP_GOIN_EST0 ****;
-		;;
-		; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
-		; nada pulsado, si lo hubiera, se estaría regresando a esta función.
-		;;
-		UNLOCK_COMP_GOIN_EST0:
-			MOVF	KEYHL,W;
-			IORWF	KEYHU,W;
-			BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
-				BSF	EST_CTL,0;
-			BCF	EST_CTL,1;
-			CALL	SERIAL_SEND;
-			RETURN;
+			GOTO	ESC_NUM_EST1;
+		; Aqui va cuando haya acabado de escribir
+
 	
-		;**** UNLOCK_COMP_GOIN_EST1 ****;
-		;;
-		; El paso del menu exterior al interior, en el segundo y último nivel, se comprueba que 
-		; el botón verde esté pulsado, cuando esté pulsado, se señaliza el estado en el bit 2, y
-		; cuando se suelte, se pondrá a 1 el bit 1 también, desbloqueando el estado.
-		;;
-		UNLOCK_COMP_GOIN_EST1:
-			MOVF	KEYHL,F;
-			BTFSS	STATUS,Z;
-				BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
-			MOVF	KEYHU,W;
-			ANDLW	B'01111111';
-			BTFSS	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
-				BCF	EST_CTL,0;
-			BTFSC	KEYHU,7; Si esta pulsado el verde, avanzamos
-				BSF	EST_CTL,2;
-			BTFSS	EST_CTL,2;	
-				BSF	EST_CTL,1;
-			CALL	SERIAL_SEND;
-			RETURN;
-			
-			
+			;**** ESC_NUM_EST0 ****;
+			;;
+			; El paso del menu exterior al interior, en el primer nivel, se comprueba que no haya
+			; nada pulsado, si lo hubiera, se estaría regresando a esta función.
+			;;
+			ESC_NUM_EST0:
+				MOVF	KEYHL,W;
+				IORWF	KEYHU,W;
+				BTFSC	STATUS,Z; Comprobamos que no haya nada pulsado, y si es así, avanzamos
+					BSF	EST_CTL,0;
+				BCF	EST_CTL,1;
+				RETURN;
+		
+			;**** ESC_NUM_EST1 ****;
+			;;
+			; El paso del menu exterior al interior, en el segundo y último nivel, se comprueba que 
+			; el botón verde esté pulsado, cuando esté pulsado, se señaliza el estado en el bit 2, y
+			; cuando se suelte, se pondrá a 1 el bit 1 también, desbloqueando el estado.
+			;;
+			ESC_NUM_EST1:
+				MOVF	KEYHL,F;
+				BTFSS	STATUS,Z;
+					BCF	EST_CTL,0; Comprobamos que no haya nada pulsado en las dos filas de abajo
+				MOVF	KEYHU,W;
+				ANDLW	B'01111111';
+				BTFSS	STATUS,Z; Comprobamos que no haya nada pulsado en las dos de arriba, a excepción del verde
+					BCF	EST_CTL,0;
+				BTFSC	KEYHU,7; Si esta pulsado el verde, avanzamos
+					BSF	EST_CTL,2;
+				BTFSS	EST_CTL,2;
+					BSF	EST_CTL,1;
+				RETURN;
+
+
 			;************ PARSER_CT ************;
 			;;
 			; Parser con tecla, es a donde se entra si hay alguna tecla pulsada.
@@ -739,7 +732,7 @@ MANDAR_SMS_:
 	MOVF	MAQUINA_EST,W;
 	XORLW	MANDAR_SMS;
 	BTFSS	STATUS,Z;
-		CALL	INIT_ESCRIBIR_SMS; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
+		CALL	INIT_ESCRIBIR_NUMERO; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
 	CALL	MANDAR_SMS_PARSER;
 	RETURN;
 	
@@ -874,7 +867,7 @@ MANDAR_SMS_:
 					MOVLW	"#";
 					GOTO	M_PARSER_CHNG_SAVE;
 				M_PARSER_L_ROJO:
-					GOTO	ESCRIBIR_SMS_; Ya se que estoy en un nivel inferior, pero no hay otra;
+					GOTO	ESCRIBIR_NUMERO_; Ya se que estoy en un nivel inferior, pero no hay otra;
 				
 				
 				M_PARSER_L_7:
