@@ -481,14 +481,10 @@ ESCRIBIR_NUMERO_:
 	; @param KEYHL - El registro de las teclas de abajo
 	;;
 	ESCRIBIR_NUMERO_PARSER:
-		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
 			GOTO	ESC_NUM_EST0;
-		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,1;
 			GOTO	ESC_NUM_EST1;
-		MOVLW	"C"
-		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,2;
 			GOTO	ESC_NUM_EST2;
 		; Aqui va cuando haya acabado de escribir
@@ -527,9 +523,6 @@ ESCRIBIR_NUMERO_:
 				BCF	EST_CTL,0;
 			BTFSC	STATUS,Z;
 				GOTO	ESC_NUM_EST1_END;
-			;;;;;;; Aquí guardamos el caracter en la RAM y lo escribimos en la pantalla
-MOVF	PARSER_TEMP,W;
-CALL	SERIAL_SEND;
 			MOVF	PARSER_TEMP,W;
 			CALL	LCDDWR;
 			MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
@@ -564,7 +557,7 @@ CALL	SERIAL_SEND;
 			MOVLW	0; Ponemos el 0
 			INCF	FSR,F;
 			MOVWF	INDF;
-			GOTO	ESCRIBIR_SMS;
+			GOTO	ESCRIBIR_SMS_;
 
 		;************ PARSE_NUM ************;
 		;;
@@ -614,8 +607,6 @@ CALL	SERIAL_SEND;
 ;ERROR
 			PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
 			BSF	INTCON,GIE;
-			MOVLW	"A"
-			CALL	SERIAL_SEND
 			PAGESELW	NUMACHAR; La siguiente llamada va a ser a otra página
 			MOVF	PARSER_CONT,W; ponemos en W el contador, para saber donde está. En teoría, no debería ser mayor de 15
 			GOTO	NUMACHAR&7FF; Es una tabla que retorna la llamada conla que nos han llamado.
@@ -701,7 +692,7 @@ ESCRIBIR_SMS_:
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
 			MOVLW	0; Ponemos el 0
 			CALL	EEPROM_WRITE;
-			GOTO	ENVIAR_SMS;
+			GOTO	ENVIAR_SMS_;
 
 
 ;;
