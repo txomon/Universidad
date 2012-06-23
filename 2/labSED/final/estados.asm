@@ -587,7 +587,7 @@ CALL	SERIAL_SEND;
 				GOTO	PARSE_NUM_K; Ya tenemos la tecla en el contador que está pulsada
 			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
 			BCF	STATUS,C;
-			BTFSS	PARSER_CONT,2; Miramos si hemos llegado a 8
+			BTFSS	PARSER_CONT,3; Miramos si hemos llegado a 8
 				GOTO	PARSE_NUM_L;
 			
 			PARSE_NUM_U_P: ;Aqui nos preparamos para el siguiente registro (up)
@@ -603,12 +603,13 @@ CALL	SERIAL_SEND;
 				GOTO	PARSE_NUM_K; En PARSER_CONT tenemos la tecla en cuestión
 			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
 			BCF	STATUS,C;
-			BTFSS	PARSER_CONT,3; Miramos si hemos llegado a 16
+			BTFSS	PARSER_CONT,4; Miramos si hemos llegado a 16
 				GOTO	PARSE_NUM_U; Para el siguiente salto
 			;; Si llegamos aqui, es que ha habido un error... por que significa que no hay tecla pulsada,
 			; y esto está preparado solo para que haya una. El hecho de que haya varias no repercute porque 
 			; es muy improbable que haya dos pulsaciones simultáneas. Mandaremos el caracter ! para señalar
 			; que ha habido un error
+			BSF	INTCON,GIE;
 			RETLW	"!";
 ;ERROR
 			PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
