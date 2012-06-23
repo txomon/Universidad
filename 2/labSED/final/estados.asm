@@ -443,6 +443,32 @@ ESCRIBIR_NUMERO_:
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
+		MOVLW	cur_set; Mover el cursor a la posicion 6
+		CALL	LCDIWR;
+		CLRF	LCD_CONT;
+		PUT_E_N_LOOP:
+			PAGESELW	LTR_ESCRIBIR_NUMERO; Cambiamos de página
+			MOVF	LCD_CONT,W;Ponemos el contador de la tabla en W
+			CALL	LTR_ESCRIBIR_NUMERO&7FF; Conseguimos el siguiente caracter
+			MOVWF	EST_CTL; lo guardamos en est_ctl
+			ANDLW	H'FF';
+			PAGESEL	PUT_E_N_LOOP_END;
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+				GOTO PUT_E_N_LOOP_END;si hemos llegado, SALIMOS
+			DECFSZ	EST_CTL,F;Si es 0 saltara
+				GOTO	PUT_E_N_LOOP_SALTO;	
+			MOVLW	cur_set|H'40';
+			CALL	LCDIWR;
+			INCF	LCD_CONT,F;
+			GOTO	PUT_E_N_LOOP;
+			PUT_E_N_LOOP_SALTO:
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
+			GOTO	PUT_E_N_LOOP;vuelvo a contar
+		PUT_E_N_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_ESCRIBIR_NUMERO_;Cambiamos lo que hay en pantalla a "COMPANY"
+		MOVWF	LCD_CTL;
 		MOVLW	ESCRIBIR_NUMERO;
 		MOVWF	MAQUINA_EST
 		RETURN;
@@ -455,10 +481,14 @@ ESCRIBIR_NUMERO_:
 	; @param KEYHL - El registro de las teclas de abajo
 	;;
 	ESCRIBIR_NUMERO_PARSER:
+		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
 			GOTO	ESC_NUM_EST0;
+		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,1;
 			GOTO	ESC_NUM_EST1;
+		MOVLW	"C"
+		CALL	SERIAL_SEND
 		BTFSS	EST_CTL,2;
 			GOTO	ESC_NUM_EST2;
 		; Aqui va cuando haya acabado de escribir
@@ -498,6 +528,8 @@ ESCRIBIR_NUMERO_:
 			BTFSC	STATUS,Z;
 				GOTO	ESC_NUM_EST1_END;
 			;;;;;;; Aquí guardamos el caracter en la RAM y lo escribimos en la pantalla
+MOVF	PARSER_TEMP,W;
+CALL	SERIAL_SEND;
 			MOVF	PARSER_TEMP,W;
 			CALL	LCDDWR;
 			MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
@@ -575,8 +607,10 @@ ESCRIBIR_NUMERO_:
 			; es muy improbable que haya dos pulsaciones simultáneas. Mandaremos el caracter ! para señalar
 			; que ha habido un error
 			RETLW	"!";
-			
+;ERROR
 			PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
+			MOVLW	"A"
+			CALL	SERIAL_SEND
 			PAGESELW	NUMACHAR; La siguiente llamada va a ser a otra página
 			MOVF	PARSER_CONT,W; ponemos en W el contador, para saber donde está. En teoría, no debería ser mayor de 15
 			GOTO	NUMACHAR&7FF; Es una tabla que retorna la llamada conla que nos han llamado.
@@ -590,9 +624,23 @@ ESCRIBIR_SMS_:
 	MOVF	MAQUINA_EST,W;
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
-		CALL	INIT_ESCRIBIR_NUMERO; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
+		CALL	INIT_ESCRIBIR_SMS; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
 	GOTO	ESCRIBIR_SMS_PARSER;
 	RETURN;
+	
+	INIT_ESCRIBIR_SMS:
+		CLRF	PARSER_LTR;
+		CLRF	PARSER_LTR_INFO;
+		CLRF	READ00;
+		CLRF	WRITE00;
+		CLRF	LCD_LTR_CONT;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set; Mover el cursor a la posicion 0
+		CALL	LCDIWR;
+		MOVLW	ESCRIBIR_SMS;
+		MOVWF	MAQUINA_EST
+		RETURN;
 	
 	ESCRIBIR_SMS_PARSER:
 		BTFSS	EST_CTL,0;Si hay un 0 en la posicion 0 se entra (lo mismo que para todas)
@@ -660,7 +708,7 @@ ENVIAR_SMS_:
 	MOVF	MAQUINA_EST,W; Comprobamos si estamos aquí por primera vez
 	XORLW	ENVIAR_SMS;
 	BTFSS	STATUS,Z; Si estamos por primera vez
-		CLRF	EST_CTL;
+		CALL	INIT_ESCRIBIR_NUMERO;
 	MOVLW	ENVIAR_SMS;
 	MOVWF	MAQUINA_EST;Decimos que estamos en ENVIAR_SMS
 	BTFSS	EST_CTL,0;
@@ -669,8 +717,6 @@ ENVIAR_SMS_:
 		CALL	POR_CTL_PER_ANALIZE;
 	BTFSS	EST_CTL,2;
 		GOTO	MENU12_1_;
-	SLEEP;
-	RETURN
 	
 	;******	PUT_STANDBY ******;
 	;;
@@ -681,7 +727,7 @@ ENVIAR_SMS_:
 	ENVIAR:
 		BANKSEL	LCD_CTL;
 		MOVF	LCD_CTL,W;
-		XORLW	LTR_ENVIAR_;
+		XORLW	LTR_ENVIANDO_;
 		BTFSC	STATUS,Z;
 			RETURN;
 		MOVLW	lcd_clr; limpio la pantalla
@@ -690,9 +736,9 @@ ENVIAR_SMS_:
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_ENVIAR_LOOP:
-			PAGESELW	LTR_ENVIAR;
+			PAGESELW	LTR_ENVIANDO_;
 			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
-			CALL	LTR_ENVIAR&7FF;
+			CALL	LTR_ENVIANDO&7FF;
 			ANDLW	H'FF';
 			PAGESEL	PUT_ENVIAR_LOOP_END;
 			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
@@ -702,7 +748,7 @@ ENVIAR_SMS_:
 			GOTO	PUT_ENVIAR_LOOP;vuelvo a contar
 		PUT_ENVIAR_LOOP_END:;Hemos salido
 		BANKSEL LCD_CTL;
-		MOVLW	LTR_ENVIAR_;Cambiamos lo que hay en pantalla a "Enviando"
+		MOVLW	LTR_ENVIANDO_;Cambiamos lo que hay en pantalla a "Enviando"
 		MOVWF	LCD_CTL;
 		; Hasta aqui, hemos puesto "enviando" en la pantalla 
 		
