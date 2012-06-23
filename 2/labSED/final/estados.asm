@@ -513,7 +513,7 @@ ESCRIBIR_NUMERO_:
 		; indicado.
 		;;
 		ESC_NUM_EST1:
-			MOVF	KEYHL,F; Juntamos el registro de arriba con
+			MOVF	KEYHL,W; Juntamos el registro de arriba con
 			IORWF	KEYHU,W; el de abajo
 			BTFSC	STATUS,Z; y si no hay nada pulsado, 
 				RETURN; volvemos
@@ -573,6 +573,7 @@ CALL	SERIAL_SEND;
 
 		PARSE_NUM:
 			; CLRF	PARSER_CTL; a 0 las cosas. No se usa en parse_num.
+			BCF	INTCON,GIE;
 			CLRF	PARSER_CONT; que vamos a usar
 			MOVF	KEYHL,W; miramos si el low
 			BTFSC	STATUS,Z; es 0
@@ -585,6 +586,7 @@ CALL	SERIAL_SEND;
 			BTFSC	STATUS,C; miramos si estaba a 1 el bit
 				GOTO	PARSE_NUM_K; Ya tenemos la tecla en el contador que está pulsada
 			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
+			BCF	STATUS,C;
 			BTFSS	PARSER_CONT,2; Miramos si hemos llegado a 8
 				GOTO	PARSE_NUM_L;
 			
@@ -600,6 +602,7 @@ CALL	SERIAL_SEND;
 			BTFSC	STATUS,C; miramos si estaba a 1 ese bit
 				GOTO	PARSE_NUM_K; En PARSER_CONT tenemos la tecla en cuestión
 			INCF	PARSER_CONT,F; Incrementamos el contador para la siguiente vuelta
+			BCF	STATUS,C;
 			BTFSS	PARSER_CONT,3; Miramos si hemos llegado a 16
 				GOTO	PARSE_NUM_U; Para el siguiente salto
 			;; Si llegamos aqui, es que ha habido un error... por que significa que no hay tecla pulsada,
@@ -609,6 +612,7 @@ CALL	SERIAL_SEND;
 			RETLW	"!";
 ;ERROR
 			PARSE_NUM_K: ; En PARSER_CONT tenemos el número de tecla que está pulsado, ahora conseguimos el caracter
+			BSF	INTCON,GIE;
 			MOVLW	"A"
 			CALL	SERIAL_SEND
 			PAGESELW	NUMACHAR; La siguiente llamada va a ser a otra página
