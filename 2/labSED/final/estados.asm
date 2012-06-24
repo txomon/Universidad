@@ -437,9 +437,8 @@ ESCRIBIR_NUMERO_:
 	;;
 	INIT_ESCRIBIR_NUMERO:
 		CLRF	PARSER_LTR;
+		CLRF	EST_CTL;
 		CLRF	PARSER_LTR_INFO;
-		CLRF	READ00;
-		CLRF	WRITE00;
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
@@ -523,6 +522,7 @@ ESCRIBIR_NUMERO_:
 				BCF	EST_CTL,0;
 			BTFSC	STATUS,Z;
 				GOTO	ESC_NUM_EST1_END;
+			;;;;;;;
 			MOVF	PARSER_TEMP,W;
 			CALL	LCDDWR;
 			MOVLW	SERIAL_SEND_DATA&H'FF'; Movemos la dirección de la ram a W
@@ -621,12 +621,17 @@ ESCRIBIR_SMS_:
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
 		CALL	INIT_ESCRIBIR_SMS; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
+	MOVLW	"5";
+	CALL	SERIAL_SEND;
 	GOTO	ESCRIBIR_SMS_PARSER;
 	RETURN;
 	
 	INIT_ESCRIBIR_SMS:
+		MOVLW	"a"
+		CALL	SERIAL_SEND
 		CLRF	PARSER_LTR;
 		CLRF	PARSER_LTR_INFO;
+		CLRF	EST_CTL;
 		CLRF	READ00;
 		CLRF	WRITE00;
 		CLRF	LCD_LTR_CONT;
@@ -636,6 +641,8 @@ ESCRIBIR_SMS_:
 		CALL	LCDIWR;
 		MOVLW	ESCRIBIR_SMS;
 		MOVWF	MAQUINA_EST
+		MOVLW	"A"
+		CALL	SERIAL_SEND
 		RETURN;
 	
 	ESCRIBIR_SMS_PARSER:
@@ -652,7 +659,9 @@ ESCRIBIR_SMS_:
 		; indicado.
 		;;
 		ESC_SMS_EST1:
-			MOVF	KEYHL,F; Juntamos el registro de arriba con
+			MOVLW	"b"
+			CALL	SERIAL_SEND
+			MOVF	KEYHL,W; Juntamos el registro de arriba con
 			IORWF	KEYHU,W; el de abajo
 			BTFSC	STATUS,Z; y si no hay nada pulsado, 
 				RETURN; volvemos
@@ -668,7 +677,7 @@ ESCRIBIR_SMS_:
 				GOTO	ESC_SMS_EST1_END;
 			;;;;;;; Aquí guardo el caracter en la eeprom.
 			MOVF	PARSER_TEMP,W;
-			CALL	LCDDWR;
+			CALL	LCD_LTRW;
 			BCF	EE_CTL,ORI_EXT;
 			MOVF	PARSER_TEMP,W;
 			CALL	EEPROM_WRITE;
@@ -677,6 +686,8 @@ ESCRIBIR_SMS_:
 			MOVWF	PARSER_LTR;
 			;;;;;;;
 			ESC_SMS_EST1_END:
+			MOVLW	"B"
+			CALL	SERIAL_SEND
 			BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
 			RETURN;
 
@@ -685,6 +696,8 @@ ESCRIBIR_SMS_:
 		; Este paso es cuando ya hemos pulsado el botón verde.
 		;;
 		ESC_SMS_EST2:
+			MOVLW	"c"
+			CALL	SERIAL_SEND;
 			BCF	EE_CTL,ORI_EXT;
 			MOVLW	H'1B'; Ponemos un escape
 			CALL	EEPROM_WRITE;
@@ -693,6 +706,8 @@ ESCRIBIR_SMS_:
 			MOVLW	0; Ponemos el 0
 			CALL	EEPROM_WRITE;
 			GOTO	ENVIAR_SMS_;
+			MOVLW	"C";
+			CALL	SERIAL_SEND;
 
 
 ;;
