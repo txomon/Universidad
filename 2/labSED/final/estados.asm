@@ -13,7 +13,6 @@ POR_:
 	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
 	BTFSS	EST_CTL,0;
 		GOTO	POR_CTL_PER_CONFIG; Intenta configurarlo
-	BCF	PORTA,D_LED;
 	BTFSS	EST_CTL,1;
 		GOTO	POR_CTL_PER_ANALIZE; Mira si lo ha conseguido
 	BTFSS	EST_CTL,2;
@@ -33,12 +32,9 @@ POR_:
 			CLRF	RCV_CONT;
 			CLRF	SER_CTL;
 			BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
-			BSF	SER_CTL,IS_SND; Marcamos que vamos a enviar por el puerto serie;
 			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
 			MOVWF	SND_CONT;
-			CALL	SEND_AT; Mandamos AT
-			BANKSEL	PIE1; BANCO 1
-			BSF	PIE1&7F,TXIE;
+			CALL	SEND_AT; Mandamos AT, activamos interrupciones y ponemos IS_SND
 			BANKSEL	STATUS; BANCO 0
 			BSF	EST_CTL,0;
 			
@@ -89,6 +85,7 @@ POR_:
 			BTFSS	EST_CTL,1;
 				BCF	EST_CTL,0; Si no ha recibido la respuesta esperada, volver a hacer
 				;la peticion del comando
+			BCF	EST_CTL,2;
 			CLRF	RCV_CONT;
 				
 			RETURN
@@ -427,9 +424,6 @@ ESCRIBIR_NUMERO_:
 	BTFSS	STATUS,Z;
 		CALL	INIT_ESCRIBIR_NUMERO;
 
-	MOVLW	"4";
-	CALL	SERIAL_SEND;
-
 	GOTO	ESCRIBIR_NUMERO_PARSER;
 	;********** INIT_ESCRIBIR_SMS ***********;
 	;; 
@@ -621,14 +615,10 @@ ESCRIBIR_SMS_:
 	XORLW	ESCRIBIR_SMS;
 	BTFSS	STATUS,Z;
 		CALL	INIT_ESCRIBIR_SMS; Reutilizamos la rutina porque total vamos a utilizar las mismas variables
-	MOVLW	"5";
-	CALL	SERIAL_SEND;
 	GOTO	ESCRIBIR_SMS_PARSER;
 	RETURN;
 	
 	INIT_ESCRIBIR_SMS:
-		MOVLW	"a"
-		CALL	SERIAL_SEND
 		CLRF	PARSER_LTR;
 		CLRF	PARSER_LTR_INFO;
 		CLRF	EST_CTL;
@@ -641,8 +631,6 @@ ESCRIBIR_SMS_:
 		CALL	LCDIWR;
 		MOVLW	ESCRIBIR_SMS;
 		MOVWF	MAQUINA_EST
-		MOVLW	"A"
-		CALL	SERIAL_SEND
 		RETURN;
 	
 	ESCRIBIR_SMS_PARSER:
@@ -659,9 +647,7 @@ ESCRIBIR_SMS_:
 		; indicado.
 		;;
 		ESC_SMS_EST1:
-			MOVLW	"b"
-			CALL	SERIAL_SEND
-			MOVF	KEYHL,W; Juntamos el registro de arriba con
+			MOVF	KEYHL,W ; Juntamos el registro de arriba con
 			IORWF	KEYHU,W; el de abajo
 			BTFSC	STATUS,Z; y si no hay nada pulsado, 
 				RETURN; volvemos
@@ -681,13 +667,8 @@ ESCRIBIR_SMS_:
 			BCF	EE_CTL,ORI_EXT;
 			MOVF	PARSER_TEMP,W;
 			CALL	EEPROM_WRITE;
-			MOVF	PARSER_TEMP,W;
-			ANDLW	H'0F';
-			MOVWF	PARSER_LTR;
 			;;;;;;;
 			ESC_SMS_EST1_END:
-			MOVLW	"B"
-			CALL	SERIAL_SEND
 			BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
 			RETURN;
 
@@ -696,8 +677,6 @@ ESCRIBIR_SMS_:
 		; Este paso es cuando ya hemos pulsado el botón verde.
 		;;
 		ESC_SMS_EST2:
-			MOVLW	"c"
-			CALL	SERIAL_SEND;
 			BCF	EE_CTL,ORI_EXT;
 			MOVLW	H'1B'; Ponemos un escape
 			CALL	EEPROM_WRITE;
@@ -706,8 +685,6 @@ ESCRIBIR_SMS_:
 			MOVLW	0; Ponemos el 0
 			CALL	EEPROM_WRITE;
 			GOTO	ENVIAR_SMS_;
-			MOVLW	"C";
-			CALL	SERIAL_SEND;
 
 
 ;;
@@ -719,15 +696,33 @@ ENVIAR_SMS_:
 	MOVF	MAQUINA_EST,W; Comprobamos si estamos aquí por primera vez
 	XORLW	ENVIAR_SMS;
 	BTFSS	STATUS,Z; Si estamos por primera vez
-		CALL	INIT_ESCRIBIR_NUMERO;
+		CALL	INIT_ENVIAR_SMS;
 	MOVLW	ENVIAR_SMS;
 	MOVWF	MAQUINA_EST;Decimos que estamos en ENVIAR_SMS
+	
+
 	BTFSS	EST_CTL,0;
-		CALL	ENVIAR;
+		GOTO	ENVIAR;
 	BTFSS	EST_CTL,1;
-		CALL	POR_CTL_PER_ANALIZE;
+		GOTO	POR_CTL_PER_ANALIZE;
 	BTFSS	EST_CTL,2;
-		GOTO	MENU12_1_;
+		GOTO	ENVIADO;
+	RETURN; Por si acaso (además he hecho bién por que ya he tenido un fallo
+	
+	;****** INIT_ENVIAR_SMS *******;	
+	INIT_ENVIAR_SMS:
+		CLRF	PARSER_LTR;
+		CLRF	PARSER_LTR_INFO;
+		CLRF	EST_CTL;
+		CLRF	READ00;
+		CLRF	LCD_LTR_CONT;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set; Mover el cursor a la posicion 0
+		CALL	LCDIWR;
+		MOVLW	ENVIAR_SMS;
+		MOVWF	MAQUINA_EST
+		RETURN;
 	
 	;******	PUT_STANDBY ******;
 	;;
@@ -740,14 +735,14 @@ ENVIAR_SMS_:
 		MOVF	LCD_CTL,W;
 		XORLW	LTR_ENVIANDO_;
 		BTFSC	STATUS,Z;
-			RETURN;
+			GOTO	ENVIAR_DESPUES;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	cur_set|h'5'; Mover el cursor a la posicion 6
+		MOVLW	cur_set|h'4'; Mover el cursor a la posicion 6
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_ENVIAR_LOOP:
-			PAGESELW	LTR_ENVIANDO_;
+			PAGESELW	LTR_ENVIANDO;
 			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
 			CALL	LTR_ENVIANDO&7FF;
 			ANDLW	H'FF';
@@ -763,14 +758,17 @@ ENVIAR_SMS_:
 		MOVWF	LCD_CTL;
 		; Hasta aqui, hemos puesto "enviando" en la pantalla 
 		
-		MOVLW	B'00000111';
-		BANKSEL	SER_CTL;
-		MOVWF	SER_CTL;
+		ENVIAR_DESPUES; Esto es cuando ya hemos puesto lo de la pantalla.
+		CLRF	RCV_CONT;
+		CLRF	SER_CTL;
+		BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
+		BSF	SER_CTL,IS_DAT; Marcamos que vamos a enviar x ram
+		BSF	SER_CTL,IS_EEP; Marcamos que vamos a enviar de la eeprom
 		MOVLW	MODEM_CMD_SEND_SMS&H'FF';
 		MOVWF	SND_CONT;
-
 		CALL	SEND_AT;
-		BANKSEL	EST_CTL;
+
+		BANKSEL	STATUS; BANCO 0
 		BSF	EST_CTL,0;
 		MOVLW	H'3F';
 		MOVWF	TMP2;
@@ -778,4 +776,42 @@ ENVIAR_SMS_:
 			NOP			; 
 			DECFSZ	TMP2,F		; Se decrementa contador básico
 			GOTO	EPOR_WAIT	; hasta llegar a cero
+		BCF	EST_CTL,1;
 		RETURN;
+		
+	;******* ENVIADO ********;
+	;;
+	; El estado enviado es cuando ya lo hemos enviado y hemos recibido el return 0
+	;;
+	
+	ENVIADO:
+		BANKSEL	LCD_CTL;
+		MOVF	LCD_CTL,W;
+		XORLW	LTR_ENVIADO_;
+		BTFSC	STATUS,Z;
+			GOTO	ENVIADO_FIN;
+		MOVLW	lcd_clr; limpio la pantalla
+		CALL	LCDIWR;
+		MOVLW	cur_set|h'4'; Mover el cursor a la posicion 6
+		CALL	LCDIWR;
+		CLRF	LCD_CONT;
+		PUT_ENVIADO_LOOP:
+			PAGESELW	LTR_ENVIADO;
+			MOVF	LCD_CONT,W;Ponemos el indice de la tabla
+			CALL	LTR_ENVIADO&7FF;
+			ANDLW	H'FF';
+			PAGESEL	PUT_ENVIADO_LOOP_END;
+			BTFSC	STATUS,Z;Comprobamos que no hemos llegado al final
+				GOTO PUT_ENVIADO_LOOP_END;si hemos llegado, SALIMOS
+			CALL	LCDDWR;Escribo la letra en pantalla
+			INCF	LCD_CONT,F;Incremento el contador
+			GOTO	PUT_ENVIADO_LOOP;vuelvo a contar
+		PUT_ENVIADO_LOOP_END:;Hemos salido
+		BANKSEL LCD_CTL;
+		MOVLW	LTR_ENVIADO_;Cambiamos lo que hay en pantalla a "Enviando"
+		MOVWF	LCD_CTL;
+		ENVIADO_FIN;
+		
+		BSF	PORTA,D_LED
+		RETURN;
+		; Hasta aqui, hemos puesto "enviando" en la pantalla 
