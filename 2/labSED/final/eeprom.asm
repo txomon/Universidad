@@ -45,16 +45,16 @@ EEPROM_WRITE:
 	MOVLW	H'AA' ;
 	MOVWF	EECON2&7F ; Write AAh
 	BSF	EECON1&7F,WR ; Set WR bit to begin write
-	BSF	INTCON,GIE ;
 	;;;;;;;;;;;;;
 
-	BANKSEL	PIR2 ; BANCO 0
-	BTFSS	PIR2,EEIF ; Comprobamos que se haya echo la escritura
+	BTFSS	EECON1,WR ; Comprobamos que se haya echo la escritura
 		GOTO	$-1 ; hasta que no se haya escrito, no salimos de aqui
 	BCF	PIR2,EEIF ;
 	BANKSEL	EECON1 ; BANCO 3
 	BCF	EECON1&7F,WREN ;
+	BSF	INTCON,GIE ;
 	BANKSEL WRITE00 ; BANCO 0
+	BCF	PIR2,EEIF;
 	BTFSS	EE_CTL,ORI_EXT
 		INCF	WRITE00,F ;
 	RETURN;
