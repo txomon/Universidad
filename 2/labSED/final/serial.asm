@@ -112,6 +112,7 @@ SEND_NEXT:
 		GOTO	RETI; y volvemos a la RETI
 		
 	SEND_EEP:
+		BSF	EE_CTL,ORI_EXT;	
 		MOVF	SND_CONT,W; Copiamos el valor del contador a W
 		CALL	EEPROM_READ; Conseguimos de la EEPROM el valor de esa posición
 		BTFSC	STATUS,Z; Si es cero

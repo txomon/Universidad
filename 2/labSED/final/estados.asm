@@ -648,7 +648,7 @@ ESCRIBIR_SMS_:
 		;;
 		ESC_SMS_EST1:
 			MOVF	KEYHL,W ; Juntamos el registro de arriba con
-			IORWF	KEYHU,W; el de abajo
+			IORWF	KEYHU,W; el de abajo			
 			BTFSC	STATUS,Z; y si no hay nada pulsado, 
 				RETURN; volvemos
 			CALL	PARSE_NUM; Conseguimos el caracter o lo que sea
@@ -661,13 +661,16 @@ ESCRIBIR_SMS_:
 				BCF	EST_CTL,0;
 			BTFSC	STATUS,Z;
 				GOTO	ESC_SMS_EST1_END;
+
 			;;;;;;; Aquí guardo el caracter en la eeprom.
-			MOVF	PARSER_TEMP,W;
-			CALL	LCD_LTRW;
 			BCF	EE_CTL,ORI_EXT;
 			MOVF	PARSER_TEMP,W;
 			CALL	EEPROM_WRITE;
+			SLEEP;
+			CALL	EEPROM_READ
+			CALL	LCD_LTRW;
 			;;;;;;;
+
 			ESC_SMS_EST1_END:
 			BCF	EST_CTL,2; Preparamos la posible entrada a la siguiente
 			RETURN;
@@ -678,7 +681,7 @@ ESCRIBIR_SMS_:
 		;;
 		ESC_SMS_EST2:
 			BCF	EE_CTL,ORI_EXT;
-			MOVLW	H'1B'; Ponemos un escape
+			MOVLW	D'26'; Ponemos un escape
 			CALL	EEPROM_WRITE;
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
@@ -700,7 +703,6 @@ ENVIAR_SMS_:
 	MOVLW	ENVIAR_SMS;
 	MOVWF	MAQUINA_EST;Decimos que estamos en ENVIAR_SMS
 	
-
 	BTFSS	EST_CTL,0;
 		GOTO	ENVIAR;
 	BTFSS	EST_CTL,1;
@@ -714,7 +716,6 @@ ENVIAR_SMS_:
 		CLRF	PARSER_LTR;
 		CLRF	PARSER_LTR_INFO;
 		CLRF	EST_CTL;
-		CLRF	READ00;
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
@@ -812,6 +813,5 @@ ENVIAR_SMS_:
 		MOVWF	LCD_CTL;
 		ENVIADO_FIN;
 		
-		BSF	PORTA,D_LED
 		RETURN;
 		; Hasta aqui, hemos puesto "enviando" en la pantalla 
