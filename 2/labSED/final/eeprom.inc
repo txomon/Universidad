@@ -18,5 +18,5 @@ EE_CTL
 	ENDC;
 
 	;******* EE_CTL *******;
-	ORI_EXT	EQU	0;
+	ORI_EXT	EQU	0; original(0)/external(1) address
 

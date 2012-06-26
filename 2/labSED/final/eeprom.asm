@@ -27,17 +27,16 @@ EEPROM_WRITE:
 	MOVWF	EEDAT&7F;move data to data field
 	
 	BANKSEL WRITE00;
-	BTFSS	EE_CTL,ORI_EXT;
-		MOVF	WRITE00,W;
+	MOVF	WRITE00,W;
 	BANKSEL EEADR;
 	BTFSS	EE_CTL,ORI_EXT;
 		MOVWF	EEADR&7F;move address to address field
 	
 	BANKSEL	EECON1 ;
+	BTFSC	EECON1&7F,WR; Comprobamos que se pueda escribir
+		GOTO	$-1; hasta que no se pueda escribir, saltamos
 	BCF	EECON1&7F, EEPGD ;Point to DATA memory
 	BSF	EECON1&7F, WREN ;Enable writes
-	MOVLW	D'8'
-	CALL	LCDWAIT
 	BCF	INTCON, GIE ;Disable INTs.
 	BTFSC	INTCON, GIE ;SEE AN576
 		GOTO	$-2
@@ -46,8 +45,15 @@ EEPROM_WRITE:
 	MOVLW	H'AA';
 	MOVWF	EECON2&7F ;Write AAh
 	BSF	EECON1&7F, WR ;Set WR bit to begin write
-	BCF	EECON1&7F, WREN;Set WREN bit to prevent accidents
-	RETFIE;
+	BCF	EECON1&7F,WREN;
+	BSF	INTCON,GIE;
+	BTFSC	EECON1&7F,WR; Comprobamos que se pueda escribir
+		GOTO	$-1; hasta que no se pueda escribir, saltamos
+	BANKSEL	TMP1;
+	MOVLW	D'6';
+	CALL 	LCDWAIT;
+	BANKSEL STATUS;
+	RETURN;
 
 ;******* EEPROM_READ ************;
 ;;
