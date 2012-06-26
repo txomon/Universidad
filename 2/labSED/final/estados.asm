@@ -712,10 +712,7 @@ ENVIAR_SMS_:
 	
 	;****** INIT_ENVIAR_SMS *******;	
 	INIT_ENVIAR_SMS:
-		CLRF	PARSER_LTR;
-		CLRF	PARSER_LTR_INFO;
 		CLRF	EST_CTL;
-		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
 		MOVLW	cur_set; Mover el cursor a la posicion 0
