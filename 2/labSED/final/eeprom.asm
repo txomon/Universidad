@@ -23,23 +23,23 @@ EEPROM_INIT:
 ;;
  
 EEPROM_WRITE:
+	MOVWF	TMP1; Guardamos en tmp1 el dato
+	MOVF	WRITE00,W ; movemos la dirección a W
+	BANKSEL EEADR ; BANCO 2
+	BTFSS	EE_CTL,ORI_EXT ; 
+		MOVWF	EEADR&7F ; move address to address field
+	BANKSEL	TMP1;
+	MOVF	TMP1,W;
 	BANKSEL	EEDAT ; BANCO 2
 	MOVWF	EEDAT&7F ; move data to data field
-
-	BANKSEL WRITE00 ; BANCO 0
-	MOVF	WRITE00,W ;
-	BANKSEL EEADR ; BANCO 2
-	BTFSS	EE_CTL,ORI_EXT ;
-		MOVWF	EEADR&7F ; move address to address field
-
+	
+	;;;;;;;;;;;;;
 	BANKSEL	EECON1 ; BANCO 3
 	BCF	EECON1&7F,EEPGD ; Point to DATA memory
 	BSF	EECON1&7F,WREN ; Enable writes
-
-	;;;;;;;;;;;;;
 	BCF	INTCON,GIE ; Disable INTs
 	BTFSC	INTCON,GIE ; SEE AN576
-		GOTO	$-1;
+		GOTO	$-2;
 	MOVLW	H'55' ;
 	MOVWF	EECON2&7F ; Write 55h
 	MOVLW	H'AA' ;
@@ -50,7 +50,7 @@ EEPROM_WRITE:
 
 	BANKSEL	PIR2 ; BANCO 0
 	BTFSS	PIR2,EEIF ; Comprobamos que se haya echo la escritura
-		GOTO	$-2 ; hasta que no se haya escrito, no salimos de aqui
+		GOTO	$-1 ; hasta que no se haya escrito, no salimos de aqui
 	BCF	PIR2,EEIF ;
 	BANKSEL	EECON1 ; BANCO 3
 	BCF	EECON1&7F,WREN ;

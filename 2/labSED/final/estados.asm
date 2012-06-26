@@ -666,8 +666,7 @@ ESCRIBIR_SMS_:
 			BCF	EE_CTL,ORI_EXT;
 			MOVF	PARSER_TEMP,W;
 			CALL	EEPROM_WRITE;
-			SLEEP;
-			CALL	EEPROM_READ
+			CALL	EEPROM_READ;
 			CALL	LCD_LTRW;
 			;;;;;;;
 
@@ -687,7 +686,7 @@ ESCRIBIR_SMS_:
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
 			MOVLW	0; Ponemos el 0
 			CALL	EEPROM_WRITE;
-			GOTO	ENVIAR_SMS_;
+			; Esto va a enviar SMS, que es el siguiente paso ;)
 
 
 ;;
