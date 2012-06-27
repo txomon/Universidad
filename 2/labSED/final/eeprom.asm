@@ -23,23 +23,20 @@ EEPROM_INIT:
 ;;
  
 EEPROM_WRITE:
-	MOVWF	TMP1; Guardamos en tmp1 el dato
+	BANKSEL	EEDAT ; BANCO 2
+	MOVWF	EEDAT&7F ; move data to data field
+	BANKSEL	WRITE00;
 	MOVF	WRITE00,W ; movemos la dirección a W
 	BANKSEL EEADR ; BANCO 2
 	BTFSS	EE_CTL,ORI_EXT ; 
 		MOVWF	EEADR&7F ; move address to address field
-	BANKSEL	TMP1;
-	MOVF	TMP1,W;
-	BANKSEL	EEDAT ; BANCO 2
-	MOVWF	EEDAT&7F ; move data to data field
-	
 	;;;;;;;;;;;;;
 	BANKSEL	EECON1 ; BANCO 3
-	BCF	EECON1&7F,EEPGD ; Point to DATA memory
-	BSF	EECON1&7F,WREN ; Enable writes
 	BCF	INTCON,GIE ; Disable INTs
 	BTFSC	INTCON,GIE ; SEE AN576
 		GOTO	$-2;
+	BCF	EECON1&7F,EEPGD ; Point to DATA memory
+	BSF	EECON1&7F,WREN ; Enable writes
 	MOVLW	H'55' ;
 	MOVWF	EECON2&7F ; Write 55h
 	MOVLW	H'AA' ;

@@ -115,6 +115,7 @@ SEND_NEXT:
 		BSF	EE_CTL,ORI_EXT;	
 		MOVF	SND_CONT,W; Copiamos el valor del contador a W
 		CALL	EEPROM_READ; Conseguimos de la EEPROM el valor de esa posición
+		ANDLW	H'FF';
 		BTFSC	STATUS,Z; Si es cero
 			BCF	SER_CTL,IS_EEP; hemos acabado de enviar datos de la EEPROM
 		INCF	SND_CONT,F; Aumentamos el contador
