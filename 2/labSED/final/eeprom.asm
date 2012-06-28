@@ -44,7 +44,7 @@ EEPROM_WRITE:
 	BSF	EECON1&7F,WR ; Set WR bit to begin write
 	;;;;;;;;;;;;;
 
-	BTFSS	EECON1&7F,WR ; Comprobamos que se haya echo la escritura
+	BTFSC	EECON1&7F,WR ; Comprobamos que se haya echo la escritura
 		GOTO	$-1 ; hasta que no se haya escrito, no salimos de aqui
 	BCF	PIR2,EEIF ;
 	BANKSEL	EECON1 ; BANCO 3
@@ -72,6 +72,9 @@ EEPROM_READ:
 	BSF	EECON1&7F, RD ;EE Read
 	BTFSC	EECON1&7F,RD;
 		GOTO	$-1;
+	BANKSEL	STATUS;
+	MOVLW	1;
+	CALL	LCDWAIT;
 	BANKSEL	EEDAT; BANCO 2
 	MOVF	EEDAT&7F, W ;W <= EEDAT
 	BANKSEL	STATUS; BANCO 0
