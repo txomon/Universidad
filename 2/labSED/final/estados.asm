@@ -662,12 +662,16 @@ ESCRIBIR_SMS_:
 			BTFSC	STATUS,Z;
 				GOTO	ESC_SMS_EST1_END;
 
-			;;;;;;; Aquí guardo el caracter en la eeprom.
-			BCF	EE_CTL,ORI_EXT;
+			;;;;;;;
 			MOVF	PARSER_TEMP,W;
-			CALL	EEPROM_WRITE;
-			CALL	EEPROM_READ;
-			CALL	LCD_LTRW;
+			CALL	LCDDWR;
+			MOVLW	SERIAL_SEND_SMS&H'FF'; Movemos la dirección de la ram a W
+			ADDWF	PARSER_LTR,W; Le sumamos el desplazamiento
+			MOVWF	FSR; Muevo la dirección resultante a FSR
+			BSF	STATUS,IRP; Ponemos que es la segunda página
+			MOVF	PARSER_TEMP,W; Movemos a W el caracter
+			MOVWF	INDF; y lo ponemos en la RAM
+			INCF	PARSER_LTR,F; Incrementamos el contador de letra
 			;;;;;;;
 
 			ESC_SMS_EST1_END:
@@ -679,13 +683,18 @@ ESCRIBIR_SMS_:
 		; Este paso es cuando ya hemos pulsado el botón verde.
 		;;
 		ESC_SMS_EST2:
-			BCF	EE_CTL,ORI_EXT;
-			MOVLW	D'26'; Ponemos un escape
-			CALL	EEPROM_WRITE;
+			MOVLW	SERIAL_SEND_DATA&H'FF';
+			ADDWF	PARSER_LTR,W;
+			MOVWF	FSR;
+			BSF	STATUS,IRP;
+			MOVLW	D'26'; Ponemos una comilla
+			MOVWF	INDF;
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
+			; en la eeprom habría que poner ahora el sms en sí.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
 			MOVLW	0; Ponemos el 0
-			CALL	EEPROM_WRITE;
+			INCF	FSR,F;
+			MOVWF	INDF;
 			; Esto va a enviar SMS, que es el siguiente paso ;)
 
 

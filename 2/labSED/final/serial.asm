@@ -111,11 +111,12 @@ SEND_NEXT:
 			CLRF	SND_CONT; reseteamos el contador
 		GOTO	RETI; y volvemos a la RETI
 		
-	SEND_EEP:
-		BSF	EE_CTL,ORI_EXT;	
+	SEND_EEP:	
 		MOVF	SND_CONT,W; Copiamos el valor del contador a W
-		CALL	EEPROM_READ; Conseguimos de la EEPROM el valor de esa posición
-		ANDLW	H'FF';
+		ADDLW	SERIAL_SEND_SMS&H'FF'; Le añadimos la dirección a partir de la que tenemos los datos para enviar
+		BSF	STATUS,IRP; preparamos el IRP de direccionamiento indirecto para leer en los bancos 2:3
+		MOVWF	FSR; ponemos la dirección indirecta bits <7:0> en el FSR
+		MOVF	INDF,W; Guardamos lo que ponga en la dirección indirecta en W
 		BTFSC	STATUS,Z; Si es cero
 			BCF	SER_CTL,IS_EEP; hemos acabado de enviar datos de la EEPROM
 		INCF	SND_CONT,F; Aumentamos el contador

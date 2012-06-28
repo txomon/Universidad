@@ -10,6 +10,7 @@
 	CBLOCK	H'110'
 	SERIAL_SEND_DATA:H'F' ;Con 16 bytes de memoria deberia ser suficiente
 	SERIAL_RECEIVE_DATA:H'A';Con 10 bytes de memoria para recibir también
+	SERIAL_SEND_SMS:H'40'; Con 80 bytes debería dar de sobra.
 	ENDC
 
 	;**** SER_CTL ****;
