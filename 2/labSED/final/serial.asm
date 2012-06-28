@@ -118,9 +118,9 @@ SEND_NEXT:
 		ANDLW	H'FF';
 		BTFSC	STATUS,Z; Si es cero
 			BCF	SER_CTL,IS_EEP; hemos acabado de enviar datos de la EEPROM
-		INCF	SND_CONT,F; Aumentamos el contador
 		BTFSC	SER_CTL,IS_EEP; Si seguimos mandando datos de la eeprom, entonces 
 			CALL	SERIAL_SEND; mandamos el caracter
+		INCF	SND_CONT,F; Aumentamos el contador
 		BTFSS	SER_CTL,IS_EEP; Si hemos acabado
 			CLRF	SND_CONT; reseteamos el contador para la siguiente fase
 		GOTO RETI; y volvemos a la RETI

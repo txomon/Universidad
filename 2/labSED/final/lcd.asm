@@ -229,32 +229,29 @@ LCDDOUT:			; Bus de datos LCD como salida
 ; a medida que pasan las letras. De momento, solo hacia
 ; delante.
 ;;	
-LCD_LTRW:	
-	BANKSEL	LCD_LTR_CONT;
-	MOVWF	TMP2;
-	MOVLW	cur_set;
-	IORWF	LCD_LTR_CONT,W;
-	CALL	LCDIWR;
-	MOVF	TMP2,W;
-	CALL	LCDDWR;
+LCD_LTRW:
+	CALL	LCDDWR; Escribo el caracter en la pantalla
 	
-	INCF	LCD_LTR_CONT,W;
-	XORLW	H'10';
-	MOVLW	H'3F'
+	INCF	LCD_LTR_CONT,W; Miro cual es la siguiente posición
+	XORLW	H'10';Si el siguiente caracter está en el 10, significa
+	MOVLW	cur_set|H'3F'; que tenemos que saltar a la siguiente linea
 	BTFSC	STATUS,Z;
-		MOVWF	LCD_LTR_CONT;
-	
-	INCF	LCD_LTR_CONT,W;	
-	XORLW	H'50';
+		CALL	LCDIWR;y saltamos
+
+	INCF	LCD_LTR_CONT,W;	Miro cual es la siguiente posición
+	XORLW	H'50'; Si es el fin de la siguiente linea, entonces
+	MOVLW	lcd_clr; limpio la pantalla
 	BTFSC	STATUS,Z;
-		MOVLW	lcd_clr
+		MOVWF	LCD_LTR_CONT; tendríamos entonces un 0 en W
 	BTFSC	STATUS,Z;
 		CALL	LCDIWR;
-	INCF	LCD_LTR_CONT,W;	
-	XORLW	H'50';
-	MOVLW	H'FF'
+
+	MOVF	LCD_LTR_CONT,W; y también pongo el cursor en la posición 0
+	MOVLW	cur_set;
 	BTFSC	STATUS,Z;
-		MOVWF	LCD_LTR_CONT;
- 	INCF	LCD_LTR_CONT,F;
-	RETURN;
-	
+		CALL	LCDIWR;
+	MOVF	LCD_LTR_CONT,W;
+	BTFSC	STATUS,Z;
+		COMF	LCD_LTR_CONT,W;
+	INCF	LCD_LTR_CONT,F; Guardamos +1
+	RETURN;	

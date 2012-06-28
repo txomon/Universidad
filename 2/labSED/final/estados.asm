@@ -410,7 +410,7 @@ MENU12_1_:
 		MOVLW	LTR_MENU12_1_;Cambiamos lo que hay en pantalla a que es el menu 12_1
 		MOVWF	LCD_CTL;
 		RETURN;
-			
+
 ;************* ESCRIBIR_SMS_ ******************;
 ;;
 ; Estado encargado de escribir (interpretar) las pulsaciones en el teclado
@@ -436,7 +436,7 @@ ESCRIBIR_NUMERO_:
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	cur_set; Mover el cursor a la posicion 6
+		MOVLW	cur_set; Mover el cursor a la posicion 0
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_E_N_LOOP:
@@ -548,8 +548,8 @@ ESCRIBIR_NUMERO_:
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
 			; en la eeprom habría que poner ahora el sms en sí.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
-			MOVLW	0; Ponemos el 0
 			INCF	FSR,F;
+			MOVLW	0; Ponemos el 0
 			MOVWF	INDF;
 			GOTO	ESCRIBIR_SMS_;
 
