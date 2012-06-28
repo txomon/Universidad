@@ -682,6 +682,9 @@ ESCRIBIR_SMS_:
 			BCF	EE_CTL,ORI_EXT;
 			MOVLW	D'26'; Ponemos un escape
 			CALL	EEPROM_WRITE;
+			CALL	EEPROM_READ;
+			MOVLW	H'FF'; Esperamos un cojon
+			CALL	LCDWAIT;
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
 			MOVLW	0; Ponemos el 0
