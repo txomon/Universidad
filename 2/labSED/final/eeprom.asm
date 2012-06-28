@@ -46,12 +46,12 @@ EEPROM_WRITE:
 
 	BTFSC	EECON1&7F,WR ; Comprobamos que se haya echo la escritura
 		GOTO	$-1 ; hasta que no se haya escrito, no salimos de aqui
+	BANKSEL	PIR2;
 	BCF	PIR2,EEIF ;
 	BANKSEL	EECON1 ; BANCO 3
 	BCF	EECON1&7F,WREN ;
 	BSF	INTCON,GIE ;
 	BANKSEL WRITE00 ; BANCO 0
-	BCF	PIR2,EEIF;
 	BTFSS	EE_CTL,ORI_EXT
 		INCF	WRITE00,F ;
 	RETURN;
