@@ -436,7 +436,7 @@ ESCRIBIR_NUMERO_:
 		CLRF	LCD_LTR_CONT;
 		MOVLW	lcd_clr; limpio la pantalla
 		CALL	LCDIWR;
-		MOVLW	cur_set; Mover el cursor a la posicion 6
+		MOVLW	cur_set; Mover el cursor a la posicion 0
 		CALL	LCDIWR;
 		CLRF	LCD_CONT;
 		PUT_E_N_LOOP:
@@ -548,8 +548,8 @@ ESCRIBIR_NUMERO_:
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
 			; en la eeprom habría que poner ahora el sms en sí.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
-			MOVLW	0; Ponemos el 0
 			INCF	FSR,F;
+			MOVLW	0; Ponemos el 0
 			MOVWF	INDF;
 			GOTO	ESCRIBIR_SMS_;
 
@@ -663,15 +663,15 @@ ESCRIBIR_SMS_:
 				GOTO	ESC_SMS_EST1_END;
 
 			;;;;;;;
-			MOVF	PARSER_TEMP,W;
-			CALL	LCDDWR;
 			MOVLW	SERIAL_SEND_SMS&H'FF'; Movemos la dirección de la ram a W
 			ADDWF	PARSER_LTR,W; Le sumamos el desplazamiento
 			MOVWF	FSR; Muevo la dirección resultante a FSR
-			BSF	STATUS,IRP; Ponemos que es la segunda página
+			BSF	STATUS,IRP; Ponemos que es el banco 2-3
 			MOVF	PARSER_TEMP,W; Movemos a W el caracter
 			MOVWF	INDF; y lo ponemos en la RAM
 			INCF	PARSER_LTR,F; Incrementamos el contador de letra
+			MOVF	PARSER_TEMP,W; Ponemos en W
+			CALL	LCD_LTRW; y lo escribimos en la pantalla
 			;;;;;;;
 
 			ESC_SMS_EST1_END:
@@ -692,8 +692,8 @@ ESCRIBIR_SMS_:
 			;Y ya esta, hemos puesto lo que mandaríamos normalmente en un sms.
 			; en la eeprom habría que poner ahora el sms en sí.
 			;Ahora vamos a poner el 0 para acabar la secuencia de transmisión (el enviador serie)
-			MOVLW	0; Ponemos el 0
 			INCF	FSR,F;
+			MOVLW	0; Ponemos el 0
 			MOVWF	INDF;
 			; Esto va a enviar SMS, que es el siguiente paso ;)
 
