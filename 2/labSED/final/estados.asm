@@ -11,17 +11,36 @@ POR_:
 	MOVLW	POR; El estado de power on reset
 	BANKSEL	MAQUINA_EST; siempre al principio de todos los estados
 	MOVWF	MAQUINA_EST; pondremos el estado llamado ahí
+	BTFSC	KEYHU,7;Si está pulsada la tecla 
+		BCF	EST_CTL,0;
+	BTFSC	KEYHU,7;
+		RETURN;
+	BTFSC	KEYHL,3;
+		CALL	ESCRIBIR_RECEPCION;
 	BTFSS	EST_CTL,0;
 		GOTO	POR_CTL_PER_CONFIG; Intenta configurarlo
 	BTFSS	EST_CTL,1;
 		GOTO	POR_CTL_PER_ANALIZE; Mira si lo ha conseguido
 	BTFSS	EST_CTL,2;
 		GOTO	STANDBY_; Salta a la siguiente etapa
-	MOVF	KEYHU,W;
-	IORWF	KEYHL,W;
-	BTFSS	STATUS,Z;
-		BCF	EST_CTL,0;
 	RETURN;
+		ESCRIBIR_RECEPCION:
+			MOVLW	cur_set|H'40';
+			CALL	LCDIWR;
+			MOVLW	SERIAL_RECEIVE_DATA&H'FF';
+			MOVWF	FSR;
+			BSF	STATUS,IRP;
+			ESC_RECEPCION:
+			MOVF	INDF,W;Cojemos el número
+			BTFSC	STATUS,Z; Si es 0, hemos acabado
+				RETURN;
+			CALL	LCDDWR;
+			INCF	FSR,W;
+			XORLW	(SERIAL_RECEIVE_DATA+H'A')&H'FF';
+			BTFSC	STATUS,Z;
+				RETURN;
+			INCF	FSR,F;
+			GOTO	ESC_RECEPCION
 	
 		;******** POR_CTL_PER_CONFIG *******;
 		;;
@@ -37,7 +56,7 @@ POR_:
 			CALL	SEND_AT; Mandamos AT, activamos interrupciones y ponemos IS_SND
 			BANKSEL	STATUS; BANCO 0
 			BSF	EST_CTL,0;
-			
+
 			MOVLW	lcd_clr; limpio la pantalla
 			CALL	LCDIWR;
 			MOVLW	cur_set|h'1'; Mover el cursor a la posicion 6
@@ -72,12 +91,12 @@ POR_:
 		;;
 		POR_CTL_PER_ANALIZE:
 			BTFSS	SER_CTL,IS_RCV;
-				RETURN;	
+				RETURN;
 			MOVLW	SERIAL_RECEIVE_DATA&H'FF'; La posición en la que está puesto lo que se recibe.
 			MOVWF	FSR;
 			BSF	STATUS,IRP;
 
-			MOVF	INDF,W; Comprobamos si el caracter es 0
+			MOVF	INDF,W; Comprobamos si el ultimo caracter es 0
 			XORLW	'0';
 			BTFSC	STATUS,Z;
 				BSF	EST_CTL,1; Si llegamo aqui es que pasamos al siguiente estado,
@@ -619,6 +638,7 @@ ESCRIBIR_SMS_:
 	RETURN;
 	
 	INIT_ESCRIBIR_SMS:
+		CLRF	STATUS;
 		CLRF	PARSER_LTR;
 		CLRF	PARSER_LTR_INFO;
 		CLRF	EST_CTL;
@@ -667,6 +687,7 @@ ESCRIBIR_SMS_:
 			MOVF	PARSER_TEMP,W;
 			CALL	EEPROM_WRITE;
 			CALL 	EEPROM_READ;
+			MOVF	PARSER_TEMP,W;
 			CALL	LCD_LTRW;
 			;;;;;;;
 

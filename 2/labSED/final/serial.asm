@@ -128,7 +128,7 @@ SEND_NEXT:
 ;******** RECEIVE_NEXT **********;
 RECEIVE_NEXT:
 	MOVF	RCV_CONT,W;
-	ADDLW	H'1F';La posicion esta especificada como 11F en serial.inc
+	ADDLW	SERIAL_RECEIVE_DATA&H'FF';La posicion esta especificada como 11F en serial.inc
 	MOVWF	FSR;
 	BSF	STATUS,IRP;
 	CALL	SERIAL_RECEIVE
