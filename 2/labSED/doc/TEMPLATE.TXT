@@ -1,0 +1,119 @@
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³                         ATTRIBUTE TEMPLATES                          ³
+³ This file contains a list of the templates that will be used as a    ³
+³ default when a dictionary item's attributes are edited for the first ³
+³ time. In order to provide a template :-                              ³
+³                                                                      ³
+³    Find the @ TEMPLATE string for the required dictionary type       ³
+³    then place the required template after the string.                ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+@TEMPLATE Associative
+@COMMENT
+
+@TEMPLATE Attribute link
+@COMMENT
+
+@TEMPLATE Contained
+@COMMENT
+
+@TEMPLATE Context node
+@COMMENT
+
+@TEMPLATE Continuous flow
+@BNF      =
+@UNITS    =
+@RANGE    =
+@RATE     =
+@ACCURACY =
+@COMMENT
+
+@TEMPLATE Control flow
+@BNF      =
+@UNITS    =
+@RANGE    =
+@RATE     =
+@ACCURACY =
+@COMMENT
+
+@TEMPLATE Control process
+@COMMENT
+
+@TEMPLATE Control store
+@BNF      =
+@UNITS    =
+@RANGE    =
+@RATE     =
+@ACCURACY =
+@COMMENT
+
+@TEMPLATE CSPEC bar
+@COMMENT
+
+@TEMPLATE Data Area
+@COMMENT
+
+@TEMPLATE Data Couple
+@COMMENT
+
+@TEMPLATE Discrete flow
+@BNF      =
+@UNITS    =
+@RANGE    =
+@RATE     =
+@ACCURACY =
+@COMMENT
+
+@TEMPLATE Domain
+@COMMENT
+
+@TEMPLATE Existence
+@COMMENT
+
+@TEMPLATE Flag
+@COMMENT
+
+@TEMPLATE Library
+@COMMENT
+
+@TEMPLATE Module
+@COMMENT
+
+@TEMPLATE Process
+@COMMENT
+
+@TEMPLATE Restricted
+@COMMENT
+
+@TEMPLATE SC Library
+@COMMENT
+
+@TEMPLATE SC Procedure
+@COMMENT
+
+@TEMPLATE State
+@COMMENT
+
+@TEMPLATE Store
+@BNF      =
+@UNITS    =
+@RANGE    =
+@RATE     =
+@ACCURACY =
+@COMMENT
+
+@TEMPLATE Strong entity
+@COMMENT
+
+@TEMPLATE Sub System
+@COMMENT
+
+@TEMPLATE Terminator
+@COMMENT
+
+@TEMPLATE Unrestricted
+@COMMENT
+
+@TEMPLATE Weak entity
+@COMMENT
+
+
