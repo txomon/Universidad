@@ -8,8 +8,6 @@ PAD_TMP2; Para guardar el registro con el que trabajamos
 ;**** control de teclas *****
 KEYHL; KEY HARD LOWER
 KEYHU; Para tener guardadas cuales son las teclas presionadas comprobadas
-KEYSL; KEY SOFT LOWER
-KEYSU; Para tener guardadas cuales son las teclas presionadas a comprobar
 KEYRCTL; Voy a utilizarlo como un registro para pasar parametros a funciones
 
 	ENDC
@@ -17,20 +15,22 @@ KEYRCTL; Voy a utilizarlo como un registro para pasar parametros a funciones
 	;** Control de origen de llamada **;
 	P_S_H EQU 7;
 ;**** equivalencias de puertos ****;
+PAD_ENT	EQU	H'F0'; Esta macro lleva el valor de cuales son los bits de entrada (a 1) y los de salida
 PORTPAD	EQU	PORTB
 TRISPAD	EQU	TRISB
 
 	;** bits de configuración de KEYRCTL **;
-	KRP0	EQU	0;
-	KRP1	EQU	1;
-	KRP2	EQU	2;
-	KRL_U	EQU	3; seleccionar lower/upper (0/1)
-	KRH_S	EQU	4; seleccionar hard/soft (0/1)
-	KRS_C	EQU	5; bit set/bit clear (0/1)
+	KRP0	EQU	0; Estos tres bits krp<0:2> sirven para marcar la posición
+	KRP1	EQU	1; dentro del keypad, en verdad es <0:3> pero como está dividido en
+	KRP2	EQU	2; dos registros, el krp<3> sirve también para distinguir en el registro en el que se guarda.
+	KRL_U	EQU	3; seleccionar lower/upper (0/1), vamos, que ademas de seleccionar el registro, distingue entre las teclas
+			; *0#D789C de 456B123A, selecciónando cuales son low (*-C) y cuales Up (4-A)
+	KRS_C	EQU	4; bit set/clear (0/1), vamos, la operación que se supone que hay que hacer en el registro de la tecla
+			; krp<0:2>, dado por krl_u, y si es en el registro Hard o Soft, dado por KRH_S. La operación a hacer es poner a 0 o a 1
 
 ;******** TABLAS PAD *********;
-;**** traduccion de num de caracter a bits de comparación ****;
-POSACOMP:
+;**** traduccion de num de tecla a bits de comparación ****;
+NUMACOMP:
 	ADDWF	PCL,F;
 	RETLW	B'01111110';*
 	RETLW	B'01111101';0
@@ -49,9 +49,9 @@ POSACOMP:
 	RETLW	B'11101011';3
 	RETLW	B'11100111';A - VERDE
 	
-;**** traducción de num de caracter a bit en el registro ****;
+;**** traducción de num de tecla a bit en el registro ****;
 NUMAKEYR:
-	ADDWF	PCL,F;
+	ADDWF	PCL,F
 	RETLW	H'01'
 	RETLW	H'02'
 	RETLW	H'04'
@@ -60,4 +60,7 @@ NUMAKEYR:
 	RETLW	H'20'
 	RETLW	H'40'
 	RETLW	H'80'
-	
+
+NUMACHAR:
+	ADDWF	PCL,F;
+	DT	"*0#R789D456U123V";

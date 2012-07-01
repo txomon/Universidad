@@ -14,9 +14,9 @@ READ00
 WRITE00
 ;READFF
 ;WRITEFF
+EE_CTL
 	ENDC;
-EE_CTL	EQU	H'70'
 
 	;******* EE_CTL *******;
-	ORI_EXT	EQU	0;
+	ORI_EXT	EQU	0; original(0)/external(1) address
 
