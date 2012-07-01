@@ -1,0 +1,19 @@
+Laboratorio de Sistemas Digitales
+=================================
+
+Manual de usuario de la aplicación:
+-----------------------------------
+
+Esta aplicación, aunque no implementada entera, permite al usuario mandar un sms numérico a un teléfono. Para ello, y para intentar simular en parte el funcionamiento de un teléfono móvil, se debe encender, desbloquear, navegar por el menú y rellenar los campos.
+
+1.	Encendemos el PIC, conectándolo al modem maestro 100 por puerto serie antes de que pasen 10 segundos.
+2.	Si hay algún error en la comunicación entre el PIC y el modem aparece Power on reset en la pantalla. Se puede dar a la tecla 7 para ver lo que el PIC ha recibido hasta entonces.
+3.	Por el contrario si no hay ningún error en la comunicación aparece standby. Si esto no ocurre hay que dar a la tecla verde para volver a intentarlo.
+4.	Al aparecer el Standby desbloqueamos el PIC. Para ello pulsamos las teclas _*_ y _#_. Primero pulsamos la _*_, sin soltarla pulsamos la _#_, después soltamos la _*_ sin soltar la _#_ y por último soltamos la _#_.
+5.	Volvemos a pulsar la tecla verde esta vez para que nos aparezca el menú para escribir o leer mensajes.
+6.	Seleccionamos la opción de escribir mensaje pulsando la tecla verde.
+7.	Aparece en la pantalla Marca el numero. Por tanto se escribe el número al que se quiere mandar el mensaje y se da a la tecla verde.
+8.	Se procede entonces a redactar el mensaje que se desee enviar. Cuando el mensaje esté completo se vuelve a dar a la tecla verde para enviarlo.
+9.	En la pantalla aparece Enviando que cuando el mensaje se envíe cambiará a Enviado!
+
+El Led rojo se enciende cuando el PIC detecta que hay una tecla pulsada.
