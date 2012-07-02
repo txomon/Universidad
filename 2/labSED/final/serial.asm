@@ -131,15 +131,13 @@ RECEIVE_NEXT:
 	MOVF	RCV_CONT,W;
 	ADDLW	SERIAL_RECEIVE_DATA&H'FF';La posicion esta especificada como 11F en serial.inc
 	MOVWF	FSR;
-	MOVF	RCREG,W;
 	BSF	STATUS,IRP;
+	CALL	SERIAL_RECEIVE
 	MOVWF	INDF;
-	INCF	RCV_CONT,F;
-	BTFSC	PIR1,RCIF; En caso de que ya haya otro caracter ya listo
-		GOTO	RECEIVE_NEXT; vamos rapidamente a por el.
 	XORLW	H'0D';
 	BTFSC	STATUS,Z;
 		BSF	SER_CTL,IS_RCV
 	INCF	FSR,F;
 	CLRF	INDF;
+	INCF	RCV_CONT,F;
 	GOTO	RETI;

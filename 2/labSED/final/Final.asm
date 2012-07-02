@@ -68,15 +68,15 @@ RSI:
 	CLRF	PCLATH;Y lo borramos por que queremos estar en el banco 0 y
 	; no queremos saltar a ningún banco de memoria
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
-	BCF	P_LED,C_LED; 
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
+	BCF	P_LED,C_LED; 
 	CLRF	PCLATH;
+	BTFSC	PIR1,RCIF;
+		GOTO	RECEIVE_NEXT;
 	BTFSC	SER_CTL,IS_SND; En vez de mirar si está vacio el txreg, tenemos que mirar si ha podido ser él el que ha
 		GOTO	SEND_NEXT; causado la interrupción.
-	SEND_NEXT_RETI: 
-	BTFSC	PIR1,RCIF; Aunque la de recibir es más prioritaria, debemos tener en cuenta que 
-		GOTO	RECEIVE_NEXT; si estamos enviando y hay que recibir, habrá de hacerse rápido.
+	SEND_NEXT_RETI:
 	BTFSC	PIR1,TMR2IF; el timer2 está para leer cuales son las teclas que hay pulsadas tras el rebote 
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF; esto está para programar la lectura después
@@ -121,23 +121,19 @@ RETI:
 ;*******************************************************************;
 ;********** Programa principal ***********;
 PROG:
-	BCF	INTCON,GIE;
+	BCF	INTCON,GIE; Deshabilitamos las interrupciones
 	PAGESEL PADINIT;
 	CALL	PADINIT;
-	PAGESEL LEDINIT;
 	CALL	LEDINIT;
-	PAGESEL LCDINIT;
 	CALL	LCDINIT;
-	PAGESEL SERIAL_INIT;
 	CALL	SERIAL_INIT;
 	PAGESEL	EEPROM_INIT;
-	CLRF	MAQUINA_EST;
-	CLRF	EST_CTL
-	CLRF	LCD_CTL
-	CLRF	LCD_CONT
-	BSF	INTCON,GIE; 
-BUCLEOCIOSO:
-
+	CLRF	MAQUINA_EST; Inicializamos a cero los registros
+	CLRF	EST_CTL; de la maquina de estados
+	CLRF	LCD_CTL;
+	CLRF	LCD_CONT;
+	BSF	INTCON,GIE; Habilitamos interrupciones
+	BUCLEOCIOSO:
 	include "maquina_de_estados.asm"
 	PAGESEL BUCLEOCIOSO;
 	GOTO	BUCLEOCIOSO;	
