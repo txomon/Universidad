@@ -26,7 +26,7 @@
 	MOVWF	PCL;
 	
 	MODEM_CMD_NUM_NO_ECHO:
-	DT	" E0 V0",H'D',0;Modem => no echo y modo numerico
+	DT	"E0V0",H'D',0;Modem => no echo y modo numerico
 	MODEM_CMD_RESET:
 	DT	"&F0",H'D',0;Reseteamos el modem
 	MODEM_CMD_SEND_SMS:

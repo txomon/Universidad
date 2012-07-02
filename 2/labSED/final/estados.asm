@@ -48,7 +48,6 @@ POR_:
 		; respuestas numéricas.
 		;;
 		POR_CTL_PER_CONFIG:
-			CLRF	RCV_CONT;
 			CLRF	SER_CTL;
 			BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
 			MOVLW	MODEM_CMD_NUM_NO_ECHO&H'FF'; Movemos el indice del comando al contador
@@ -92,22 +91,55 @@ POR_:
 		POR_CTL_PER_ANALIZE:
 			BTFSS	SER_CTL,IS_RCV;
 				RETURN;
-			MOVLW	SERIAL_RECEIVE_DATA&H'FF'; La posición en la que está puesto lo que se recibe.
-			MOVWF	FSR;
+			MOVLW	(SERIAL_RECEIVE_DATA - 1 )&H'FF'; La posición en la que está puesto lo que se recibe.
 			BSF	STATUS,IRP;
+			MOVWF	FSR;
 
+			INCF	FSR,F;
 			MOVF	INDF,W; Comprobamos si el ultimo caracter es 0
+			BTFSS	STATUS,Z;
+				GOTO	$-3;
+			DECF	FSR,F;
+			MOVF	INDF,W;
+			XORLW	H'A';
+			BTFSC	STATUS,Z;
+				GOTO	POR_CTL_PER_ANA_CR;
+			INCF	FSR,F;
+			POR_CTL_PER_ANA_CR:
+			DECF	FSR,F;
+			MOVF	INDF,W;
+			XORLW	H'D';
+			BTFSC	STATUS,Z;
+				GOTO	POR_CTL_PER_ANA_Z;
+			POR_CTL_PER_ANA_Z:
+			DECF	FSR,F;
+			MOVF	INDF,W;
 			XORLW	'0';
 			BTFSC	STATUS,Z;
 				BSF	EST_CTL,1; Si llegamo aqui es que pasamos al siguiente estado,
 				; ya que este ha recibido la respuesta esperada.
 			BTFSS	EST_CTL,1;
-				BCF	EST_CTL,0; Si no ha recibido la respuesta esperada, volver a hacer
+				GOTO	POR_CTL_PER_ANA_AGA; Si no ha recibido la respuesta esperada, volver a hacer
 				;la peticion del comando
 			BCF	EST_CTL,2;
-			CLRF	RCV_CONT;
-				
 			RETURN
+			
+			POR_CTL_PER_ANA_AGA:
+			BTFSC	EST_CTL,7;
+				GOTO	POR_CTL_PER_ANA_AGA_FIN;
+			CLRF	PARSER_CTL;
+			MOVLW	H'2F';
+			CALL	LCDWAIT
+			INCFSZ	PARSER_CTL,F;
+				GOTO	$-3;
+			BTFSS	SER_CTL,IS_RCV;
+				BSF	EST_CTL,7;
+			GOTO	POR_CTL_PER_ANALIZE;
+			
+			POR_CTL_PER_ANA_AGA_FIN:
+			BCF	EST_CTL,0;
+			BCF	EST_CTL,1;
+			RETURN;
 
 
 		
@@ -780,7 +812,6 @@ ENVIAR_SMS_:
 		; Hasta aqui, hemos puesto "enviando" en la pantalla 
 		
 		ENVIAR_DESPUES; Esto es cuando ya hemos puesto lo de la pantalla.
-		CLRF	RCV_CONT;
 		CLRF	SER_CTL;
 		BSF	SER_CTL,IS_CMD; Marcamos que vamos a enviar un comando
 		BSF	SER_CTL,IS_DAT; Marcamos que vamos a enviar x ram
