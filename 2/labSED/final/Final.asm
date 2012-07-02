@@ -68,15 +68,15 @@ RSI:
 	CLRF	PCLATH;Y lo borramos por que queremos estar en el banco 0 y
 	; no queremos saltar a ningún banco de memoria
 	;AQUI TODAS LAS INTERRUPCIONES POR ORDEN DE PRIORIDAD.
+	BCF	P_LED,C_LED; 
 RETI:
 	CLRF	STATUS;Por defecto en las rsi trabajare en el banco 0
-	BCF	P_LED,C_LED; 
 	CLRF	PCLATH;
-	BTFSC	PIR1,RCIF;
-		GOTO	RECEIVE_NEXT;
 	BTFSC	SER_CTL,IS_SND; En vez de mirar si está vacio el txreg, tenemos que mirar si ha podido ser él el que ha
 		GOTO	SEND_NEXT; causado la interrupción.
-	SEND_NEXT_RETI:
+	SEND_NEXT_RETI: 
+	BTFSC	PIR1,RCIF; Aunque la de recibir es más prioritaria, debemos tener en cuenta que 
+		GOTO	RECEIVE_NEXT; si estamos enviando y hay que recibir, habrá de hacerse rápido.
 	BTFSC	PIR1,TMR2IF; el timer2 está para leer cuales son las teclas que hay pulsadas tras el rebote 
 		GOTO	TMR2INTER;
 	BTFSC	INTCON,RBIF; esto está para programar la lectura después
